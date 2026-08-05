@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revision Lesson · Units 1–6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E9ECF1;
+    --card:#FFFFFF;
+    --ink:#0B1533;
+    --ink-soft:#4A5470;
+    --hair:#D4D9E4;
+
+    --blue:#1A3E8C;
+    --green:#0F7F58;
+    --purple:#6A2B7A;
+    --gold:#C8880F;
+    --red:#C8342A;
+
+    --ok:#0F7F58;
+    --bad:#C8342A;
+
+    --display:"Rubik", system-ui, sans-serif;
+    --body:"Literata", Georgia, serif;
+    --mono:"JetBrains Mono", ui-monospace, monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--body); font-size:17px; line-height:1.6;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:0 20px 80px}
+
+  /* ---------- header ---------- */
+  header{padding:56px 0 28px}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+  h1{
+    font-family:var(--display); font-weight:800; font-size:clamp(38px,8vw,64px);
+    line-height:.98; letter-spacing:-.02em; margin:10px 0 14px;
+  }
+  h1 em{font-style:normal; color:var(--blue)}
+  .lede{font-size:18px; color:var(--ink-soft); max-width:52ch; margin:0}
+
+  .scorebar{
+    position:sticky; top:0; z-index:20; margin:26px 0 0;
+    background:var(--ink); color:#fff; border-radius:14px;
+    padding:12px 16px; display:flex; align-items:center; gap:14px;
+    font-family:var(--mono); font-size:13px; letter-spacing:.04em;
+    box-shadow:0 6px 22px rgba(11,21,51,.18);
+  }
+  .scorebar .track{flex:1; height:8px; background:rgba(255,255,255,.18); border-radius:99px; overflow:hidden}
+  .scorebar .fill{height:100%; width:0%; background:#7FD4A8; border-radius:99px; transition:width .35s ease}
+
+  /* ---------- tube-line spine ---------- */
+  .stop{position:relative; padding:38px 0 38px 54px}
+  .stop::before{
+    content:""; position:absolute; left:16px; top:0; bottom:0; width:5px;
+    background:var(--line, var(--blue));
+  }
+  .stop::after{
+    content:""; position:absolute; left:8px; top:44px; width:21px; height:21px;
+    border-radius:50%; background:#fff; border:5px solid var(--line, var(--blue));
+  }
+  .stop.terminus::before{bottom:auto; height:70px}
+
+  .stop > h2{
+    font-family:var(--display); font-weight:800; font-size:clamp(24px,4.6vw,34px);
+    letter-spacing:-.01em; line-height:1.1; margin:32px 0 4px;
+  }
+  .stop > .sub{
+    font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--line, var(--blue)); margin:0 0 22px;
+  }
+
+  /* ---------- task card ---------- */
+  .task{
+    background:var(--card); border:1px solid var(--hair); border-radius:16px;
+    padding:22px 22px 18px; margin:0 0 18px;
+  }
+  .task > h3{
+    font-family:var(--display); font-weight:600; font-size:18px; line-height:1.3;
+    margin:0 0 4px; display:flex; gap:12px; align-items:flex-start;
+  }
+  .num{
+    flex:none; width:30px; height:30px; border-radius:50%;
+    border:3px solid var(--line, var(--blue)); color:var(--ink);
+    font-family:var(--mono); font-weight:700; font-size:13px;
+    display:grid; place-items:center; margin-top:-2px;
+  }
+  .hint{font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin:2px 0 16px 42px}
+
+  ol.items{margin:0; padding-left:26px}
+  ol.items li{margin:0 0 12px; padding-left:4px}
+  ol.items li::marker{font-family:var(--mono); font-size:13px; color:var(--ink-soft)}
+  .plain{list-style:none; padding-left:0}
+
+  .pairs{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px 20px}
+  .pair{display:flex; align-items:center; gap:8px}
+  .pair .from{min-width:96px; font-weight:600}
+  .arrow{color:var(--ink-soft)}
+
+  /* ---------- inputs ---------- */
+  input.blank, select.blank{
+    font-family:var(--body); font-size:16px; color:var(--ink);
+    border:0; border-bottom:2px solid var(--hair); background:transparent;
+    padding:2px 4px; min-width:70px; width:110px; border-radius:2px;
+  }
+  input.blank.wide{width:min(100%,420px); display:block; margin-top:6px}
+  input.blank:focus, select.blank:focus, button:focus-visible{
+    outline:3px solid #9CB6F0; outline-offset:2px;
+  }
+  select.blank{width:auto; border-bottom:2px solid var(--hair); padding:4px}
+  .ok{border-bottom-color:var(--ok) !important; color:var(--ok); font-weight:600}
+  .bad{border-bottom-color:var(--bad) !important; color:var(--bad)}
+  .revealed{border-bottom-color:var(--ink-soft) !important; color:var(--ink-soft); font-style:italic}
+
+  .pick{display:inline-flex; gap:4px; margin:0 2px; vertical-align:baseline}
+  .pick button{
+    font-family:var(--body); font-size:15px; padding:2px 12px; border-radius:99px;
+    border:1.5px solid var(--hair); background:#fff; color:var(--ink); cursor:pointer;
+  }
+  .pick button:hover{border-color:var(--ink-soft)}
+  .pick button.sel{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .pick button.sel.good{background:var(--ok); border-color:var(--ok)}
+  .pick button.sel.wrong{background:var(--bad); border-color:var(--bad)}
+  .pick button.show{border-color:var(--ok); color:var(--ok); font-weight:600}
+
+  .actions{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:18px; padding-top:14px; border-top:1px dashed var(--hair)}
+  .btn{
+    font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    padding:9px 16px; border-radius:99px; cursor:pointer; border:1.5px solid var(--ink);
+    background:var(--ink); color:#fff;
+  }
+  .btn.ghost{background:transparent; color:var(--ink)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn{transition:transform .15s ease}
+  .result{font-family:var(--mono); font-size:13px; color:var(--ink-soft)}
+
+  /* ---------- speaking + key blocks ---------- */
+  .speak{
+    background:#F3F0FA; border:1px solid #DCD3EE; border-left:5px solid var(--purple);
+    border-radius:12px; padding:16px 18px; margin:0 0 18px;
+  }
+  .speak p:first-child{
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--purple); margin:0 0 8px;
+  }
+  .speak p{margin:0 0 6px}
+  .speak ul{margin:6px 0 0; padding-left:20px}
+  .speak li{margin:0 0 5px}
+
+  .key{display:none; margin-top:14px; padding:14px 16px; background:#F2F7F4; border:1px solid #C9E2D6; border-radius:12px}
+  .key.open{display:block}
+  .key p{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok); margin:0 0 8px}
+  .key ol{margin:0; padding-left:22px}
+  .key li{margin:0 0 6px}
+  .key b{color:var(--ok)}
+
+  .text-gap{line-height:2.4}
+  .text-gap input.blank{width:96px}
+
+  footer{padding:10px 0 0; color:var(--ink-soft); font-family:var(--mono); font-size:12px; letter-spacing:.04em}
+
+  @media (max-width:640px){
+    body{font-size:16px}
+    .wrap{padding:0 14px 60px}
+    .stop{padding-left:34px}
+    .stop::before{left:8px; width:4px}
+    .stop::after{left:1px; top:40px; width:17px; height:17px; border-width:4px}
+    .task{padding:18px 15px 14px}
+    .hint{margin-left:0}
+    ol.items{padding-left:20px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Revision · Units 1–6</div>
+  <h1>Все, що ми<br>вивчили — <em>разом</em></h1>
+  <p class="lede">To be · question words · possessives · family · adjectives · personal information. Пиши відповіді в полях і тисни «Перевірити».</p>
+  <div class="scorebar">
+    <span id="scoreText">0 / 0 правильних</span>
+    <span class="track"><span class="fill" id="scoreFill"></span></span>
+  </div>
+</header>
+
+<!-- ================= WARM UP ================= -->
+<section class="stop" style="--line:var(--purple)">
+  <h2>Warm-up</h2>
+  <p class="sub">Speaking · 5 хвилин</p>
+
+  <div class="speak">
+    <p>Answer quickly — full sentences!</p>
+    <ul>
+      <li>What's your name? How are you today?</li>
+      <li>Where are you from? Where do you live now?</li>
+      <li>How old is your best friend?</li>
+      <li>Who is your favourite teacher? Why?</li>
+      <li>Is your city big or small? Is it expensive?</li>
+      <li>Are you tired today? Are you hungry?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= PART 1 ================= -->
+<section class="stop" style="--line:var(--green)">
+  <h2>Part 1 — Vocabulary</h2>
+  <p class="sub">Words · Countries · Jobs · Family</p>
+
+  <!-- T1 -->
+  <div class="task" data-task>
+    <h3><span class="num">1</span> Complete the questions with the question word</h3>
+    <p class="hint">what · who · why · where · when · how · how old · how much · how many · who…with</p>
+    <ol class="items">
+      <li><input class="blank" data-a="what"> is your name? — Maria.</li>
+      <li><input class="blank" data-a="how"> old are you? — I'm 25.</li>
+      <li><input class="blank" data-a="where"> are you from? — I'm from Spain.</li>
+      <li><input class="blank" data-a="who"> is your teacher? — Debbie.</li>
+      <li><input class="blank" data-a="why"> are you in London? — To learn English.</li>
+      <li><input class="blank" data-a="how"> many people are in your family? — Five.</li>
+      <li><input class="blank" data-a="how"> much is a ticket? — Two pounds.</li>
+      <li><input class="blank" data-a="who"> are you <input class="blank" data-a="with">? — With my host family.</li>
+      <li><input class="blank" data-a="when"> is your first lesson? — On Monday.</li>
+      <li><input class="blank" data-a="how"> are you? — I'm fine, thanks.</li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T2 -->
+  <div class="task" data-task>
+    <h3><span class="num">2</span> Countries → nationalities</h3>
+    <div class="pairs">
+      <div class="pair"><span class="from">Spain</span><span class="arrow">→</span><input class="blank" data-a="spanish"></div>
+      <div class="pair"><span class="from">Italy</span><span class="arrow">→</span><input class="blank" data-a="italian"></div>
+      <div class="pair"><span class="from">Hungary</span><span class="arrow">→</span><input class="blank" data-a="hungarian"></div>
+      <div class="pair"><span class="from">Japan</span><span class="arrow">→</span><input class="blank" data-a="japanese"></div>
+      <div class="pair"><span class="from">China</span><span class="arrow">→</span><input class="blank" data-a="chinese"></div>
+      <div class="pair"><span class="from">Egypt</span><span class="arrow">→</span><input class="blank" data-a="egyptian"></div>
+      <div class="pair"><span class="from">Switzerland</span><span class="arrow">→</span><input class="blank" data-a="swiss"></div>
+      <div class="pair"><span class="from">France</span><span class="arrow">→</span><input class="blank" data-a="french"></div>
+      <div class="pair"><span class="from">Poland</span><span class="arrow">→</span><input class="blank" data-a="polish"></div>
+      <div class="pair"><span class="from">Brazil</span><span class="arrow">→</span><input class="blank" data-a="brazilian"></div>
+      <div class="pair"><span class="from">Ukraine</span><span class="arrow">→</span><input class="blank" data-a="ukrainian"></div>
+      <div class="pair"><span class="from">England</span><span class="arrow">→</span><input class="blank" data-a="english"></div>
+    </div>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T3 -->
+  <div class="task" data-task>
+    <h3><span class="num">3</span> What's the job?</h3>
+    <ol class="items">
+      <li>This person designs buildings. → <input class="blank" data-a="architect|an architect"></li>
+      <li>This person helps people in hospital. → <input class="blank" data-a="nurse|a nurse|doctor|a doctor"></li>
+      <li>This person takes photos. → <input class="blank" data-a="photographer|a photographer"></li>
+      <li>This person brings your food in a restaurant. → <input class="blank" data-a="waiter|a waiter|waitress|a waitress"></li>
+      <li>This person makes computer programs. → <input class="blank" data-a="software engineer|a software engineer|programmer|a programmer|developer|a developer"></li>
+      <li>This person helps you choose clothes. → <input class="blank" data-a="fashion stylist|a fashion stylist|stylist|a stylist"></li>
+      <li>This person works in a gallery. → <input class="blank" data-a="gallery attendant|a gallery attendant"></li>
+      <li>This person teaches music. → <input class="blank" data-a="music teacher|a music teacher"></li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T4 -->
+  <div class="task" data-task>
+    <h3><span class="num">4</span> Family — complete the sentences</h3>
+    <ol class="items">
+      <li>My mother's mother is my <input class="blank" data-a="grandmother|grandma"></li>
+      <li>My father's brother is my <input class="blank" data-a="uncle"></li>
+      <li>My uncle's daughter is my <input class="blank" data-a="cousin"></li>
+      <li>My sister's son is my <input class="blank" data-a="nephew"></li>
+      <li>My brother's daughter is my <input class="blank" data-a="niece"></li>
+      <li>My brother and my sister are my <input class="blank" data-a="siblings"></li>
+      <li>My son's daughter is my <input class="blank" data-a="granddaughter"></li>
+      <li>My wife's mother is my <input class="blank" data-a="mother-in-law|mother in law"></li>
+      <li>My father's new wife is my <input class="blank" data-a="stepmother|step-mother"></li>
+      <li>My mother's parents are my <input class="blank" data-a="grandparents"></li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T5 -->
+  <div class="task" data-task>
+    <h3><span class="num">5</span> Opposites</h3>
+    <div class="pairs">
+      <div class="pair"><span class="from">expensive</span><span class="arrow">↔</span><input class="blank" data-a="cheap|free"></div>
+      <div class="pair"><span class="from">difficult</span><span class="arrow">↔</span><input class="blank" data-a="easy"></div>
+      <div class="pair"><span class="from">big</span><span class="arrow">↔</span><input class="blank" data-a="small|little"></div>
+      <div class="pair"><span class="from">young</span><span class="arrow">↔</span><input class="blank" data-a="old"></div>
+      <div class="pair"><span class="from">fast</span><span class="arrow">↔</span><input class="blank" data-a="slow"></div>
+      <div class="pair"><span class="from">boring</span><span class="arrow">↔</span><input class="blank" data-a="interesting"></div>
+      <div class="pair"><span class="from">nice</span><span class="arrow">↔</span><input class="blank" data-a="horrible|bad"></div>
+      <div class="pair"><span class="from">hot</span><span class="arrow">↔</span><input class="blank" data-a="cold"></div>
+      <div class="pair"><span class="from">good</span><span class="arrow">↔</span><input class="blank" data-a="bad"></div>
+      <div class="pair"><span class="from">beautiful</span><span class="arrow">↔</span><input class="blank" data-a="ugly"></div>
+    </div>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T6 -->
+  <div class="task" data-task>
+    <h3><span class="num">6</span> Places, transport or weather?</h3>
+    <div class="pairs">
+      <div class="pair"><span class="from">museum</span><select class="blank" data-a="places"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">bus</span><select class="blank" data-a="transport"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">sunny</span><select class="blank" data-a="weather"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">gallery</span><select class="blank" data-a="places"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">Underground</span><select class="blank" data-a="transport"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">cold</span><select class="blank" data-a="weather"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">park</span><select class="blank" data-a="places"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">café</span><select class="blank" data-a="places"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">taxi</span><select class="blank" data-a="transport"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">theatre</span><select class="blank" data-a="places"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">rainy</span><select class="blank" data-a="weather"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+      <div class="pair"><span class="from">bike</span><select class="blank" data-a="transport"><option value=""></option><option>places</option><option>transport</option><option>weather</option></select></div>
+    </div>
+    <div class="actions"></div>
+  </div>
+
+  <div class="speak">
+    <p>Speaking</p>
+    <ul>
+      <li>What places are there in your city?</li>
+      <li>How do you usually travel — by bus, by car or on foot?</li>
+      <li>What's the weather like today?</li>
+      <li>Who is the oldest person in your family?</li>
+      <li>What's your favourite food?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= PART 2 ================= -->
+<section class="stop" style="--line:var(--blue)">
+  <h2>Part 2 — Grammar</h2>
+  <p class="sub">To be · Questions · Possessives</p>
+
+  <!-- T7 -->
+  <div class="task" data-task>
+    <h3><span class="num">7</span> am / is / are</h3>
+    <ol class="items">
+      <li>I <input class="blank" data-a="am|'m"> a student.</li>
+      <li>My name <input class="blank" data-a="is|'s"> Arina.</li>
+      <li>They <input class="blank" data-a="are|'re"> from Italy.</li>
+      <li>My parents <input class="blank" data-a="are|'re"> at home.</li>
+      <li>It <input class="blank" data-a="is|'s"> a nice day.</li>
+      <li>You <input class="blank" data-a="are|'re"> my best friend.</li>
+      <li>My friend and I <input class="blank" data-a="are|'re"> tired.</li>
+      <li>The children <input class="blank" data-a="are|'re"> in the park.</li>
+      <li>Debbie <input class="blank" data-a="is|'s"> a good teacher.</li>
+      <li>English <input class="blank" data-a="is|'s"> easy for me.</li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T8 -->
+  <div class="task" data-task>
+    <h3><span class="num">8</span> Make it negative</h3>
+    <ol class="items">
+      <li>I'm a doctor. <input class="blank wide" data-a="i'm not a doctor|i am not a doctor"></li>
+      <li>She is at home. <input class="blank wide" data-a="she isn't at home|she is not at home|she's not at home"></li>
+      <li>They are Spanish. <input class="blank wide" data-a="they aren't spanish|they are not spanish|they're not spanish"></li>
+      <li>We are late. <input class="blank wide" data-a="we aren't late|we are not late|we're not late"></li>
+      <li>It is cold today. <input class="blank wide" data-a="it isn't cold today|it is not cold today|it's not cold today"></li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T9 -->
+  <div class="task" data-task>
+    <h3><span class="num">9</span> Make questions and short answers</h3>
+    <ol class="items">
+      <li>you / from Poland → <input class="blank wide" data-a="are you from poland">No, <input class="blank" data-a="i'm not|i am not">.</li>
+      <li>she / a nurse → <input class="blank wide" data-a="is she a nurse">Yes, <input class="blank" data-a="she is">.</li>
+      <li>they / at school → <input class="blank wide" data-a="are they at school">Yes, <input class="blank" data-a="they are">.</li>
+      <li>it / expensive → <input class="blank wide" data-a="is it expensive">No, <input class="blank" data-a="it isn't|it is not|it's not">.</li>
+      <li>I / late → <input class="blank wide" data-a="am i late">No, <input class="blank" data-a="you aren't|you are not|you're not">.</li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T10 -->
+  <div class="task" data-task data-selfcheck>
+    <h3><span class="num">10</span> Find the mistake and correct it</h3>
+    <p class="hint">Пиши правильний варіант, потім тисни «Показати відповіді»</p>
+    <ol class="items">
+      <li>I amn't tired. <input class="blank wide" data-free></li>
+      <li>My sister aren't at home. <input class="blank wide" data-free></li>
+      <li>The children isn't in the park. <input class="blank wide" data-free></li>
+      <li>We not are hungry. <input class="blank wide" data-free></li>
+      <li>You isn't my teacher. <input class="blank wide" data-free></li>
+      <li>Where you are from? <input class="blank wide" data-free></li>
+      <li>My homework aren't difficult. <input class="blank wide" data-free></li>
+      <li>Is she your sister? — Yes, she's. <input class="blank wide" data-free></li>
+    </ol>
+    <div class="key">
+      <p>Answers</p>
+      <ol>
+        <li>I'm <b>not</b> tired.</li>
+        <li>My sister <b>isn't</b> at home.</li>
+        <li>The children <b>aren't</b> in the park.</li>
+        <li>We <b>aren't</b> hungry.</li>
+        <li>You <b>aren't</b> my teacher.</li>
+        <li><b>Where are you</b> from?</li>
+        <li>My homework <b>isn't</b> difficult.</li>
+        <li>Yes, <b>she is</b>. <span style="color:var(--ink-soft)">(у коротких відповідях немає скорочень)</span></li>
+      </ol>
+    </div>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T11 -->
+  <div class="task" data-task>
+    <h3><span class="num">11</span> Choose the correct word</h3>
+    <ol class="items">
+      <li><span class="pick" data-a="I"><button>I</button><button>My</button></span> am from Kyiv. <span class="pick" data-a="My"><button>My</button><button>I</button></span> name is Arina.</li>
+      <li><span class="pick" data-a="He"><button>He</button><button>His</button></span> is Peter. <span class="pick" data-a="His"><button>He</button><button>His</button></span> bike is black.</li>
+      <li><span class="pick" data-a="We"><button>We</button><button>Our</button></span> are friends. <span class="pick" data-a="Our"><button>We</button><button>Our</button></span> team is strong.</li>
+      <li><span class="pick" data-a="Their"><button>They</button><button>Their</button></span> school is old.</li>
+      <li><span class="pick" data-a="She"><button>She</button><button>Her</button></span> is a doctor. <span class="pick" data-a="Her"><button>She</button><button>Her</button></span> office is big.</li>
+      <li><span class="pick" data-a="It"><button>It</button><button>Its</button></span> is a cat. <span class="pick" data-a="Its"><button>It</button><button>Its</button></span> name is Rex.</li>
+      <li>What's <span class="pick" data-a="your"><button>you</button><button>your</button></span> phone number?</li>
+      <li><span class="pick" data-a="It's"><button>It's</button><button>Its</button></span> cold today.</li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T12 -->
+  <div class="task" data-task>
+    <h3><span class="num">12</span> Rewrite with 's / s' — or keep <i>of</i>!</h3>
+    <p class="hint">Увага: 2 речення залишаються з <i>of</i></p>
+    <ol class="items">
+      <li>the son of Mr Smith <input class="blank wide" data-a="mr smith's son|mr smiths son"></li>
+      <li>the toys of the children <input class="blank wide" data-a="the children's toys|children's toys"></li>
+      <li>the house of my parents <input class="blank wide" data-a="my parents' house"></li>
+      <li>the name of the film <input class="blank wide" data-a="the name of the film"></li>
+      <li>the car of Ross <input class="blank wide" data-a="ross's car|ross' car"></li>
+      <li>the books of the students <input class="blank wide" data-a="the students' books|students' books"></li>
+      <li>the end of the street <input class="blank wide" data-a="the end of the street"></li>
+      <li>the lesson of today <input class="blank wide" data-a="today's lesson"></li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T13 -->
+  <div class="task" data-task>
+    <h3><span class="num">13</span> Choose the correct answer</h3>
+    <ol class="items">
+      <li>I have one sister. My … name is Olena. <span class="pick" data-a="sister's"><button>sister's</button><button>sisters'</button></span></li>
+      <li>My two brothers have one bike. My … bike is broken. <span class="pick" data-a="brothers'"><button>brother's</button><button>brothers'</button></span></li>
+      <li>All the children are outside. The … toys are on the floor. <span class="pick" data-a="children's"><button>children's</button><button>childrens'</button></span></li>
+      <li>We have three cats. The … bowls are empty. <span class="pick" data-a="cats'"><button>cat's</button><button>cats'</button></span></li>
+      <li>My grandmother lives in a village. My … garden is beautiful. <span class="pick" data-a="grandmother's"><button>grandmother's</button><button>grandmothers'</button></span></li>
+      <li>All the teachers use one room. The … room is on the first floor. <span class="pick" data-a="teachers'"><button>teacher's</button><button>teachers'</button></span></li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+
+  <!-- T14 -->
+  <div class="task" data-task>
+    <h3><span class="num">14</span> Put the words in the correct order</h3>
+    <ol class="items">
+      <li>am / I / tired / this morning <input class="blank wide" data-a="i am tired this morning|i'm tired this morning"></li>
+      <li>a / He / good / boy / is <input class="blank wide" data-a="he is a good boy|he's a good boy"></li>
+      <li>at / We / school / are / today <input class="blank wide" data-a="we are at school today|we're at school today"></li>
+      <li>She / from / is / Canada <input class="blank wide" data-a="she is from canada|she's from canada"></li>
+      <li>not / They / ready / are <input class="blank wide" data-a="they are not ready|they aren't ready|they're not ready"></li>
+      <li>is / your / mother / a / nurse / ? <input class="blank wide" data-a="is your mother a nurse"></li>
+      <li>old / how / you / are / ? <input class="blank wide" data-a="how old are you"></li>
+      <li>is / not / his / Tom / name <input class="blank wide" data-a="his name is not tom|his name isn't tom|his name's not tom"></li>
+    </ol>
+    <div class="actions"></div>
+  </div>
+</section>
+
+<!-- ================= MIXED ================= -->
+<section class="stop" style="--line:var(--gold)">
+  <h2>Mixed</h2>
+  <p class="sub">Everything together</p>
+
+  <div class="task" data-task>
+    <h3><span class="num">15</span> Complete the text about Nina</h3>
+    <p class="text-gap">
+      Hello! <input class="blank" data-a="my"> name's Nina and I <input class="blank" data-a="am|'m"> from Odesa.
+      I <input class="blank" data-a="am|'m"> a photographer. My home <input class="blank" data-a="isn't|is not|'s not"> a flat —
+      it <input class="blank" data-a="is|'s"> an old blue boat! <input class="blank" data-a="its"> name is Vira.
+      I have a dog. <input class="blank" data-a="his"> name's Biscuit and he <input class="blank" data-a="is|'s"> crazy about the sea.
+      My parents <input class="blank" data-a="are|'re"> Taras and Olena. My <input class="blank" data-a="father's"> job is very interesting —
+      he <input class="blank" data-a="is|'s"> a doctor. My mother <input class="blank" data-a="is|'s"> a music teacher.
+      My brother <input class="blank" data-a="is|'s"> 17 and he <input class="blank" data-a="is|'s"> at school.
+      My brother and his friend <input class="blank" data-a="are|'re"> crazy about football.
+    </p>
+    <div class="actions"></div>
+  </div>
+
+  <div class="speak">
+    <p>Now about you</p>
+    <ul>
+      <li>What's your name? Where are you from?</li>
+      <li>What's your job? Who do you live with?</li>
+      <li>What's your favourite place in your city?</li>
+      <li>What's your best friend's name?</li>
+      <li>Is your family big or small? Tell me about your family.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= TRANSLATION ================= -->
+<section class="stop terminus" style="--line:var(--red)">
+  <h2>Final task</h2>
+  <p class="sub">Translate UA → EN</p>
+
+  <div class="task" data-task data-selfcheck>
+    <h3><span class="num">16</span> Переклади речення</h3>
+    <ol class="items">
+      <li>Мене звати Аріна, і я з України. <input class="blank wide" data-free></li>
+      <li>Я не вчителька, я студентка. <input class="blank wide" data-free></li>
+      <li>Мої батьки вдома. <input class="blank wide" data-free></li>
+      <li>Її брат — лікар. <input class="blank wide" data-free></li>
+      <li>Скільки тобі років? <input class="blank wide" data-free></li>
+      <li>Звідки вони? <input class="blank wide" data-free></li>
+      <li>Це не мій телефон. <input class="blank wide" data-free></li>
+      <li>Кімната дітей дуже маленька. <input class="blank wide" data-free></li>
+      <li>Машина моїх батьків стара. <input class="blank wide" data-free></li>
+      <li>Твоя сестра заміжня? <input class="blank wide" data-free></li>
+      <li>Ім'я мого собаки — Біскіт. <input class="blank wide" data-free></li>
+      <li>Лондон дуже дорогий, але дуже цікавий. <input class="blank wide" data-free></li>
+      <li>Хто твій найкращий друг? <input class="blank wide" data-free></li>
+      <li>Ми не втомлені, ми голодні. <input class="blank wide" data-free></li>
+      <li>Це не її сумка — це сумка її сестри. <input class="blank wide" data-free></li>
+    </ol>
+    <div class="key">
+      <p>Answers</p>
+      <ol>
+        <li>My name's Arina and I'm from Ukraine.</li>
+        <li>I'm not a teacher, I'm a student.</li>
+        <li>My parents are at home.</li>
+        <li>Her brother is a doctor.</li>
+        <li>How old are you?</li>
+        <li>Where are they from?</li>
+        <li>This isn't my phone.</li>
+        <li>The children's room is very small.</li>
+        <li>My parents' car is old.</li>
+        <li>Is your sister married?</li>
+        <li>My dog's name is Biscuit.</li>
+        <li>London is very expensive, but very interesting.</li>
+        <li>Who is your best friend?</li>
+        <li>We aren't tired, we're hungry.</li>
+        <li>This isn't her bag — it's her sister's bag.</li>
+      </ol>
+    </div>
+    <div class="actions"></div>
+  </div>
+
+  <footer>Well done! · Revision Units 1–6</footer>
+</section>
+
+</div>
+
+<script>
+(function(){
+  const norm = s => (s||"")
+    .toLowerCase()
+    .replace(/[\u2019\u02BC\u00B4`]/g, "'")
+    .replace(/[.?!,;:—–-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const tasks = document.querySelectorAll('[data-task]');
+
+  tasks.forEach(task => {
+    const bar = task.querySelector('.actions');
+    const selfcheck = task.hasAttribute('data-selfcheck');
+    const gradeables = task.querySelectorAll('[data-a]');
+
+    if (!selfcheck && gradeables.length) {
+      const check = document.createElement('button');
+      check.className = 'btn';
+      check.textContent = 'Перевірити';
+      check.addEventListener('click', () => grade(task, true));
+      bar.appendChild(check);
+    }
+
+    const show = document.createElement('button');
+    show.className = 'btn ghost';
+    show.textContent = 'Показати відповіді';
+    show.addEventListener('click', () => reveal(task));
+    bar.appendChild(show);
+
+    const res = document.createElement('span');
+    res.className = 'result';
+    bar.appendChild(res);
+    task._res = res;
+  });
+
+  // pick buttons
+  document.querySelectorAll('.pick').forEach(group => {
+    group.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', () => {
+        group.querySelectorAll('button').forEach(x => x.classList.remove('sel','good','wrong'));
+        b.classList.add('sel');
+        group.dataset.chosen = b.textContent;
+      });
+    });
+  });
+
+  function grade(task, announce){
+    let right = 0, total = 0;
+
+    task.querySelectorAll('input[data-a], select[data-a]').forEach(el => {
+      total++;
+      el.classList.remove('ok','bad','revealed');
+      const alts = el.dataset.a.split('|').map(norm);
+      const val = norm(el.value);
+      if (val && alts.includes(val)) { el.classList.add('ok'); right++; }
+      else if (val) { el.classList.add('bad'); }
+    });
+
+    task.querySelectorAll('.pick[data-a]').forEach(g => {
+      total++;
+      const chosen = g.dataset.chosen;
+      const btn = [...g.querySelectorAll('button')].find(b => b.textContent === chosen);
+      g.querySelectorAll('button').forEach(b => b.classList.remove('good','wrong'));
+      if (!btn) return;
+      if (norm(chosen) === norm(g.dataset.a)) { btn.classList.add('good'); right++; }
+      else { btn.classList.add('wrong'); }
+    });
+
+    if (announce && task._res) {
+      task._res.textContent = right + ' / ' + total + ' правильно';
+    }
+    updateScore();
+  }
+
+  function reveal(task){
+    task.querySelectorAll('input[data-a], select[data-a]').forEach(el => {
+      if (el.classList.contains('ok')) return;
+      el.value = el.dataset.a.split('|')[0];
+      el.classList.remove('bad');
+      el.classList.add('revealed');
+    });
+    task.querySelectorAll('.pick[data-a]').forEach(g => {
+      const correct = [...g.querySelectorAll('button')].find(b => norm(b.textContent) === norm(g.dataset.a));
+      if (correct) correct.classList.add('show');
+    });
+    const key = task.querySelector('.key');
+    if (key) key.classList.add('open');
+    updateScore();
+  }
+
+  function updateScore(){
+    let right = 0, total = 0;
+    document.querySelectorAll('input[data-a], select[data-a]').forEach(el => {
+      total++; if (el.classList.contains('ok')) right++;
+    });
+    document.querySelectorAll('.pick[data-a]').forEach(g => {
+      total++; if (g.querySelector('button.good')) right++;
+    });
+    document.getElementById('scoreText').textContent = right + ' / ' + total + ' правильних';
+    document.getElementById('scoreFill').style.width = (total ? (right/total*100) : 0) + '%';
+  }
+
+  // live re-check on Enter
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.matches('input.blank')) {
+      const task = e.target.closest('[data-task]');
+      if (task && !task.hasAttribute('data-selfcheck')) grade(task, true);
+    }
+  });
+
+  updateScore();
+})();
+</script>
+</body>
+</html>
