@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skincare English — Revision Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700&family=Onest:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --porcelain:#EAEEEC;
+  --paper:#FFFFFF;
+  --ink:#0F1C19;
+  --jade:#0B5D52;
+  --jade-deep:#07403A;
+  --jade-soft:#D6E5E0;
+  --amber:#D98A2B;
+  --amber-soft:#F7E6CE;
+  --blush:#D2938C;
+  --blush-soft:#F2DFDC;
+  --muted:#647A75;
+  --line:#C6D3CF;
+  --ok:#1B7A5A;
+  --no:#B5453C;
+  --display:'Unbounded','Onest',system-ui,sans-serif;
+  --body:'Onest',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--porcelain);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 22px 120px}
+
+/* ---------- HERO ---------- */
+.hero{padding:64px 0 40px;position:relative}
+.eyebrow{
+  font-family:var(--display);font-weight:500;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--jade);margin-bottom:20px;
+}
+h1{
+  font-family:var(--display);font-weight:700;letter-spacing:-.03em;
+  font-size:clamp(34px,6vw,60px);line-height:1.02;max-width:16ch;
+}
+h1 em{font-style:normal;color:var(--jade);display:block}
+.lede{margin-top:22px;max-width:52ch;color:var(--muted);font-size:18px}
+
+/* ---------- SKIN CROSS-SECTION ---------- */
+.skin-card{
+  margin-top:44px;background:var(--paper);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1.15fr 1fr;
+}
+.skin-svg-holder{padding:22px;border-right:1px solid var(--line)}
+.skin-svg-holder svg{width:100%;height:auto;display:block}
+.layer-band{cursor:pointer;transition:opacity .25s}
+.layer-band:hover{opacity:.85}
+.layer-band.on rect{stroke:var(--ink);stroke-width:2}
+.skin-panel{padding:26px 24px}
+.skin-panel h3{
+  font-family:var(--display);font-weight:500;font-size:15px;letter-spacing:-.01em;margin-bottom:4px;
+}
+.skin-panel .depth-tag{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+  font-weight:600;margin-bottom:14px;display:block;
+}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.chip{
+  background:var(--jade-soft);color:var(--jade-deep);border-radius:99px;
+  padding:6px 13px;font-size:14px;font-weight:500;
+}
+.chip small{display:block;font-size:11px;color:var(--muted);font-weight:400;letter-spacing:.02em}
+.skin-hint{font-size:13px;color:var(--muted);margin-top:18px;font-style:italic}
+
+/* ---------- STAGE SPINE ---------- */
+.stage{position:relative;padding:56px 0 8px;border-top:1px solid var(--line);margin-top:56px}
+.stage-head{display:flex;gap:18px;align-items:baseline;margin-bottom:8px}
+.stage-num{
+  font-family:var(--display);font-weight:300;font-size:13px;color:var(--amber);
+  letter-spacing:.1em;padding-top:6px;flex-shrink:0;
+}
+h2{font-family:var(--display);font-weight:500;font-size:clamp(23px,3.4vw,31px);letter-spacing:-.025em;line-height:1.12}
+h2 span{color:var(--muted);display:block;font-size:14px;font-weight:300;letter-spacing:0;margin-top:7px;font-family:var(--body)}
+.task-note{color:var(--muted);font-size:15px;margin:18px 0 22px;max-width:60ch}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:18px}
+
+/* ---------- SPEAKING ---------- */
+.speak{background:var(--amber-soft);border:1px solid #E7CFA8;border-radius:16px;padding:22px 24px;margin-top:20px}
+.speak-label{
+  font-family:var(--display);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:#8A5A11;font-weight:500;margin-bottom:12px;
+}
+.speak ul{list-style:none}
+.speak li{padding:7px 0 7px 24px;position:relative;font-size:16px}
+.speak li::before{content:"→";position:absolute;left:0;color:var(--amber);font-weight:600}
+
+/* ---------- MATCHING ---------- */
+.match-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:16px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.m-item{
+  border:1px solid var(--line);background:var(--paper);border-radius:10px;
+  padding:11px 14px;cursor:pointer;text-align:left;font-family:var(--body);
+  font-size:15px;color:var(--ink);transition:all .18s;line-height:1.4;
+}
+.m-item:hover:not(.done){border-color:var(--jade);background:#F4F9F7}
+.m-item.sel{border-color:var(--jade);background:var(--jade-soft);box-shadow:0 0 0 2px var(--jade-soft)}
+.m-item.done{background:#EAF5F0;border-color:#A9D4C2;color:var(--ok);cursor:default;opacity:.7}
+.m-item.wrong{border-color:var(--no);background:#FBECEB;animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.m-item.left{font-weight:600}
+
+/* ---------- GAP / INPUTS ---------- */
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;padding:16px;background:var(--jade-soft);border-radius:12px}
+.bank span{background:var(--paper);border-radius:7px;padding:5px 11px;font-size:14.5px;font-weight:500;border:1px solid #BCD5CD}
+.bank-title{width:100%;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--jade);font-weight:600;margin-bottom:4px;font-family:var(--display)}
+.gap{
+  border:none;border-bottom:2px solid var(--jade);background:transparent;
+  font-family:var(--body);font-size:16px;font-weight:600;color:var(--jade-deep);
+  width:130px;padding:2px 4px;text-align:center;outline:none;
+}
+.gap:focus{background:var(--jade-soft);border-radius:4px 4px 0 0}
+.gap.ok{color:var(--ok);border-color:var(--ok)}
+.gap.no{color:var(--no);border-color:var(--no)}
+.gap.wide{width:165px}
+
+.line{padding:11px 0;border-bottom:1px dashed var(--line);font-size:16.5px}
+.line:last-child{border-bottom:none}
+.line b{color:var(--jade)}
+
+/* dialogue */
+.turn{display:grid;grid-template-columns:92px 1fr;gap:16px;padding:12px 0;align-items:start}
+.who{
+  font-family:var(--display);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:500;padding-top:5px;
+}
+.who.c{color:var(--jade)}
+.who.p{color:var(--blush)}
+.turn p{font-size:16.5px}
+.turn strong{color:var(--jade-deep);font-weight:600}
+
+/* ---------- MCQ ---------- */
+.q{padding:16px 0;border-bottom:1px dashed var(--line)}
+.q:last-child{border-bottom:none}
+.q-text{font-size:16.5px;margin-bottom:10px}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{
+  border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:6px 16px;
+  font-family:var(--body);font-size:15px;cursor:pointer;transition:all .16s;color:var(--ink);
+}
+.opt:hover:not(:disabled){border-color:var(--jade);background:#F4F9F7}
+.opt.ok{background:#DEF0E7;border-color:var(--ok);color:var(--ok);font-weight:600}
+.opt.no{background:#FBECEB;border-color:var(--no);color:var(--no);text-decoration:line-through}
+.opt:disabled{cursor:default}
+
+/* ---------- SORTER ---------- */
+.sort-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;min-height:44px}
+.tok{
+  background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:7px 15px;
+  font-size:15px;cursor:pointer;font-family:var(--body);transition:all .16s;
+}
+.tok:hover{border-color:var(--jade);transform:translateY(-1px)}
+.tok.sel{background:var(--jade);color:#fff;border-color:var(--jade)}
+.buckets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.bucket{border:1.5px dashed var(--line);border-radius:14px;padding:14px;min-height:150px;cursor:pointer;transition:all .18s}
+.bucket:hover{border-color:var(--jade);background:#F4F9F7}
+.bucket h4{font-family:var(--display);font-size:12px;font-weight:500;letter-spacing:-.01em;margin-bottom:10px;line-height:1.3}
+.bucket .drop{display:flex;flex-wrap:wrap;gap:6px}
+.drop .tok{font-size:13.5px;padding:5px 11px;cursor:default}
+.drop .tok.ok{background:#DEF0E7;border-color:#A9D4C2;color:var(--ok)}
+.drop .tok.no{background:#FBECEB;border-color:#E4B4B0;color:var(--no)}
+
+/* ---------- TRANSLATION ---------- */
+.tr{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px}
+.tr-ua{font-size:16.5px;display:flex;gap:12px;align-items:flex-start}
+.tr-n{font-family:var(--display);font-size:11px;color:var(--amber);font-weight:500;padding-top:5px;flex-shrink:0;width:22px}
+.tr-en{
+  display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);
+  color:var(--jade-deep);font-size:16.5px;font-weight:500;padding-left:34px;
+}
+.tr.open .tr-en{display:block}
+.tr-en em{font-style:normal;background:var(--jade-soft);border-radius:4px;padding:1px 4px}
+.tr-btn{
+  margin-left:auto;flex-shrink:0;border:1px solid var(--line);background:transparent;border-radius:99px;
+  padding:4px 13px;font-size:12.5px;font-family:var(--body);cursor:pointer;color:var(--muted);transition:all .16s;
+}
+.tr-btn:hover{border-color:var(--jade);color:var(--jade)}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  background:var(--jade);color:#fff;border:none;border-radius:99px;padding:11px 26px;
+  font-family:var(--body);font-size:15px;font-weight:600;cursor:pointer;transition:all .18s;
+}
+.btn:hover{background:var(--jade-deep);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--jade);border:1.5px solid var(--jade)}
+.btn.ghost:hover{background:var(--jade-soft);color:var(--jade-deep)}
+.row{display:flex;gap:10px;align-items:center;margin-top:22px;flex-wrap:wrap}
+.score{font-size:15px;font-weight:600;color:var(--muted)}
+.score.good{color:var(--ok)}
+
+/* ---------- CHECKLIST ---------- */
+.checklist{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.checklist span{font-size:13px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:4px 9px;color:var(--muted)}
+
+footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+
+@media(max-width:760px){
+  body{font-size:16px}
+  .skin-card{grid-template-columns:1fr}
+  .skin-svg-holder{border-right:none;border-bottom:1px solid var(--line)}
+  .match-grid{grid-template-columns:1fr}
+  .buckets{grid-template-columns:1fr}
+  .turn{grid-template-columns:1fr;gap:2px}
+  .gap{width:110px}
+  .tr-en{padding-left:0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="eyebrow">English for cosmetologists · Revision</div>
+  <h1>From cleanse<em>to glow.</em></h1>
+  <p class="lede">Повторюємо всю лексику процедури — від першого дотику до фінальної сироватки. Ти проходиш урок так само, як ведеш клієнта через догляд: етап за етапом.</p>
+
+  <div class="skin-card">
+    <div class="skin-svg-holder">
+      <svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Схема шарів шкіри">
+        <!-- surface -->
+        <g class="layer-band on" data-layer="0">
+          <rect x="16" y="16" width="388" height="52" rx="8" fill="#F2DFDC"/>
+          <text x="30" y="40" font-family="Onest,sans-serif" font-size="13" font-weight="600" fill="#8A4B44">On the surface</text>
+          <text x="30" y="57" font-family="Onest,sans-serif" font-size="11" fill="#A5716B">makeup · oil · dirt</text>
+          <circle cx="330" cy="42" r="4" fill="#8A4B44"/><circle cx="348" cy="36" r="3" fill="#8A4B44"/><circle cx="360" cy="49" r="3.5" fill="#8A4B44"/>
+        </g>
+        <!-- outer layer -->
+        <g class="layer-band" data-layer="1">
+          <rect x="16" y="76" width="388" height="52" rx="8" fill="#F7E6CE"/>
+          <text x="30" y="100" font-family="Onest,sans-serif" font-size="13" font-weight="600" fill="#8A5A11">Outer layer of skin</text>
+          <text x="30" y="117" font-family="Onest,sans-serif" font-size="11" fill="#A87F3E">stratum corneum</text>
+          <path d="M320 96 q8 -7 16 0 q8 7 16 0 q8 -7 16 0" stroke="#8A5A11" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M320 110 q8 -7 16 0 q8 7 16 0 q8 -7 16 0" stroke="#8A5A11" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
+        </g>
+        <!-- pores -->
+        <g class="layer-band" data-layer="2">
+          <rect x="16" y="136" width="388" height="60" rx="8" fill="#D6E5E0"/>
+          <text x="30" y="161" font-family="Onest,sans-serif" font-size="13" font-weight="600" fill="#07403A">Inside the pores</text>
+          <text x="30" y="178" font-family="Onest,sans-serif" font-size="11" fill="#4A7A70">sebum · debris</text>
+          <ellipse cx="326" cy="166" rx="7" ry="15" fill="#07403A" opacity=".28"/>
+          <ellipse cx="352" cy="166" rx="7" ry="15" fill="#07403A" opacity=".5"/>
+          <ellipse cx="378" cy="166" rx="7" ry="15" fill="#07403A" opacity=".8"/>
+        </g>
+        <!-- deep -->
+        <g class="layer-band" data-layer="3">
+          <rect x="16" y="204" width="388" height="80" rx="8" fill="#0B5D52"/>
+          <text x="30" y="230" font-family="Onest,sans-serif" font-size="13" font-weight="600" fill="#EAEEEC">Deep down</text>
+          <text x="30" y="247" font-family="Onest,sans-serif" font-size="11" fill="#9EC4BC">collagen · muscle · blood flow</text>
+          <path d="M300 265 q14 -18 28 0 q14 18 28 0 q14 -18 28 0" stroke="#D98A2B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M300 238 q14 -14 28 0 q14 14 28 0 q14 -14 28 0" stroke="#9EC4BC" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        </g>
+      </svg>
+    </div>
+    <div class="skin-panel">
+      <h3 id="layerName">On the surface</h3>
+      <span class="depth-tag" id="layerDepth">Superficial</span>
+      <p id="layerDesc" style="font-size:15px;color:var(--muted)">Усе, що лежить зверху й змивається першим кроком.</p>
+      <div class="chips" id="layerChips"></div>
+      <p class="skin-hint">Натисни на шар, щоб побачити слова, які «живуть» на цій глибині.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 01 WARM-UP ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">01</div>
+    <h2>Warm-up: the consultation<span>Перше, що ти питаєш у клієнта — англійською</span></h2>
+  </div>
+  <p class="task-note">Дай повні відповіді. Постарайся вжити щонайменше по два слова з теми в кожній відповіді.</p>
+  <div class="speak">
+    <div class="speak-label">Speaking</div>
+    <ul>
+      <li>What are the most common <b>skin concerns</b> your clients come to you with?</li>
+      <li>Describe a basic <b>facial</b> step by step. How long does it take?</li>
+      <li>Which is worse for the skin: never exfoliating, or exfoliating every day? Why?</li>
+      <li>A client says: “My skin always <b>flakes</b> in winter.” What do you recommend?</li>
+      <li>Which treatment in your salon has the longest <b>downtime</b>? Why do clients still choose it?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 02 MATCHING ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">02</div>
+    <h2>Cleanse &amp; extract<span>Частина 1 — очищення, розпарювання, чистка</span></h2>
+  </div>
+  <p class="task-note">Task 1. З'єднай слово з поясненням. Спочатку натисни слово ліворуч, потім — переклад праворуч.</p>
+  <div class="card">
+    <div class="match-grid">
+      <div class="match-col" id="mLeft"></div>
+      <div class="match-col" id="mRight"></div>
+    </div>
+    <div class="row"><span class="score" id="mScore">0 / 10</span></div>
+  </div>
+</section>
+
+<!-- ================= 03 CLIENT COMPLAINTS ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">03</div>
+    <h2>What the client says<span>Task 2 — скарги клієнта</span></h2>
+  </div>
+  <p class="task-note">Заповни пропуски словами з банку. Одне слово — один пропуск.</p>
+  <div class="card">
+    <div class="bank">
+      <div class="bank-title">Word bank</div>
+      <span>breakouts</span><span>blackheads</span><span>clogged pores</span><span>impurities</span>
+      <span>debris</span><span>flakes</span><span>fine lines</span><span>complexion</span>
+      <span>dead skin cells</span><span>pores</span>
+    </div>
+    <div id="complaints">
+      <div class="line">1. “I get a lot of small red spots on my chin before my period.” → She's talking about <input class="gap" data-a="breakouts"></div>
+      <div class="line">2. “My nose is covered in tiny black dots.” → Those are <input class="gap" data-a="blackheads"></div>
+      <div class="line">3. “My skin looks grey and tired, especially in the morning.” → Her <input class="gap" data-a="complexion"> is dull.</div>
+      <div class="line">4. “The skin around my eyes has little wrinkles when I smile.” → Those are <input class="gap wide" data-a="fine lines">.</div>
+      <div class="line">5. “My cheeks are dry and the skin comes off in little pieces.” → Her skin <input class="gap" data-a="flakes|flake">.</div>
+      <div class="line">6. “My <input class="gap" data-a="pores"> look huge on my cheeks.” → Very common in oily skin.</div>
+      <div class="line">7. Oil, dirt and <input class="gap wide" data-a="dead skin cells"> build up inside the pore.</div>
+      <div class="line">8. All that build-up is called <input class="gap" data-a="debris"> — залишки на шкірі й у порі.</div>
+      <div class="line">9. When the pore is completely blocked, we call them <input class="gap wide" data-a="clogged pores">.</div>
+      <div class="line">10. A good cleanser removes make-up and <input class="gap" data-a="impurities"> from the skin.</div>
+    </div>
+    <div class="row">
+      <button class="btn" data-check="complaints">Перевірити</button>
+      <button class="btn ghost" data-reveal="complaints">Показати відповіді</button>
+      <span class="score" id="s-complaints"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 COLLOCATIONS ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">04</div>
+    <h2>Say it like a pro<span>Task 3 — сталі словосполучення</span></h2>
+  </div>
+  <p class="task-note">Обери правильне слово. Це саме ті фрази, які ти говориш клієнту вголос — вивчи їх цілими блоками, не по одному слову.</p>
+  <div class="card" id="mcq"></div>
+</section>
+
+<!-- ================= 05 SORTER ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">05</div>
+    <h2>Problem → action → result<span>Task 4 — сортування</span></h2>
+  </div>
+  <p class="task-note">Натисни слово, потім — колонку, куди воно належить. Проблема клієнта, твоя дія чи результат після догляду?</p>
+  <div class="card">
+    <div class="sort-pool" id="pool"></div>
+    <div class="buckets">
+      <div class="bucket" data-b="0"><h4>The client's problem</h4><div class="drop"></div></div>
+      <div class="bucket" data-b="1"><h4>What you do</h4><div class="drop"></div></div>
+      <div class="bucket" data-b="2"><h4>The result</h4><div class="drop"></div></div>
+    </div>
+    <div class="row"><span class="score" id="sortScore">0 / 15</span><button class="btn ghost" id="sortReset">Почати спочатку</button></div>
+  </div>
+</section>
+
+<!-- ================= 06 SENSATIONS ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">06</div>
+    <h2>How does it feel?<span>Частина 2 — відчуття клієнта під час процедури</span></h2>
+  </div>
+  <p class="task-note">Task 5. Клієнт нервує. Обери відчуття, яке ти опишеш, і заспокой його однією фразою.</p>
+  <div class="card">
+    <div class="line">1. The acid solution is on the skin. → “You may feel a little <input class="gap" data-a="tingling"> — це нормально.” <i style="color:var(--muted);font-size:14px">(поколювання)</i></div>
+    <div class="line">2. It's a bit stronger than expected. → “Does it <input class="gap" data-a="sting"> a lot? Tell me if it's too much.” <i style="color:var(--muted);font-size:14px">(пекти, щипати)</i></div>
+    <div class="line">3. The microcurrent device is on. → “You'll hear a soft <input class="gap" data-a="buzzing">, don't worry.” <i style="color:var(--muted);font-size:14px">(гудіння)</i></div>
+    <div class="line">4. You're doing extractions. → “You'll feel some <input class="gap" data-a="pressure">, but it shouldn't hurt.” <i style="color:var(--muted);font-size:14px">(тиск)</i></div>
+    <div class="line">5. I always work very <input class="gap" data-a="gently"> around the eye area. <i style="color:var(--muted);font-size:14px">(м'яко)</i></div>
+    <div class="line">6. The peel can be <input class="gap wide" data-a="superficial">, medium or <input class="gap" data-a="deep"> — yours today is the lightest one.</div>
+    <div class="row">
+      <button class="btn" data-check="sens">Перевірити</button>
+      <button class="btn ghost" data-reveal="sens">Показати відповіді</button>
+      <span class="score" id="s-sens"></span>
+    </div>
+  </div>
+  <div class="speak">
+    <div class="speak-label">Speaking · reassure the client</div>
+    <ul>
+      <li>Клієнтка каже: “It stings! Is that normal?” — заспокой її трьома реченнями.</li>
+      <li>Поясни різницю між <b>superficial</b>, <b>medium</b> and <b>deep</b> peels — і кому який підходить.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 07 DIALOGUE ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">07</div>
+    <h2>The full appointment<span>Task 6 — діалог із клієнткою</span></h2>
+  </div>
+  <p class="task-note">Змішана лексика з обох частин. Заповни пропуски — банку слів немає, згадуй сама.</p>
+  <div class="card" id="dialogue">
+    <div class="turn"><div class="who c">Therapist</div><p>Hi Anna, come in. So, what are your main skin <input class="gap" data-a="concerns">?</p></div>
+    <div class="turn"><div class="who p">Client</div><p>My T-zone is really oily and I keep getting <input class="gap" data-a="breakouts">. And I have so many <input class="gap" data-a="blackheads"> on my nose.</p></div>
+    <div class="turn"><div class="who c">Therapist</div><p>Let me have a look. Yes, I can see quite a few <input class="gap wide" data-a="clogged pores">. First I'll <input class="gap" data-a="cleanse"> your skin to <input class="gap" data-a="remove"> make-up and <input class="gap" data-a="impurities">.</p></div>
+    <div class="turn"><div class="who p">Client</div><p>And then?</p></div>
+    <div class="turn"><div class="who c">Therapist</div><p>Then I'll <input class="gap" data-a="steam"> your face for ten minutes to open up the <input class="gap" data-a="pores">. That makes the <input class="gap" data-a="extraction"> much easier — I'll gently <input class="gap" data-a="lift"> the debris out of each pore.</p></div>
+    <div class="turn"><div class="who p">Client</div><p>Will it hurt?</p></div>
+    <div class="turn"><div class="who c">Therapist</div><p>You'll feel some <input class="gap" data-a="pressure">, but no. After that I'll apply an <input class="gap wide" data-a="acid solution"> — a light peel. It will <input class="gap" data-a="buff"> away <input class="gap wide" data-a="dead skin cells"> from the <input class="gap" data-a="outer"> layer of skin, so your skin feels <input class="gap" data-a="smooth"> straight away.</p></div>
+    <div class="turn"><div class="who p">Client</div><p>How long is the <input class="gap" data-a="downtime">?</p></div>
+    <div class="turn"><div class="who c">Therapist</div><p>Minimal. Your skin might <input class="gap" data-a="flake"> a little tomorrow — don't exfoliate at home for a week. At the end I'll <input class="gap" data-a="tone"> your skin and apply a <input class="gap" data-a="serum"> that <input class="gap" data-a="nourishes"> it deeply.</p></div>
+    <div class="turn"><div class="who p">Client</div><p>What about that machine over there?</p></div>
+    <div class="turn"><div class="who c">Therapist</div><p>That one uses <input class="gap wide" data-a="low-level"> currents to work the facial <input class="gap" data-a="muscles">. You'll hear a soft buzzing. It <input class="gap" data-a="stimulates"> <input class="gap" data-a="circulation"> and helps <input class="gap" data-a="boost"> collagen.</p></div>
+    <div class="turn"><div class="who p">Client</div><p>Will I see a difference today?</p></div>
+    <div class="turn"><div class="who c">Therapist</div><p>You'll walk out with a beautiful <input class="gap" data-a="glow"> and a <input class="gap" data-a="brighter"> complexion. But to really <input class="gap" data-a="tighten"> the skin and soften those <input class="gap wide" data-a="fine lines">, you need a course — collagen builds up <input class="gap wide" data-a="over time">.</p></div>
+    <div class="row">
+      <button class="btn" data-check="dialogue">Перевірити</button>
+      <button class="btn ghost" data-reveal="dialogue">Показати відповіді</button>
+      <span class="score" id="s-dialogue"></span>
+    </div>
+  </div>
+  <div class="speak">
+    <div class="speak-label">Role-play · you are the therapist</div>
+    <ul>
+      <li><b>Client A</b> — 24, oily skin, blackheads, wants a quick result before a wedding on Saturday.</li>
+      <li><b>Client B</b> — 45, dry skin, fine lines, afraid of anything that stings. Sell her a treatment that boosts collagen.</li>
+      <li><b>Client C</b> — asks: “Can I just do a deep peel and fix everything at once?” Explain why not.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= 08 TRANSLATION ================= -->
+<section class="stage">
+  <div class="stage-head">
+    <div class="stage-num">08</div>
+    <h2>Translate it<span>Фінальне завдання — 18 речень, уся лексика уроку</span></h2>
+  </div>
+  <p class="task-note">Перекладай уголос, потім відкривай відповідь. Кожне слово з уроку зустрічається тут щонайменше один раз.</p>
+  <div id="trList"></div>
+  <div class="row"><button class="btn ghost" id="trAll">Показати всі відповіді</button></div>
+
+  <div class="card" style="margin-top:26px">
+    <div style="font-family:var(--display);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--jade);font-weight:500">Усе, що ти повторила сьогодні</div>
+    <div class="checklist" id="checklist"></div>
+  </div>
+</section>
+
+<footer>Skincare English · revision lesson · вимовляй нові слова вголос принаймні тричі, перш ніж закрити урок.</footer>
+</div>
+
+<script>
+/* ---------- HERO LAYERS ---------- */
+const LAYERS=[
+ {name:"On the surface",depth:"Superficial",desc:"Усе, що лежить зверху й змивається на першому кроці.",
+  words:[["cleanse","очищати"],["impurities","забруднення"],["debris","залишки себуму й бруду"],["remove","видаляти"],["lift the dirt out of","витягнути бруд із"]]},
+ {name:"Outer layer of skin",depth:"Superficial",desc:"Зовнішній шар — тут працює ексфоліація.",
+  words:[["dead skin cells","відмерлі клітини"],["exfoliation","відлущування"],["buff away","м'яко зняти тертям"],["flake","лущитися"],["acid solution","кислотний розчин"],["smooth","гладкий"]]},
+ {name:"Inside the pores",depth:"Medium",desc:"Пора, себум і все, що в ній застрягло.",
+  words:[["pores","пори"],["clogged pores","закупорені пори"],["blackheads","чорні цятки"],["breakouts","висипання"],["extraction","механічне чищення"],["steam","розпарювати"],["clear out","очистити від"],["lift out","витягнути"]]},
+ {name:"Deep down",depth:"Deep",desc:"Колаген, м'язи та кровообіг — сюди працюють апаратні методики.",
+  words:[["boost collagen","стимулювати колаген"],["facial muscles","м'язи обличчя"],["circulation","кровообіг"],["low-level currents","слабкі імпульси"],["tighten","підтягувати"],["keep the skin firm","підтримувати пружність"],["fine lines","мімічні зморшки"]]}
+];
+const bands=document.querySelectorAll('.layer-band');
+function showLayer(i){
+  bands.forEach(b=>b.classList.toggle('on',+b.dataset.layer===i));
+  const L=LAYERS[i];
+  document.getElementById('layerName').textContent=L.name;
+  document.getElementById('layerDepth').textContent=L.depth;
+  document.getElementById('layerDesc').textContent=L.desc;
+  document.getElementById('layerChips').innerHTML=L.words.map(w=>`<span class="chip">${w[0]}<small>${w[1]}</small></span>`).join('');
+}
+bands.forEach(b=>b.addEventListener('click',()=>showLayer(+b.dataset.layer)));
+showLayer(0);
+
+/* ---------- MATCHING ---------- */
+const PAIRS=[
+ ["cleanse","очищати шкіру"],
+ ["steam","розпарювати обличчя перед чисткою"],
+ ["extraction","механічне чищення пор, видалення комедонів"],
+ ["debris","залишки себуму, відмерлих клітин і бруду"],
+ ["impurities","усе, що накопичується на шкірі та в порах"],
+ ["clogged pores","закупорені пори"],
+ ["blackheads","чорні цятки"],
+ ["breakouts","висипання"],
+ ["absorb","поглинати"],
+ ["downtime","період відновлення після процедури"]
+];
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+let mSel=null,mDone=0;
+function buildMatch(){
+  const L=document.getElementById('mLeft'),R=document.getElementById('mRight');
+  L.innerHTML='';R.innerHTML='';
+  shuffle(PAIRS.map((p,i)=>i)).forEach(i=>{
+    const b=document.createElement('button');
+    b.className='m-item left';b.dataset.i=i;b.textContent=PAIRS[i][0];
+    b.onclick=()=>{if(b.classList.contains('done'))return;
+      document.querySelectorAll('.m-item.left').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');mSel=b;};
+    L.appendChild(b);
+  });
+  shuffle(PAIRS.map((p,i)=>i)).forEach(i=>{
+    const b=document.createElement('button');
+    b.className='m-item';b.dataset.i=i;b.textContent=PAIRS[i][1];
+    b.onclick=()=>{
+      if(!mSel||b.classList.contains('done'))return;
+      if(mSel.dataset.i===b.dataset.i){
+        mSel.classList.remove('sel');mSel.classList.add('done');b.classList.add('done');
+        mSel=null;mDone++;
+        const s=document.getElementById('mScore');
+        s.textContent=mDone+' / '+PAIRS.length;
+        if(mDone===PAIRS.length){s.textContent='Готово — 10 / 10 ✓';s.classList.add('good');}
+      }else{
+        b.classList.add('wrong');setTimeout(()=>b.classList.remove('wrong'),350);
+      }
+    };
+    R.appendChild(b);
+  });
+}
+buildMatch();
+
+/* ---------- MCQ ---------- */
+const MCQ=[
+ ["This scrub gently ___ away dead skin cells.",["buffs","lifts","tones"],0,"buff away — зняти тертям, відполірувати"],
+ ["I'll gently ___ out the blackhead.",["lift","buff","steam"],0,"lift sth out — акуратно витягнути вміст пори"],
+ ["This treatment helps ___ collagen production.",["boost","clear","tone"],0,"boost collagen — стимулювати вироблення колагену"],
+ ["Our products ___ specific skin concerns.",["target","deliver","absorb"],0,"target skin concerns — працювати з конкретними проблемами"],
+ ["This mask helps ___ out clogged pores.",["clear","flake","stimulate"],0,"clear sth out — очистити від вмісту"],
+ ["This device ___ active ingredients into the skin.",["delivers","removes","buffs"],0,"deliver sth into — вводити компоненти в шкіру"],
+ ["Collagen helps keep the skin ___.",["firm","smooth","youthful"],0,"keep the skin firm — сталий вираз про пружність"],
+ ["After cleansing I'll ___ your skin.",["tone","flake","sting"],0,"to tone — використати тонік"],
+ ["Exfoliation removes dead cells from the ___ layer of skin.",["outer","deep","medium"],0,"the outer layer of skin — зовнішній шар"],
+ ["The CO2 treatment ___ circulation and gives the skin a glow.",["stimulates","absorbs","targets"],0,"stimulate circulation — стимулювати кровообіг"],
+ ["This serum ___ the skin and helps maintain hydration.",["nourishes","stings","flakes"],0,"nourish — живити"],
+ ["Fine lines become softer ___.",["over time","on time","in a time"],0,"over time — з часом, поступово"]
+];
+const mcqBox=document.getElementById('mcq');
+MCQ.forEach((q,qi)=>{
+  const d=document.createElement('div');d.className='q';
+  d.innerHTML=`<div class="q-text">${qi+1}. ${q[0]}</div>`;
+  const o=document.createElement('div');o.className='opts';
+  const order=shuffle(q[1].map((t,i)=>i));
+  order.forEach(i=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=q[1][i];
+    b.onclick=()=>{
+      o.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      if(i===q[2]){b.classList.add('ok');}
+      else{b.classList.add('no');[...o.children].find(x=>x.textContent===q[1][q[2]]).classList.add('ok');}
+      const n=document.createElement('div');
+      n.style.cssText='font-size:13.5px;color:var(--muted);margin-top:9px';
+      n.textContent='→ '+q[3];d.appendChild(n);
+    };
+    o.appendChild(b);
+  });
+  d.appendChild(o);mcqBox.appendChild(d);
+});
+
+/* ---------- SORTER ---------- */
+const SORT=[
+ ["clogged pores",0],["blackheads",0],["breakouts",0],["fine lines",0],["flaky skin",0],
+ ["cleanse",1],["steam",1],["exfoliate",1],["tone",1],["apply a serum",1],
+ ["glow",2],["smooth skin",2],["youthful",2],["brighter complexion",2],["firm skin",2]
+];
+let tokSel=null,sortDone=0;
+function buildSort(){
+  const pool=document.getElementById('pool');
+  pool.innerHTML='';sortDone=0;tokSel=null;
+  document.querySelectorAll('.bucket .drop').forEach(d=>d.innerHTML='');
+  document.getElementById('sortScore').textContent='0 / 15';
+  document.getElementById('sortScore').classList.remove('good');
+  shuffle(SORT.map((s,i)=>i)).forEach(i=>{
+    const t=document.createElement('button');
+    t.className='tok';t.textContent=SORT[i][0];t.dataset.b=SORT[i][1];
+    t.onclick=()=>{document.querySelectorAll('#pool .tok').forEach(x=>x.classList.remove('sel'));
+      t.classList.add('sel');tokSel=t;};
+    pool.appendChild(t);
+  });
+}
+document.querySelectorAll('.bucket').forEach(b=>{
+  b.addEventListener('click',()=>{
+    if(!tokSel)return;
+    const right=tokSel.dataset.b===b.dataset.b;
+    const t=tokSel;t.classList.remove('sel');
+    t.classList.add(right?'ok':'no');t.onclick=null;
+    b.querySelector('.drop').appendChild(t);
+    tokSel=null;
+    if(right)sortDone++;
+    const s=document.getElementById('sortScore');
+    s.textContent=sortDone+' / 15';
+    if(sortDone===15){s.textContent='Усе правильно — 15 / 15 ✓';s.classList.add('good');}
+  });
+});
+document.getElementById('sortReset').onclick=buildSort;
+buildSort();
+
+/* ---------- GAP CHECKING ---------- */
+const norm=s=>s.toLowerCase().trim().replace(/[.,!?;:'"]/g,'').replace(/\s+/g,' ');
+function check(id){
+  const box=document.getElementById(id);
+  let ok=0,total=0;
+  box.querySelectorAll('.gap').forEach(inp=>{
+    total++;
+    const ans=inp.dataset.a.split('|').map(norm);
+    inp.classList.remove('ok','no');
+    if(ans.includes(norm(inp.value))){inp.classList.add('ok');ok++;}
+    else if(inp.value.trim()!==''){inp.classList.add('no');}
+    else{inp.classList.add('no');}
+  });
+  const s=document.getElementById('s-'+id);
+  s.textContent=ok+' / '+total;
+  s.classList.toggle('good',ok===total);
+  if(ok===total)s.textContent='Бездоганно — '+ok+' / '+total+' ✓';
+}
+function reveal(id){
+  const box=document.getElementById(id);
+  box.querySelectorAll('.gap').forEach(inp=>{
+    inp.value=inp.dataset.a.split('|')[0];
+    inp.classList.remove('no');inp.classList.add('ok');
+  });
+}
+document.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>check(b.dataset.check));
+document.querySelectorAll('[data-reveal]').forEach(b=>b.onclick=()=>reveal(b.dataset.reveal));
+
+/* wire sensations block (it has no wrapper id in markup order) */
+document.querySelectorAll('.line .gap').forEach(()=>{});
+</script>
+
+<script>
+/* sensations section needs an id — assign it to the card that holds s-sens */
+(function(){
+  const btn=document.querySelector('[data-check="sens"]');
+  if(btn){btn.closest('.card').id='sens';}
+})();
+
+/* ---------- TRANSLATION ---------- */
+const TR=[
+["Спочатку я м'яко очищу твою шкіру, а потім розпарю обличчя, щоб відкрити пори.",
+ "First I'll <em>gently cleanse</em> your skin, and then I'll <em>steam</em> your face to open the <em>pores</em>."],
+["Цей засіб витягує бруд із пор і видаляє забруднення.",
+ "This product <em>lifts the dirt out of</em> the pores and <em>removes impurities</em>."],
+["Розпарювання допомагає очистити закупорені пори перед механічною чисткою.",
+ "Steaming helps <em>clear out clogged pores</em> before the <em>extraction</em>."],
+["Я обережно витягну чорні цятки — ти відчуєш легкий тиск, але не біль.",
+ "I'll gently <em>lift out</em> the <em>blackheads</em> — you'll feel a slight <em>pressure</em>, but no pain."],
+["Себум, відмерлі клітини й забруднення накопичуються і спричиняють висипання.",
+ "Sebum, <em>dead skin cells</em> and <em>debris</em> build up and cause <em>breakouts</em>."],
+["Відлущування знімає відмерлі клітини із зовнішнього шару шкіри.",
+ "<em>Exfoliation removes</em> dead cells from the <em>outer layer of skin</em>."],
+["Цей скраб м'яко відполірує суху шкіру, яка лущиться.",
+ "This scrub gently <em>buffs away</em> dry skin that <em>flakes</em>."],
+["Я нанесу кислотний розчин — він може трохи пекти, і ти відчуєш поколювання.",
+ "I'm going to apply an <em>acid solution</em> — it may <em>sting</em> a little and you'll feel some <em>tingling</em>."],
+["Пілінги бувають поверхневі, серединні та глибокі.",
+ "Peels can be <em>superficial</em>, <em>medium</em> or <em>deep</em>."],
+["Після процедури шкіра стає гладенькою, а колір обличчя — світлішим.",
+ "After the treatment the skin feels <em>smooth</em> and the <em>complexion</em> looks <em>brighter</em>."],
+["Після очищення я протонізую шкіру, а потім нанесу сироватку, яка живить її.",
+ "After cleansing I'll <em>tone</em> your skin and then apply a <em>serum</em> that <em>nourishes</em> it."],
+["Цей апарат вводить активні компоненти в шкіру, тож вона краще їх поглинає.",
+ "This device <em>delivers</em> active ingredients <em>into</em> the skin, so it <em>absorbs</em> them better."],
+["Процедура з вуглекислим газом стимулює кровообіг і дає шкірі сяяння.",
+ "The <em>carbon dioxide (CO2)</em> treatment <em>stimulates circulation</em> and gives the skin a <em>glow</em>."],
+["Апарат використовує слабкі електричні імпульси, щоб працювати з м'язами обличчя — ти почуєш легке гудіння.",
+ "The device uses <em>low-level currents</em> to work the <em>facial muscles</em> — you'll hear a slight <em>buzzing</em>."],
+["Ця процедура підтягує шкіру й дає ліфтинг-ефект.",
+ "This treatment <em>lifts</em> and <em>tightens</em> the skin."],
+["Колаген допомагає підтримувати пружність шкіри й робить її молодшою на вигляд.",
+ "Collagen helps <em>keep the skin firm</em> and makes it look <em>youthful</em>."],
+["З часом мімічні зморшки стають менш помітними, бо процедура стимулює вироблення колагену.",
+ "<em>Over time</em> the <em>fine lines</em> become less visible, because the treatment <em>boosts collagen</em> production."],
+["Наші засоби працюють із конкретними проблемами шкіри, і після цього догляду період відновлення мінімальний.",
+ "Our products <em>target</em> specific <em>skin concerns</em>, and this <em>facial</em> has minimal <em>downtime</em>."]
+];
+const trList=document.getElementById('trList');
+TR.forEach((t,i)=>{
+  const d=document.createElement('div');d.className='tr';
+  d.innerHTML=`<div class="tr-ua"><span class="tr-n">${String(i+1).padStart(2,'0')}</span><span>${t[0]}</span>
+   <button class="tr-btn">відповідь</button></div><div class="tr-en">${t[1]}</div>`;
+  d.querySelector('.tr-btn').onclick=()=>{
+    d.classList.toggle('open');
+    d.querySelector('.tr-btn').textContent=d.classList.contains('open')?'сховати':'відповідь';
+  };
+  trList.appendChild(d);
+});
+document.getElementById('trAll').onclick=()=>{
+  const anyClosed=[...document.querySelectorAll('.tr')].some(x=>!x.classList.contains('open'));
+  document.querySelectorAll('.tr').forEach(x=>{
+    x.classList.toggle('open',anyClosed);
+    x.querySelector('.tr-btn').textContent=anyClosed?'сховати':'відповідь';
+  });
+  document.getElementById('trAll').textContent=anyClosed?'Сховати всі відповіді':'Показати всі відповіді';
+};
+
+/* ---------- CHECKLIST ---------- */
+const ALL=["cleanse","steam","pores","clear sth out","extraction","lift sth out","debris","absorb",
+"acid solution","dead skin cells","to tone","tingling","keep the skin firm","youthful",
+"low-level currents","facial muscles","lift","breakouts","target skin concerns","carbon dioxide (CO2)",
+"circulation","glow","stimulate","exfoliation","buff away","outer layer of skin","smooth","flake",
+"downtime","sting","pressure","gently","tighten","boost collagen","remove","brighten","complexion",
+"clogged pores","over time","fine lines","buzzing","lift the dirt out of","deliver sth into","serum",
+"blackheads","superficial / medium / deep","impurities","nourish","skin concerns","facial"];
+document.getElementById('checklist').innerHTML=ALL.map(w=>`<span>${w}</span>`).join('');
+</script>
+</body>
+</html>
