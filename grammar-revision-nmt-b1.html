@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Revision — NMT Practice | dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101C34;
+  --ink-soft:#3D4A63;
+  --paper:#EFF1EC;
+  --card:#FFFFFF;
+  --mark:#FFD84D;
+  --ok:#12876A;
+  --ok-bg:#E4F4EE;
+  --no:#D9503F;
+  --no-bg:#FBE9E6;
+  --line:#D8DCD4;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;
+  line-height:1.6;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px 90px}
+
+/* ---------- header ---------- */
+header{
+  background:var(--ink);
+  color:var(--paper);
+  padding:44px 0 40px;
+  margin-bottom:34px;
+}
+header .wrap{padding-bottom:0}
+.brand{
+  font-family:"Unbounded",sans-serif;
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mark);margin-bottom:18px;
+}
+h1{
+  font-family:"Unbounded",sans-serif;
+  font-weight:800;font-size:clamp(26px,5.4vw,42px);
+  line-height:1.12;margin:0 0 14px;
+}
+h1 em{font-style:normal;background:var(--mark);color:var(--ink);padding:0 8px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+.sub{color:#B9C2D2;font-size:16px;max-width:60ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{
+  border:1px solid #2C3A57;border-radius:100px;padding:5px 13px;
+  font-size:13px;color:#D6DEEA;
+}
+
+/* ---------- parts ---------- */
+.part{margin-bottom:26px}
+.part-head{
+  display:flex;align-items:baseline;gap:14px;
+  border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:6px;
+}
+.part-num{
+  font-family:"Unbounded",sans-serif;font-weight:800;font-size:13px;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.part-title{font-family:"Unbounded",sans-serif;font-weight:600;font-size:18px}
+.part-note{color:var(--ink-soft);font-size:15px;margin:12px 0 26px}
+
+.task{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 22px 8px;margin-bottom:20px;
+}
+.task-title{
+  font-family:"Unbounded",sans-serif;font-weight:600;font-size:15px;margin:0 0 4px;
+}
+.rubric{color:var(--ink-soft);font-size:14.5px;font-style:italic;margin:0 0 18px}
+
+.q{padding:14px 0;border-top:1px dashed var(--line)}
+.q:first-of-type{border-top:none;padding-top:4px}
+.q-text{display:flex;gap:10px;margin-bottom:10px}
+.q-num{
+  font-family:"Unbounded",sans-serif;font-weight:600;font-size:13px;
+  min-width:26px;color:var(--ink-soft);padding-top:2px;
+}
+.q-body{flex:1}
+.opts{display:flex;flex-wrap:wrap;gap:8px;padding-left:36px}
+.opt{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--line);border-radius:100px;
+  padding:6px 14px 6px 10px;cursor:pointer;background:#fff;
+  transition:border-color .15s, background .15s, transform .1s;
+  font-size:15.5px;
+}
+.opt:hover{border-color:var(--ink)}
+.opt:active{transform:scale(.985)}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.opt .letter{
+  font-family:"Unbounded",sans-serif;font-size:11px;font-weight:600;
+  width:22px;height:22px;border-radius:50%;background:var(--paper);
+  display:grid;place-items:center;color:var(--ink-soft);flex:none;
+}
+.opt.sel{border-color:var(--ink);background:#FFF8DC}
+.opt.sel .letter{background:var(--mark);color:var(--ink)}
+.opt:focus-within{outline:2px solid var(--ink);outline-offset:2px}
+.locked .opt{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.right .letter{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--no);background:var(--no-bg);text-decoration:line-through}
+.opt.wrong .letter{background:var(--no);color:#fff}
+
+/* NMT text */
+.nmt-text{
+  background:var(--paper);border-left:3px solid var(--mark);
+  padding:16px 18px;border-radius:0 10px 10px 0;margin-bottom:22px;
+  font-size:16.5px;line-height:1.85;
+}
+.nmt-text .g{
+  font-family:"Unbounded",sans-serif;font-size:12px;font-weight:600;
+  background:#fff;border:1px solid var(--line);border-radius:5px;
+  padding:1px 7px;margin:0 2px;
+}
+.nmt-text p{margin:0 0 12px}
+.nmt-text p:last-child{margin:0}
+.q.inline .q-body{display:none}
+.q.inline .opts{padding-left:0}
+.q.inline .q-text{margin-bottom:0}
+.q.inline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+
+/* ---------- buttons ---------- */
+.btn{
+  font-family:"Unbounded",sans-serif;font-weight:600;font-size:14px;
+  background:var(--ink);color:#fff;border:none;border-radius:100px;
+  padding:15px 30px;cursor:pointer;transition:opacity .15s, transform .1s;
+}
+.btn:hover{opacity:.88}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:8px 0 40px}
+.left-note{font-size:14px;color:var(--ink-soft)}
+
+/* ---------- results ---------- */
+.result{display:none;margin:8px 0 40px}
+.result.show{display:block}
+.score-card{
+  background:var(--ink);color:#fff;border-radius:var(--radius);
+  padding:26px 24px;margin-bottom:20px;
+}
+.score-top{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.score-big{font-family:"Unbounded",sans-serif;font-weight:800;font-size:46px;line-height:1}
+.score-of{color:#A9B4C7;font-size:15px;padding-bottom:6px}
+.score-msg{color:#DCE3EE;font-size:15px;margin-top:12px}
+.bar{height:9px;background:#2A3651;border-radius:100px;margin-top:18px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--mark);border-radius:100px;width:0;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+
+.review-h{
+  font-family:"Unbounded",sans-serif;font-weight:600;font-size:15px;
+  margin:26px 0 12px;
+}
+.err{
+  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--no);
+  border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px;
+}
+.err-q{font-weight:500;margin:0 0 10px}
+.err-q b{font-family:"Unbounded",sans-serif;font-size:12px;color:var(--ink-soft);margin-right:6px}
+.err-row{font-size:15px;margin:3px 0}
+.err-row .lbl{color:var(--ink-soft);display:inline-block;min-width:112px}
+.yours{color:var(--no);font-weight:600}
+.correct{color:var(--ok);font-weight:600}
+.why{
+  margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);
+  font-size:15px;color:var(--ink-soft);
+}
+.why b{color:var(--ink);font-weight:600}
+.perfect{
+  background:var(--ok-bg);border:1px solid var(--ok);border-radius:10px;
+  padding:16px 18px;color:#0C6350;font-size:15.5px;
+}
+.hidden{display:none}
+
+footer{
+  border-top:1px solid var(--line);margin-top:40px;padding-top:20px;
+  font-size:13.5px;color:var(--ink-soft);display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;
+}
+footer b{font-family:"Unbounded",sans-serif;font-weight:600;color:var(--ink)}
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+  background:var(--ink);color:#fff;padding:12px 22px;border-radius:100px;
+  font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:9;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:560px){
+  body{font-size:16px}
+  .task{padding:18px 16px 6px}
+  .opts{padding-left:0}
+  .opt{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">dinglish · revision</div>
+    <h1>Grammar revision:<br>tenses, relatives, articles &amp; <em>used to</em></h1>
+    <p class="sub">Two parts. Part 1 — classic practice tasks. Part 2 — NMT exam format. Check your answers after each part and read the explanations for the mistakes.</p>
+    <div class="meta">
+      <span class="chip">Level B1</span>
+      <span class="chip">50 questions</span>
+      <span class="chip">≈ 35 min</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ PART 1 ============ -->
+  <section class="part" id="part1">
+    <div class="part-head">
+      <span class="part-num">Part 1</span>
+      <span class="part-title">Practice tasks</span>
+    </div>
+    <p class="part-note">Обери один правильний варіант у кожному завданні. Коли закінчиш — натисни «Перевірити частину 1».</p>
+    <div id="p1-body"></div>
+  </section>
+
+  <div class="actions" id="p1-actions">
+    <button class="btn" id="check1">Перевірити частину 1</button>
+    <span class="left-note" id="left1"></span>
+  </div>
+
+  <div class="result" id="res1"></div>
+
+  <div class="actions hidden" id="go2">
+    <button class="btn" id="btn-go2">Перейти до частини 2 →</button>
+  </div>
+
+  <!-- ============ PART 2 ============ -->
+  <section class="part hidden" id="part2">
+    <div class="part-head">
+      <span class="part-num">Part 2</span>
+      <span class="part-title">NMT format</span>
+    </div>
+    <p class="part-note">Формат НМТ: текст із пропусками. Прочитай текст повністю, а потім обери варіант (A, B, C або D) для кожного пропуску.</p>
+    <div id="p2-body"></div>
+  </section>
+
+  <div class="actions hidden" id="p2-actions">
+    <button class="btn" id="check2">Перевірити частину 2</button>
+    <span class="left-note" id="left2"></span>
+  </div>
+
+  <div class="result" id="res2"></div>
+
+  <div class="result" id="final"></div>
+
+  <footer>
+    <span><b>dinglish</b> · grammar revision worksheet</span>
+    <span>Present &amp; past tenses · relative clauses · articles · used to</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================== DATA ============================== */
+const PART1 = [
+  {
+    title: "Task 1. Present Simple or Present Continuous?",
+    rubric: "Choose the correct form. Remember: some verbs are not normally used in the Continuous.",
+    items: [
+      { q:"Sorry, I can't talk now. I ___ dinner with my family.",
+        o:["have","am having","having","has"], a:1,
+        e:"«Have dinner» = їсти вечерю, це <b>дія</b>, а не стан → можна вживати Continuous. Дія відбувається зараз (<i>now</i>) → <b>am having</b>." },
+      { q:"My sister ___ three foreign languages.",
+        o:["is speaking","speak","speaks","are speaking"], a:2,
+        e:"Постійний факт → Present Simple. Підмет <i>my sister</i> (he/she/it) → додаємо <b>-s</b>: <b>speaks</b>." },
+      { q:"Look! The bus ___ .",
+        o:["comes","is coming","come","came"], a:1,
+        e:"Слово <i>Look!</i> показує, що дія відбувається саме зараз, у момент мовлення → Present Continuous: <b>is coming</b>." },
+      { q:"This soup ___ delicious. What's in it?",
+        o:["is tasting","taste","tastes","are tasting"], a:2,
+        e:"<i>Taste</i> у значенні «мати смак» — це <b>stative verb</b> (стан), у Continuous не вживається. Підмет <i>soup</i> → <b>tastes</b>." },
+      { q:"My brother usually goes to school by bus, but this week he ___ his bike.",
+        o:["rides","is riding","ride","rode"], a:1,
+        e:"<i>This week</i> = тимчасова ситуація, яка відрізняється від звичайної → Present Continuous: <b>is riding</b>. (<i>usually goes</i> — звичка, Present Simple.)" },
+      { q:"I ___ what you mean now. Thanks for explaining.",
+        o:["am understanding","understand","understands","understood"], a:1,
+        e:"<i>Understand</i> — дієслово стану (розумовий стан), у Continuous не вживається навіть зі словом <i>now</i>: <b>I understand</b>." },
+      { q:"Water ___ at 100 degrees.",
+        o:["is boiling","boil","boils","boiled"], a:2,
+        e:"Науковий факт / загальна істина → Present Simple. Підмет <i>water</i> (it) → <b>boils</b>." },
+      { q:"Why ___ at me like that? Have I said something wrong?",
+        o:["are you looking","do you look","you look","you are looking"], a:0,
+        e:"Дія відбувається в цей момент → Present Continuous. У питанні порядок слів: <i>Why + am/is/are + підмет + V-ing</i> → <b>Why are you looking</b>." },
+      { q:"You look worried. What ___ about?",
+        o:["do you think","are you thinking","you think","think you"], a:1,
+        e:"<i>Think about</i> = «обмірковувати» — це дія, тому Continuous можливий і потрібен: думає саме зараз → <b>are you thinking</b>. (Порівняй: <i>I think it's a good idea</i> = вважаю — стан.)" }
+    ]
+  },
+  {
+    title: "Task 2. Past Simple or Past Continuous?",
+    rubric: "Choose the correct form to complete each sentence.",
+    items: [
+      { q:"While I ___ home, it started to rain.",
+        o:["walked","was walking","walk","have walked"], a:1,
+        e:"Після <i>while</i> — довга дія у процесі, яку перериває інша → Past Continuous: <b>was walking</b>." },
+      { q:"When the teacher came in, the students ___ a lot of noise.",
+        o:["made","were making","make","have made"], a:1,
+        e:"Шум уже тривав до моменту, коли зайшов учитель (фон) → Past Continuous: <b>were making</b>. <i>Came in</i> — коротка дія, Past Simple." },
+      { q:"I ___ my keys yesterday, so I couldn't get into the flat.",
+        o:["was losing","lose","lost","have lost"], a:2,
+        e:"Завершена дія з чітким часом у минулому (<i>yesterday</i>) → Past Simple. <i>Lose</i> — неправильне дієслово: <b>lost</b>." },
+      { q:"What ___ at 8 o'clock last night when I called you?",
+        o:["did you do","were you doing","you did","have you done"], a:1,
+        e:"Питання про дію в процесі в конкретний момент минулого → Past Continuous: <b>were you doing</b>." },
+      { q:"She was cooking dinner when the phone ___ .",
+        o:["was ringing","rings","rang","ring"], a:2,
+        e:"Коротка дія, що перервала довгу → Past Simple. <i>Ring</i> — неправильне дієслово: <b>rang</b>." },
+      { q:"Last summer we ___ to Spain for two weeks.",
+        o:["were going","went","have gone","was going"], a:1,
+        e:"<i>Last summer</i> — завершений період у минулому → Past Simple: <b>went</b>." }
+    ]
+  },
+  {
+    title: "Task 3. used to / be used to / get used to / would",
+    rubric: "Choose the correct option. Watch the form after each structure.",
+    items: [
+      { q:"I ___ live in a small village when I was a child.",
+        o:["used to","use to","am used to","would be"], a:0,
+        e:"Минула звичка, якої вже немає → <b>used to + інфінітив</b>: <i>used to live</i>. (<i>am used to</i> = звик, і після нього йде -ing.)" },
+      { q:"She isn't used to ___ up so early.",
+        o:["get","got","getting","gets"], a:2,
+        e:"Після <b>be used to</b> завжди йде іменник або <b>-ing</b>: <i>isn't used to getting up</i>. Тут <i>to</i> — прийменник, а не частка інфінітива." },
+      { q:"Every summer we ___ go to the seaside with our parents.",
+        o:["are used to","would","got used to","use to"], a:1,
+        e:"Повторювана дія в минулому → <b>would + інфінітив</b>: <i>we would go</i>. Тут це синонім <i>used to go</i>." },
+      { q:"At first the noise in the hostel was terrible, but after a week I ___ it.",
+        o:["used to","was used to","got used to","would get"], a:2,
+        e:"Йдеться про <b>процес звикання</b> (спочатку важко → потім звик) → <b>got used to</b>. <i>Was used to</i> означало б, що вже був звиклий із самого початку." },
+      { q:"He didn't use to ___ coffee, but now he drinks three cups a day.",
+        o:["drinking","drinks","drink","drank"], a:2,
+        e:"У запереченні й питанні: <b>didn't use to + інфінітив без to</b> (не <i>used</i>, бо є <i>did</i>) → <b>drink</b>." },
+      { q:"When I was a child, we ___ a big dog called Rex.",
+        o:["would have","used to have","are used to have","would having"], a:1,
+        e:"<b>Would</b> не вживається з дієсловами стану (<i>have</i> = мати, <i>be</i>, <i>like</i>, <i>know</i>). Для минулого стану — тільки <b>used to have</b>." }
+    ]
+  },
+  {
+    title: "Task 4. Relative clauses",
+    rubric: "Choose the correct relative pronoun or adverb.",
+    items: [
+      { q:"The man ___ lives next door is a doctor.",
+        o:["which","who","whose","where"], a:1,
+        e:"Мова про людину → <b>who</b> (або <i>that</i>). <i>Which</i> вживаємо з речами." },
+      { q:"That's the house ___ I was born.",
+        o:["which","that","where","who"], a:2,
+        e:"Йдеться про <b>місце</b>, і після пропуску речення повне (<i>I was born</i>) → <b>where</b>. З <i>which</i> потрібен був би прийменник: <i>the house which I was born in</i>." },
+      { q:"My friend Anna, ___ works in a bank, is coming tonight.",
+        o:["that","which","who","where"], a:2,
+        e:"Це non-defining clause (виділена комами, додаткова інформація). У таких реченнях <b>that заборонений</b>, з людьми вживаємо <b>who</b>." },
+      { q:"The girl ___ bag was stolen went to the police.",
+        o:["who","whose","which","who's"], a:1,
+        e:"Показує <b>належність</b> (сумка дівчини) → <b>whose</b>. <i>Who's</i> = who is, це інше." },
+      { q:"I don't know the reason ___ she left so early.",
+        o:["why","where","which","who"], a:0,
+        e:"Після слова <i>reason</i> вживаємо <b>why</b>: <i>the reason why…</i>." },
+      { q:"This is the film ___ won an Oscar last year.",
+        o:["who","where","which","what"], a:2,
+        e:"Мова про річ (фільм) → <b>which</b> або <i>that</i>. <b>What</b> ніколи не вживається як relative pronoun у такій позиції." }
+    ]
+  },
+  {
+    title: "Task 5. Articles: a / an / the / —",
+    rubric: "Choose the correct article. The dash (—) means no article.",
+    items: [
+      { q:"I saw ___ interesting film yesterday.",
+        o:["a","an","the","—"], a:1,
+        e:"Згадуємо вперше й слово починається з голосного звуку [ɪ] → <b>an</b> interesting film." },
+      { q:"___ Sun rises in the east.",
+        o:["A","An","The","—"], a:2,
+        e:"Унікальні об'єкти (Sun, Moon, Earth, sky) — завжди з <b>the</b>." },
+      { q:"My sister plays ___ piano very well.",
+        o:["a","an","the","—"], a:2,
+        e:"З музичними інструментами вживаємо <b>the</b>: <i>play the piano / the guitar</i>. (Зі спортом — без артикля: <i>play football</i>.)" },
+      { q:"Every morning I go to ___ school by bus.",
+        o:["a","an","the","—"], a:3,
+        e:"<i>Go to school</i> у значенні «вчитися» — стала фраза <b>без артикля</b> (так само: <i>go to bed, go to work, at home</i>)." },
+      { q:"Kyiv is ___ capital of Ukraine.",
+        o:["a","an","the","—"], a:2,
+        e:"Об'єкт єдиний у своєму роді + конструкція <i>the … of …</i> → <b>the</b> capital of Ukraine." }
+    ]
+  }
+];
+
+const PART2 = [
+  {
+    title: "Task 6. Reading with gaps",
+    rubric: "Read the text below. For questions 33–42, choose the correct answer (A, B, C or D).",
+    text: `<p><b>Summers in the village</b></p>
+<p>When I was a child, I <span class="g">33</span> every summer at my grandmother's house in a small village near Poltava. My parents <span class="g">34</span> me there in June and picked me up at the end of August. Life in the village was completely different from <span class="g">35</span> life I knew in the city.</p>
+<p>My grandmother, <span class="g">36</span> was already over seventy, got up at five o'clock every morning. At first I couldn't <span class="g">37</span> used to such an early start, but after a week or two I <span class="g">38</span> waking up with the birds.</p>
+<p>Behind the house there was a river <span class="g">39</span> we swam almost every day. While we <span class="g">40</span> in the water, my cousin usually <span class="g">41</span> our clothes and ran away — that was his favourite joke. Now I <span class="g">42</span> those summers as the happiest time of my childhood.</p>`,
+    items: [
+      { n:33, o:["spend","spent","was spending","have spent"], a:1,
+        e:"Завершена дія в минулому (<i>when I was a child</i>) → Past Simple: <b>spent</b>." },
+      { n:34, o:["took","were taking","take","have taken"], a:0,
+        e:"Повторювана завершена дія в минулому, поряд стоїть <i>picked me up</i> (Past Simple) → <b>took</b>." },
+      { n:35, o:["a","an","the","—"], a:2,
+        e:"Іменник уточнений підрядним реченням (<i>life which I knew in the city</i>) — конкретне життя → <b>the</b>." },
+      { n:36, o:["which","who","that","what"], a:1,
+        e:"Non-defining clause з комами + мова про людину → <b>who</b>. <i>That</i> у таких реченнях не вживається." },
+      { n:37, o:["get","getting","got","to get"], a:0,
+        e:"Після модального <i>couldn't</i> — інфінітив <b>без to</b>: <i>couldn't get used to</i>." },
+      { n:38, o:["used to","was used to","got used to","would"], a:2,
+        e:"<i>At first… but after a week or two…</i> — це процес звикання → <b>got used to</b> + -ing (<i>waking up</i>)." },
+      { n:39, o:["which","where","who","when"], a:1,
+        e:"Річка = місце, і після пропуску повне речення (<i>we swam</i>) → <b>where</b>." },
+      { n:40, o:["swam","swim","were swimming","have swum"], a:2,
+        e:"Після <i>while</i> — довга дія-фон, яку перериває інша → Past Continuous: <b>were swimming</b>." },
+      { n:41, o:["hid","was hiding","hides","has hidden"], a:0,
+        e:"Повторювана звичка в минулому зі словом <i>usually</i> → Past Simple: <b>hid</b> (hide – hid – hidden)." },
+      { n:42, o:["am remembering","remember","remembers","was remembering"], a:1,
+        e:"<i>Remember</i> — дієслово стану, у Continuous не вживається; <i>now</i> тут вказує на теперішнє → <b>remember</b>." }
+    ]
+  },
+  {
+    title: "Task 7. Reading with gaps",
+    rubric: "Read the text below. For questions 43–50, choose the correct answer (A, B, C or D).",
+    text: `<p><b>My friend in Lviv</b></p>
+<p>My friend Olia <span class="g">43</span> in Lviv at the moment. She moved there two years ago because she got <span class="g">44</span> job in an IT company. The office <span class="g">45</span> she works is right in the centre of the city.</p>
+<p>At first she <span class="g">46</span> used to the noise and the crowds, but now she loves the place. She <span class="g">47</span> me every Sunday and tells me about her new life. "I <span class="g">48</span> that I will ever come back to our small town," she always says.</p>
+<p>Last month I visited her. While she <span class="g">49</span> at work, I walked around the old streets and took hundreds of photos. Now I understand why she <span class="g">50</span> that city so much.</p>`,
+    items: [
+      { n:43, o:["lives","is living","live","lived"], a:1,
+        e:"<i>At the moment</i> + тимчасова ситуація (переїхала на цей період) → Present Continuous: <b>is living</b>." },
+      { n:44, o:["a","an","the","—"], a:0,
+        e:"Згадуємо вперше, злічуваний іменник в однині, приголосний звук [dʒ] → <b>a</b> job." },
+      { n:45, o:["which","that","where","what"], a:2,
+        e:"Офіс = місце, після пропуску повне речення (<i>she works</i>) → <b>where</b>. З <i>which</i> треба було б <i>which she works in</i>." },
+      { n:46, o:["wasn't","didn't use to","isn't used","wouldn't"], a:0,
+        e:"Структура <i>be used to + іменник</i> у минулому: <b>wasn't used to</b> the noise. Форма <i>isn't</i> не підходить — це минуле (<i>at first</i>)." },
+      { n:47, o:["is calling","call","calls","called"], a:2,
+        e:"Регулярна дія (<i>every Sunday</i>) → Present Simple; підмет <i>she</i> → <b>calls</b>." },
+      { n:48, o:["am not thinking","don't think","not think","didn't think"], a:1,
+        e:"<i>Think</i> у значенні «вважати» — стан, Continuous не вживаємо; заперечення в Present Simple → <b>don't think</b>." },
+      { n:49, o:["is","was","were","was being"], a:1,
+        e:"Минулий час, підмет <i>she</i> → <b>was</b> at work. Тут <i>while</i> + стан, тому просто <i>was</i>." },
+      { n:50, o:["is loving","loves","love","loved"], a:1,
+        e:"<i>Love</i> — дієслово стану + теперішнє почуття, підмет <i>she</i> → <b>loves</b>." }
+    ]
+  }
+];
+
+/* ============================== RENDER ============================== */
+const L = ["A","B","C","D"];
+let counter = 0;
+const KEY = [];           // flat list of all questions
+const esc = s => s;
+
+function optionRow(id, opts){
+  return `<div class="opts" data-q="${id}">` + opts.map((t,i)=>`
+    <label class="opt" data-i="${i}">
+      <input type="radio" name="q${id}" value="${i}">
+      <span class="letter">${L[i]}</span><span class="txt">${t}</span>
+    </label>`).join("") + `</div>`;
+}
+
+function renderPart1(){
+  let html = "";
+  PART1.forEach(task=>{
+    html += `<div class="task"><h3 class="task-title">${task.title}</h3><p class="rubric">${task.rubric}</p>`;
+    task.items.forEach(it=>{
+      counter++;
+      const id = counter;
+      KEY.push({id, part:1, q:it.q, o:it.o, a:it.a, e:it.e});
+      html += `<div class="q" id="qw${id}">
+        <div class="q-text"><span class="q-num">${id}.</span><span class="q-body">${it.q}</span></div>
+        ${optionRow(id, it.o)}
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById("p1-body").innerHTML = html;
+}
+
+function renderPart2(){
+  let html = "";
+  PART2.forEach(task=>{
+    html += `<div class="task"><h3 class="task-title">${task.title}</h3><p class="rubric">${task.rubric}</p>
+      <div class="nmt-text">${task.text}</div>`;
+    task.items.forEach(it=>{
+      counter++;
+      const id = counter;
+      KEY.push({id, part:2, q:`Пропуск ${it.n} (${task.title.split(".")[0]})`, o:it.o, a:it.a, e:it.e});
+      html += `<div class="q inline" id="qw${id}">
+        <span class="q-num">${it.n}.</span>
+        ${optionRow(id, it.o)}
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById("p2-body").innerHTML = html;
+}
+
+renderPart1();
+renderPart2();
+
+/* selection styling */
+document.addEventListener("change", e=>{
+  if(e.target.type !== "radio") return;
+  const row = e.target.closest(".opts");
+  if(row.closest(".locked")) return;
+  row.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));
+  e.target.closest(".opt").classList.add("sel");
+  updateLeft();
+});
+
+function answered(part){
+  return KEY.filter(k=>k.part===part && document.querySelector(`input[name="q${k.id}"]:checked`)).length;
+}
+function updateLeft(){
+  const t1 = KEY.filter(k=>k.part===1).length, t2 = KEY.filter(k=>k.part===2).length;
+  const l1 = t1 - answered(1), l2 = t2 - answered(2);
+  document.getElementById("left1").textContent = l1 ? `Без відповіді: ${l1} з ${t1}` : "Усі відповіді є ✓";
+  document.getElementById("left2").textContent = l2 ? `Без відповіді: ${l2} з ${t2}` : "Усі відповіді є ✓";
+}
+updateLeft();
+
+/* ============================== CHECKING ============================== */
+const scores = {1:null, 2:null};
+
+function checkPart(part, boxId){
+  const items = KEY.filter(k=>k.part===part);
+  const wrong = [];
+  let right = 0;
+
+  items.forEach(k=>{
+    const chosen = document.querySelector(`input[name="q${k.id}"]:checked`);
+    const row = document.querySelector(`.opts[data-q="${k.id}"]`);
+    const wrap = document.getElementById("qw"+k.id);
+    wrap.classList.add("locked");
+    row.querySelectorAll("input").forEach(i=>i.disabled = true);
+    const ci = chosen ? +chosen.value : null;
+
+    row.querySelector(`.opt[data-i="${k.a}"]`).classList.add("right");
+    if(ci === k.a){ right++; }
+    else{
+      if(ci !== null) row.querySelector(`.opt[data-i="${ci}"]`).classList.add("wrong");
+      wrong.push({...k, chosen: ci});
+    }
+  });
+
+  scores[part] = {right, total: items.length};
+  renderResult(part, boxId, right, items.length, wrong);
+}
+
+function msgFor(pct){
+  if(pct === 100) return "Ідеально. Ці теми повністю під контролем.";
+  if(pct >= 85) return "Дуже сильний результат. Лишилося дошліфувати кілька деталей.";
+  if(pct >= 70) return "Добре. Уважно прочитай пояснення нижче — там саме твої слабкі місця.";
+  if(pct >= 50) return "Половина є. Розбери помилки нижче й повтори правила ще раз.";
+  return "Ці теми варто повторити разом на уроці. Почни з пояснень нижче.";
+}
+
+function renderResult(part, boxId, right, total, wrong){
+  const pct = Math.round(right/total*100);
+  let html = `
+    <div class="score-card">
+      <div class="score-top">
+        <span class="score-big">${right}</span>
+        <span class="score-of">правильних із ${total} · ${pct}%</span>
+      </div>
+      <div class="bar"><span id="bar${part}"></span></div>
+      <p class="score-msg">${msgFor(pct)}</p>
+    </div>`;
+
+  if(wrong.length === 0){
+    html += `<div class="perfect">Жодної помилки в цій частині — розбирати нічого. Молодець!</div>`;
+  }else{
+    html += `<h3 class="review-h">Розбір помилок (${wrong.length})</h3>`;
+    wrong.forEach(w=>{
+      const yours = w.chosen === null ? "— немає відповіді" : `${L[w.chosen]}. ${w.o[w.chosen]}`;
+      html += `<div class="err">
+        <p class="err-q"><b>№${w.id}</b>${w.q}</p>
+        <p class="err-row"><span class="lbl">Твоя відповідь:</span> <span class="yours">${yours}</span></p>
+        <p class="err-row"><span class="lbl">Правильно:</span> <span class="correct">${L[w.a]}. ${w.o[w.a]}</span></p>
+        <p class="why">${w.e}</p>
+      </div>`;
+    });
+  }
+
+  const box = document.getElementById(boxId);
+  box.innerHTML = html;
+  box.classList.add("show");
+  setTimeout(()=>{ document.getElementById("bar"+part).style.width = pct+"%"; }, 60);
+  box.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+/* buttons */
+document.getElementById("check1").addEventListener("click", ()=>{
+  checkPart(1, "res1");
+  document.getElementById("check1").disabled = true;
+  document.getElementById("go2").classList.remove("hidden");
+});
+
+document.getElementById("btn-go2").addEventListener("click", ()=>{
+  document.getElementById("part2").classList.remove("hidden");
+  document.getElementById("p2-actions").classList.remove("hidden");
+  document.getElementById("go2").classList.add("hidden");
+  document.getElementById("part2").scrollIntoView({behavior:"smooth", block:"start"});
+  updateLeft();
+});
+
+document.getElementById("check2").addEventListener("click", ()=>{
+  checkPart(2, "res2");
+  document.getElementById("check2").disabled = true;
+  showFinal();
+});
+
+function showFinal(){
+  const r = scores[1].right + scores[2].right;
+  const t = scores[1].total + scores[2].total;
+  const pct = Math.round(r/t*100);
+  const box = document.getElementById("final");
+  box.innerHTML = `
+    <h3 class="review-h">Загальний результат</h3>
+    <div class="score-card">
+      <div class="score-top">
+        <span class="score-big">${r}</span>
+        <span class="score-of">із ${t} · ${pct}%</span>
+      </div>
+      <div class="bar"><span id="barF"></span></div>
+      <p class="score-msg">Частина 1 (practice): ${scores[1].right}/${scores[1].total} · Частина 2 (NMT format): ${scores[2].right}/${scores[2].total}</p>
+    </div>
+    <div class="actions">
+      <button class="btn ghost" id="copyBtn">Скопіювати результат для вчителя</button>
+      <button class="btn ghost" id="againBtn">Пройти ще раз</button>
+    </div>`;
+  box.classList.add("show");
+  setTimeout(()=>{ document.getElementById("barF").style.width = pct+"%"; }, 60);
+
+  document.getElementById("againBtn").addEventListener("click", ()=>location.reload());
+  document.getElementById("copyBtn").addEventListener("click", ()=>{
+    const wrongIds = KEY.filter(k=>{
+      const c = document.querySelector(`input[name="q${k.id}"]:checked`);
+      return !c || +c.value !== k.a;
+    }).map(k=>k.id);
+    const txt =
+`Grammar revision (B1 / NMT)
+Частина 1: ${scores[1].right}/${scores[1].total}
+Частина 2: ${scores[2].right}/${scores[2].total}
+Разом: ${r}/${t} (${pct}%)
+Помилки в завданнях: ${wrongIds.length ? wrongIds.join(", ") : "немає"}`;
+    navigator.clipboard.writeText(txt).then(
+      ()=>toast("Результат скопійовано — надішли вчителю"),
+      ()=>toast("Не вдалося скопіювати. Зроби скриншот сторінки")
+    );
+  });
+  box.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function toast(t){
+  const el = document.getElementById("toast");
+  el.textContent = t; el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"), 2600);
+}
+</script>
+</body>
+</html>
