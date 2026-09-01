@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerund &amp; Infinitive — тест</title>
+<style>
+  :root{
+    --paper:#EDEFF6;
+    --card:#FFFFFF;
+    --ink:#171A2B;
+    --muted:#6A7089;
+    --line:#DCDFEC;
+    --accent:#3B3FA8;
+    --ing:#0D7C86;
+    --inf:#7A4BC9;
+    --ok:#2E7D4F;
+    --bad:#B94334;
+    --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+    --sans: ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    padding:24px 16px 64px;
+  }
+  .wrap{max-width:720px;margin:0 auto}
+
+  /* ---------- header ---------- */
+  header{margin-bottom:22px}
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:10px;
+  }
+  h1{
+    font-family:var(--serif);font-weight:600;font-size:clamp(30px,6vw,42px);
+    line-height:1.05;letter-spacing:-.01em;margin:0;
+  }
+  h1 .ing{color:var(--ing)}
+  h1 .inf{color:var(--inf)}
+  .lede{color:var(--muted);font-size:15px;margin-top:10px;max-width:46ch}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px;box-shadow:0 1px 2px rgba(23,26,43,.04),0 12px 28px -22px rgba(23,26,43,.35);
+  }
+
+  /* ---------- buttons ---------- */
+  button{font:inherit;color:inherit;cursor:pointer}
+  .btn{
+    border:1px solid var(--ink);background:var(--ink);color:#fff;
+    border-radius:10px;padding:12px 20px;font-size:15px;font-weight:600;
+    transition:transform .12s ease,opacity .12s ease;
+  }
+  .btn:hover{opacity:.88}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.ghost:hover{border-color:var(--ink);opacity:1}
+  .btn[disabled]{opacity:.35;cursor:not-allowed}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- start ---------- */
+  .rules{list-style:none;margin:0 0 22px;padding:0}
+  .rules li{
+    display:flex;gap:12px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line);
+    font-size:15px;
+  }
+  .rules li:first-child{border-top:0}
+  .rules span.k{font-family:var(--mono);font-size:11px;color:var(--muted);min-width:28px}
+
+  /* ---------- progress ---------- */
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .counter{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap}
+  .counter b{color:var(--ink);font-weight:600}
+  .rail{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+  .rail i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s ease}
+
+  /* ---------- question ---------- */
+  .sentence{
+    font-family:var(--serif);font-size:clamp(21px,4.4vw,27px);line-height:1.45;
+    margin:4px 0 26px;
+  }
+  .slot{
+    display:inline-block;min-width:5.5ch;text-align:center;
+    border-bottom:2px dotted #B9BECF;color:#B9BECF;
+    padding:0 .25em;transition:color .18s ease,border-color .18s ease;
+  }
+  .slot.filled{color:var(--accent);border-bottom:2px solid var(--accent);border-bottom-style:solid}
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{
+    display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+    background:#fff;border:1px solid var(--line);border-radius:11px;
+    padding:13px 15px;font-size:17px;font-family:var(--serif);
+    transition:border-color .14s ease,background .14s ease;
+  }
+  .opt:hover{border-color:#B9BECF}
+  .opt .key{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    border:1px solid var(--line);border-radius:5px;width:22px;height:22px;
+    display:grid;place-items:center;flex:none;
+  }
+  .opt.sel{border-color:var(--accent);background:#F4F4FD}
+  .opt.sel .key{border-color:var(--accent);color:var(--accent)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+  .hint{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-top:16px}
+
+  /* ---------- map ---------- */
+  .mapwrap{margin-top:20px}
+  .maptitle{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:10px;
+  }
+  .map{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+  .cell{
+    aspect-ratio:1;border-radius:5px;border:1px solid var(--line);background:#fff;
+    font-family:var(--mono);font-size:10px;color:var(--muted);
+    display:grid;place-items:center;padding:0;
+  }
+  .cell.done{background:#E9EAF6;border-color:#D3D6EA;color:var(--ink)}
+  .cell.now{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}
+  .cell.ok{background:#E7F3EC;border-color:#BFE0CC;color:var(--ok)}
+  .cell.bad{background:#FBEAE7;border-color:#F0C7BF;color:var(--bad)}
+  @media (max-width:420px){.map{grid-template-columns:repeat(6,1fr)}}
+
+  /* ---------- results ---------- */
+  .score{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .score .big{font-family:var(--serif);font-size:clamp(46px,12vw,68px);line-height:1;font-weight:600}
+  .score .of{font-family:var(--serif);font-size:26px;color:var(--muted)}
+  .score .pct{font-family:var(--mono);font-size:13px;color:var(--muted);margin-left:auto}
+  .verdict{margin-top:14px;font-size:16px;color:var(--muted);max-width:52ch}
+
+  .bars{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+  .bar .lbl{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;gap:12px}
+  .bar .lbl b{font-family:var(--mono);font-weight:500;color:var(--muted);white-space:nowrap}
+  .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;border-radius:3px;background:var(--accent)}
+
+  h2.sec{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);font-weight:500;margin:34px 0 12px;
+  }
+  .review{display:flex;flex-direction:column;gap:12px}
+  .item{background:#fff;border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:12px;padding:16px 18px}
+  .item .num{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:8px;display:flex;gap:10px;align-items:center}
+  .tag{
+    font-family:var(--sans);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    padding:2px 7px;border-radius:20px;border:1px solid currentColor;font-weight:600;
+  }
+  .tag.ing{color:var(--ing)}
+  .tag.inf{color:var(--inf)}
+  .tag.both{color:var(--muted)}
+  .item .s{font-family:var(--serif);font-size:19px;line-height:1.5;margin-bottom:12px}
+  .item .s u{text-decoration:none;color:var(--ok);border-bottom:2px solid #BFE0CC;font-weight:600}
+  .ab{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;margin-bottom:10px}
+  .ab span{display:flex;gap:7px;align-items:center}
+  .ab .yours{color:var(--bad)}
+  .ab .yours s{opacity:.75}
+  .ab .right{color:var(--ok);font-weight:600}
+  .why{font-size:14.5px;color:#3F4459;border-top:1px solid var(--line);padding-top:11px}
+  .why code{font-family:var(--mono);font-size:12.5px;background:#F1F2F9;padding:1px 5px;border-radius:4px}
+  .perfect{text-align:center;padding:30px 20px;font-family:var(--serif);font-size:22px}
+
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  footer{margin-top:34px;font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center}
+
+  .hidden{display:none}
+  .fade{animation:fade .22s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Grammar test · B1–B2</div>
+    <h1>Gerund <span class="ing">-ing</span> &amp; Infinitive <span class="inf">to</span></h1>
+    <p class="lede">60 речень. Обери правильну форму дієслова. Наприкінці — результат і розбір усіх помилок.</p>
+  </header>
+
+  <!-- START -->
+  <section id="start" class="card">
+    <ul class="rules">
+      <li><span class="k">01</span><span>Одне питання на екран. Відповідь можна змінити, поки тест не завершено.</span></li>
+      <li><span class="k">02</span><span>Клавіші <b>A B C</b> або <b>1 2 3</b> — вибір, <b>→ ←</b> — перехід між питаннями.</span></li>
+      <li><span class="k">03</span><span>Сітка внизу показує, на що ти вже відповів, і дає перейти до будь-якого питання.</span></li>
+    </ul>
+    <button class="btn" id="go">Почати тест</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="hidden">
+    <div class="topbar">
+      <div class="counter" id="counterEl"><b>01</b> / 60</div>
+      <div class="rail"><i id="railfill"></i></div>
+      <div class="counter" id="answered">0 відповідей</div>
+    </div>
+
+    <div class="card">
+      <p class="sentence" id="sentence"></p>
+      <div class="opts" id="opts"></div>
+      <div class="nav">
+        <button class="btn ghost" id="prev">← Назад</button>
+        <button class="btn" id="next">Далі →</button>
+      </div>
+      <p class="hint" id="hint"></p>
+    </div>
+
+    <div class="mapwrap">
+      <div class="maptitle">Питання</div>
+      <div class="map" id="map"></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="hidden">
+    <div class="card">
+      <div class="score">
+        <span class="big" id="scoreNum">0</span>
+        <span class="of">/ 60</span>
+        <span class="pct" id="scorePct"></span>
+      </div>
+      <p class="verdict" id="verdict"></p>
+      <div class="bars" id="bars"></div>
+    </div>
+
+    <div class="mapwrap">
+      <div class="maptitle">Карта відповідей</div>
+      <div class="map" id="map2"></div>
+    </div>
+
+    <h2 class="sec" id="mistakesTitle">Помилки з поясненням</h2>
+    <div class="review" id="review"></div>
+
+    <div class="actions">
+      <button class="btn" id="retryWrong">Пройти помилки ще раз</button>
+      <button class="btn ghost" id="restart">Почати спочатку</button>
+    </div>
+  </section>
+
+  <footer>dinglish · gerund &amp; infinitive</footer>
+</div>
+
+<script>
+const G='ing', I='to', B='both';
+const CATS={
+  vg:'Дієслово + -ing',
+  prep:'Прийменник + -ing',
+  fix:'Сталий вираз + -ing',
+  vi:'Дієслово + to + V',
+  voi:'Дієслово + об’єкт + to + V',
+  both:'Обидві форми можливі'
+};
+
+const DATA=[
+ {s:"She admitted ___ the cookies.",o:["eat","to eat","eating"],a:2,f:G,c:'vg',
+  w:"<code>admit + -ing</code>. Після admit іде тільки герундій: <i>He admitted stealing the money.</i>"},
+ {s:"I’ve just finished ___ the report.",o:["to write","writing","write"],a:1,f:G,c:'vg',
+  w:"<code>finish + -ing</code>. Finish ніколи не вживається з інфінітивом."},
+ {s:"I love ___ early on weekends.",o:["waking","to waking","to wake"],a:2,alt:[0],f:B,c:'both',
+  w:"<code>love + -ing</code> і <code>love + to V</code> — обидві форми правильні, тож <i>waking</i> і <i>to wake</i> тут однаково приймаються. Неможливий лише варіант <i>to waking</i>: після частки <i>to</i> йде базова форма."},
+ {s:"He avoided ___ eye contact with her.",o:["making","to make","make"],a:0,f:G,c:'vg',
+  w:"<code>avoid + -ing</code>. Той самий шаблон: <i>avoid talking, avoid going</i>."},
+ {s:"I’ll never forgive you for ___ my trust.",o:["breaking","break","to break"],a:0,f:G,c:'prep',
+  w:"Після прийменника (<i>for</i>) завжди -ing: <code>for + -ing</code>. Аналогічно: <i>thank you for coming</i>."},
+ {s:"I really miss ___ to the beach.",o:["go","to go","going"],a:2,f:G,c:'vg',
+  w:"<code>miss + -ing</code> = сумувати за тим, що робив раніше."},
+ {s:"She is used to ___ in big cities.",o:["live","to live","living"],a:2,f:G,c:'prep',
+  w:"У <i>be used to</i> слово <b>to</b> — прийменник, а не частка інфінітива, тому далі -ing. Порівняй: <i>I used to live here</i> (звичка в минулому) vs <i>I’m used to living here</i> (я звик)."},
+ {s:"I hate ___ late to work.",o:["being","to being","be"],a:0,f:G,c:'vg',
+  w:"<code>hate + -ing</code> (можливо й <i>hate to be</i>), але варіант <i>to being</i> граматично неможливий."},
+ {s:"He practises ___ the piano every day.",o:["to play","playing","play"],a:1,f:G,c:'vg',
+  w:"<code>practise + -ing</code>. Практикувати можна тільки «щось роблячи»."},
+ {s:"I can’t help ___ when I watch this show.",o:["laugh","laughing","to laugh"],a:1,f:G,c:'fix',
+  w:"<code>can’t help + -ing</code> = не можу стриматися, щоб не..."},
+ {s:"I have difficulty ___ this software.",o:["use","using","to use"],a:1,f:G,c:'fix',
+  w:"<code>have difficulty (in) + -ing</code>. Так само: <i>have trouble doing, have a hard time doing</i>."},
+ {s:"I prefer ___ tea over coffee.",o:["drinking","drink","to drinking"],a:0,f:G,c:'vg',
+  w:"<code>prefer + -ing</code> для загальних уподобань. Форма <i>to drinking</i> неможлива."},
+ {s:"She can’t stand ___ in traffic.",o:["to sit","sitting","sit"],a:1,f:G,c:'vg',
+  w:"<code>can’t stand + -ing</code> = терпіти не можу."},
+ {s:"Can you imagine ___ on Mars?",o:["to live","living","live"],a:1,f:G,c:'vg',
+  w:"<code>imagine + -ing</code>. Уявляти можна лише процес."},
+ {s:"The noise prevented me from ___.",o:["to sleep","sleeping","sleep"],a:1,f:G,c:'prep',
+  w:"<code>prevent sb from + -ing</code>. Після <i>from</i> — тільки -ing."},
+ {s:"He denied ___ anything wrong.",o:["do","to do","doing"],a:2,f:G,c:'vg',
+  w:"<code>deny + -ing</code>. Пара до №1: admit / deny — обидва з герундієм."},
+ {s:"The job involves ___ with people.",o:["working","to work","work"],a:0,f:G,c:'vg',
+  w:"<code>involve + -ing</code> = передбачає (якусь діяльність)."},
+ {s:"I regret ___ you the truth.",o:["telling","to tell","tell"],a:0,f:G,c:'vg',
+  w:"<code>regret + -ing</code> = шкодую про те, що зробив. А <i>regret to tell you</i> = формальне «на жаль, мушу повідомити» (погана новина). Тут ідеться про минуле."},
+ {s:"I dislike ___ early in winter.",o:["getting","get","to get"],a:0,f:G,c:'vg',
+  w:"<code>dislike + -ing</code>. Як і like / love / enjoy у значенні уподобань."},
+ {s:"It’s no good ___ about it now.",o:["to worry","worrying","worry"],a:1,f:G,c:'fix',
+  w:"<code>It’s no good + -ing</code> = немає сенсу. Той самий шаблон, що й <i>it’s no use</i>."},
+ {s:"You risk ___ your money.",o:["to lose","losing","lose"],a:1,f:G,c:'vg',
+  w:"<code>risk + -ing</code> = ризикувати чимось зробити."},
+ {s:"I don’t mind ___ dishes.",o:["to do","do","doing"],a:2,f:G,c:'vg',
+  w:"<code>mind + -ing</code>. Так само в питаннях: <i>Do you mind opening the window?</i>"},
+ {s:"It’s no use ___ with him.",o:["arguing","argue","to argue"],a:0,f:G,c:'fix',
+  w:"<code>It’s no use + -ing</code> = марно щось робити."},
+ {s:"We spend time ___ old photos.",o:["looking","to look","look"],a:0,f:G,c:'fix',
+  w:"<code>spend time/money + -ing</code>. Так само: <i>waste time doing</i>."},
+ {s:"I enjoy ___ new languages.",o:["learning","learn","to learn"],a:0,f:G,c:'vg',
+  w:"<code>enjoy + -ing</code> — одне з найчастіших дієслів із герундієм."},
+ {s:"It’s not worth ___ over small things.",o:["argue","arguing","to argue"],a:1,f:G,c:'fix',
+  w:"<code>(be) worth + -ing</code> = вартий того, щоб. <i>This film is worth watching.</i>"},
+ {s:"She suggested ___ lunch outside.",o:["to have","have","having"],a:2,f:G,c:'vg',
+  w:"<code>suggest + -ing</code>. Помилка «suggest to do» — одна з найпоширеніших. Можна ще: <i>suggest that we have lunch</i>."},
+ {s:"Do you fancy ___ out tonight?",o:["going","go","to go"],a:0,f:G,c:'vg',
+  w:"<code>fancy + -ing</code> (BrE) = мати настрій щось зробити."},
+ {s:"He kept ___ even when it got tough.",o:["try","to try","trying"],a:2,f:G,c:'vg',
+  w:"<code>keep (on) + -ing</code> = продовжувати робити."},
+ {s:"I feel like ___ a movie.",o:["to watch","watch","watching"],a:2,f:G,c:'fix',
+  w:"<code>feel like + -ing</code> = хочеться. Тут <i>like</i> — прийменник."},
+ {s:"I like ___ books in bed.",o:["to read","reading","both are correct"],a:2,f:B,c:'both',
+  w:"Після <i>like</i> можливі обидві форми. Нюанс: <i>like + -ing</i> частіше = насолоджуюся процесом, <i>like + to V</i> = вважаю правильним / маю таку звичку."},
+ {s:"I can’t afford ___ a new car now.",o:["to buy","buying","buy"],a:0,f:I,c:'vi',
+  w:"<code>afford + to V</code>. Завжди з інфінітивом."},
+ {s:"He failed ___ the final exam.",o:["passing","pass","to pass"],a:2,f:I,c:'vi',
+  w:"<code>fail + to V</code> = не зумів щось зробити."},
+ {s:"We’re preparing ___ the guests.",o:["welcome","welcoming","to welcome"],a:2,f:I,c:'vi',
+  w:"<code>prepare + to V</code>. Але з прийменником: <i>prepare for welcoming</i>."},
+ {s:"She agreed ___ us.",o:["to join","joining","join"],a:0,f:I,c:'vi',
+  w:"<code>agree + to V</code>. Дієслова домовленості (agree, promise, refuse, offer) — з інфінітивом."},
+ {s:"Don’t forget ___ your keys!",o:["take","to take","taking"],a:1,f:I,c:'vi',
+  w:"<code>forget + to V</code> = забути зробити (у майбутньому). А <i>forget + -ing</i> = не пам’ятати про те, що вже зробив: <i>I’ll never forget meeting her.</i>"},
+ {s:"He pretended ___ busy.",o:["be","to be","being"],a:1,f:I,c:'vi',
+  w:"<code>pretend + to V</code> = вдавати."},
+ {s:"We don’t allow students ___ during tests.",o:["to talk","talking","talk"],a:0,f:I,c:'voi',
+  w:"<code>allow + sb + to V</code>. Без об’єкта — герундій: <i>We don’t allow talking.</i>"},
+ {s:"I hope ___ a raise this year.",o:["to get","getting","get"],a:0,f:I,c:'vi',
+  w:"<code>hope + to V</code>. Дієслова наміру/очікування (hope, expect, plan, want) — з інфінітивом."},
+ {s:"She promised ___ earlier next time.",o:["to arrive","arriving","arrive"],a:0,f:I,c:'vi',
+  w:"<code>promise + to V</code>."},
+ {s:"He appears ___ nervous.",o:["to be","being","be"],a:0,f:I,c:'vi',
+  w:"<code>appear / seem + to be</code> = здається, виглядає."},
+ {s:"They invited us ___ dinner.",o:["to have","having","have"],a:0,f:I,c:'voi',
+  w:"<code>invite + sb + to V</code>."},
+ {s:"She refused ___ the contract.",o:["signing","to sign","sign"],a:1,f:I,c:'vi',
+  w:"<code>refuse + to V</code>. Пара до <i>agree to</i>."},
+ {s:"We arranged ___ them at 6.",o:["meeting","to meet","meet"],a:1,f:I,c:'vi',
+  w:"<code>arrange + to V</code> = домовитися щось зробити."},
+ {s:"I want ___ how to cook.",o:["to learn","learning","learn"],a:0,f:I,c:'vi',
+  w:"<code>want + to V</code>. Після want герундій неможливий."},
+ {s:"He seems ___ sad today.",o:["being","be","to be"],a:2,f:I,c:'vi',
+  w:"<code>seem + to be</code>. Можна й просто <i>He seems sad</i>, але якщо є дієслово — то <i>to be</i>."},
+ {s:"I asked him ___ the window.",o:["to close","closing","close"],a:0,f:I,c:'voi',
+  w:"<code>ask + sb + to V</code> — непряме прохання."},
+ {s:"She managed ___ her fear.",o:["overcome","to overcome","overcoming"],a:1,f:I,c:'vi',
+  w:"<code>manage + to V</code> = зуміти, вдалося."},
+ {s:"I started ___ Spanish last year.",o:["to learn","learning","both are correct"],a:2,f:B,c:'both',
+  w:"Після <i>start</i> обидві форми без різниці в значенні. Виняток: не кажуть <i>starting learning</i> — два -ing підряд."},
+ {s:"He began ___ loudly.",o:["laughing","to laugh","both are correct"],a:2,f:B,c:'both',
+  w:"<i>begin</i> працює як <i>start</i> — і <i>to laugh</i>, і <i>laughing</i> правильні."},
+ {s:"I need ___ more practice.",o:["to get","getting","get"],a:0,f:I,c:'vi',
+  w:"<code>need + to V</code>. Форма <i>need + -ing</i> існує, але в пасивному значенні: <i>The car needs washing</i> (= needs to be washed)."},
+ {s:"I want ___ to the mountains.",o:["going","go","to go"],a:2,f:I,c:'vi',
+  w:"<code>want + to V</code>."},
+ {s:"She chose ___ the easier route.",o:["to take","taking","take"],a:0,f:I,c:'vi',
+  w:"<code>choose + to V</code> = вирішити зробити."},
+ {s:"He offered ___ me with my bags.",o:["help","to help","helping"],a:1,f:I,c:'vi',
+  w:"<code>offer + to V</code> = запропонувати свою допомогу."},
+ {s:"I would like ___ a coffee, please.",o:["to have","having","have"],a:0,f:I,c:'vi',
+  w:"<code>would like + to V</code> — завжди інфінітив, навіть якщо просто <i>like</i> допускає -ing."},
+ {s:"We decided ___ at home.",o:["stay","staying","to stay"],a:2,f:I,c:'vi',
+  w:"<code>decide + to V</code>."},
+ {s:"They persuaded me ___ the party.",o:["to join","joining","join"],a:0,f:I,c:'voi',
+  w:"<code>persuade + sb + to V</code> = переконати когось щось зробити."},
+ {s:"We expect ___ the results soon.",o:["to get","getting","get"],a:0,f:I,c:'vi',
+  w:"<code>expect + to V</code>."},
+ {s:"She plans ___ a book next year.",o:["write","writing","to write"],a:2,f:I,c:'vi',
+  w:"<code>plan + to V</code>."},
+ {s:"I can’t stand ___ in the rain.",o:["standing","to stand","stand"],a:0,f:G,c:'vg',
+  w:"<code>can’t stand + -ing</code> — те саме правило, що й у №13."}
+];
+
+const N=DATA.length;
+let answers=new Array(N).fill(null);
+let idx=0, finished=false, confirmPending=false, subset=null; // subset = масив індексів для режиму «помилки»
+
+const $=id=>document.getElementById(id);
+const letters=['A','B','C'];
+const order=()=>subset||Array.from({length:N},(_,i)=>i);
+
+function isRight(i){
+  const d=DATA[i], a=answers[i];
+  if(a===null) return false;
+  return a===d.a || (d.alt&&d.alt.includes(a));
+}
+function answerText(i,a){
+  const t=DATA[i].o[a];
+  return t==='both are correct'?'both are correct':t;
+}
+function renderSentence(i,a){
+  const d=DATA[i];
+  const filled=a===null?'':d.o[a];
+  const slot=`<span class="slot${a===null?'':' filled'}">${a===null?'&nbsp;&nbsp;&nbsp;&nbsp;':filled}</span>`;
+  return d.s.replace('___',slot);
+}
+
+function draw(){
+  const list=order(), pos=list.indexOf(idx);
+  const i=idx, d=DATA[i], a=answers[i];
+  $('counterEl').innerHTML=`<b>${String(pos+1).padStart(2,'0')}</b> / ${list.length}`;
+  $('railfill').style.width=((pos+1)/list.length*100)+'%';
+  const done=list.filter(k=>answers[k]!==null).length;
+  $('answered').textContent=done+' з '+list.length;
+
+  $('sentence').innerHTML=renderSentence(i,a);
+  $('sentence').classList.remove('fade');void $('sentence').offsetWidth;$('sentence').classList.add('fade');
+
+  $('opts').innerHTML=d.o.map((t,k)=>
+    `<button class="opt${a===k?' sel':''}" data-k="${k}"><span class="key">${letters[k]}</span><span>${t}</span></button>`
+  ).join('');
+  [...$('opts').children].forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+
+  $('prev').disabled=pos===0;
+  const last=pos===list.length-1;
+  $('next').textContent=last?'Завершити тест':'Далі →';
+  $('next').classList.toggle('ghost',!last&&a===null);
+  $('hint').textContent=last&&done<list.length?`Без відповіді: ${list.length-done}`:'A B C — вибір · ← → — навігація';
+
+  drawMap('map',false);
+}
+
+function pick(k){
+  answers[idx]=k;
+  confirmPending=false;
+  draw();
+  const list=order(), pos=list.indexOf(idx);
+  if(pos<list.length-1) setTimeout(()=>{idx=list[pos+1];draw();},220);
+}
+
+function drawMap(el,res){
+  const list=order();
+  $(el).innerHTML=list.map((i,p)=>{
+    let cls='cell';
+    if(res){ cls+=isRight(i)?' ok':' bad'; }
+    else{ if(answers[i]!==null)cls+=' done'; if(i===idx)cls+=' now'; }
+    return `<button class="${cls}" data-i="${i}">${p+1}</button>`;
+  }).join('');
+  if(!res)[...$(el).children].forEach(b=>b.onclick=()=>{idx=+b.dataset.i;draw();});
+}
+
+function finish(){
+  const list=order();
+  const unanswered=list.filter(k=>answers[k]===null).length;
+  if(unanswered && !confirmPending){
+    confirmPending=true;
+    $('hint').textContent=`Ще ${unanswered} без відповіді — вони підуть як помилки. Натисни ще раз, щоб завершити.`;
+    $('next').textContent='Завершити все одно';
+    return;
+  }
+  confirmPending=false;
+  finished=true;
+  $('quiz').classList.add('hidden');
+  $('results').classList.remove('hidden');
+  const right=list.filter(isRight).length;
+  $('scoreNum').textContent=right;
+  $('results').querySelector('.of').textContent='/ '+list.length;
+  const pct=Math.round(right/list.length*100);
+  $('scorePct').textContent=pct+'%';
+  $('verdict').textContent =
+    pct>=95?'Майже бездоганно. Форми відпрацьовані на автоматизмі.' :
+    pct>=85?'Сильний результат. Слабких місць лишилось небагато — див. розбір нижче.' :
+    pct>=70?'Добра база, але кілька груп дієслів ще плутаються. Пройдися по помилках і повтори тест.' :
+    pct>=50?'Основне зрозуміло, проте списки дієслів варто вивчити окремо: спочатку ті, що завжди з -ing.' :
+            'Тут потрібна теорія, а не вгадування. Почни зі списків дієслів у розборі нижче.';
+
+  // статистика за типами
+  const stats={};
+  list.forEach(i=>{const c=DATA[i].c;(stats[c]=stats[c]||{t:0,r:0}).t++;if(isRight(i))stats[c].r++;});
+  $('bars').innerHTML=Object.keys(CATS).filter(c=>stats[c]).map(c=>{
+    const s=stats[c], p=Math.round(s.r/s.t*100);
+    return `<div class="bar"><div class="lbl"><span>${CATS[c]}</span><b>${s.r}/${s.t}</b></div>
+      <div class="track"><i style="width:${p}%;background:${p>=80?'var(--ok)':p>=50?'var(--accent)':'var(--bad)'}"></i></div></div>`;
+  }).join('');
+
+  drawMap('map2',true);
+
+  const wrong=list.filter(i=>!isRight(i));
+  $('mistakesTitle').textContent=wrong.length?`Помилки з поясненням — ${wrong.length}`:'Помилок немає';
+  $('review').innerHTML = wrong.length ? wrong.map(i=>{
+    const d=DATA[i], a=answers[i];
+    const correct=d.o[d.a];
+    const shown=correct==='both are correct'?d.o[0]+' / '+d.o[1]:correct;
+    const tag=d.f===G?'<span class="tag ing">gerund</span>':d.f===I?'<span class="tag inf">infinitive</span>':'<span class="tag both">both</span>';
+    return `<div class="item">
+      <div class="num">№ ${i+1} · ${CATS[d.c]} ${tag}</div>
+      <div class="s">${d.s.replace('___','<u>'+(correct==='both are correct'?d.o[1]:correct)+'</u>')}</div>
+      <div class="ab">
+        <span class="yours">Твоя відповідь: ${a===null?'—':'<s>'+d.o[a]+'</s>'}</span>
+        <span class="right">Правильно: ${shown}</span>
+      </div>
+      <div class="why">${d.w}</div>
+    </div>`;
+  }).join('') : '<div class="card perfect">Усі 60 речень правильно. Нічого розбирати.</div>';
+
+  $('retryWrong').classList.toggle('hidden',wrong.length===0);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function start(list){
+  subset=list; finished=false;
+  (subset||Array.from({length:N},(_,i)=>i)).forEach(i=>answers[i]=null);
+  idx=(subset||[0])[0];
+  $('start').classList.add('hidden');
+  $('results').classList.add('hidden');
+  $('quiz').classList.remove('hidden');
+  draw();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+$('go').onclick=()=>start(null);
+$('restart').onclick=()=>{answers=new Array(N).fill(null);start(null);};
+$('retryWrong').onclick=()=>{
+  const list=order().filter(i=>!isRight(i));
+  start(list);
+};
+$('prev').onclick=()=>{const l=order(),p=l.indexOf(idx);if(p>0){idx=l[p-1];draw();}};
+$('next').onclick=()=>{const l=order(),p=l.indexOf(idx);if(p<l.length-1){idx=l[p+1];draw();}else finish();};
+
+document.addEventListener('keydown',e=>{
+  if($('quiz').classList.contains('hidden'))return;
+  const k=e.key.toLowerCase();
+  const map={'a':0,'b':1,'c':2,'1':0,'2':1,'3':2,'ф':0,'и':1,'с':2};
+  if(k in map && map[k]<DATA[idx].o.length){e.preventDefault();pick(map[k]);}
+  if(e.key==='ArrowRight'){e.preventDefault();$('next').click();}
+  if(e.key==='ArrowLeft'){e.preventDefault();$('prev').click();}
+});
+</script>
+</body>
+</html>
