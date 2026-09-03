@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speaking · The Passive · B1+ | dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1E2B26;
+    --ink-soft:#4A5A53;
+    --paper:#EFF2ED;
+    --panel:#FFFFFF;
+    --green:#2F4A3E;
+    --gold:#C8952B;
+    --line:#D3DBD3;
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:28px 20px 64px}
+
+  /* masthead */
+  header.top{
+    display:flex;align-items:baseline;justify-content:space-between;
+    gap:16px;padding-bottom:14px;border-bottom:1px solid var(--line);
+  }
+  .brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.01em}
+  .brand span{color:var(--gold)}
+  .top .meta{font-size:13px;color:var(--ink-soft)}
+
+  h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(28px,4.6vw,44px);
+    line-height:1.1;
+    letter-spacing:-.02em;
+    margin:26px 0 8px;
+    max-width:22ch;
+  }
+  .lede{color:var(--ink-soft);max-width:60ch;margin:0 0 26px;font-size:15px}
+
+  /* filters */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .chip{
+    font-family:var(--sans);font-size:13.5px;
+    padding:7px 13px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--line);background:transparent;color:var(--ink-soft);
+  }
+  .chip:hover{border-color:var(--green);color:var(--green)}
+  .chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+
+  /* deck */
+  .deck{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:5px solid var(--gold);
+    padding:30px 32px 26px;
+    min-height:290px;
+    display:flex;flex-direction:column;
+  }
+  .deck-head{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:13px;color:var(--ink-soft);margin-bottom:20px;
+  }
+  .tag{color:var(--green);font-weight:500}
+  .count{font-variant-numeric:tabular-nums}
+  .q{
+    font-family:var(--serif);
+    font-size:clamp(23px,3.7vw,34px);
+    line-height:1.28;
+    font-weight:400;
+    letter-spacing:-.01em;
+    margin:0;
+    max-width:26ch;
+    flex:1;
+  }
+  .q.turn{animation:in .32s ease}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .followup{
+    margin-top:18px;padding:12px 16px;background:var(--paper);
+    border-left:2px solid var(--green);font-size:15.5px;color:var(--green);
+    display:none;
+  }
+  .followup.show{display:block}
+  .controls{display:flex;align-items:center;gap:10px;margin-top:24px;flex-wrap:wrap}
+  button.act{
+    font-family:var(--sans);font-size:14px;font-weight:500;
+    padding:10px 18px;border:1px solid var(--green);background:transparent;
+    color:var(--green);cursor:pointer;border-radius:2px;
+  }
+  button.act:hover{background:var(--green);color:#fff}
+  button.act.solid{background:var(--green);color:#fff}
+  button.act.solid:hover{background:var(--ink)}
+  button.act.ghost{border-color:var(--line);color:var(--ink-soft)}
+  button.act.ghost:hover{background:var(--ink-soft);border-color:var(--ink-soft);color:#fff}
+  .spacer{flex:1}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  .progress{display:flex;gap:4px;margin-top:16px;flex-wrap:wrap}
+  .pip{width:16px;height:3px;background:var(--line)}
+  .pip.done{background:var(--gold)}
+  .pip.here{background:var(--green)}
+
+  /* starters */
+  .starters{margin-top:30px;border-top:1px solid var(--line);padding-top:22px}
+  .starters h2,.notes h2,.all h2{
+    font-family:var(--sans);font-size:13px;font-weight:600;
+    color:var(--ink-soft);margin:0 0 12px;
+  }
+  .starter-row{display:flex;flex-wrap:wrap;gap:8px}
+  .starter{
+    font-family:var(--serif);font-size:16px;
+    padding:8px 14px;background:var(--panel);border:1px solid var(--line);
+    cursor:pointer;color:var(--ink);
+  }
+  .starter.used{background:var(--green);border-color:var(--green);color:#fff;text-decoration:line-through}
+
+  /* grammar */
+  .notes{margin-top:34px}
+  details{border-top:1px solid var(--line);padding:16px 0}
+  summary{
+    cursor:pointer;font-family:var(--serif);font-size:19px;font-weight:600;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--gold);font-size:22px;font-family:var(--sans)}
+  details[open] summary::after{content:"–"}
+  .body{padding-top:14px;max-width:66ch;color:var(--ink-soft);font-size:15px}
+  table{border-collapse:collapse;width:100%;margin-top:10px;font-size:14.5px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--ink);font-weight:600;width:33%}
+  td em{font-family:var(--serif);font-style:normal;color:var(--ink);font-size:15.5px}
+
+  /* full list */
+  .all{margin-top:34px}
+  .all ol{margin:0;padding-left:20px}
+  .all li{margin-bottom:7px;font-family:var(--serif);font-size:16.5px}
+  .all .grp{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--green);margin:18px 0 8px}
+
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--ink-soft);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  @media (max-width:560px){
+    .deck{padding:22px 20px}
+    .controls button.act{flex:1 1 auto}
+  }
+  @media (prefers-reduced-motion:reduce){.q.turn{animation:none}}
+  @media print{
+    .deck,.filters,.starters,.controls,.notes{display:none}
+    body{background:#fff}
+    .all{display:block}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">d<span>i</span>nglish</div>
+    <div class="meta">Speaking practice · B1+ · one-to-one</div>
+  </header>
+
+  <h1>Talk about things done to you</h1>
+  <p class="lede">Answer in full sentences. Every answer needs at least one passive form — tick a starter below when you use it. If you slip into the active, your teacher will ask the follow-up.</p>
+
+  <div class="filters" id="filters"></div>
+
+  <section class="deck">
+    <div class="deck-head">
+      <span class="tag" id="tag"></span>
+      <span class="count" id="count"></span>
+    </div>
+    <p class="q" id="q"></p>
+    <div class="followup" id="followup"></div>
+    <div class="controls">
+      <button class="act ghost" id="prev">Back</button>
+      <button class="act solid" id="next">Next question</button>
+      <button class="act" id="fu">Push me further</button>
+      <span class="spacer"></span>
+      <button class="act ghost" id="shuffle">Shuffle</button>
+    </div>
+    <div class="progress" id="pips"></div>
+  </section>
+
+  <section class="starters">
+    <h2>Use these — tap one when you say it</h2>
+    <div class="starter-row" id="starters"></div>
+  </section>
+
+  <section class="notes">
+    <h2>Reference</h2>
+
+    <details>
+      <summary>Як будується пасив</summary>
+      <div class="body">
+        <p>Формула завжди одна: <strong>be</strong> у потрібному часі + <strong>V3</strong> (past participle). Змінюється лише форма <em>be</em>.</p>
+        <table>
+          <tr><th>Present simple</th><td><em>Coffee is grown in Brazil.</em></td></tr>
+          <tr><th>Present continuous</th><td><em>The road is being repaired.</em></td></tr>
+          <tr><th>Past simple</th><td><em>I was given a strange gift.</em></td></tr>
+          <tr><th>Present perfect</th><td><em>My account has been hacked.</em></td></tr>
+          <tr><th>Future / modal</th><td><em>It will be replaced. It should be regulated.</em></td></tr>
+        </table>
+        <p style="margin-top:14px">Пасив вживаємо, коли діяч невідомий, неважливий або очевидний. Якщо він все ж потрібен — додаємо <em>by</em>: <em>The email was sent <strong>by</strong> my manager.</em></p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Дієслова з двома додатками</summary>
+      <div class="body">
+        <p>Give, tell, offer, send, show, pay, teach мають два додатки, тому пасив можна почати з людини — і саме так говорять найчастіше.</p>
+        <table>
+          <tr><th>Active</th><td><em>They gave me a discount.</em></td></tr>
+          <tr><th>Passive (natural)</th><td><em>I was given a discount.</em></td></tr>
+          <tr><th>Passive (also correct)</th><td><em>A discount was given to me.</em></td></tr>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary>It is said that… — для дискусії</summary>
+      <div class="body">
+        <p>Коли переказуємо чужу думку, а джерело невідоме: <em>It is said / believed / thought / known that…</em></p>
+        <table>
+          <tr><th>Neutral</th><td><em>It is said that coffee is bad for you.</em></td></tr>
+          <tr><th>Shorter</th><td><em>Coffee is said to be bad for you.</em></td></tr>
+          <tr><th>Disagreeing</th><td><em>It is often believed that…, but in my experience…</em></td></tr>
+        </table>
+      </div>
+    </details>
+  </section>
+
+  <section class="all">
+    <h2>All questions</h2>
+    <div id="alllist"></div>
+  </section>
+
+  <footer>
+    <span>dinglish · the passive · speaking</span>
+    <span>Arrow keys to move · F for the follow-up</span>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  {g:"Lifestyle & food", q:"Where is the best coffee in your city made?", f:"And how is it usually served — with milk, with sugar?"},
+  {g:"Lifestyle & food", q:"Are you ever offered food you don't want to eat? How do you refuse politely?", f:"When were you last offered something you really couldn't eat?"},
+  {g:"Lifestyle & food", q:"What dishes are traditionally served at family celebrations in your family?", f:"Who are they cooked by — the same person every year?"},
+  {g:"Lifestyle & food", q:"How is coffee usually drunk in Ukraine? Is it different from Italy or Turkey?", f:"Has that been changed by the new coffee shops?"},
+  {g:"Lifestyle & food", q:"Have you ever been served something terrible in a restaurant? What happened?", f:"Were you given an apology, or your money back?"},
+
+  {g:"Childhood & past", q:"Where were you born and brought up?", f:"Has the area been changed a lot since then?"},
+  {g:"Childhood & past", q:"Was your name chosen by your parents, or by someone else in the family?", f:"Were you ever called something else at home?"},
+  {g:"Childhood & past", q:"What rules were you given as a child that you didn't understand?", f:"Were they ever explained to you properly?"},
+  {g:"Childhood & past", q:"Have you ever been told something that completely changed your mind?", f:"Who was it said by?"},
+
+  {g:"Work", q:"How is your work evaluated — by results or by hours?", f:"Should it be measured differently?"},
+  {g:"Work", q:"What skills are expected from a person in your position?", f:"Which of them were you never taught?"},
+  {g:"Work", q:"Have you ever been criticised unfairly at work?", f:"Were you given a chance to explain?"},
+  {g:"Work", q:"Is remote work encouraged in your company, or only tolerated?", f:"How were those decisions made?"},
+
+  {g:"City & society", q:"What is your city known for?", f:"What would you like it to be known for instead?"},
+  {g:"City & society", q:"What buildings near you are being renovated at the moment?", f:"When will the work be finished, do you think?"},
+  {g:"City & society", q:"What should be done to make public transport better?", f:"Why hasn't it been done already?"},
+  {g:"City & society", q:"If a new park were built next to your house, what would you like to be included?", f:"What definitely shouldn't be built there?"},
+
+  {g:"Technology", q:"What kind of data is collected about us online?", f:"Who is it sold to?"},
+  {g:"Technology", q:"Has your account ever been hacked, or your phone stolen?", f:"Was anything taken? Was the problem solved?"},
+  {g:"Technology", q:"Which jobs will be replaced by AI in ten years — and which won't?", f:"Could your own job be done by a machine?"},
+  {g:"Technology", q:"Should social media be regulated more strictly?", f:"By whom — the state or the platforms?"},
+
+  {g:"It is said that…", q:"\u201CCoffee is said to be bad for your health.\u201D Do you agree?", f:"Where are these ideas usually spread?"},
+  {g:"It is said that…", q:"What is believed about Ukrainians abroad that simply isn't true?", f:"How could that be changed?"},
+  {g:"It is said that…", q:"\u201CMoney is thought to make people happier.\u201D True or not?", f:"What are you told about money as a child?"}
+];
+
+const STARTERS = ["It is made…","It was built…","It is being…","It has been…","I was given…","I was told…","It should be…","It will be…","…by whom?"];
+
+let filter = "All";
+let list = DATA.slice();
+let i = 0;
+const seen = new Set();
+
+const $ = id => document.getElementById(id);
+const groups = ["All", ...[...new Set(DATA.map(d => d.g))]];
+
+groups.forEach(g => {
+  const b = document.createElement("button");
+  b.className = "chip";
+  b.textContent = g;
+  b.setAttribute("aria-pressed", g === filter);
+  b.onclick = () => { filter = g; applyFilter(); };
+  $("filters").appendChild(b);
+});
+
+function applyFilter(){
+  list = filter === "All" ? DATA.slice() : DATA.filter(d => d.g === filter);
+  i = 0;
+  [...$("filters").children].forEach(c => c.setAttribute("aria-pressed", c.textContent === filter));
+  render();
+}
+
+function render(){
+  const item = list[i];
+  seen.add(item.q);
+  $("tag").textContent = item.g;
+  $("count").textContent = String(i + 1).padStart(2,"0") + " / " + String(list.length).padStart(2,"0");
+  const q = $("q");
+  q.textContent = item.q;
+  q.classList.remove("turn"); void q.offsetWidth; q.classList.add("turn");
+  $("followup").textContent = item.f;
+  $("followup").classList.remove("show");
+  $("pips").innerHTML = "";
+  list.forEach((d, n) => {
+    const p = document.createElement("span");
+    p.className = "pip" + (n === i ? " here" : (seen.has(d.q) ? " done" : ""));
+    $("pips").appendChild(p);
+  });
+}
+
+$("next").onclick = () => { i = (i + 1) % list.length; render(); };
+$("prev").onclick = () => { i = (i - 1 + list.length) % list.length; render(); };
+$("fu").onclick = () => $("followup").classList.toggle("show");
+$("shuffle").onclick = () => {
+  for (let n = list.length - 1; n > 0; n--){
+    const m = Math.floor(Math.random() * (n + 1));
+    [list[n], list[m]] = [list[m], list[n]];
+  }
+  i = 0; render();
+};
+
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "BUTTON" && e.key === " ") return;
+  if (e.key === "ArrowRight") $("next").click();
+  if (e.key === "ArrowLeft") $("prev").click();
+  if (e.key.toLowerCase() === "f") $("fu").click();
+});
+
+STARTERS.forEach(s => {
+  const b = document.createElement("button");
+  b.className = "starter";
+  b.textContent = s;
+  b.onclick = () => b.classList.toggle("used");
+  $("starters").appendChild(b);
+});
+
+let current = "";
+DATA.forEach(d => {
+  if (d.g !== current){
+    current = d.g;
+    const h = document.createElement("div");
+    h.className = "grp";
+    h.textContent = d.g;
+    $("alllist").appendChild(h);
+    const ol = document.createElement("ol");
+    ol.id = "ol-" + current;
+    $("alllist").appendChild(ol);
+  }
+  const li = document.createElement("li");
+  li.textContent = d.q;
+  $("alllist").lastChild.appendChild(li);
+});
+
+render();
+</script>
+</body>
+</html>
