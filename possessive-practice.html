@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>’s чи of? — Elementary practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FCFBF6;
+    --rule:#CBDCEA;
+    --margin:#E3A7AE;
+    --ink:#1F3B73;
+    --ink-soft:#6C7FA3;
+    --pencil:#2A2E35;
+    --red:#C4362F;
+    --green:#2C6E52;
+    --lh:34px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:#EFEAE0;
+    color:var(--pencil);
+    font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:17px;
+    line-height:var(--lh);
+    display:flex;
+    justify-content:center;
+    padding:24px 12px 64px;
+  }
+  .page{
+    width:100%;
+    max-width:620px;
+    background:
+      linear-gradient(to bottom, transparent calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px), var(--rule) var(--lh));
+    background-size:100% var(--lh);
+    background-color:var(--paper);
+    border-radius:2px 10px 10px 2px;
+    box-shadow:0 1px 0 #D9D2C5, 0 18px 40px -28px rgba(31,59,115,.5);
+    padding:0 24px 40px 46px;
+    position:relative;
+    overflow:hidden;
+  }
+  .page::before{
+    content:"";position:absolute;top:0;bottom:0;left:30px;width:1px;background:var(--margin);
+  }
+  h1,h2,h3{font-family:"Literata",Georgia,serif;font-weight:600;margin:0}
+
+  /* hero */
+  header{padding-top:calc(var(--lh) * 1.2);padding-bottom:calc(var(--lh) * .6)}
+  .mark{
+    font-family:"Literata",Georgia,serif;
+    font-size:150px;
+    line-height:.72;
+    color:var(--ink);
+    letter-spacing:-6px;
+  }
+  .mark span{color:var(--margin)}
+  h1{font-size:29px;line-height:var(--lh);margin-top:12px}
+  .sub{color:var(--ink-soft);font-size:15px;line-height:calc(var(--lh) - 8px);margin-top:6px}
+
+  /* rules */
+  .rules{margin-top:calc(var(--lh) * .6)}
+  .rule-row{display:grid;grid-template-columns:66px 1fr;gap:14px;align-items:baseline;padding:6px 0}
+  .key{
+    font-family:"Literata",Georgia,serif;font-size:24px;color:var(--ink);
+    border-bottom:2px solid var(--ink);text-align:center;padding-bottom:2px;
+  }
+  .rule-row p{margin:0;font-size:15.5px;line-height:calc(var(--lh) - 4px)}
+  .ex{color:var(--ink);font-family:"Literata",Georgia,serif}
+
+  /* buttons */
+  button{font-family:inherit;font-size:16px;cursor:pointer}
+  .go{
+    margin-top:calc(var(--lh) * .7);
+    background:var(--ink);color:#FCFBF6;border:none;border-radius:6px;
+    padding:12px 26px;font-weight:700;letter-spacing:.2px;
+  }
+  .go:hover{background:#16305F}
+  .ghost{background:none;border:none;color:var(--ink-soft);text-decoration:underline;padding:8px 0}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+  /* quiz */
+  .meta{display:flex;justify-content:space-between;align-items:baseline;color:var(--ink-soft);font-size:14px;padding-top:calc(var(--lh) * 1.2)}
+  .track{height:3px;background:#E4E9EF;margin:8px 0 calc(var(--lh) * .8);border-radius:2px}
+  .track i{display:block;height:3px;background:var(--ink);border-radius:2px;transition:width .25s}
+  .prompt{font-family:"Literata",Georgia,serif;font-size:22px;line-height:calc(var(--lh) + 4px);margin:0 0 4px}
+  .prompt em{font-style:normal;color:var(--ink)}
+  .task-hint{color:var(--ink-soft);font-size:14px;margin:0 0 18px}
+
+  .opt{
+    display:block;width:100%;text-align:left;background:transparent;
+    border:1px solid #DDD8CC;border-radius:8px;padding:12px 16px;margin-bottom:10px;
+    font-family:"Literata",Georgia,serif;font-size:19px;color:var(--pencil);
+  }
+  .opt:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+  .opt:disabled{cursor:default}
+  .opt.right{border-color:var(--green);color:var(--green);background:rgba(44,110,82,.07)}
+  .opt.wrong{border-color:var(--red);color:var(--red);text-decoration:line-through;text-decoration-color:var(--red)}
+
+  .answer-line{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  input[type=text]{
+    flex:1;min-width:220px;font-family:"Literata",Georgia,serif;font-size:20px;color:var(--ink);
+    background:transparent;border:none;border-bottom:2px solid var(--ink-soft);
+    padding:6px 2px;line-height:28px;
+  }
+  input[type=text]:focus{outline:none;border-bottom-color:var(--ink)}
+  .check{background:var(--ink);color:#FCFBF6;border:none;border-radius:6px;padding:10px 20px;font-weight:700}
+
+  .fb{font-size:15.5px;line-height:calc(var(--lh) - 6px);margin:2px 0 0;min-height:var(--lh)}
+  .fb b{font-family:"Literata",Georgia,serif;font-weight:600}
+  .fb.ok{color:var(--green)}
+  .fb.no{color:var(--red)}
+  .next{margin-top:10px;background:none;border:1px solid var(--ink);color:var(--ink);border-radius:6px;padding:10px 22px;font-weight:700}
+  .next:hover{background:var(--ink);color:#FCFBF6}
+  .hidden{display:none}
+
+  /* results */
+  .score{font-family:"Literata",Georgia,serif;font-size:64px;color:var(--ink);line-height:1.1}
+  .score small{font-size:24px;color:var(--ink-soft)}
+  .missed{margin-top:calc(var(--lh) * .6);padding-left:0;list-style:none}
+  .missed li{font-family:"Literata",Georgia,serif;font-size:18px;line-height:calc(var(--lh) - 2px);border-left:2px solid var(--red);padding-left:12px;margin-bottom:10px}
+  .missed li s{color:var(--ink-soft)}
+  .missed li b{color:var(--green);font-weight:600}
+  .brand{
+    font-family:"Literata",Georgia,serif;font-size:20px;color:var(--ink);
+    letter-spacing:.5px;display:inline-block;
+  }
+  .brand::before{content:"’";color:var(--margin)}
+  .sign{
+    margin-top:calc(var(--lh) * 1.2);padding-top:10px;
+    color:var(--ink-soft);font-size:13.5px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  }
+  @media (max-width:520px){
+    .mark{font-size:104px}
+    h1{font-size:24px}
+    .page{padding:0 16px 32px 38px}
+    .page::before{left:24px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- SCREEN 1: rules -->
+  <section id="s-intro">
+    <header>
+      <span class="brand">dinglish</span>
+      <div class="mark">’s <span>of</span></div>
+      <h1>Чий це предмет?</h1>
+      <p class="sub">Тренажер присвійних форм для рівня Elementary. 20 завдань: обери правильний варіант, а потім напиши сам.</p>
+    </header>
+
+    <div class="rules">
+      <div class="rule-row">
+        <div class="key">’s</div>
+        <p>Люди й тварини: <span class="ex">Anna’s bag</span>, <span class="ex">the dog’s tail</span>, <span class="ex">my brother’s car</span></p>
+      </div>
+      <div class="rule-row">
+        <div class="key">s’</div>
+        <p>Множина, що вже має <b>-s</b>: <span class="ex">my parents’ house</span>, <span class="ex">the boys’ room</span></p>
+      </div>
+      <div class="rule-row">
+        <div class="key">of</div>
+        <p>Речі, місця, абстрактні поняття: <span class="ex">the end of the film</span>, <span class="ex">the name of the street</span></p>
+      </div>
+    </div>
+
+    <button class="go" id="start">Почати</button>
+  </section>
+
+  <!-- SCREEN 2: quiz -->
+  <section id="s-quiz" class="hidden">
+    <div class="meta"><span id="q-stage">Обери правильний варіант</span><span id="q-count"></span></div>
+    <div class="track"><i id="q-bar" style="width:0"></i></div>
+
+    <p class="prompt" id="q-prompt"></p>
+    <p class="task-hint" id="q-hint"></p>
+
+    <div id="q-options"></div>
+
+    <div class="answer-line hidden" id="q-input-wrap">
+      <input type="text" id="q-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Напиши фразу тут">
+      <button class="check" id="q-check">Перевірити</button>
+    </div>
+
+    <p class="fb" id="q-fb"></p>
+    <button class="next hidden" id="q-next">Далі</button>
+  </section>
+
+  <!-- SCREEN 3: results -->
+  <section id="s-done" class="hidden">
+    <div class="meta"><span>Результат</span><span></span></div>
+    <div class="track"><i style="width:100%"></i></div>
+    <p class="score" id="r-score"></p>
+    <h2 id="r-verdict"></h2>
+    <p class="sub" id="r-note"></p>
+    <ul class="missed" id="r-missed"></ul>
+    <button class="go" id="again">Пройти ще раз</button>
+  </section>
+
+  <footer class="sign">
+    <span>Possessive ’s and of · Elementary</span>
+    <span class="brand" style="font-size:16px">dinglish</span>
+  </footer>
+
+</main>
+
+<script>
+const MCQ = [
+  {p:"Anna has a bag.", a:["Anna’s bag","the bag of Anna"], c:0, w:"Люди завжди беруть <b>’s</b>."},
+  {p:"The film has an end.", a:["the film’s end","the end of the film"], c:1, w:"Для речей і понять — <b>of</b>."},
+  {p:"My brother has a car.", a:["my brother’s car","the car of my brother"], c:0, w:"<b>My brother</b> — людина, отже <b>’s</b>."},
+  {p:"The house has a door.", a:["the house’s door","the door of the house"], c:1, w:"Будинок — предмет, тому <b>of</b>."},
+  {p:"The dog has a name.", a:["the dog’s name","the name of the dog"], c:0, w:"Тварини теж беруть <b>’s</b>."},
+  {p:"The street has a name.", a:["the street’s name","the name of the street"], c:1, w:"Вулиця — не людина: <b>of</b>."},
+  {p:"Tom has a birthday in May.", a:["the birthday of Tom","Tom’s birthday"], c:1, w:"Ім’я людини + <b>’s</b>."},
+  {p:"The wall is blue.", a:["the colour of the wall","the wall’s colour"], c:0, w:"Колір предмета — через <b>of</b>."},
+  {p:"My parents have a house.", a:["my parents’s house","my parents’ house"], c:1, w:"Слово вже має <b>-s</b> → лише апостроф: <b>parents’</b>."},
+  {p:"The children have toys.", a:["the children’s toys","the childrens’ toys"], c:0, w:"<b>Children</b> — множина без <b>-s</b>, тому <b>children’s</b>."},
+  {p:"The ticket costs 300 hryvnias.", a:["the ticket’s price","the price of the ticket"], c:1, w:"Ціна квитка — <b>of</b>."},
+  {p:"The book has a first page.", a:["the first page of the book","the book’s first page"], c:0, w:"Частина предмета — <b>of</b>."}
+];
+
+const WRITE = [
+  {p:"the phone + Maria", h:"Хто власник? Постав ’s.", ok:["maria's phone"], show:"Maria’s phone"},
+  {p:"the roof + the house", h:"Це предмет — потрібне of.", ok:["the roof of the house","roof of the house"], show:"the roof of the house"},
+  {p:"the bike + my sister", h:"", ok:["my sister's bike"], show:"my sister’s bike"},
+  {p:"the beginning + the book", h:"", ok:["the beginning of the book","beginning of the book"], show:"the beginning of the book"},
+  {p:"the tail + the cat", h:"Тварина — теж ’s.", ok:["the cat's tail","cat's tail"], show:"the cat’s tail"},
+  {p:"the address + the school", h:"", ok:["the address of the school","address of the school"], show:"the address of the school"},
+  {p:"the office + Mr Brown", h:"", ok:["mr brown's office","mr. brown's office"], show:"Mr Brown’s office"},
+  {p:"the room + the girls", h:"Множина вже має -s.", ok:["the girls' room","girls' room"], show:"the girls’ room"}
+];
+
+const $ = id => document.getElementById(id);
+const total = MCQ.length + WRITE.length;
+let i = 0, score = 0, missed = [], answered = false;
+
+function norm(s){
+  return s.toLowerCase()
+    .replace(/[’`´]/g,"'")
+    .replace(/[.,!?]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function render(){
+  answered = false;
+  $("q-fb").textContent = ""; $("q-fb").className = "fb";
+  $("q-next").classList.add("hidden");
+  $("q-count").textContent = (i+1) + " / " + total;
+  $("q-bar").style.width = (i/total*100) + "%";
+
+  if(i < MCQ.length){
+    const q = MCQ[i];
+    $("q-stage").textContent = "Choose the correct phrase";
+    $("q-prompt").innerHTML = q.p;
+    $("q-hint").textContent = "";
+    $("q-input-wrap").classList.add("hidden");
+    $("q-options").classList.remove("hidden");
+    $("q-options").innerHTML = "";
+    q.a.forEach((text, idx) => {
+      const b = document.createElement("button");
+      b.className = "opt"; b.textContent = text;
+      b.onclick = () => pickOption(b, idx, q);
+      $("q-options").appendChild(b);
+    });
+  } else {
+    const w = WRITE[i - MCQ.length];
+    $("q-stage").textContent = "Write the phrase";
+    $("q-prompt").innerHTML = "<em>" + w.p + "</em>";
+    $("q-hint").textContent = w.h || "Об’єднай два слова в одну присвійну фразу.";
+    $("q-options").classList.add("hidden");
+    $("q-input-wrap").classList.remove("hidden");
+    const inp = $("q-input");
+    inp.value = ""; inp.disabled = false; $("q-check").disabled = false;
+    inp.focus();
+  }
+}
+
+function pickOption(btn, idx, q){
+  if(answered) return;
+  answered = true;
+  const buttons = $("q-options").querySelectorAll("button");
+  buttons.forEach((b, n) => { b.disabled = true; if(n === q.c) b.classList.add("right"); });
+  if(idx === q.c){
+    score++;
+    $("q-fb").className = "fb ok";
+    $("q-fb").innerHTML = "Правильно. " + q.w;
+  } else {
+    btn.classList.add("wrong");
+    $("q-fb").className = "fb no";
+    $("q-fb").innerHTML = "Ні. " + q.w;
+    missed.push({bad:q.a[idx], good:q.a[q.c]});
+  }
+  $("q-next").classList.remove("hidden");
+  $("q-next").focus();
+}
+
+function checkWritten(){
+  if(answered) return;
+  const w = WRITE[i - MCQ.length];
+  const val = $("q-input").value;
+  if(!norm(val)) return;
+  answered = true;
+  $("q-input").disabled = true; $("q-check").disabled = true;
+  if(w.ok.includes(norm(val))){
+    score++;
+    $("q-fb").className = "fb ok";
+    $("q-fb").innerHTML = "Так — <b>" + w.show + "</b>";
+  } else {
+    $("q-fb").className = "fb no";
+    $("q-fb").innerHTML = "Правильна відповідь: <b>" + w.show + "</b>";
+    missed.push({bad:val, good:w.show});
+  }
+  $("q-next").classList.remove("hidden");
+  $("q-next").focus();
+}
+
+function finish(){
+  $("s-quiz").classList.add("hidden");
+  $("s-done").classList.remove("hidden");
+  $("r-score").innerHTML = score + " <small>/ " + total + "</small>";
+  const pct = score/total;
+  if(pct === 1){ $("r-verdict").textContent = "Ідеально."; $("r-note").textContent = "Помилок немає. Можна переходити до довших фраз: the name of my sister’s cat."; }
+  else if(pct >= .8){ $("r-verdict").textContent = "Дуже добре."; $("r-note").textContent = "Правило працює. Подивись, де саме збився."; }
+  else if(pct >= .5){ $("r-verdict").textContent = "Непогано."; $("r-note").textContent = "Повтори правило вгорі й пройди ще раз."; }
+  else { $("r-verdict").textContent = "Ще треба потренуватись."; $("r-note").textContent = "Головне: люди й тварини — ’s, речі — of."; }
+
+  const list = $("r-missed"); list.innerHTML = "";
+  missed.forEach(m => {
+    const li = document.createElement("li");
+    li.innerHTML = "<s>" + m.bad + "</s> → <b>" + m.good + "</b>";
+    list.appendChild(li);
+  });
+}
+
+$("start").onclick = () => { $("s-intro").classList.add("hidden"); $("s-quiz").classList.remove("hidden"); render(); };
+$("q-next").onclick = () => { i++; if(i < total) render(); else finish(); };
+$("q-check").onclick = checkWritten;
+$("q-input").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); answered ? $("q-next").click() : checkWritten(); }});
+$("again").onclick = () => { i = 0; score = 0; missed = []; $("s-done").classList.add("hidden"); $("s-quiz").classList.remove("hidden"); render(); };
+</script>
+</body>
+</html>
