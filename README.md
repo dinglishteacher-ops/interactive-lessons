@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| ’s чи of? — Elementary practice | [possessive-practice.html](possessive-practice.html) |
 | Gerund & Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
 | Grammar Revision — NMT Practice | dinglish | [grammar-revision-nmt-b1.html](grammar-revision-nmt-b1.html) |
 | Skincare English — Revision Lesson | [skincare-english-revision.html](skincare-english-revision.html) |
