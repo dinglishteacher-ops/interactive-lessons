@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Speaking · The Passive · B1+ | dinglish | [passive-speaking.html](passive-speaking.html) |
 | ’s чи of? — Elementary practice | [possessive-practice.html](possessive-practice.html) |
 | Gerund & Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
 | Grammar Revision — NMT Practice | dinglish | [grammar-revision-nmt-b1.html](grammar-revision-nmt-b1.html) |
