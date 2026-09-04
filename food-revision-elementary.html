@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Food — Revision (Elementary) | dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDF0E4;
+    --card:#FFFDF7;
+    --ink:#1D2B1A;
+    --muted:#5F6C57;
+    --line:#D3DAC3;
+    --green:#3F6B35;
+    --honey:#DDA02F;
+    --berry:#9E3050;
+    --ok:#2E7D32;
+    --no:#B3261E;
+    --ok-bg:#E4F0E1;
+    --no-bg:#F8E3E1;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Karla',system-ui,sans-serif;font-size:17px;line-height:1.55;
+  }
+  .wrap{max-width:840px;margin:0 auto;padding:0 20px 80px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 28px;border-bottom:2px solid var(--ink)}
+  .hero h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:700;
+    font-size:clamp(56px,13vw,104px);line-height:.92;letter-spacing:-.02em;
+    margin:0 0 14px;
+  }
+  .hero p{margin:0;max-width:52ch;color:var(--muted)}
+  .hero .sig{
+    display:inline-block;margin-top:22px;font-weight:700;letter-spacing:.02em;
+    color:var(--berry);border-bottom:2px solid var(--honey);padding-bottom:2px;
+  }
+
+  /* ---------- sticky bar ---------- */
+  .bar{
+    position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;padding:10px 0;margin-bottom:8px;
+  }
+  .chips{display:flex;gap:6px;overflow-x:auto;flex:1;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chips a{
+    flex:0 0 auto;text-decoration:none;color:var(--ink);background:var(--card);
+    border:1px solid var(--line);border-radius:3px;padding:4px 10px;font-size:14px;font-weight:500;
+  }
+  .chips a:hover{border-color:var(--green);color:var(--green)}
+  .score{
+    flex:0 0 auto;font-family:'Fraunces',serif;font-weight:600;font-size:15px;
+    background:var(--ink);color:#fff;padding:5px 11px;border-radius:3px;white-space:nowrap;
+  }
+
+  /* ---------- sections ---------- */
+  section{margin-top:44px}
+  .head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  .num{
+    font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:#fff;background:var(--green);
+    width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+    transform:translateY(-2px);
+  }
+  .head h2{font-family:'Fraunces',serif;font-weight:600;font-size:27px;margin:0;line-height:1.15}
+  .head .kind{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap}
+  .rubric{margin:12px 0 0;font-weight:500}
+
+  .rule{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--honey);
+    border-radius:3px;padding:12px 16px;margin:16px 0 22px;font-size:15.5px;
+  }
+  .rule b{color:var(--green)}
+  .rule .t{font-family:'Fraunces',serif;font-weight:600;font-size:16px;display:block;margin-bottom:4px}
+  .rule ul{margin:6px 0 0;padding-left:18px}
+  .rule li{margin:3px 0}
+
+  .talk{
+    margin-top:18px;font-size:15.5px;color:var(--muted);
+    padding-left:14px;border-left:3px solid var(--berry);
+  }
+  .talk b{color:var(--berry);font-family:'Fraunces',serif}
+
+  /* ---------- items ---------- */
+  .item{
+    background:var(--card);border:1px solid var(--line);border-radius:3px;
+    padding:11px 14px;margin-bottom:8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;
+  }
+  .q{flex:1 1 240px;min-width:200px}
+  .q .n{color:var(--muted);font-size:14px;margin-right:6px}
+  .opts{display:flex;gap:6px;flex-wrap:wrap}
+  button.opt{
+    font-family:'Karla',sans-serif;font-size:15px;font-weight:500;cursor:pointer;
+    background:#fff;border:1px solid var(--line);border-radius:3px;padding:5px 12px;color:var(--ink);
+  }
+  button.opt:hover:not(:disabled){border-color:var(--green);color:var(--green)}
+  button.opt:disabled{cursor:default;opacity:1}
+  button.opt.good{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+  button.opt.bad{background:var(--no-bg);border-color:var(--no);color:var(--no);text-decoration:line-through}
+  .item.done{border-color:var(--ok)}
+
+  input.gap{
+    font-family:'Karla',sans-serif;font-size:16px;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-bottom:2px solid var(--green);
+    border-radius:3px;padding:4px 8px;width:110px;
+  }
+  input.gap.wide{width:150px}
+  input.gap:focus{outline:2px solid var(--honey);outline-offset:1px}
+  input.gap.good{background:var(--ok-bg);border-color:var(--ok)}
+  input.gap.bad{background:var(--no-bg);border-color:var(--no)}
+  .sent{flex:1 1 100%;line-height:2.1}
+  .sent .n{color:var(--muted);font-size:14px;margin-right:6px}
+  .tag{font-size:14px;color:var(--muted);margin-left:6px}
+
+  .bank{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .bank span{
+    background:var(--ink);color:#fff;border-radius:3px;padding:3px 10px;font-size:14.5px;font-weight:500;
+  }
+
+  .actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  button.act{
+    font-family:'Karla',sans-serif;font-size:15px;font-weight:700;cursor:pointer;
+    background:var(--green);color:#fff;border:1px solid var(--green);border-radius:3px;padding:7px 16px;
+  }
+  button.act:hover{background:#345A2C}
+  button.act.ghost{background:transparent;color:var(--green)}
+  button.act.ghost:hover{background:#E2E9D8}
+
+  .ta{
+    width:100%;font-family:'Karla',sans-serif;font-size:16px;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-radius:3px;padding:7px 10px;
+  }
+  .ta:focus{outline:2px solid var(--honey);outline-offset:1px}
+  .ta.good{background:var(--ok-bg);border-color:var(--ok)}
+  .ta.bad{background:var(--no-bg);border-color:var(--no)}
+  .ua{font-weight:500;margin-bottom:6px}
+  .ua .n{color:var(--muted);font-size:14px;margin-right:6px}
+  .key{margin-top:6px;font-size:15px;color:var(--ok);display:none}
+  .key.show{display:block}
+  .item.tr{display:block}
+
+  footer{
+    margin-top:56px;border-top:2px solid var(--ink);padding-top:20px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+  .total{font-family:'Fraunces',serif;font-size:22px;font-weight:600}
+  footer .sig{font-weight:700;color:var(--berry)}
+
+  @media (max-width:560px){
+    body{font-size:16px}
+    .head h2{font-size:22px}
+    .head .kind{display:none}
+    input.gap{width:96px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>Food</h1>
+    <p>Revision for elementary students: countable and uncountable nouns, articles and quantifiers, <i>there is / there are</i>, <i>like</i> and <i>would like</i>, and a final translation mix in Present and Past Simple.</p>
+    <span class="sig">dinglish</span>
+  </header>
+
+  <nav class="bar">
+    <div class="chips">
+      <a href="#s1">1 Countable</a>
+      <a href="#s2">2 a / an / some</a>
+      <a href="#s3">3 there is / are</a>
+      <a href="#s4">4 would like</a>
+      <a href="#s5">5 much / many</a>
+      <a href="#s6">6 too / enough</a>
+      <a href="#s7">7 Translation</a>
+    </div>
+    <div class="score" id="score">0 / 68</div>
+  </nav>
+
+  <!-- 1 -->
+  <section id="s1">
+    <div class="head"><span class="num">1</span><h2>Countable or uncountable?</h2><span class="kind">14 words</span></div>
+    <p class="rubric">Read each word and choose <i>countable</i> or <i>uncountable</i>.</p>
+    <div class="rule">
+      <span class="t">Як це працює</span>
+      <b>Countable</b> — можна порахувати, є множина: <i>an apple → two apples</i>.<br>
+      <b>Uncountable</b> — не рахуємо штуками, немає множини й немає <i>a/an</i>: <i>milk, bread, rice</i>.
+      Щоб порахувати uncountable, беремо порцію: <i>a glass of milk, a piece of bread, a kilo of rice</i>.
+    </div>
+    <div id="t1"></div>
+    <p class="talk"><b>Talk:</b> name three countable and three uncountable things in your fridge right now.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <div class="head"><span class="num">2</span><h2>a, an or some</h2><span class="kind">10 sentences</span></div>
+    <p class="rubric">Choose the correct word for each gap.</p>
+    <div class="rule">
+      <span class="t">Як це працює</span>
+      <ul>
+        <li><b>a</b> + злічуваний в однині, приголосний звук: <i>a sandwich, a banana</i></li>
+        <li><b>an</b> + злічуваний в однині, голосний звук: <i>an egg, an orange, an apple</i></li>
+        <li><b>some</b> + незлічуваний або множина: <i>some water, some biscuits</i></li>
+      </ul>
+    </div>
+    <div id="t2"></div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <div class="head"><span class="num">3</span><h2>there is / there are + some / any</h2><span class="kind">8 sentences</span></div>
+    <p class="rubric">Write the missing words. Look at the sign: (+) positive, (&minus;) negative, (?) question.</p>
+    <div class="rule">
+      <span class="t">Як це працює</span>
+      <ul>
+        <li>(+) <b>There is</b> + однина / незлічуване + <b>some</b>. <b>There are</b> + множина + <b>some</b>.</li>
+        <li>(&minus;) <b>There isn't / There aren't</b> + <b>any</b>.</li>
+        <li>(?) <b>Is there / Are there</b> + <b>any</b> …?</li>
+      </ul>
+      <i>There is some cheese. There aren't any eggs. Is there any milk?</i>
+    </div>
+    <div id="t3"></div>
+    <div class="actions">
+      <button class="act" data-check="t3">Check answers</button>
+      <button class="act ghost" data-show="t3">Show answers</button>
+    </div>
+    <p class="talk"><b>Talk:</b> describe your kitchen table. Use <i>there is</i>, <i>there are</i>, <i>some</i> and <i>any</i>.</p>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <div class="head"><span class="num">4</span><h2>like or would like</h2><span class="kind">8 sentences</span></div>
+    <p class="rubric">Choose the correct form for each sentence.</p>
+    <div class="rule">
+      <span class="t">Як це працює</span>
+      <b>like</b> = любити взагалі, завжди: <i>I like fish. Do you like coffee?</i><br>
+      <b>would like ('d like)</b> = хотіти зараз, ввічливе прохання: <i>I'd like a coffee, please. Would you like a sandwich?</i><br>
+      Після <b>would like</b> ставимо <b>to + дієслово</b>: <i>I'd like to order a pizza.</i> Після <b>like</b> — <i>-ing</i> або <i>to</i>: <i>I like cooking.</i>
+    </div>
+    <div id="t4"></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <div class="head"><span class="num">5</span><h2>much, many or a lot of</h2><span class="kind">8 sentences</span></div>
+    <p class="rubric">Write the missing quantifier. Use the words in the box.</p>
+    <div class="rule">
+      <span class="t">Як це працює</span>
+      <ul>
+        <li><b>much</b> + незлічуване, у запереченнях і питаннях: <i>I don't drink much tea. How much sugar?</i></li>
+        <li><b>many</b> + множина, у запереченнях і питаннях: <i>We haven't got many eggs. How many apples?</i></li>
+        <li><b>a lot of</b> + і те, і те, найчастіше у ствердженнях: <i>She eats a lot of fruit.</i></li>
+      </ul>
+    </div>
+    <div class="bank"><span>much</span><span>many</span><span>a lot of</span></div>
+    <div id="t5"></div>
+    <div class="actions">
+      <button class="act" data-check="t5">Check answers</button>
+      <button class="act ghost" data-show="t5">Show answers</button>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <div class="head"><span class="num">6</span><h2>too or enough</h2><span class="kind">8 sentences</span></div>
+    <p class="rubric">Complete the sentences with the words in the box.</p>
+    <div class="rule">
+      <span class="t">Як це працює</span>
+      <ul>
+        <li><b>too</b> + прикметник = занадто (це проблема): <i>The soup is too hot.</i></li>
+        <li><b>too much</b> + незлічуване, <b>too many</b> + множина: <i>too much salt, too many biscuits</i></li>
+        <li><b>enough</b> + іменник = достатньо: <i>We haven't got enough bread.</i></li>
+        <li>прикметник + <b>enough</b> (після прикметника!): <i>The tea isn't sweet enough.</i></li>
+      </ul>
+    </div>
+    <div class="bank"><span>too</span><span>too much</span><span>too many</span><span>enough</span></div>
+    <div id="t6"></div>
+    <div class="actions">
+      <button class="act" data-check="t6">Check answers</button>
+      <button class="act ghost" data-show="t6">Show answers</button>
+    </div>
+    <p class="talk"><b>Talk:</b> complain about a bad meal in a restaurant. Use <i>too</i> and <i>enough</i> three times.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <div class="head"><span class="num">7</span><h2>Translation mix</h2><span class="kind">12 sentences</span></div>
+    <p class="rubric">Translate the sentences into English. Watch the tense: Present Simple or Past Simple.</p>
+    <div class="rule">
+      <span class="t">Як це працює</span>
+      <b>Past Simple</b>: <i>ate, drank, bought, was, were</i>. Заперечення й питання — через <b>did / didn't</b> + перша форма:
+      <i>We didn't buy bread. Did you eat?</i> Але з <b>was / were</b> — без did: <i>There were a lot of people.</i>
+    </div>
+    <div id="t7"></div>
+    <div class="actions">
+      <button class="act" data-check="t7">Check answers</button>
+      <button class="act ghost" data-show="t7">Show answers</button>
+    </div>
+  </section>
+
+  <footer>
+    <span class="total" id="total">Your score: 0 / 68</span>
+    <span class="sig">dinglish</span>
+  </footer>
+</div>
+
+<script>
+/* ---------------- data ---------------- */
+const D1 = [
+  ['apple',1],['bread',0],['rice',0],['egg',1],['milk',0],['sandwich',1],['cheese',0],
+  ['banana',1],['sugar',0],['tomato',1],['water',0],['biscuit',1],['meat',0],['onion',1]
+];
+
+const D2 = [
+  ['I usually have ___ egg for breakfast.','an'],
+  ['Can I have ___ water, please?','some'],
+  ['She wants ___ sandwich with cheese.','a'],
+  ['We need ___ sugar for the cake.','some'],
+  ["There's ___ orange in my bag.",'an'],
+  ['Would you like ___ soup?','some'],
+  ["He's eating ___ banana.",'a'],
+  ['Add ___ salt, please.','some'],
+  ['My mum makes ___ delicious cake.','a'],
+  ['There is ___ rice in the bowl.','some']
+];
+
+const D3 = [
+  ['apples in the basket.','(+)',['there are'],['some']],
+  ['juice in the bottle.','(−)',['there isn\'t','there is not'],['any']],
+  ['eggs in the fridge?','(?)',['are there'],['any']],
+  ['cheese on the plate.','(+)',['there is','there\'s'],['some']],
+  ['tomatoes in the salad.','(−)',['there aren\'t','there are not'],['any']],
+  ['bread in the kitchen?','(?)',['is there'],['any']],
+  ['sugar in my tea.','(+)',['there is','there\'s'],['some']],
+  ['biscuits in the box.','(−)',['there aren\'t','there are not'],['any']]
+];
+
+const D4 = [
+  ["___ a cup of coffee? I'm thirsty.",['Do you like','Would you like'],1],
+  ['I ___ pizza. I eat it every Friday.',['like','would like'],0],
+  ['She ___ to have a salad for lunch today.',['likes','would like'],1],
+  ['___ vegetables? — Yes, I do.',['Do you like','Would you like'],0],
+  ['We ___ to book a table for two, please.',['like','would like'],1],
+  ["My brother doesn't ___ fish.",['like','would like'],0],
+  ['___ some more cake? — No, thank you.',['Do you like','Would you like'],1],
+  ['They ___ Italian food very much.',['like','would like'],0]
+];
+
+const D5 = [
+  ['How ___ sugar do you take in your tea?',['much']],
+  ['How ___ eggs do we need for the omelette?',['many']],
+  ["There isn't ___ milk in the fridge.",['much']],
+  ['She eats ___ vegetables every day.',['a lot of']],
+  ["I don't drink ___ coffee in the evening.",['much']],
+  ['There are ___ people in the restaurant tonight.',['a lot of','many']],
+  ["We haven't got ___ potatoes.",['many']],
+  ['He puts ___ butter on his bread.',['a lot of']]
+];
+
+const D6 = [
+  ["This soup is ___ hot. I can't eat it.",['too']],
+  ["I can't make a cake. There aren't ___ eggs.",['enough']],
+  ["You eat ___ biscuits. It's not healthy.",['too many']],
+  ["This coffee isn't sweet ___.",['enough']],
+  ['This restaurant is ___ expensive for us.',['too']],
+  ["We haven't got ___ time for lunch.",['enough']],
+  ["There's ___ salt in this soup.",['too much']],
+  ["I'm not tall ___ to reach the shelf.",['enough']]
+];
+
+const D7 = [
+  ['У холодильнику є трохи молока.',['There is some milk in the fridge']],
+  ['Скільки яєць нам потрібно?',['How many eggs do we need']],
+  ["Вчора я з'їв яблуко і бутерброд.",['Yesterday I ate an apple and a sandwich','I ate an apple and a sandwich yesterday']],
+  ['Хочеш чашку чаю?',['Would you like a cup of tea']],
+  ['Я люблю сир, але не люблю рибу.',['I like cheese but I don\'t like fish']],
+  ['У салаті немає помідорів.',['There aren\'t any tomatoes in the salad']],
+  ['Вона п’є забагато кави.',['She drinks too much coffee']],
+  ['Минулого тижня ми не купили достатньо хліба.',['Last week we didn\'t buy enough bread','We didn\'t buy enough bread last week']],
+  ['Учора в кафе було багато людей.',['There were a lot of people in the cafe yesterday','Yesterday there were a lot of people in the cafe','There were many people in the cafe yesterday']],
+  ['Вона хотіла б замовити піцу.',['She would like to order a pizza','She would like to order pizza']],
+  ["Мій брат учора не їв м'яса.",['My brother didn\'t eat any meat yesterday','My brother didn\'t eat meat yesterday','Yesterday my brother didn\'t eat any meat']],
+  ['Скільки цукру ти кладеш у чай?',['How much sugar do you put in your tea','How much sugar do you put in tea']]
+];
+
+/* ---------------- scoring ---------------- */
+const TOTAL = D1.length + D2.length + D3.length + D4.length + D5.length + D6.length + D7.length;
+const done = new Set();
+function mark(id){
+  done.add(id);
+  document.getElementById('score').textContent = done.size + ' / ' + TOTAL;
+  document.getElementById('total').textContent = 'Your score: ' + done.size + ' / ' + TOTAL;
+}
+document.getElementById('score').textContent = '0 / ' + TOTAL;
+document.getElementById('total').textContent = 'Your score: 0 / ' + TOTAL;
+
+function norm(s){
+  return (s||'').toLowerCase()
+    .replace(/[’‘`]/g,"'")
+    .replace(/\bthere's\b/g,'there is')
+    .replace(/\bi'd\b/g,'i would')
+    .replace(/\bshe'd\b/g,'she would')
+    .replace(/\bhe'd\b/g,'he would')
+    .replace(/\bwe'd\b/g,'we would')
+    .replace(/\bisn't\b/g,'is not')
+    .replace(/\baren't\b/g,'are not')
+    .replace(/\bdon't\b/g,'do not')
+    .replace(/\bdoesn't\b/g,'does not')
+    .replace(/\bdidn't\b/g,'did not')
+    .replace(/\bhaven't\b/g,'have not')
+    .replace(/\bi'm\b/g,'i am')
+    .replace(/\bit's\b/g,'it is')
+    .replace(/\bcafé\b/g,'cafe')
+    .replace(/[.,!?;:"]/g,'')
+    .replace(/\s+/g,' ').trim();
+}
+const hit = (val, list) => list.some(a => norm(a) === norm(val));
+const esc = arr => JSON.stringify(arr).replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+
+/* ---------------- task 1 ---------------- */
+const box1 = document.getElementById('t1');
+D1.forEach(([w,c],i)=>{
+  const id = 't1-'+i;
+  const row = document.createElement('div');
+  row.className = 'item';
+  row.innerHTML = '<div class="q"><span class="n">'+(i+1)+'.</span><b>'+w+'</b></div>';
+  const opts = document.createElement('div');
+  opts.className = 'opts';
+  [['countable',1],['uncountable',0]].forEach(([label,val])=>{
+    const b = document.createElement('button');
+    b.className = 'opt'; b.textContent = label;
+    b.onclick = ()=>{
+      const right = (val === c);
+      b.classList.add(right ? 'good' : 'bad');
+      if(right){
+        row.classList.add('done');
+        opts.querySelectorAll('button').forEach(x=>x.disabled=true);
+        mark(id);
+      }
+    };
+    opts.appendChild(b);
+  });
+  row.appendChild(opts);
+  box1.appendChild(row);
+});
+
+/* ---------------- choice tasks (2 and 4) ---------------- */
+function buildChoice(target, data, key, fixedOpts){
+  const box = document.getElementById(target);
+  data.forEach((row,i)=>{
+    const id = key+'-'+i;
+    const sentence = row[0];
+    const opts = fixedOpts || row[1];
+    const answer = fixedOpts ? row[1] : opts[row[2]];
+    const el = document.createElement('div');
+    el.className = 'item';
+    el.innerHTML = '<div class="q"><span class="n">'+(i+1)+'.</span>'+sentence.replace('___','<b>___</b>')+'</div>';
+    const wrap = document.createElement('div');
+    wrap.className = 'opts';
+    opts.forEach(o=>{
+      const b = document.createElement('button');
+      b.className='opt'; b.textContent=o;
+      b.onclick = ()=>{
+        const right = (o === answer);
+        b.classList.add(right ? 'good' : 'bad');
+        if(right){
+          el.classList.add('done');
+          el.querySelector('.q').innerHTML = '<span class="n">'+(i+1)+'.</span>'+sentence.replace('___','<b style="color:var(--ok)">'+answer+'</b>');
+          wrap.querySelectorAll('button').forEach(x=>x.disabled=true);
+          mark(id);
+        }
+      };
+      wrap.appendChild(b);
+    });
+    el.appendChild(wrap);
+    box.appendChild(el);
+  });
+}
+buildChoice('t2', D2, 't2', ['a','an','some']);
+buildChoice('t4', D4, 't4', null);
+
+/* ---------------- task 3: two gaps ---------------- */
+const box3 = document.getElementById('t3');
+D3.forEach(([tail,sign,a1,a2],i)=>{
+  const el = document.createElement('div');
+  el.className='item';
+  el.innerHTML =
+    '<div class="sent"><span class="n">'+(i+1)+'.</span>'+
+    '<input class="gap wide" data-a=\''+esc(a1)+'\' autocomplete="off"> '+
+    '<input class="gap" data-a=\''+esc(a2)+'\' autocomplete="off"> '+
+    tail+'<span class="tag">'+sign+'</span></div>'+
+    '<div class="key">'+a1[0]+' … '+a2[0]+'</div>';
+  el.dataset.id = 't3-'+i;
+  box3.appendChild(el);
+});
+
+/* ---------------- gapfill tasks (5 and 6) ---------------- */
+function buildGap(target, data, key, wide){
+  const box = document.getElementById(target);
+  data.forEach(([sentence,answers],i)=>{
+    const parts = sentence.split('___');
+    const el = document.createElement('div');
+    el.className='item';
+    el.innerHTML =
+      '<div class="sent"><span class="n">'+(i+1)+'.</span>'+parts[0]+
+      '<input class="gap'+(wide?' wide':'')+'" data-a=\''+esc(answers)+'\' autocomplete="off">'+
+      parts[1]+'</div>'+
+      '<div class="key">'+answers[0]+'</div>';
+    el.dataset.id = key+'-'+i;
+    box.appendChild(el);
+  });
+}
+buildGap('t5', D5, 't5', true);
+buildGap('t6', D6, 't6', true);
+
+/* ---------------- task 7: translation ---------------- */
+const box7 = document.getElementById('t7');
+D7.forEach(([ua,answers],i)=>{
+  const el = document.createElement('div');
+  el.className='item tr';
+  el.innerHTML =
+    '<div class="ua"><span class="n">'+(i+1)+'.</span>'+ua+'</div>'+
+    '<textarea class="ta" rows="1" data-a=\''+esc(answers)+'\'></textarea>'+
+    '<div class="key">'+answers[0]+'.</div>';
+  el.dataset.id = 't7-'+i;
+  box7.appendChild(el);
+});
+
+/* ---------------- check / show ---------------- */
+document.querySelectorAll('[data-check]').forEach(btn=>{
+  btn.onclick = ()=>{
+    const box = document.getElementById(btn.dataset.check);
+    box.querySelectorAll('.item').forEach(item=>{
+      const fields = item.querySelectorAll('.gap, .ta');
+      let all = true;
+      fields.forEach(f=>{
+        const answers = JSON.parse(f.dataset.a);
+        const right = hit(f.value, answers);
+        f.classList.remove('good','bad');
+        f.classList.add(right ? 'good' : 'bad');
+        if(!right) all = false;
+      });
+      if(all){ item.classList.add('done'); mark(item.dataset.id); }
+    });
+  };
+});
+document.querySelectorAll('[data-show]').forEach(btn=>{
+  btn.onclick = ()=>{
+    document.getElementById(btn.dataset.show)
+      .querySelectorAll('.key').forEach(k=>k.classList.add('show'));
+  };
+});
+
+/* textarea auto-grow */
+document.querySelectorAll('.ta').forEach(t=>{
+  const grow = ()=>{ t.style.height='auto'; t.style.height=(t.scrollHeight+2)+'px'; };
+  t.addEventListener('input',grow); grow();
+});
+</script>
+</body>
+</html>
