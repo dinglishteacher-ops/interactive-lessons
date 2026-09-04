@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Food — Revision (Elementary) | dinglish | [food-revision-elementary.html](food-revision-elementary.html) |
 | Speaking · The Passive · B1+ | dinglish | [passive-speaking.html](passive-speaking.html) |
 | ’s чи of? — Elementary practice | [possessive-practice.html](possessive-practice.html) |
 | Gerund & Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
