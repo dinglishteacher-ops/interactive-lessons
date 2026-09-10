@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| How Instagram decides what you see — dinglish | [instagram-ranking-lesson.html](instagram-ranking-lesson.html) |
 | Тренажер слів · dinglish | [vocab-trainer-b1.html](vocab-trainer-b1.html) |
 | Food — Revision (Elementary) \| dinglish | [food-revision-elementary.html](food-revision-elementary.html) |
 | Speaking · The Passive · B1+ \| dinglish | [passive-speaking.html](passive-speaking.html) |
