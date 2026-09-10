@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Instagram decides what you see — dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500&family=Onest:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--ink:#12161a; --paper:#fff; --page:#eceef1; --line:#d7dbe0;
+--accent:#4b3be8; --accent-soft:#e9e7fd; --muted:#5c666f;
+--ok:#197a4b; --ok-bg:#e6f3ec; --no:#b3261e; --no-bg:#fbeceb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);
+font-family:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.65}
+.wrap{max-width:700px;margin:0 auto;padding:0 18px 80px}
+h1,h2,h3,.brand{font-family:"Unbounded","Onest",sans-serif;font-weight:500;letter-spacing:-.01em}
+header{padding:44px 0 28px}
+.brand{font-size:15px;font-weight:400;color:var(--accent);margin:0 0 22px}
+h1{font-size:34px;line-height:1.18;margin:0 0 14px}
+.meta{color:var(--muted);font-size:15px;margin:0}
+.stage{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 20px;margin:0 0 18px}
+.stage h2{font-size:19px;margin:0 0 4px;display:flex;gap:10px;align-items:baseline}
+.n{font-family:"Unbounded",sans-serif;font-size:13px;color:var(--accent);flex:none}
+.rubric{color:var(--muted);font-size:15px;margin:0 0 18px}
+.ua{background:var(--accent-soft);border-radius:10px;padding:14px 16px;font-size:15.5px;line-height:1.6;margin:16px 0}
+.ua b{font-weight:500}
+ul,ol{padding-left:20px}
+li{margin:6px 0}
+button{font:inherit;font-size:14.5px;background:var(--ink);color:#fff;border:0;border-radius:8px;
+padding:9px 16px;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input,select{font:inherit;font-size:16px;background:#fff;border:1px solid var(--line);border-radius:7px;padding:7px 10px;color:var(--ink)}
+select{-webkit-appearance:none;appearance:none;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%235c666f' stroke-width='1.6'/></svg>") no-repeat right 10px center;
+padding-right:30px;min-width:82px;text-align:center;border-color:#d7dbe0;color:#12161a}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.fc{border:1px solid var(--line);border-radius:12px;padding:14px 15px;cursor:pointer;background:#fff}
+.fc:hover{border-color:var(--accent)}
+.fc .w{font-weight:500;font-size:17.5px}
+.fc .hint{font-size:13px;color:var(--muted);margin-top:6px}
+.fc .back{display:none;margin-top:11px;padding-top:11px;border-top:1px solid var(--line)}
+.fc.open .back{display:block}
+.fc.open .hint{display:none}
+.fc .ipa{font-size:15px;color:var(--accent)}
+.fc .uk{font-size:16px;margin:5px 0 0}
+.fc .ex{font-size:15px;color:var(--muted);margin:7px 0 0;font-style:italic}
+input.gap{width:150px;padding:4px 8px;font-size:16px}
+.row{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.row:last-of-type{border-bottom:0}
+.row .term{flex:1;min-width:150px;font-weight:500}
+.item{padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-of-type{border-bottom:0}
+.q{margin:0 0 8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);border-radius:8px;padding:7px 13px;font-size:15.5px;cursor:pointer;background:#fff}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.ok{border-color:var(--ok)!important;background:var(--ok-bg)!important}
+.no{border-color:var(--no)!important;background:var(--no-bg)!important}
+.score{font-size:15px;color:var(--muted);margin-left:12px}
+.tools{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.key{font-size:15.5px;color:var(--ok);margin:8px 0 0;display:none}
+.card{border:1px solid var(--line);border-radius:11px;padding:13px 15px;margin:0 0 10px}
+.card .time{font-size:13px;color:var(--muted)}
+.card .en{margin:5px 0 0}
+.card .tr{display:none;margin:11px 0 0;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:16px}
+.card button{margin-top:10px;font-size:13.5px;padding:6px 12px;background:transparent;color:var(--ink);border:1px solid var(--line)}
+.speak{background:var(--accent-soft);border:0}
+.speak h2 .n{color:var(--accent)}
+footer{text-align:center;color:var(--muted);font-size:14px;padding:26px 0}
+@media(max-width:520px){h1{font-size:27px}.wrap{padding:0 14px 60px}.stage{padding:18px 15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="brand">dinglish</p>
+  <h1>How Instagram decides what you see</h1>
+  <p class="meta">Level B2–C1 · 60–90 min · Adam Mosseri on ranking (part 2)</p>
+</header>
+
+<section class="stage speak">
+  <h2><span class="n">01</span> Warm-up</h2>
+  <p class="rubric">Answer the questions. Give examples from your own feed.</p>
+  <ul>
+    <li>How much time do you spend on Instagram or TikTok a day? Be honest.</li>
+    <li>Whose posts do you see most often — friends, strangers, brands?</li>
+    <li>Do you think the algorithm knows you well? What has it got wrong about you?</li>
+    <li>If you posted a photo right now, how many people would see it, and why?</li>
+  </ul>
+</section>
+
+<section class="stage">
+  <h2><span class="n">02</span> Vocabulary cards</h2>
+  <p class="rubric">Tap a card to see the pronunciation, the Ukrainian meaning and an example. Cover the card and say the word from the Ukrainian side.</p>
+  <div id="cards" class="cards"></div>
+  <div class="tools"><button class="ghost" id="c-all">Show all</button><button class="ghost" id="c-none">Hide all</button><button class="ghost" id="c-mix">Shuffle</button></div>
+</section>
+
+<section class="stage">
+  <h2><span class="n">03</span> Key vocabulary</h2>
+  <p class="rubric">Match each word with its definition. Then check your answers.</p>
+  <ol id="defs"></ol>
+  <div id="match"></div>
+  <div class="tools"><button data-check="match">Check answers</button><span class="score" id="s-match"></span></div>
+</section>
+
+<section class="stage">
+  <h2><span class="n">04</span> Watch and read</h2>
+  <p class="rubric">Watch the video. Read the script below — tap a sentence to see the Ukrainian version.</p>
+  <div id="script"></div>
+  <div class="tools"><button class="ghost" id="all">Show all translations</button><button class="ghost" id="none">Hide all</button></div>
+</section>
+
+<section class="stage">
+  <h2><span class="n">05</span> Comprehension</h2>
+  <p class="rubric">Choose the correct answer.</p>
+  <div id="mcq"></div>
+  <div class="tools"><button data-check="mcq">Check answers</button><span class="score" id="s-mcq"></span></div>
+</section>
+
+<section class="stage">
+  <h2><span class="n">06</span> Vocabulary in use</h2>
+  <p class="rubric">Complete the sentences with one word from task 2. Use the correct form.</p>
+  <div id="gap1"></div>
+  <div class="tools"><button data-check="gap1">Check answers</button><span class="score" id="s-gap1"></span></div>
+</section>
+
+<section class="stage">
+  <h2><span class="n">07</span> Collocations</h2>
+  <p class="rubric">Match a verb with a noun to make a phrase from the video.</p>
+  <div id="coll"></div>
+  <div class="tools"><button data-check="coll">Check answers</button><span class="score" id="s-coll"></span></div>
+</section>
+
+<section class="stage speak">
+  <h2><span class="n">08</span> Speaking</h2>
+  <p class="rubric">Discuss. Use at least five words from tasks 2 and 6.</p>
+  <ul>
+    <li>Instagram gives more distribution to original creators than to accounts that repost. Is that fair to meme pages?</li>
+    <li>Your friend's café has 200 followers. What should they post so that the algorithm auditions their content?</li>
+    <li>Should platforms tell users exactly how ranking works? What could go wrong?</li>
+  </ul>
+</section>
+
+<section class="stage">
+  <h2><span class="n">09</span> Grammar: talking about change</h2>
+  <p class="rubric">Read the examples from the video, then study the rules.</p>
+  <ul>
+    <li>We've driven that percentage <b>way up</b> over time.</li>
+    <li>Instagram responds <b>much, much more quickly</b> to the world.</li>
+    <li>We have made our AI models <b>larger and larger</b>.</li>
+    <li>That number has <b>also gone way up</b> and has grown <b>increasingly</b> over the last few years.</li>
+    <li><b>It used to be that</b> something might happen and you would see it five days later.</li>
+  </ul>
+  <div class="ua">
+    <b>1. Підсилення порівняльної форми.</b> Перед comparative ставимо <b>much / far / way / a lot / significantly</b> — «набагато, значно»: <i>much more quickly</i>, <i>far bigger</i>, <i>way up</i>. <b>Way</b> — розмовне, дуже часте в мові IT/SMM: <i>way up</i>, <i>way faster</i>. Порівняй з <b>slightly / a bit</b> — «трохи».<br><br>
+    <b>2. Comparative + and + comparative</b> = «дедалі …»: <i>larger and larger</i> (дедалі більші), <i>more and more expensive</i> (дедалі дорожчі). Для довгих прикметників — <i>more and more + adjective</i>.<br><br>
+    <b>3. Increasingly + adjective</b> — те саме значення, але формальніше: <i>increasingly popular</i> = дедалі популярніший.<br><br>
+    <b>4. Used to + inf.</b> — те, що було раніше, а зараз ні: <i>Posts used to take five days to appear.</i> Конструкція <i>It used to be that…</i> = «раніше було так, що…». Не плутай з <b>be used to + -ing</b> (звикнути): <i>I'm used to seeing ads.</i>
+  </div>
+</section>
+
+<section class="stage">
+  <h2><span class="n">10</span> Grammar practice</h2>
+  <p class="rubric">Rewrite the sentence using the word in brackets. Keep the meaning.</p>
+  <div id="trans"></div>
+</section>
+
+<section class="stage">
+  <h2><span class="n">11</span> Mixed practice</h2>
+  <p class="rubric">Complete the text with one word in each gap. Vocabulary and grammar from the whole lesson.</p>
+  <div id="gap2"></div>
+  <div class="tools"><button data-check="gap2">Check answers</button><span class="score" id="s-gap2"></span></div>
+</section>
+
+<section class="stage speak">
+  <h2><span class="n">12</span> Speaking: pitch your strategy</h2>
+  <p class="rubric">You run the Instagram account of a small business. Present a 2-minute growth plan to your partner.</p>
+  <ul>
+    <li>Say what you post now and how it performs.</li>
+    <li>Explain how you will use the four principles: originality, recency, breaking content, model size.</li>
+    <li>Describe your progress with <i>way up</i>, <i>more and more</i>, <i>increasingly</i>, <i>used to</i>.</li>
+    <li>Your partner asks two difficult questions about your numbers.</li>
+  </ul>
+</section>
+
+<section class="stage">
+  <h2><span class="n">13</span> Translation</h2>
+  <p class="rubric">Translate the sentences into English. Then compare with the model answer.</p>
+  <div id="tr"></div>
+</section>
+
+<footer>dinglish · interactive lesson</footer>
+</div>
+
+<script>
+const VOC=[
+["ranking","the process of deciding the order in which posts are shown to a user"],
+["engagement","likes, comments, shares and other actions people take on a post"],
+["distribution","how widely a post is shown across the platform"],
+["impressions","the number of times a post appears on someone's screen"],
+["a signal","a piece of data the system uses to make a decision about a post"],
+["recency","how new a piece of content is"],
+["original content","content made by the account that posts it, not copied from elsewhere"],
+["to repost","to publish someone else's content on your own account"],
+["to audition content","to show a post to a small test group to see how it performs"],
+["to outperform expectations","to do much better than anyone predicted"]
+];
+const MCQ=[
+["What does Instagram use to predict your interest in a post?",["Your age and location","What you have interacted with in the past","The number of followers the account has"],1],
+["Why does the platform favour original creators?",["To give more distribution to the account that actually made the content","Because reposts break copyright law","Because original posts are usually longer"],0],
+["What problem did recency solve?",["Posts were too long","Users saw events three to five days late","Creators posted too often"],1],
+["How does a small account reach a huge audience?",["It pays for distribution","Its content is shown to non-followers as a test and does well","It reposts big creators"],1],
+["Why has Instagram made its AI models bigger?",["To store more photos","To get better at ranking overall","To reduce the number of ads"],1]
+];
+const GAP1=[
+["The first hour matters: if a reel gets strong ___, the system shows it to more people.","engagement"],
+["Half of our ___ now come from users who don't follow the account.","impressions"],
+["The algorithm looks at dozens of ___ before it decides who sees your post.","signals"],
+["She never films anything herself — she just ___ other people's videos.","reposts"],
+["That post ___ expectations: we hoped for 2,000 views and got 400,000.","outperformed"],
+["Small accounts get very little ___, so almost nobody sees their work.","distribution"]
+];
+const COLL=[["reach","a massive audience"],["get","more distribution"],["shorten","the timelines"],["shed light on","how ranking works"],["take advantage of","the latest technology"]];
+const TRANS=[
+["Instagram now responds to the world more quickly than before. (MUCH)","Instagram now responds to the world much more quickly than before."],
+["The percentage of original content has increased a lot. (WAY)","The percentage of original content has gone way up."],
+["Our AI models keep getting bigger every year. (AND)","Our AI models are getting bigger and bigger every year."],
+["It is becoming more difficult for small accounts to grow. (INCREASINGLY)","It is becoming increasingly difficult for small accounts to grow."],
+["In the past, users saw important news five days late. (USED)","Users used to see important news five days late."],
+["Reels are a bit more popular than photos in our feed. (SLIGHTLY)","Reels are slightly more popular than photos in our feed."]
+];
+const GAP2=[
+["Five years ago it ___ to take days for a video to appear in the feed.","used"],
+["Since then the platform has become ___ faster.","way|much|far"],
+["More ___ more brands now build their strategy around short video.","and"],
+["The number of accounts reaching a massive ___ has grown every year.","audience"],
+["We ___ light on our ranking principles because creators kept asking.","shed"],
+["Original creators get ___ distribution than the pages that repost them.","more"]
+];
+const TR=[
+["Раніше знадобилося б п'ять днів, щоб побачити важливу новину у стрічці.","It used to take five days to see important news in the feed."],
+["Кількість показів оригінального контенту різко зросла.","The number of impressions on original content has gone way up."],
+["Наші моделі стають дедалі більшими.","Our models are getting bigger and bigger."],
+["Малим авторам дедалі важче отримати охоплення.","It is increasingly difficult for small creators to get distribution."],
+["Система показує твій допис людям, які на тебе не підписані, просто щоб перевірити його.","The system shows your post to people who don't follow you just to test it."],
+["Цей допис перевершив очікування і зібрав понад мільйон переглядів.","That post outperformed expectations and got over a million views."],
+["Алгоритм вирішує, що тобі цікаво, на основі того, з чим ти взаємодіяв раніше.","The algorithm decides what you're interested in based on what you've interacted with in the past."],
+["Ми скоротили ці терміни настільки, наскільки це було можливо.","We shortened those timelines as much as possible."],
+["Вони не створюють нічого свого — вони просто репостять чужі відео.","They don't create anything of their own — they just repost other people's videos."],
+["Залученість важливіша за кількість підписників.","Engagement is more important than the number of followers."]
+];
+const SCRIPT=[
+["0:02","I'm going to share a few things you might not know about how ranking works on Instagram.","Я поділюся кількома речами, яких ви, можливо, не знаєте про те, як працює ранжування в Instagram."],
+["0:09","People know that we rank content based on how interested we think people are in that content.","Люди знають, що ми ранжуємо контент на основі того, наскільки, на нашу думку, він цікавий людям."],
+["0:14","We do that by showing people content that we think they're going to interact with based on what they've interacted with in the past.","Ми робимо це, показуючи людям контент, з яким, як ми вважаємо, вони взаємодіятимуть — виходячи з того, з чим вони взаємодіяли раніше."],
+["0:19","Are you likely to send this to a friend, or like it, or watch the video to the end? That's called engagement.","Чи ймовірно, що ви надішлете це другові, вподобаєте або додивитеся відео до кінця? Це називається залученість."],
+["0:26","What you might know less about is what we call our content principles.","Про що ви, можливо, знаєте менше — це те, що ми називаємо принципами контенту."],
+["0:40","The four are originality, recency, breaking content, and just model size.","Ці чотири такі: оригінальність, свіжість, контент, що «вистрілює», і просто розмір моделі."],
+["0:50","We want to create a platform that gives more distribution to the original content creator than to those who repost it.","Ми хочемо створити платформу, яка дає більше охоплення оригінальному автору контенту, ніж тим, хто його репостить."],
+["0:58","We try to estimate how likely a piece of content is to be original by looking at what they've posted in the past and other signals.","Ми намагаємося оцінити, наскільки ймовірно, що контент є оригінальним, дивлячись на те, що акаунт публікував раніше, та на інші сигнали."],
+["1:08","We've driven that percentage way up over time — the percentage of impressions that were on original content.","З часом ми суттєво підняли цей відсоток — відсоток показів, які припадали на оригінальний контент."],
+["1:16","We want Instagram to respond to the world as it changes around them.","Ми хочемо, щоб Instagram реагував на світ у міру того, як він змінюється навколо."],
+["1:20","It used to be that something might happen and you would see it on Instagram three, four, five days later, and that just doesn't work.","Раніше бувало так: щось стається, а ви бачите це в Instagram через три, чотири, п'ять днів — і це просто не працює."],
+["1:27","So we had to go through all the different aspects of how ranking works and shorten those timelines as much as possible.","Тож нам довелося пройтися по всіх аспектах роботи ранжування і скоротити ці терміни якомога більше."],
+["1:44","We look mostly at what percentage of impressions in a given day are of posts that are less than 24 hours old.","Ми дивимося переважно на те, який відсоток показів за день припадає на дописи, яким менше ніж 24 години."],
+["1:55","We don't just want to be a place where large creators can get a lot of distribution.","Ми не хочемо бути лише місцем, де великі автори отримують велике охоплення."],
+["1:59","We want to be a place where a new creator with a great idea can actually reach a massive audience.","Ми хочемо бути місцем, де новий автор із чудовою ідеєю справді може дістатися величезної аудиторії."],
+["2:05","And we do this by auditioning content.","І ми робимо це, влаштовуючи контенту своєрідне «прослуховування»."],
+["2:08","We will show content from a public account to some accounts that don't follow it, just to see if it might actually be more interesting than we realize.","Ми показуємо контент публічного акаунта деяким акаунтам, які на нього не підписані, просто щоб побачити, чи не є він цікавішим, ніж нам здається."],
+["2:20","You can see a post from a small public creator reach hundreds of thousands, even millions of people, because it's just outperforming expectations.","Ви можете побачити, як допис невеликого публічного автора досягає сотень тисяч і навіть мільйонів людей — просто тому, що він перевершує очікування."],
+["2:39","Model size is less about content and more just about how smart the system is.","Розмір моделі — це менше про контент і більше просто про те, наскільки розумна сама система."],
+["2:43","We have made our AI models larger and larger over the last few years in order to get better at ranking overall.","За останні кілька років ми робили наші AI-моделі дедалі більшими, щоб краще ранжувати загалом."],
+["2:55","Hopefully, this sheds some light on how we do what we do.","Сподіваюся, це трохи прояснює, як ми робимо те, що робимо."]
+];
+
+const CARDS=[
+["ranking","/ˈræŋkɪŋ/","ранжування — порядок, у якому пости показують користувачу","Ranking decides which post you see first when you open the app."],
+["engagement","/ɪnˈɡeɪdʒmənt/","залученість — лайки, коментарі, збереження, поширення","The reel got huge engagement in the first hour."],
+["distribution","/ˌdɪstrɪˈbjuːʃn/","охоплення, поширення контенту платформою","Original creators get more distribution than accounts that repost."],
+["impressions","/ɪmˈpreʃnz/","покази — скільки разів допис з'явився на екрані","Half of our impressions come from people who don't follow us."],
+["a signal","/ə ˈsɪɡnəl/","сигнал — дані, на які спирається система, ухвалюючи рішення","The system looks at dozens of signals before it ranks a post."],
+["recency","/ˈriːsnsi/","свіжість — наскільки новим є контент","Recency matters: posts under 24 hours old get priority."],
+["original content","/əˈrɪdʒənl ˈkɒntent/","оригінальний контент — створений самим акаунтом","We have driven up the share of original content in the feed."],
+["to repost","/ˌriːˈpəʊst/","репостити — публікувати чужий контент у себе","He never films anything — he just reposts other people's videos."],
+["to audition content","/ɔːˈdɪʃn ˈkɒntent/","тестувати контент на невеликій аудиторії, щоб побачити реакцію","We audition content by showing it to accounts that don't follow you."],
+["to outperform expectations","/ˌaʊtpəˈfɔːm/","перевершити очікування","That post outperformed expectations and reached two million people."],
+["likely","/ˈlaɪkli/","ймовірний; такий, що, найпевніше, станеться (be likely to do sth)","Are you likely to send this to a friend or watch it to the end?"],
+["content principles","/ˈkɒntent ˈprɪnsəplz/","принципи контенту — цінності, які система враховує, крім залученості","Originality and recency are two of our four content principles."],
+["breaking content","/ˈbreɪkɪŋ ˈkɒntent/","контент, що «вистрілює» — допис, який раптово отримує величезне охоплення","Breaking content lets a new creator reach a massive audience overnight."],
+["to estimate","/ˈestɪmeɪt/","оцінювати, приблизно визначати (наголос на першому складі)","We try to estimate how likely a piece of content is to be original."],
+["to shorten timelines","/ˈʃɔːtn ˈtaɪmlaɪnz/","скоротити терміни, зробити процес швидшим","We went through the whole system and shortened those timelines."],
+["to shed some light on sth","/ʃed sʌm laɪt ɒn/","пролити світло на щось, прояснити","Hopefully this sheds some light on how ranking actually works."]
+];
+const cbox=document.getElementById("cards");
+function drawCards(list){
+  cbox.innerHTML="";
+  list.forEach(c=>{
+    const d=document.createElement("div");d.className="fc";d.tabIndex=0;
+    d.innerHTML='<div class="w"></div><div class="hint">tap to reveal</div>'+
+      '<div class="back"><div class="ipa"></div><p class="uk"></p><p class="ex"></p></div>';
+    d.querySelector(".w").textContent=c[0];
+    d.querySelector(".ipa").textContent=c[1];
+    d.querySelector(".uk").textContent=c[2];
+    d.querySelector(".ex").textContent=c[3];
+    const flip=()=>d.classList.toggle("open");
+    d.onclick=flip;
+    d.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();flip()}};
+    cbox.append(d);
+  });
+}
+drawCards(CARDS);
+document.getElementById("c-all").onclick=()=>cbox.querySelectorAll(".fc").forEach(c=>c.classList.add("open"));
+document.getElementById("c-none").onclick=()=>cbox.querySelectorAll(".fc").forEach(c=>c.classList.remove("open"));
+document.getElementById("c-mix").onclick=()=>drawCards(CARDS.slice().sort(()=>Math.random()-.5));
+
+const L="ABCDEFGHIJ";
+const norm=s=>s.toLowerCase().trim().replace(/[.,!?;]$/,"").replace(/\s+/g," ");
+const el=(t,c,h)=>{const n=document.createElement(t);if(c)n.className=c;if(h!==undefined)n.innerHTML=h;return n};
+
+// 02 matching
+const shuffled=VOC.map((v,i)=>[v[1],i]).sort(()=>Math.random()-.5);
+const defs=document.getElementById("defs");
+shuffled.forEach(d=>defs.append(el("li","",d[0])));
+const match=document.getElementById("match");
+VOC.forEach((v,i)=>{
+  const r=el("div","row");
+  r.append(el("span","term",v[0]));
+  const s=document.createElement("select");
+  s.append(new Option("—",""));
+  shuffled.forEach((d,j)=>s.append(new Option(L[j],d[1])));
+  s.dataset.a=i;r.append(s);match.append(r);
+});
+
+// 03 script
+const sc=document.getElementById("script");
+SCRIPT.forEach(d=>{
+  const c=el("div","card");
+  c.append(el("div","time",d[0]),el("p","en",d[1]));
+  const b=el("button","","Переклад"),t=el("p","tr",d[2]);
+  b.onclick=()=>{const o=t.style.display!=="block";t.style.display=o?"block":"none";b.textContent=o?"Сховати":"Переклад"};
+  c.append(b,t);sc.append(c);
+});
+const setAll=v=>sc.querySelectorAll(".card").forEach(c=>{
+  c.querySelector(".tr").style.display=v?"block":"none";
+  c.querySelector("button").textContent=v?"Сховати":"Переклад"});
+document.getElementById("all").onclick=()=>setAll(true);
+document.getElementById("none").onclick=()=>setAll(false);
+
+// 04 mcq
+const mq=document.getElementById("mcq");
+MCQ.forEach((q,i)=>{
+  const it=el("div","item");it.append(el("p","q",(i+1)+". "+q[0]));
+  const o=el("div","opts");
+  q[1].forEach((txt,j)=>{
+    const b=el("button","opt",txt);b.type="button";b.setAttribute("aria-pressed","false");
+    b.onclick=()=>{o.querySelectorAll(".opt").forEach(x=>{x.setAttribute("aria-pressed","false");x.classList.remove("ok","no")});
+      b.setAttribute("aria-pressed","true");o.dataset.p=j};
+    o.append(b);
+  });
+  o.dataset.a=q[2];it.append(o);mq.append(it);
+});
+
+// gap fills
+function buildGaps(id,data){
+  const box=document.getElementById(id);
+  data.forEach((g,i)=>{
+    const it=el("div","item");
+    const p=el("p","q");
+    const parts=g[0].split("___");
+    p.append(document.createTextNode((i+1)+". "+parts[0]));
+    const inp=document.createElement("input");inp.className="gap";inp.dataset.a=g[1];
+    inp.setAttribute("aria-label","gap "+(i+1));
+    p.append(inp,document.createTextNode(parts[1]||""));
+    it.append(p);box.append(it);
+  });
+}
+buildGaps("gap1",GAP1);buildGaps("gap2",GAP2);
+
+// 06 collocations
+const co=document.getElementById("coll");
+const nouns=COLL.map((c,i)=>[c[1],i]).sort(()=>Math.random()-.5);
+COLL.forEach((c,i)=>{
+  const r=el("div","row");r.append(el("span","term",c[0]+" …"));
+  const s=document.createElement("select");s.append(new Option("—",""));
+  nouns.forEach(n=>s.append(new Option(n[0],n[1])));
+  s.dataset.a=i;r.append(s);co.append(r);
+});
+
+// 09 transformation
+const trn=document.getElementById("trans");
+TRANS.forEach((t,i)=>{
+  const it=el("div","item");
+  it.append(el("p","q",(i+1)+". "+t[0]));
+  const inp=document.createElement("input");inp.style.width="100%";inp.setAttribute("aria-label","answer "+(i+1));
+  const k=el("p","key","✓ "+t[1]);
+  const b=el("button","ghost","Show answer");
+  b.style.marginTop="10px";
+  b.onclick=()=>{if(!inp.value.trim()){inp.classList.add("no");return}
+    inp.classList.remove("no");k.style.display="block";b.style.display="none"};
+  inp.oninput=()=>inp.classList.remove("no");
+  it.append(inp,b,k);trn.append(it);
+});
+
+// 12 translation
+const trb=document.getElementById("tr");
+TR.forEach((t,i)=>{
+  const it=el("div","item");
+  it.append(el("p","q",(i+1)+". "+t[0]));
+  const inp=document.createElement("input");inp.style.width="100%";inp.setAttribute("aria-label","translation "+(i+1));
+  const k=el("p","key","✓ "+t[1]);
+  const b=el("button","ghost","Show model answer");b.style.marginTop="10px";
+  b.onclick=()=>{if(!inp.value.trim()){inp.classList.add("no");return}
+    inp.classList.remove("no");k.style.display="block";b.style.display="none"};
+  inp.oninput=()=>inp.classList.remove("no");
+  it.append(inp,b,k);trb.append(it);
+});
+
+// checking
+function checkSelects(root){let n=0,t=0;
+  root.querySelectorAll("select").forEach(s=>{t++;const good=s.value===s.dataset.a;
+    s.classList.remove("ok","no");s.classList.add(good?"ok":"no");if(good)n++});
+  return[n,t]}
+function checkGaps(root){let n=0,t=0;
+  root.querySelectorAll("input.gap").forEach(i=>{t++;
+    const good=i.dataset.a.split("|").some(a=>norm(a)===norm(i.value));
+    i.classList.remove("ok","no");i.classList.add(good?"ok":"no");if(good)n++});
+  return[n,t]}
+function checkMcq(root){let n=0,t=0;
+  root.querySelectorAll(".opts").forEach(o=>{t++;const p=o.dataset.p;
+    if(p===undefined)return;const b=o.querySelectorAll(".opt")[p];
+    if(String(p)===o.dataset.a){b.classList.add("ok");n++}else{b.classList.add("no");
+      o.querySelectorAll(".opt")[o.dataset.a].classList.add("ok")}});
+  return[n,t]}
+document.querySelectorAll("[data-check]").forEach(b=>{
+  b.onclick=()=>{const id=b.dataset.check,root=document.getElementById(id);
+    const r=id==="mcq"?checkMcq(root):(id.startsWith("gap")?checkGaps(root):checkSelects(root));
+    document.getElementById("s-"+id).textContent=r[0]+" / "+r[1]}});
+</script>
+</body>
+</html>
