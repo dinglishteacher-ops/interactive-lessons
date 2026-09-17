@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Living your way — Intermediate Plus 1.1 (part 2) | [living-your-way-1.1b.html](living-your-way-1.1b.html) |
 | How Instagram decides what you see — dinglish | [instagram-ranking-lesson.html](instagram-ranking-lesson.html) |
 | Тренажер слів · dinglish | [vocab-trainer-b1.html](vocab-trainer-b1.html) |
 | Food — Revision (Elementary) \| dinglish | [food-revision-elementary.html](food-revision-elementary.html) |
@@ -14,5 +15,5 @@ Repository with interactive English lessons.
 | Gerund & Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
 | Grammar Revision — NMT Practice \| dinglish | [grammar-revision-nmt-b1.html](grammar-revision-nmt-b1.html) |
 | Skincare English — Revision Lesson | [skincare-english-revision.html](skincare-english-revision.html) |
-| Revision Lesson · Units 1–6 | [revision-lesson.html](revision-lesson.html) |
 | Coffee drinker? — Intermediate Plus 1.1 | [coffee-drinker-1.1.html](coffee-drinker-1.1.html) |
+| Revision Lesson · Units 1–6 | [revision-lesson.html](revision-lesson.html) |
