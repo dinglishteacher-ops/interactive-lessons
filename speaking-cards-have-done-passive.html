@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speaking cards — have sth done &amp; passive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;0,800;1,700&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B1A12; --roast:#4A2C1D; --paper:#EFE7DA; --foam:#FFFBF4;
+  --cherry:#B23A2F; --caramel:#D6A354; --leaf:#4A7C59;
+  --line:rgba(43,26,18,.16); --line-soft:rgba(43,26,18,.08);
+  --display:"Alegreya",Georgia,serif; --body:"Manrope",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.55;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+.wrap{max-width:720px;width:100%;margin:0 auto;padding:22px 18px 40px;flex:1;display:flex;flex-direction:column}
+
+header.top{margin-bottom:16px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cherry);margin:0 0 6px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,7vw,42px);line-height:1;margin:0 0 6px}
+.sub{margin:0;color:rgba(43,26,18,.66);font-size:15px}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 14px;align-items:center}
+.fbtn{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  border:1.5px solid var(--line);background:transparent;color:var(--ink);
+  border-radius:999px;padding:8px 14px;cursor:pointer;transition:.18s;
+}
+.fbtn:hover{border-color:var(--ink)}
+.fbtn.on{background:var(--ink);color:var(--foam);border-color:var(--ink)}
+.fbtn:focus-visible,button:focus-visible{outline:3px solid var(--caramel);outline-offset:2px}
+.spacer{flex:1}
+
+/* ---- card ---- */
+.stage{perspective:1600px;flex:1;display:flex;align-items:stretch;min-height:430px}
+.card{
+  position:relative;width:100%;transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.3,.8,.3,1);cursor:pointer;
+}
+.card.flipped{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:20px;padding:26px 24px;display:flex;flex-direction:column;
+  overflow-y:auto;
+}
+.front{
+  background:var(--foam);border:1px solid var(--line);
+  box-shadow:0 1px 0 var(--line),0 14px 30px -20px rgba(43,26,18,.5);
+}
+.back{
+  transform:rotateY(180deg);
+  scrollbar-width:thin;scrollbar-color:rgba(255,251,244,.35) transparent;
+  background:var(--roast);color:var(--foam);border:1px solid var(--roast);
+  box-shadow:0 14px 30px -20px rgba(43,26,18,.6);
+}
+.card.done .front{border-color:var(--leaf);box-shadow:0 0 0 2px rgba(74,124,89,.25),0 14px 30px -20px rgba(43,26,18,.4)}
+
+.tagrow{display:flex;align-items:center;gap:9px;margin-bottom:auto}
+.tag{
+  font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px;
+}
+.tag.have{background:var(--cherry);color:#fff}
+.tag.pass{background:var(--caramel);color:var(--ink)}
+.num{font-family:var(--mono);font-size:12px;color:rgba(43,26,18,.45);margin-left:auto}
+.back .num{color:rgba(255,251,244,.5)}
+
+.q{
+  font-family:var(--display);font-weight:700;font-size:clamp(22px,5.2vw,31px);
+  line-height:1.22;margin:22px 0;
+}
+.hint{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(43,26,18,.42);margin-top:auto;
+}
+
+.back h4{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--caramel);margin:16px 0 8px;font-weight:700;
+}
+.back h4:first-of-type{margin-top:18px}
+.back ul{margin:0;padding-left:18px}
+.back li{margin-bottom:7px;font-size:16px;color:rgba(255,251,244,.92)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.lchip{
+  font-size:14.5px;border:1px solid rgba(255,251,244,.3);border-radius:999px;
+  padding:5px 12px;color:rgba(255,251,244,.9);
+}
+.back .ua{font-size:14px;color:rgba(255,251,244,.6);margin:12px 0 0}
+
+/* ---- controls ---- */
+.nav{display:flex;align-items:center;gap:10px;margin-top:18px}
+.round{
+  width:52px;height:52px;border-radius:50%;flex:0 0 auto;
+  border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  font-size:21px;line-height:1;cursor:pointer;transition:.15s;
+  display:grid;place-items:center;
+}
+.round:hover{background:var(--ink);color:var(--foam)}
+.round:disabled{opacity:.3;cursor:default}
+.round:disabled:hover{background:transparent;color:var(--ink)}
+.mid{flex:1;text-align:center}
+.dots{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(43,26,18,.2);transition:.2s;cursor:pointer;border:none;padding:0}
+.dot.on{background:var(--cherry);transform:scale(1.4)}
+.dot.done{background:var(--leaf)}
+.counter{font-family:var(--mono);font-size:12px;color:rgba(43,26,18,.55)}
+
+.tools{display:flex;gap:9px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.tbtn{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  border:1.5px solid var(--line);background:transparent;color:var(--ink);
+  border-radius:999px;padding:9px 15px;cursor:pointer;transition:.18s;
+}
+.tbtn:hover{border-color:var(--ink)}
+.tbtn.green{border-color:var(--leaf);color:var(--leaf)}
+.tbtn.green.on{background:var(--leaf);color:#fff}
+
+.sig{
+  font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+  color:var(--caramel);text-align:center;margin-top:22px;
+}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);
+  background:var(--ink);color:var(--foam);padding:10px 17px;border-radius:999px;
+  font-family:var(--mono);font-size:12px;opacity:0;pointer-events:none;transition:.28s;z-index:50;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:620px){
+  .wrap{padding:16px 14px 26px}
+  .stage{min-height:min(470px,58vh)}
+  .face{padding:18px 16px;border-radius:16px}
+  .round{width:46px;height:46px;font-size:19px}
+  h1{font-size:26px}
+  .sub{font-size:14px}
+  .back li{font-size:15px;margin-bottom:6px}
+  .lchip{font-size:13.5px;padding:4px 10px}
+  .back h4{margin:13px 0 7px}
+  .back h4:first-of-type{margin-top:14px}
+  .back .ua{font-size:13px}
+  .q{margin:16px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .card{transition:none}
+  *{animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Speaking cards · B1+ / B2</p>
+    <h1>Have it done. Or let it be done.</h1>
+    <p class="sub">Ten questions that are hard to answer in one sentence. Tap the card to see follow-ups and useful language.</p>
+  </header>
+
+  <div class="filters">
+    <button class="fbtn on" data-filter="all">All 10</button>
+    <button class="fbtn" data-filter="have">have sth done</button>
+    <button class="fbtn" data-filter="passive">passive</button>
+  </div>
+
+  <div class="stage">
+    <div class="card" id="card" tabindex="0" role="button" aria-label="Tap to flip the card">
+      <div class="face front">
+        <div class="tagrow"><span class="tag" id="tag"></span><span class="num" id="num"></span></div>
+        <p class="q" id="q"></p>
+        <p class="hint" id="hint">tap to flip</p>
+      </div>
+      <div class="face back">
+        <div class="tagrow"><span class="tag" id="tag2"></span><span class="num" id="num2"></span></div>
+        <h4>Follow-up questions</h4>
+        <ul id="fups"></ul>
+        <h4>Useful language</h4>
+        <div class="chips" id="chips"></div>
+        <p class="ua" id="ua"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="round" id="prev" aria-label="Previous card">‹</button>
+    <div class="mid">
+      <div class="dots" id="dots"></div>
+      <div class="counter"><span id="cur">1</span> / <span id="tot">10</span></div>
+    </div>
+    <button class="round" id="next" aria-label="Next card">›</button>
+  </div>
+
+  <div class="tools">
+    <button class="tbtn green" id="mark">Обговорили ✓</button>
+    <button class="tbtn" id="shuffle">Перемішати</button>
+    <button class="tbtn" id="reset">Скинути</button>
+  </div>
+
+  <p class="sig">dinglish</p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+var CARDS = [
+ {t:"have",
+  q:"What is the most expensive thing you have ever had done — and looking back, was it worth every hryvnia?",
+  f:["Who did it, and how did you choose them?",
+     "Would you pay that money again today, or spend it differently?",
+     "What is the cheapest thing you have had done that made the biggest difference?"],
+  c:["It set me back…","It was worth every penny","I'd think twice before…","in hindsight"],
+  ua:"Фокус: had + object + V3 у past simple, плюс оцінка досвіду."},
+
+ {t:"have",
+  q:"Is there something you would never let anyone else do for you, even if you had the money? Why do you insist on doing it yourself?",
+  f:["Is it about control, money, or the pleasure of doing it?",
+     "Has anyone ever done it for you badly and put you off for good?",
+     "What does that say about your character?"],
+  c:["I'd rather do it myself","I don't trust anyone to…","nobody does it the way I like it","it's not about the money"],
+  ua:"Фокус: контраст «I do it myself» vs «I have it done»."},
+
+ {t:"have",
+  q:"Tell me about a time you had something done badly. Did you complain, ask for your money back, or just put up with it?",
+  f:["How did you raise it with them — face to face, or in a message?",
+     "Do you find it easy to complain in Ukrainian? And in English?",
+     "Would you handle it differently now?"],
+  c:["They made a mess of it","I had it redone","I let it go","I asked for a refund"],
+  ua:"Фокус: had it done → had it redone; лексика скарги."},
+
+ {t:"have",
+  q:"If someone gave you a personal assistant for one month, what three things would you have taken off your hands — and what would you refuse to delegate?",
+  f:["Which of those would free up the most time?",
+     "Why are the other things too personal to delegate?",
+     "Do you think your life would actually get better, or just emptier?"],
+  c:["I'd have my inbox managed","I'd get the admin dealt with","I'd keep that to myself","it would free up hours"],
+  ua:"Фокус: would have sth done + delegation vocabulary."},
+
+ {t:"have",
+  q:"In your family, who gets things done for them and who does everything themselves? Has that changed between the generations?",
+  f:["What did your grandparents do themselves that nobody does now?",
+     "Is paying for services seen as normal or as laziness in your circle?",
+     "Where will your generation's children draw the line?"],
+  c:["My grandparents would never have…","these days everyone has it delivered","it used to be seen as…","people don't think twice about it"],
+  ua:"Фокус: have sth done у різних часах + used to."},
+
+ {t:"passive",
+  q:"Think of a rule that has recently been introduced at your work or in your city. Was it explained properly, and who was it really designed for?",
+  f:["Was anyone actually asked before it was brought in?",
+     "Has it changed anyone's behaviour, or is it just ignored?",
+     "What rule should be scrapped tomorrow?"],
+  c:["It was brought in last…","We were never consulted","It's widely ignored","It should be scrapped"],
+  ua:"Фокус: present perfect passive + was designed / was consulted."},
+
+ {t:"passive",
+  q:"What is something you were told as a child that turned out to be completely untrue?",
+  f:["Who told you, and do you think they believed it themselves?",
+     "When and how were you finally told the truth?",
+     "Is there anything children in Ukraine are still told that should stop?"],
+  c:["I was brought up to believe…","We were warned that…","I was never told that…","It was drummed into us"],
+  ua:"Фокус: пасив із дієсловами мовлення — was told, was taught, was warned."},
+
+ {t:"passive",
+  q:"Which decision that changed your life was made by somebody else, without you being asked?",
+  f:["How did you find out about it?",
+     "Do you think the right decision was made in the end?",
+     "If you could have that decision reopened today, would you?"],
+  c:["The decision was taken over my head","I wasn't given a choice","It was sprung on me","In the end it worked out"],
+  ua:"Фокус: пасив із модальними та перфектом; without being asked."},
+
+ {t:"passive",
+  q:"If a documentary were made about your life, which years would be cut out in the edit — and which five minutes would be shown at every festival?",
+  f:["Who would be interviewed about you?",
+     "What would the title be?",
+     "Would it be shown to your family, or only to strangers?"],
+  c:["That part would be cut","It would be filmed in…","I'd be played by…","It would never be shown"],
+  ua:"Фокус: would + be + V3 (гіпотетичний пасив)."},
+
+ {t:"passive",
+  q:"What skill used to be taught to everyone and has quietly been dropped? Should it be brought back into schools?",
+  f:["What has replaced it, and is that an improvement?",
+     "What should be added to the curriculum tomorrow?",
+     "What were you taught at school that has never once been useful?"],
+  c:["It was dropped years ago","It's no longer taught","It ought to be brought back","We were made to learn…"],
+  ua:"Фокус: used to be + V3, should/ought to be + V3."}
+];
+
+
+var card=document.getElementById("card"),
+    idx=0, filter="all", order=[], done={};
+
+function pool(){
+  return CARDS.map(function(c,i){return i;}).filter(function(i){
+    return filter==="all" || CARDS[i].t===filter;
+  });
+}
+function rebuild(keep){
+  var p=pool();
+  order = order.length && keep ? order.filter(function(i){return p.indexOf(i)>-1;}) : p.slice();
+  if(!order.length) order=p.slice();
+  if(idx>=order.length) idx=0;
+  render(); buildDots();
+}
+function buildDots(){
+  var box=document.getElementById("dots"); box.innerHTML="";
+  order.forEach(function(ci,n){
+    var b=document.createElement("button");
+    b.className="dot"+(n===idx?" on":"")+(done[ci]?" done":"");
+    b.setAttribute("aria-label","Card "+(n+1));
+    b.onclick=function(){ idx=n; card.classList.remove("flipped"); render(); };
+    box.appendChild(b);
+  });
+}
+function render(){
+  var ci=order[idx], c=CARDS[ci];
+  var lbl = c.t==="have" ? "have sth done" : "passive voice";
+  ["tag","tag2"].forEach(function(id){
+    var el=document.getElementById(id);
+    el.textContent=lbl;
+    el.className="tag "+(c.t==="have"?"have":"pass");
+  });
+  var n=(idx+1)+" / "+order.length;
+  document.getElementById("num").textContent=n;
+  document.getElementById("num2").textContent=n;
+  document.getElementById("q").textContent=c.q;
+  var ul=document.getElementById("fups"); ul.innerHTML="";
+  c.f.forEach(function(x){ var li=document.createElement("li"); li.textContent=x; ul.appendChild(li); });
+  var ch=document.getElementById("chips"); ch.innerHTML="";
+  c.c.forEach(function(x){ var s=document.createElement("span"); s.className="lchip"; s.textContent=x; ch.appendChild(s); });
+  document.getElementById("ua").textContent=c.ua;
+  document.getElementById("cur").textContent=idx+1;
+  document.getElementById("tot").textContent=order.length;
+  card.classList.toggle("done", !!done[ci]);
+  document.getElementById("mark").classList.toggle("on", !!done[ci]);
+  document.getElementById("prev").disabled = idx===0;
+  document.getElementById("next").disabled = idx===order.length-1;
+  buildDots();
+}
+function go(step){
+  var n=idx+step;
+  if(n<0||n>=order.length) return;
+  idx=n; card.classList.remove("flipped"); render();
+}
+
+card.addEventListener("click",function(){ card.classList.toggle("flipped"); });
+card.addEventListener("keydown",function(e){
+  if(e.key===" "||e.key==="Enter"){ e.preventDefault(); card.classList.toggle("flipped"); }
+});
+document.getElementById("prev").onclick=function(e){ e.stopPropagation(); go(-1); };
+document.getElementById("next").onclick=function(e){ e.stopPropagation(); go(1); };
+document.addEventListener("keydown",function(e){
+  if(e.target.tagName==="BUTTON"&&e.key===" ") return;
+  if(e.key==="ArrowRight") go(1);
+  if(e.key==="ArrowLeft") go(-1);
+});
+
+/* swipe */
+var x0=null;
+card.addEventListener("touchstart",function(e){ x0=e.touches[0].clientX; },{passive:true});
+card.addEventListener("touchend",function(e){
+  if(x0===null) return;
+  var dx=e.changedTouches[0].clientX-x0;
+  if(Math.abs(dx)>60){ go(dx<0?1:-1); e.preventDefault(); }
+  x0=null;
+},{passive:false});
+
+document.querySelectorAll(".fbtn").forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll(".fbtn").forEach(function(x){x.classList.remove("on");});
+    b.classList.add("on");
+    filter=b.dataset.filter; idx=0; order=[];
+    card.classList.remove("flipped");
+    rebuild(false);
+  };
+});
+
+document.getElementById("mark").onclick=function(){
+  var ci=order[idx];
+  done[ci]=!done[ci];
+  toast(done[ci]?"Позначено як обговорене":"Позначку знято");
+  render();
+};
+document.getElementById("shuffle").onclick=function(){
+  var p=pool();
+  for(var i=p.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=p[i]; p[i]=p[j]; p[j]=t; }
+  order=p; idx=0; card.classList.remove("flipped"); render();
+  toast("Перемішано");
+};
+document.getElementById("reset").onclick=function(){
+  done={}; idx=0; order=[]; card.classList.remove("flipped"); rebuild(false);
+  toast("Скинуто");
+};
+
+var tEl=document.getElementById("toast"), tT;
+function toast(m){
+  tEl.textContent=m; tEl.classList.add("on");
+  clearTimeout(tT); tT=setTimeout(function(){ tEl.classList.remove("on"); },1600);
+}
+
+rebuild(false);
+})();
+</script>
+</body>
+</html>
