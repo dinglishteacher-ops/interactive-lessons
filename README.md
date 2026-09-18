@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Gerund & Infinitive — тест | [gerund-infinitive-test-2.html](gerund-infinitive-test-2.html) |
 | Speaking cards — have sth done & passive | [speaking-cards-have-done-passive.html](speaking-cards-have-done-passive.html) |
 | Living your way — Intermediate Plus 1.1 (part 2) | [living-your-way-1.1b.html](living-your-way-1.1b.html) |
 | How Instagram decides what you see — dinglish | [instagram-ranking-lesson.html](instagram-ranking-lesson.html) |
