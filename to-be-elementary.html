@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>To be: am, is, are — dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1FA;--surface:#FFFFFF;--ink:#1A2150;--muted:#5A628C;--line:#D7DCEE;--chip:#F3F5FC;
+  --am:#6D4AE8;--is:#C99500;--are:#2A73E0;
+  --ok:#1C8A45;--okbg:#E3F5E9;--bad:#C8324C;--badbg:#FCE7EB;--focus:#2A73E0;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12152B;--surface:#1B1F3B;--ink:#ECEEFA;--muted:#A3A9CC;--line:#2E3460;--chip:#252A4D;
+    --am:#A58FFF;--is:#FFC933;--are:#6AA6FF;--ok:#5BD08A;--okbg:#173826;--bad:#FF7A90;--badbg:#3F1A24;--focus:#6AA6FF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12152B;--surface:#1B1F3B;--ink:#ECEEFA;--muted:#A3A9CC;--line:#2E3460;--chip:#252A4D;
+  --am:#A58FFF;--is:#FFC933;--are:#6AA6FF;--ok:#5BD08A;--okbg:#173826;--bad:#FF7A90;--badbg:#3F1A24;--focus:#6AA6FF;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Onest,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+main{max-width:760px;margin:0 auto;padding:0 18px 64px}
+h1,h2,h3{font-family:Unbounded,Onest,system-ui,sans-serif;line-height:1.2;margin:0}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* hero */
+.hero{padding:36px 0 28px}
+.brand{font-family:Unbounded,sans-serif;font-weight:700;font-size:15px;color:var(--muted);letter-spacing:.02em}
+.hero h1{font-size:clamp(28px,6vw,40px);margin:14px 0 6px}
+.hero p{color:var(--muted);margin:0 0 26px;max-width:56ch}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.trio div{background:var(--surface);border-radius:18px;padding:16px 14px 14px;border:1px solid var(--line)}
+.trio b{display:block;font-family:Unbounded,sans-serif;font-size:clamp(34px,9vw,58px);line-height:1;font-weight:700}
+.trio span{display:block;margin-top:10px;color:var(--muted);font-size:15px}
+.c-am{color:var(--am)}.c-is{color:var(--is)}.c-are{color:var(--are)}
+
+/* parts */
+.part{margin-top:44px}
+.part>h2{font-size:22px;margin-bottom:14px}
+.rule{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--am);border-radius:6px 16px 16px 6px;padding:16px 18px;margin-bottom:22px}
+.rule h3{font-size:15px;margin-bottom:8px}
+.rule p{margin:.4em 0}
+.rule .tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:15.5px;margin:8px 0}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted)}
+.note{font-size:15px;color:var(--muted)}
+.rule.q{border-left-color:var(--are)}.rule.p{border-left-color:var(--is)}
+
+.speak{border:2px dashed var(--line);border-radius:16px;padding:14px 18px;margin:22px 0}
+.speak h3{font-size:15px;margin-bottom:6px}
+.speak ul{margin:6px 0 0;padding-left:20px}
+
+/* tasks */
+.task{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 18px 18px;margin:18px 0}
+.task h3{font-size:17px}
+.task .num{display:inline-block;min-width:1.9em;color:var(--muted)}
+.instr{margin:6px 0 14px;color:var(--muted)}
+.task ol{list-style:none;margin:0;padding:0;counter-reset:q}
+.item{counter-increment:q;position:relative;padding:10px 0 10px 34px;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item::before{content:counter(q);position:absolute;left:0;top:11px;width:24px;height:24px;border-radius:50%;background:var(--chip);font-size:13px;font-weight:600;display:grid;place-items:center;color:var(--muted)}
+.item.ok::before{background:var(--ok);color:#fff;content:"✓"}
+.item.bad::before{background:var(--bad);color:#fff;content:"✗"}
+.q{margin:0 0 8px}
+.slot{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--muted);text-align:center;font-weight:600;padding:0 4px}
+.item.ok .slot{color:var(--ok);border-color:var(--ok)}
+.item.bad .slot{color:var(--bad);border-color:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--chip);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:38px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chip.right{border-color:var(--ok);box-shadow:0 0 0 2px var(--ok) inset}
+.inp{width:100%;border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;min-height:44px}
+.item.ok .inp{border-color:var(--ok);background:var(--okbg)}
+.item.bad .inp{border-color:var(--bad);background:var(--badbg)}
+.hint{color:var(--muted);font-size:15px}
+.fix{margin:6px 0 0;color:var(--ok);font-weight:600;font-size:15.5px}
+.fix:empty{display:none}
+.sign{display:inline-block;font-weight:700;padding:0 6px;border-radius:6px;margin-left:4px}
+.sign.y{background:var(--okbg);color:var(--ok)}.sign.n{background:var(--badbg);color:var(--bad)}
+
+/* word order */
+.line{min-height:48px;border:1.5px dashed var(--line);border-radius:12px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.item.ok .line{border-color:var(--ok);background:var(--okbg);border-style:solid}
+.item.bad .line{border-color:var(--bad);background:var(--badbg);border-style:solid}
+.bank{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tile{border:1.5px solid var(--line);background:var(--chip);border-radius:8px;padding:5px 11px;cursor:pointer;min-height:36px}
+.line .tile{background:var(--surface)}
+.end{font-weight:700;padding:0 4px;color:var(--muted)}
+
+/* gap text */
+.story{line-height:2.3;margin:0}
+.gap{width:4.6em;border:0;border-bottom:2px solid var(--muted);background:transparent;text-align:center;font-weight:600;padding:0 2px}
+.gap.ok{border-color:var(--ok);color:var(--ok);background:var(--okbg)}
+.gap.bad{border-color:var(--bad);color:var(--bad);background:var(--badbg)}
+
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.btn{border:0;border-radius:12px;padding:10px 18px;cursor:pointer;font-weight:600;min-height:44px}
+.btn.main{background:var(--ink);color:var(--surface)}
+.btn.sec{background:var(--chip);border:1.5px solid var(--line)}
+.score{margin-left:auto;font-family:Unbounded,sans-serif;font-weight:700;font-size:18px}
+.score.good{color:var(--ok)}.score.low{color:var(--bad)}
+
+.total{margin-top:44px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+.total b{font-family:Unbounded,sans-serif;font-size:34px;display:block;margin-top:6px}
+footer{text-align:center;color:var(--muted);margin-top:28px;font-family:Unbounded,sans-serif;font-size:14px}
+@media (max-width:480px){.trio div{padding:12px 10px}.task{padding:16px 14px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+  <div class="brand">dinglish</div>
+  <h1>To be: am, is, are</h1>
+  <p>Elementary. Present Simple of the verb <i>to be</i> in all sentence types, question words, and he / she / his / her.</p>
+  <div class="trio">
+    <div><b class="c-am">am</b><span>I</span></div>
+    <div><b class="c-is">is</b><span>he, she, it</span></div>
+    <div><b class="c-are">are</b><span>we, you, they</span></div>
+  </div>
+</header>
+
+<!-- PART 1 -->
+<section class="part">
+  <h2>Part 1. Am, is, are</h2>
+  <div class="rule">
+    <h3>Дієслово to be у Present Simple</h3>
+    <p>Українською ми часто пропускаємо «є»: <i>Я студент.</i> Англійською дієслово обов'язкове: <b>I am a student.</b></p>
+    <div class="tw"><table>
+      <tr><th></th><th>Стверджувальне</th><th>Заперечне</th><th>Питання</th></tr>
+      <tr><td>I</td><td>I <b class="c-am">am</b> (I'm)</td><td>I am not (I'm not)</td><td><b class="c-am">Am</b> I…?</td></tr>
+      <tr><td>he / she / it</td><td>she <b class="c-is">is</b> (she's)</td><td>she is not (she isn't)</td><td><b class="c-is">Is</b> she…?</td></tr>
+      <tr><td>we / you / they</td><td>they <b class="c-are">are</b> (they're)</td><td>they are not (they aren't)</td><td><b class="c-are">Are</b> they…?</td></tr>
+    </table></div>
+    <p><b>Питання:</b> am/is/are стає на перше місце: <i>She is at home → Is she at home?</i></p>
+    <p><b>Короткі відповіді:</b> Yes, I am. / No, I'm not. Yes, he is. / No, he isn't. Yes, they are. / No, they aren't.</p>
+    <p class="note">У короткій відповіді «так» скорочення не буває: <b>Yes, I am</b> ✓ &nbsp; <s>Yes, I'm</s> ✗</p>
+  </div>
+
+  <div class="task" data-task="t1"></div>
+  <div class="task" data-task="t2"></div>
+  <div class="task" data-task="t3"></div>
+  <div class="task" data-task="t4"></div>
+  <div class="task" data-task="t5"></div>
+
+  <div class="speak">
+    <h3>Speaking</h3>
+    <ul>
+      <li>Say 3 true and 2 false sentences about yourself: <i>I'm 25. I'm not a doctor…</i> Your teacher guesses which are false.</li>
+      <li>Ask your teacher 4 questions with <i>Are you…? / Is your…?</i> and answer with short answers.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PART 2 -->
+<section class="part">
+  <h2>Part 2. Question words</h2>
+  <div class="rule q">
+    <h3>Питальні слова</h3>
+    <div class="tw"><table>
+      <tr><th>Слово</th><th>Значення</th><th>Приклад</th></tr>
+      <tr><td><b>What</b></td><td>що, який</td><td>What is your name?</td></tr>
+      <tr><td><b>Where</b></td><td>де, звідки (+ from)</td><td>Where are you from?</td></tr>
+      <tr><td><b>Who</b></td><td>хто</td><td>Who is she?</td></tr>
+      <tr><td><b>When</b></td><td>коли</td><td>When is your birthday?</td></tr>
+      <tr><td><b>How</b></td><td>як</td><td>How are you?</td></tr>
+      <tr><td><b>How old</b></td><td>скільки років</td><td>How old is he?</td></tr>
+      <tr><td><b>Why</b></td><td>чому</td><td>Why are you sad?</td></tr>
+    </table></div>
+    <p><b>Порядок слів:</b> питальне слово + am/is/are + підмет. <i>Where <b>is</b> he?</i> (не <s>Where he is?</s>)</p>
+  </div>
+
+  <div class="task" data-task="t6"></div>
+  <div class="task" data-task="t7"></div>
+
+  <div class="speak">
+    <h3>Speaking</h3>
+    <ul>
+      <li>Interview your teacher about a friend or a family member: <i>What's his name? How old is he? Where is he from? Why is he your best friend?</i></li>
+    </ul>
+  </div>
+</section>
+
+<!-- PART 3 -->
+<section class="part">
+  <h2>Part 3. He, she, his, her</h2>
+  <div class="rule p">
+    <h3>Хто? і Чий?</h3>
+    <div class="tw"><table>
+      <tr><th></th><th>Хто? (перед дієсловом)</th><th>Чий? (перед іменником)</th></tr>
+      <tr><td>чоловік</td><td><b>he</b> — він: <i>He is a pilot.</i></td><td><b>his</b> — його: <i>his car</i></td></tr>
+      <tr><td>жінка</td><td><b>she</b> — вона: <i>She is a nurse.</i></td><td><b>her</b> — її: <i>her bag</i></td></tr>
+    </table></div>
+    <p class="note">Не плутайте: <b>he's</b> = he is (він є), <b>his</b> = його. <i>He's my brother. His name is Max.</i></p>
+  </div>
+
+  <div class="task" data-task="t8"></div>
+  <div class="task" data-task="t9"></div>
+
+  <div class="speak">
+    <h3>Speaking</h3>
+    <ul>
+      <li>Describe a man and a woman from your family: name, age, job, city. Use <i>he / his</i> and <i>she / her</i>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- MIXED -->
+<section class="part">
+  <h2>Mixed practice</h2>
+  <div class="task" data-task="t10"></div>
+  <div class="task" data-task="t11"></div>
+</section>
+
+<section class="total" aria-live="polite">
+  <div>Your result</div>
+  <b id="total">0 / 0</b>
+  <div class="note" id="totalNote">Check each task to see your total.</div>
+</section>
+<footer>dinglish</footer>
+</main>
+
+<script>
+const T = {
+  t1:{title:'Choose am, is or are',instr:'Tap the correct word.',type:'chips',options:['am','is','are'],items:[
+    ['I ___ a student.','am'],['My sister ___ twenty-five.','is'],['We ___ from Ukraine.','are'],['The coffee ___ hot.','is'],
+    ['You ___ my best friend.','are'],['Tom and Anna ___ at work.','are'],['It ___ cold today.','is'],['I ___ hungry.','am'],
+    ['My parents ___ teachers.','are'],['This book ___ interesting.','is']]},
+  t2:{title:'Make the sentences negative',instr:'Write the negative sentence. You can use full or short forms.',type:'text',items:[
+    ['I am tired.','I am not tired.'],['She is a doctor.','She is not a doctor.'],['They are at home.','They are not at home.'],
+    ['The shop is open.','The shop is not open.'],['We are late.','We are not late.'],['My brother is married.','My brother is not married.'],
+    ['You are right.','You are not right.'],['It is expensive.','It is not expensive.']]},
+  t3:{title:'Make questions',instr:'Write a question.',type:'text',items:[
+    ['He is from Poland.','Is he from Poland?'],['You are a student.','Are you a student?'],['The children are at school.','Are the children at school?'],
+    ['It is your phone.','Is it your phone?'],['She is 30.',['Is she 30?','Is she thirty?']],['They are happy.','Are they happy?'],
+    ['Your flat is big.','Is your flat big?'],['I am late.','Am I late?']]},
+  t4:{title:'Short answers',instr:'Look at the sign and write a short answer: Yes, … / No, …',type:'text',strictShort:true,items:[
+    ['Are you a teacher? <span class="sign n">✗</span>',"No, I'm not."],['Is your mum at home? <span class="sign y">✓</span>','Yes, she is.'],
+    ['Is it cold outside? <span class="sign n">✗</span>',"No, it isn't."],['Are they your friends? <span class="sign y">✓</span>','Yes, they are.'],
+    ['Is Mark married? <span class="sign n">✗</span>',"No, he isn't."],['Am I right? <span class="sign y">✓</span>','Yes, you are.'],
+    ['Are we late? <span class="sign y">✓</span>',['Yes, we are.','Yes, you are.']],['Is the museum open today? <span class="sign n">✗</span>',"No, it isn't."]]},
+  t5:{title:'Put the words in order',instr:'Tap the words to build a sentence. Tap a word in the line to move it back.',type:'order',items:[
+    [['hungry','not','I','am'],'I am not hungry','.'],[['your','is','teacher','she'],'Is she your teacher','?'],
+    [['home',"aren't",'at','we'],"We aren't at home",'.'],[['good','are','friends','they'],'They are good friends','.'],
+    [['nice','the','is','weather'],'Is the weather nice','?'],[['tall','my',"isn't",'brother'],"My brother isn't tall",'.'],
+    [['Kyiv','from','are','you'],'Are you from Kyiv','?']]},
+  t6:{title:'Choose the question word',instr:'Read the answer and tap the correct question word.',type:'chips',options:['What','Where','Who','When','How','Why'],items:[
+    ['___ is your name? — My name is Olena.','What'],['___ are you from? — I\'m from Lviv.','Where'],['___ is that man? — He\'s my uncle.','Who'],
+    ['___ old is your son? — He\'s seven.','How'],['___ is your birthday? — It\'s in May.','When'],['___ are you sad? — Because it\'s Monday.','Why'],
+    ['___ are you? — I\'m fine, thanks.','How'],['___ is your favourite colour? — Blue.','What'],['___ is my phone? — It\'s on the table.','Where'],
+    ['___ are they? — They\'re my classmates.','Who']]},
+  t7:{title:'Write the questions',instr:'Use the words in brackets and am, is or are.',type:'text',items:[
+    ['— Her name is Kate. <span class="hint">(what / her name)</span>','What is her name?'],['— They are in the park. <span class="hint">(where / they)</span>','Where are they?'],
+    ['— I am 25. <span class="hint">(how old / you)</span>','How old are you?'],['— The party is on Saturday. <span class="hint">(when / the party)</span>','When is the party?'],
+    ['— He is my boss. <span class="hint">(who / he)</span>','Who is he?'],['— She is late because the bus is slow. <span class="hint">(why / she / late)</span>','Why is she late?']]},
+  t8:{title:'Choose he, she, his or her',instr:'Tap the correct word.',type:'chips',options:['he','she','his','her'],items:[
+    ['This is Anna. ___ is my cousin.','she'],['My cousin is a girl. ___ name is Anna.','her'],['Look at Mr Brown. ___ is a pilot.','he'],
+    ['Mr Brown is at home. ___ car is in the garage.','his'],['My dad is 50. ___ birthday is in June.','his'],['My mum is a nurse. ___ is very kind.','she'],
+    ['Where is Max? — ___ is in the kitchen.','he'],['Is this Kate\'s phone? — Yes, it\'s ___ phone.','her'],['Tom and ___ sister are twins.','his'],
+    ['Olga loves ___ dog.','her'],['Is ___ your brother? — Yes, he is.','he'],['Ask Lisa. ___ is the manager.','she']]},
+  t9:{title:'Complete the text',instr:'Write he, she, his or her in each gap.',type:'gaptext',
+    text:'This is my friend Oleh. ___ is 28 and ___ job is interesting: ___ is a programmer. ___ wife is Iryna. ___ is a teacher and ___ students love her. ___ favourite food is pizza, but Oleh loves borscht. ___ borscht is delicious!',
+    answers:['he','his','he','his','she','her','her','his']},
+  t10:{title:'Correct the mistakes',instr:'Each sentence has one mistake. Write the correct sentence.',type:'text',items:[
+    ['He name is Paul.','His name is Paul.'],['She are my sister.','She is my sister.'],['I is from Ukraine.','I am from Ukraine.'],
+    ['Her is a doctor.','She is a doctor.'],['Where he is?','Where is he?'],["They isn't at home.","They aren't at home."],
+    ['Is you a student?','Are you a student?'],['My dad and his friend is in the garden.','My dad and his friend are in the garden.']]},
+  t11:{title:'Translate into English',instr:'Translate the sentences. Short forms are fine.',type:'text',items:[
+    ['Я вдома.','I am at home.'],['Мій брат не студент.','My brother is not a student.'],['Вони з Польщі?','Are they from Poland?'],
+    ['Як її звати?','What is her name?'],['Де його телефон?','Where is his phone?'],['Скільки йому років?','How old is he?'],
+    ['Вона не вдома, вона на роботі.','She is not at home, she is at work.'],['Хто він? — Він мій тато.',['Who is he? He is my dad.','Who is he? He is my father.']],
+    ['Чому ти сумний?','Why are you sad?'],['Ми не голодні.','We are not hungry.']]}
+};
+
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function norm(s){
+  s=' '+String(s).toLowerCase().replace(/[’‘`´]/g,"'")+' ';
+  s=s.replace(/\bi'm\b/g,'i am')
+     .replace(/\b(he|she|it|what|where|who|how|when|why|that|this)'s\b/g,'$1 is')
+     .replace(/\b(you|we|they)'re\b/g,'$1 are')
+     .replace(/\bisn't\b/g,'is not').replace(/\baren't\b/g,'are not');
+  return s.replace(/[^a-z0-9а-яіїєґ ]/g,' ').replace(/\s+/g,' ').trim();
+}
+const answersOf = a => [].concat(a);
+const results = {};
+
+function render(id){
+  const t=T[id], box=document.querySelector(`[data-task="${id}"]`);
+  const n=Object.keys(T).indexOf(id)+1;
+  let body='';
+  if(t.type==='chips'){
+    body='<ol>'+t.items.map(([q],i)=>{
+      const cap=/(^|[.?!—]\s*)___/.test(q);
+      return `<li class="item" data-i="${i}" data-cap="${cap}"><p class="q">${q.replace('___','<span class="slot">&nbsp;</span>')}</p>
+      <div class="chips">${t.options.map(o=>`<button type="button" class="chip" data-v="${o}" aria-pressed="false">${o}</button>`).join('')}</div><p class="fix"></p></li>`;}).join('')+'</ol>';
+  } else if(t.type==='text'){
+    body='<ol>'+t.items.map(([q],i)=>`<li class="item" data-i="${i}"><p class="q">${q}</p>
+      <input class="inp" type="text" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Answer ${i+1}"><p class="fix"></p></li>`).join('')+'</ol>';
+  } else if(t.type==='order'){
+    body='<ol>'+t.items.map(([w,,end],i)=>`<li class="item" data-i="${i}"><div class="line" aria-label="Your sentence"></div><span class="end">${end}</span>
+      <div class="bank">${w.map((x,j)=>`<button type="button" class="tile" data-j="${j}">${esc(x)}</button>`).join('')}</div><p class="fix"></p></li>`).join('')+'</ol>';
+  } else if(t.type==='gaptext'){
+    const parts=t.text.split('___');
+    body='<p class="story">'+parts.map((p,i)=>esc(p)+(i<parts.length-1?`<input class="gap" data-i="${i}" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Gap ${i+1}">`:'')).join('')+'</p><p class="fix"></p>';
+  }
+  box.innerHTML=`<h3><span class="num">${n}.</span>${t.title}</h3><p class="instr">${t.instr}</p>${body}
+    <div class="bar"><button type="button" class="btn main" data-act="check">Check</button>
+    <button type="button" class="btn sec" data-act="show">Show answers</button>
+    <button type="button" class="btn sec" data-act="reset">Try again</button><span class="score" aria-live="polite"></span></div>`;
+  if(t.type==='order') t.state=t.items.map(()=>[]);
+}
+
+function clearMarks(li){ li.classList.remove('ok','bad'); const f=li.querySelector('.fix'); if(f) f.textContent=''; }
+
+document.addEventListener('click',e=>{
+  const box=e.target.closest('[data-task]'); if(!box) return;
+  const id=box.dataset.task, t=T[id];
+  const chip=e.target.closest('.chip');
+  if(chip){
+    const li=chip.closest('.item');
+    li.querySelectorAll('.chip').forEach(c=>{c.setAttribute('aria-pressed',c===chip);c.classList.remove('right');});
+    let v=chip.dataset.v; if(li.dataset.cap==='true') v=v[0].toUpperCase()+v.slice(1);
+    li.querySelector('.slot').textContent=v; clearMarks(li); return;
+  }
+  const tile=e.target.closest('.tile');
+  if(tile){
+    const li=tile.closest('.item'), i=+li.dataset.i, st=t.state[i], j=+tile.dataset.j;
+    const inLine=tile.parentElement.classList.contains('line');
+    if(inLine) st.splice(st.indexOf(j),1); else st.push(j);
+    drawOrder(t,li); clearMarks(li); return;
+  }
+  const act=e.target.closest('[data-act]');
+  if(act){ ({check,show,reset})[act.dataset.act](id,box); }
+});
+document.addEventListener('input',e=>{
+  if(e.target.classList.contains('inp')) clearMarks(e.target.closest('.item'));
+  if(e.target.classList.contains('gap')) e.target.classList.remove('ok','bad');
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && (e.target.classList.contains('inp')||e.target.classList.contains('gap'))){
+    const box=e.target.closest('[data-task]'); check(box.dataset.task,box);
+  }
+});
+
+function drawOrder(t,li){
+  const i=+li.dataset.i, words=t.items[i][0], st=t.state[i];
+  li.querySelector('.line').innerHTML=st.map(j=>`<button type="button" class="tile" data-j="${j}">${esc(words[j])}</button>`).join('');
+  li.querySelector('.bank').innerHTML=words.map((w,j)=>st.includes(j)?'':`<button type="button" class="tile" data-j="${j}">${esc(w)}</button>`).join('');
+}
+
+function valueOf(t,li){
+  const i=+li.dataset.i;
+  if(t.type==='chips'){ const c=li.querySelector('.chip[aria-pressed="true"]'); return c?c.dataset.v:''; }
+  if(t.type==='text') return li.querySelector('.inp').value;
+  if(t.type==='order') return t.state[i].map(j=>t.items[i][0][j]).join(' ');
+}
+function isOk(t,it,v){
+  if(!String(v).trim()) return false;
+  if(t.strictShort && /^\s*yes\W+\w+['’](m|s|re)\b/i.test(v)) return false;
+  const ans = t.type==='order'? [it[1]] : answersOf(it[1]);
+  return ans.some(a=>norm(a)===norm(v));
+}
+
+function check(id,box){
+  const t=T[id]; let ok=0,total=0;
+  if(t.type==='gaptext'){
+    box.querySelectorAll('.gap').forEach(g=>{
+      total++; const good=norm(g.value)===t.answers[+g.dataset.i];
+      g.classList.toggle('ok',good); g.classList.toggle('bad',!good); if(good) ok++;
+    });
+  } else {
+    box.querySelectorAll('.item').forEach(li=>{
+      total++; const good=isOk(t,t.items[+li.dataset.i],valueOf(t,li));
+      li.classList.toggle('ok',good); li.classList.toggle('bad',!good); if(good) ok++;
+    });
+  }
+  const sc=box.querySelector('.score');
+  sc.textContent=`${ok} / ${total}`;
+  sc.className='score '+(ok/total>=.8?'good':ok/total<.5?'low':'');
+  results[id]=[ok,total]; updateTotal();
+}
+
+function show(id,box){
+  const t=T[id];
+  if(!box.querySelector('.score').textContent) check(id,box);
+  if(t.type==='gaptext'){
+    box.querySelector('.fix').textContent='✓ '+t.answers.map((a,i)=>`${i+1} ${a}`).join(',  ');
+    return;
+  }
+  box.querySelectorAll('.item.bad').forEach(li=>{
+    const it=t.items[+li.dataset.i];
+    if(t.type==='chips'){
+      li.querySelectorAll('.chip').forEach(c=>c.classList.toggle('right',c.dataset.v===it[1]));
+      li.querySelector('.fix').textContent='✓ '+it[1];
+    } else if(t.type==='order'){
+      li.querySelector('.fix').textContent='✓ '+it[1]+it[2];
+    } else {
+      li.querySelector('.fix').textContent='✓ '+answersOf(it[1]).join('  /  ');
+    }
+  });
+}
+
+function reset(id,box){ delete results[id]; render(id); updateTotal(); }
+
+function updateTotal(){
+  let ok=0,total=0,n=0; Object.values(results).forEach(([a,b])=>{ok+=a;total+=b;n++;});
+  document.getElementById('total').textContent=`${ok} / ${total}`;
+  const all=Object.keys(T).length;
+  document.getElementById('totalNote').textContent = n<all ? `Checked ${n} of ${all} tasks.` : (ok/total>=.8?'Great job! All tasks checked.':'All tasks checked. Try the red ones again.');
+}
+
+Object.keys(T).forEach(render);
+</script>
+</body>
+</html>
