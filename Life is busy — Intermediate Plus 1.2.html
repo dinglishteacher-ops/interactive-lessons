@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life is busy — Intermediate Plus 1.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;0,800;1,700&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B1A12;
+  --roast:#4A2C1D;
+  --paper:#EFE7DA;
+  --foam:#FFFBF4;
+  --cherry:#B23A2F;
+  --caramel:#D6A354;
+  --leaf:#4A7C59;
+  --line:rgba(43,26,18,.16);
+  --line-soft:rgba(43,26,18,.08);
+  --display:"Alegreya",Georgia,serif;
+  --body:"Manrope",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+}
+img{max-width:100%}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--roast);
+  background-image:radial-gradient(circle at 88% 20%,rgba(214,163,84,.22),transparent 45%);
+  color:var(--foam);
+  padding:46px 22px 38px;
+}
+.mast-inner{max-width:880px;margin:0 auto}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--caramel);
+  margin:0 0 14px;
+}
+.masthead h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(40px,9vw,68px);
+  line-height:.98;
+  margin:0 0 12px;
+  letter-spacing:-.01em;
+}
+.masthead h1 em{font-style:italic;color:var(--caramel)}
+.mast-sub{
+  margin:0 0 22px;
+  max-width:34em;
+  color:rgba(255,251,244,.82);
+  font-size:16px;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  border:1px solid rgba(255,251,244,.32);
+  border-radius:999px;
+  padding:6px 12px;
+  color:rgba(255,251,244,.9);
+}
+
+/* ---------- sticky progress ---------- */
+.tracker{
+  position:sticky;top:0;z-index:20;
+  background:rgba(239,231,218,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.tracker-inner{
+  max-width:880px;margin:0 auto;
+  padding:10px 22px;
+  display:flex;align-items:center;gap:14px;
+}
+.cup{flex:0 0 auto;width:38px;height:42px}
+.cup .body-line{fill:none;stroke:var(--roast);stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round}
+.cup .brew{fill:var(--cherry);transition:transform .55s cubic-bezier(.2,.8,.25,1)}
+.track-text{flex:1;min-width:0}
+.track-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--roast);opacity:.75;
+}
+.bar{height:6px;background:rgba(43,26,18,.12);border-radius:99px;margin-top:5px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:var(--cherry);border-radius:99px;transition:width .45s ease}
+.score{font-family:var(--mono);font-size:13px;font-weight:700;white-space:nowrap}
+
+/* ---------- layout ---------- */
+main{max-width:880px;margin:0 auto;padding:8px 22px 90px}
+.part{
+  margin:44px 0 26px;
+  padding-top:26px;
+  border-top:2px solid var(--ink);
+}
+.part-tag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cherry);margin:0 0 6px;
+}
+.part h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(27px,5.4vw,38px);line-height:1.05;margin:0 0 6px;
+}
+.part p.part-note{margin:0;color:rgba(43,26,18,.68);font-size:15px}
+
+.task{
+  background:var(--foam);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px 22px;
+  margin:20px 0;
+}
+.task-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:6px}
+.ring{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+  border:2px solid var(--ink);
+  display:grid;place-items:center;
+  font-family:var(--mono);font-weight:700;font-size:14px;
+  box-shadow:0 0 0 4px var(--foam),0 0 0 5px var(--line-soft);
+}
+.task h3{
+  font-family:var(--display);font-weight:700;font-size:23px;
+  line-height:1.2;margin:4px 0 0;
+}
+.kicker{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--cherry);display:block;margin-bottom:3px;
+}
+.instr{margin:10px 0 16px;font-size:16px}
+.instr .ua{display:block;color:rgba(43,26,18,.6);font-size:14.5px;margin-top:3px}
+
+/* ---------- items ---------- */
+ol.items{margin:0;padding:0;list-style:none;counter-reset:it}
+ol.items>li{
+  counter-increment:it;
+  position:relative;
+  padding:11px 0 11px 30px;
+  border-top:1px solid var(--line-soft);
+}
+ol.items>li:first-child{border-top:none}
+ol.items>li::before{
+  content:counter(it);
+  position:absolute;left:0;top:13px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  color:rgba(43,26,18,.42);
+}
+.sub{font-size:14px;color:rgba(43,26,18,.6);font-family:var(--mono)}
+
+input[type=text]{
+  font-family:var(--body);font-size:16px;color:var(--ink);
+  background:transparent;
+  border:none;border-bottom:2px dotted var(--line);
+  padding:2px 4px;min-width:130px;width:auto;
+  transition:border-color .2s,background .2s;
+}
+input[type=text]:focus{outline:none;border-bottom-color:var(--cherry);background:rgba(214,163,84,.12)}
+input.wide{min-width:min(100%,420px);width:min(100%,420px)}
+input.mid{min-width:min(100%,260px)}
+select{
+  font-family:var(--body);font-size:15px;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line);
+  border-radius:8px;padding:7px 9px;max-width:100%;
+}
+select:focus{outline:2px solid var(--cherry);outline-offset:1px}
+textarea{
+  width:100%;font-family:var(--body);font-size:15.5px;color:var(--ink);
+  background:rgba(43,26,18,.03);border:1px dashed var(--line);
+  border-radius:10px;padding:11px 12px;min-height:76px;resize:vertical;
+}
+textarea:focus{outline:none;border-color:var(--cherry);border-style:solid}
+
+.ok{border-bottom-color:var(--leaf)!important;background:rgba(74,124,89,.13)!important}
+.no{border-bottom-color:var(--cherry)!important;background:rgba(178,58,47,.11)!important}
+select.ok{border-color:var(--leaf);background:rgba(74,124,89,.13)}
+select.no{border-color:var(--cherry);background:rgba(178,58,47,.11)}
+.mark{font-family:var(--mono);font-size:14px;font-weight:700;margin-left:7px}
+.mark.y{color:var(--leaf)}
+.mark.n{color:var(--cherry)}
+
+/* buttons */
+.btn{
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  border:1.5px solid var(--ink);background:var(--ink);color:var(--foam);
+  border-radius:999px;padding:9px 17px;cursor:pointer;
+  transition:transform .12s ease,background .2s;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:rgba(43,26,18,.07)}
+.btn:focus-visible,button:focus-visible{outline:3px solid var(--caramel);outline-offset:2px}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;align-items:center}
+
+/* choice buttons (T/F + MCQ) */
+.opts{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.opt{
+  font-family:var(--body);font-size:15px;
+  border:1.5px solid var(--line);background:var(--paper);color:var(--ink);
+  border-radius:999px;padding:6px 14px;cursor:pointer;transition:.18s;
+}
+.opt:hover{border-color:var(--ink)}
+.opt.sel{background:var(--ink);color:var(--foam);border-color:var(--ink)}
+.opt.good{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.opt.bad{background:var(--cherry);border-color:var(--cherry);color:#fff}
+
+/* reading */
+.article{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-left:5px solid var(--cherry);
+  border-radius:12px;padding:22px 22px 6px;margin:16px 0 0;
+}
+.article h4{
+  font-family:var(--display);font-weight:800;font-size:26px;
+  line-height:1.1;margin:0 0 4px;
+}
+.article .lead{
+  font-family:var(--display);font-style:italic;font-size:19px;
+  line-height:1.45;margin:10px 0 20px;color:var(--roast);
+}
+.facts{margin:0;padding:0;list-style:none;counter-reset:f}
+.facts li{
+  counter-increment:f;position:relative;
+  padding:0 0 18px 42px;font-size:16px;
+}
+.facts li::before{
+  content:counter(f);
+  position:absolute;left:0;top:-2px;
+  font-family:var(--display);font-weight:800;font-size:26px;color:var(--caramel);
+}
+.hl{background:rgba(214,163,84,.34);padding:0 2px;border-radius:3px}
+
+/* rules box */
+.rules{
+  border:1.5px solid var(--cherry);border-radius:12px;
+  padding:16px 18px;margin:16px 0 0;background:rgba(178,58,47,.045);
+}
+.rules .lbl{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cherry);margin-bottom:8px;
+}
+.rules ul{margin:0;padding-left:19px}
+.rules li{margin-bottom:7px}
+.rules li:last-child{margin-bottom:0}
+code{
+  font-family:var(--mono);font-size:14px;
+  background:rgba(43,26,18,.07);padding:1px 5px;border-radius:4px;
+}
+
+/* stress task */
+.stressline{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:4px}
+.w{
+  font-size:17px;padding:3px 7px;border-radius:7px;cursor:pointer;
+  border:1.5px solid transparent;transition:.15s;user-select:none;
+}
+.w:hover{background:rgba(43,26,18,.06)}
+.w.on{background:var(--ink);color:var(--foam);font-weight:700}
+.w.hit{background:var(--leaf);color:#fff;font-weight:700}
+.w.miss{border-color:var(--cherry);border-style:dashed}
+
+/* photos */
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 18px}
+.photo{margin:0;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
+.photo img{display:block;width:100%;height:270px;object-fit:cover}
+.photo figcaption{
+  position:absolute;left:10px;top:10px;
+  background:rgba(43,26,18,.8);color:var(--foam);
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  padding:3px 10px;border-radius:999px;letter-spacing:.06em;
+}
+.ipa{
+  font-family:var(--mono);font-size:12.5px;
+  color:var(--roast);opacity:.62;white-space:nowrap;
+}
+@media (max-width:620px){.photo img{height:180px}.ipa{font-size:11.5px}}
+
+
+/* two-column compare */
+.tri{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 4px}
+.tri-col{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--paper)}
+.tri-col:nth-child(2){border-color:var(--cherry);background:rgba(178,58,47,.05)}
+.tri-lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cherry);margin-bottom:7px}
+.tri-ex{font-family:var(--display);font-size:19px;line-height:1.25;margin:0 0 8px}
+.tri-note{font-size:14px;color:rgba(43,26,18,.7);margin:0}
+
+/* speech bubbles */
+.bubbles{display:grid;gap:12px;margin:8px 0 4px}
+.bub{border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--paper);position:relative}
+.bub.b1{border-color:rgba(74,124,89,.5);background:rgba(74,124,89,.06)}
+.bub.b2{border-color:rgba(178,58,47,.45);background:rgba(178,58,47,.05)}
+.bub.b3{border-color:rgba(214,163,84,.7);background:rgba(214,163,84,.1)}
+.b-name{font-family:var(--display);font-weight:800;font-size:19px;margin-bottom:5px}
+.bub p{margin:0;font-size:16px}
+
+/* linking */
+.linkline{display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin-top:4px;font-size:18px}
+.lw{padding:2px 1px}
+.j{
+  border:1px dashed var(--line);background:transparent;cursor:pointer;
+  font-family:var(--mono);font-size:15px;line-height:1;color:rgba(43,26,18,.45);
+  min-width:30px;height:30px;padding:0;border-radius:8px;transition:.15s;
+  display:inline-grid;place-items:center;
+}
+.j:hover{background:rgba(43,26,18,.08);color:var(--ink)}
+.j.on{background:var(--ink);color:var(--foam);border-style:solid;border-color:var(--ink)}
+.j.hit{background:var(--leaf);color:#fff;border-style:solid;border-color:var(--leaf)}
+.j.miss{outline:2px dashed var(--cherry);outline-offset:-2px;color:var(--cherry)}
+
+.gloss li{margin-bottom:6px;font-size:15.5px}
+.gloss b{font-family:var(--body);font-weight:700}
+.sig{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--caramel);margin:18px 0 0!important;opacity:.85}
+
+@media (max-width:620px){
+  .tri{grid-template-columns:1fr}
+  .tri-ex{font-size:18px}
+  .linkline{font-size:17px}
+}
+
+/* speaking */
+.speak{background:rgba(74,124,89,.07);border:1px solid rgba(74,124,89,.32)}
+.speak .ring{border-color:var(--leaf)}
+.prompts{margin:0;padding-left:20px}
+.prompts li{margin-bottom:9px}
+.hintbox{
+  margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;
+  font-size:15px;color:rgba(43,26,18,.72);
+}
+
+/* reveal */
+.answer{
+  display:none;margin-top:9px;padding:10px 13px;
+  background:rgba(74,124,89,.1);border-left:3px solid var(--leaf);
+  border-radius:0 8px 8px 0;font-size:15.5px;
+}
+.answer.show{display:block}
+.answer b{font-family:var(--body)}
+
+/* finish */
+.finish{
+  background:var(--roast);color:var(--foam);
+  border-radius:18px;padding:28px 24px;margin-top:40px;
+}
+.finish h3{font-family:var(--display);font-size:28px;margin:0 0 8px;font-weight:800}
+.finish p{color:rgba(255,251,244,.82);margin:0 0 18px}
+.finish .btn{border-color:var(--caramel);background:var(--caramel);color:var(--ink)}
+.finish .btn.ghost{background:transparent;color:var(--foam);border-color:rgba(255,251,244,.5)}
+.bigscore{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--caramel);line-height:1}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+  background:var(--ink);color:var(--foam);padding:11px 18px;border-radius:999px;
+  font-family:var(--mono);font-size:13px;opacity:0;pointer-events:none;transition:.3s;z-index:60;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:620px){
+  body{font-size:16px}
+  main{padding:8px 14px 70px}
+  .masthead{padding:34px 16px 28px}
+  .task{padding:19px 15px;border-radius:13px}
+  .article{padding:18px 15px 4px}
+  .tracker-inner{padding:8px 14px;gap:10px}
+  .cup{width:30px;height:34px}
+  input.wide{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="mast-inner">
+    <p class="eyebrow">Speakout Intermediate Plus · Unit 1.2</p>
+    <h1>Life is <em>busy</em></h1>
+    <p class="mast-sub">Verb + preposition, an article about busy-ness as a status symbol, and present simple vs continuous.</p>
+    <div class="chips">
+      <span class="chip">B1+ / B2</span>
+      <span class="chip">80–90 хв</span>
+      <span class="chip">dinglish</span>
+    </div>
+  </div>
+</header>
+
+<div class="tracker">
+  <div class="tracker-inner">
+    <svg class="cup" viewBox="0 0 40 44" aria-hidden="true">
+      <defs><clipPath id="cupClip"><path d="M7 9 h20 v18 a10 10 0 0 1 -20 0 z"/></clipPath></defs>
+      <g clip-path="url(#cupClip)"><rect class="brew" x="5" y="9" width="24" height="30" transform="translate(0,30)" id="brewFill"/></g>
+      <path class="body-line" d="M7 9 h20 v18 a10 10 0 0 1 -20 0 z"/>
+      <path class="body-line" d="M27 13 h4 a5 5 0 0 1 0 10 h-4"/>
+      <path class="body-line" d="M4 40 h30"/>
+    </svg>
+    <div class="track-text">
+      <div class="track-label">Прогрес уроку</div>
+      <div class="bar"><span id="barFill"></span></div>
+    </div>
+    <div class="score"><span id="scoreNow">0</span>/<span id="scoreMax">0</span></div>
+  </div>
+</div>
+
+<main>
+
+<section class="part">
+  <p class="part-tag">Part one</p>
+  <h2>Verb + preposition</h2>
+  <p class="part-note">Як говорити про навантаження, дедлайни і спроби все встигнути.</p>
+</section>
+
+<div class="task speak">
+  <div class="task-head">
+    <div class="ring">1</div>
+    <div><span class="kicker">Warm-up · speaking</span><h3>Is your life busy?</h3></div>
+  </div>
+  <p class="instr">Give examples, not just yes or no.</p>
+  <ol class="prompts">
+    <li>How busy is your life right now, compared with a year ago?</li>
+    <li>Walk me through your busiest day last week, hour by hour.</li>
+    <li>When someone asks how you are, how often do you answer "busy"? Why do you think that is?</li>
+  </ol>
+  <textarea class="note" placeholder="Нотатки / нові слова…"></textarea>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">2</div>
+    <div><span class="kicker">Reading · three voices</span><h3>Three people on their workload</h3></div>
+  </div>
+  <p class="instr">Read what three people say. Whose comments describe how you feel?</p>
+  <div class="bubbles">
+    <article class="bub b1">
+      <div class="b-name">Jodi</div>
+      <p>I feel completely <b>overwhelmed by</b> the amount of work I'm expected to do. I spend my life <b>racing around</b>, trying to <b>keep up with</b> everything. There simply aren't enough hours in the day.</p>
+    </article>
+    <article class="bub b2">
+      <div class="b-name">Victor</div>
+      <p>My problem is that I <b>have no control over</b> my workload. My boss forces me to <b>take on</b> far too much, and then I <b>struggle with</b> finding the time to do it all.</p>
+    </article>
+    <article class="bub b3">
+      <div class="b-name">Alejandra</div>
+      <p>I try not to <b>let</b> my work <b>pile up</b>. I prioritise my tasks, and I make sure I <b>take time out</b> from work and <b>make time for</b> the other things that matter to me.</p>
+    </article>
+  </div>
+  <div class="hintbox">Speaking: which of the three sounds most like you at the moment, and which one would you like to be?</div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">3</div>
+    <div><span class="kicker">Vocabulary · verb + preposition</span><h3>Match the phrase to the definition</h3></div>
+  </div>
+  <p class="instr">All nine phrases are in bold in the texts above.</p>
+  <ol class="items">
+    <li>take responsibility for something<br>
+      <select data-answer="take on"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>find time to do something or be with someone even when you're busy<br>
+      <select data-answer="make time for"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>do something at the necessary speed<br>
+      <select data-answer="keep up with"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>allow something to increase<br>
+      <select data-answer="let something pile up"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>how you feel when something is too much or too difficult, so you can't cope<br>
+      <select data-answer="feel overwhelmed by"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>have trouble managing or achieving something<br>
+      <select data-answer="struggle with"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>go fast, doing lots of different tasks quickly<br>
+      <select data-answer="race around"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>not have the power to direct or manage something<br>
+      <select data-answer="have no control over"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+    <li>stop what you are doing in order to do something else for a while<br>
+      <select data-answer="take time out"><option value="">— choose —</option><option>struggle with</option><option>take on</option><option>race around</option><option>make time for</option><option>have no control over</option><option>keep up with</option><option>let something pile up</option><option>take time out</option><option>feel overwhelmed by</option></select></li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+
+  <div class="rules" style="margin-top:20px">
+    <div class="lbl">Словничок</div>
+    <ul class="gloss">
+      <li><b>feel overwhelmed by sth</b> — почуватися заваленим, не витягувати <span class="ipa">/ˌəʊvəˈwelmd/</span></li>
+      <li><b>race around</b> — гасати, робити все нашвидкуруч</li>
+      <li><b>keep up with sth</b> — встигати за темпом</li>
+      <li><b>have no control over sth</b> — не контролювати щось</li>
+      <li><b>take on sth</b> — брати на себе (роботу, обов'язки)</li>
+      <li><b>struggle with sth</b> — мати труднощі з чимось <span class="ipa">/ˈstrʌɡl/</span></li>
+      <li><b>let sth pile up</b> — дати чомусь накопичитися</li>
+      <li><b>take time out</b> — зробити паузу, відволіктися</li>
+      <li><b>make time for sth/sb</b> — знаходити час на щось попри зайнятість</li>
+    </ul>
+  </div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">4</div>
+    <div><span class="kicker">Vocabulary · practice</span><h3>Complete with the correct form</h3></div>
+  </div>
+  <p class="instr">Mind the tense and the preposition — both are being tested.</p>
+  <ol class="items">
+    <li>I've <input type="text" data-answer="taken on" size="12"> three new projects this month and now I regret it.</li>
+    <li>Don't <input type="text" data-answer="let" size="7"> the dishes <input type="text" data-answer="pile up" size="9"> — it takes five minutes now and forty minutes on Sunday.</li>
+    <li>She spent the whole morning <input type="text" data-answer="racing around" size="14"> the office looking for a free meeting room.</li>
+    <li>I <input type="text" data-answer="struggle with|am struggling with|'m struggling with" size="16"> mornings — I'm useless before nine.</li>
+    <li>New tools appear every week and it's impossible to <input type="text" data-answer="keep up with" size="14"> them all.</li>
+    <li>He <input type="text" data-answer="has no control over|had no control over" size="18"> the deadlines; they're set by the client.</li>
+    <li>You should <input type="text" data-answer="take time out" size="14"> at least once during the working day, even for ten minutes.</li>
+    <li>However busy she is, she always <input type="text" data-answer="makes time for" size="14"> her parents on Sundays.</li>
+    <li>By Friday afternoon I usually <input type="text" data-answer="feel overwhelmed by" size="18"> the number of unanswered emails.</li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+</div>
+
+<div class="task speak">
+  <div class="task-head">
+    <div class="ring">5</div>
+    <div><span class="kicker">Speaking · true for you</span><h3>Finish the sentences about yourself</h3></div>
+  </div>
+  <p class="instr">Write your endings, then say each one out loud and explain it.</p>
+  <ol class="items">
+    <li>I sometimes feel overwhelmed by <input type="text" class="wide note-only" placeholder="…"></li>
+    <li>I have a tendency to take on <input type="text" class="wide note-only" placeholder="…"></li>
+    <li>During the week I often race around <input type="text" class="wide note-only" placeholder="…"></li>
+    <li>I try to make time for <input type="text" class="wide note-only" placeholder="…"></li>
+    <li>One thing I have no control over is <input type="text" class="wide note-only" placeholder="…"></li>
+    <li>I always let <input type="text" class="wide note-only" placeholder="… pile up"></li>
+    <li>I really struggle with <input type="text" class="wide note-only" placeholder="…"></li>
+    <li>When I take time out, I usually <input type="text" class="wide note-only" placeholder="…"></li>
+  </ol>
+  <div class="hintbox">Follow-ups to expect: <em>Why? How long has that been going on? What would have to change?</em></div>
+</div>
+<section class="part">
+  <p class="part-tag">Part two</p>
+  <h2>Busy-ness is not a competition</h2>
+  <p class="part-note">Текст на тему радіопрограми BBC — з питаннями й дискусією.</p>
+</section>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">6</div>
+    <div><span class="kicker">Reading</span><h3>Why does everybody claim to be busy?</h3></div>
+  </div>
+  <p class="instr">Read the article. What problem does it focus on?</p>
+  <div class="article">
+    <h4>Busy-ness is NOT a competition</h4>
+    <p class="lead">In the modern workplace, when a colleague asks how you are, the answer is almost always the same: "Busy. So busy." It sounds like a complaint — but are we secretly proud of it?</p>
+    <p>Notice what happens when people come back from holiday. Twenty years ago, the ritual was simple: you returned with photographs, you talked about the food and the weather, and everyone was slightly jealous. Today the first thing most people say is how many emails were waiting for them and how little of the holiday they actually managed to switch off. The story is no longer about the holiday. It is about the backlog.</p>
+    <p>Something strange has happened to the way we signal status. For most of history, the people at the top demonstrated their position through leisure: the whole point of being wealthy was that you did not have to rush anywhere. Now the opposite is true. Being permanently in demand has become the brand. Busy means needed, needed means important, and important means successful — so we perform our busy-ness for each other, and social media makes it very easy to show what we are doing at seven in the morning and eleven at night.</p>
+    <p>The trouble is that this quietly changes how we judge people. If you are not visibly busy, you risk being seen as someone who is not delivering, or worse, someone nobody wants to work with. So we compare sixty-hour weeks the way people used to compare cars, and "busy" becomes equated with progress.</p>
+    <p>And yet almost nobody says they enjoy it. We have more time-saving technology than any generation before us and we somehow feel we have less time than ever. Perhaps the real question is not how we can fit more in, but why we are so addicted to the feeling of being needed in the first place.</p>
+  </div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">7</div>
+    <div><span class="kicker">Reading · comprehension</span><h3>Answer the questions</h3></div>
+  </div>
+  <p class="instr">Answer in full sentences first, then check the model answer.</p>
+  <ol class="items">
+    <li>How has the post-holiday ritual changed in recent years? What happened before, and what happens now?
+      <div class="controls"><button class="btn ghost reveal">Model answer</button></div>
+      <div class="answer">People used to come back and talk about the holiday itself — the photos, the food, the weather. Now they talk about how many emails were waiting for them and how hard it was to switch off, so the conversation is about the backlog rather than the break.</div></li>
+    <li>According to the article, why do we all claim to be so busy?
+      <div class="controls"><button class="btn ghost reveal">Model answer</button></div>
+      <div class="answer">Because being busy now signals status. Busy means you are in demand, being needed means you are important, and being important means you are successful — so people perform their busy-ness for each other.</div></li>
+    <li>How did rich people show their status in the past, and why is that interesting?
+      <div class="controls"><button class="btn ghost reveal">Model answer</button></div>
+      <div class="answer">They showed it through leisure — the point of being wealthy was not having to rush. It's interesting because the signal has completely reversed: today we compete over how little free time we have.</div></li>
+  </ol>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">8</div>
+    <div><span class="kicker">Reading · detail</span><h3>True or false?</h3></div>
+  </div>
+  <p class="instr">Decide, then correct the false ones out loud.</p>
+  <ol class="items">
+    <li>We are more likely to say we're busy now than people were in the past.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+    <li>Being busy has become a kind of personal brand.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+    <li>Someone who isn't visibly busy is usually seen as well organised.
+      <div class="opts" data-answer="False"><button class="opt">True</button><button class="opt">False</button></div></li>
+    <li>In the past, having a lot of free time was a sign of high status.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+    <li>According to the article, technology has given us the feeling of having more time.
+      <div class="opts" data-answer="False"><button class="opt">True</button><button class="opt">False</button></div></li>
+    <li>Most people say they genuinely enjoy being this busy.
+      <div class="opts" data-answer="False"><button class="opt">True</button><button class="opt">False</button></div></li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button></div>
+</div>
+
+<div class="task speak">
+  <div class="task-head">
+    <div class="ring">9</div>
+    <div><span class="kicker">Speaking · discussion</span><h3>What do you think?</h3></div>
+  </div>
+  <ol class="prompts">
+    <li>Do you think how busy someone is really defines their social status? Is it the same in Ukraine as in the article?</li>
+    <li>Is busy-ness a problem nowadays? If it is, what could society actually do about it?</li>
+    <li>Have you ever exaggerated how busy you were? Why?</li>
+    <li>Who is the least busy person you know? Do you envy them or not?</li>
+    <li>If you had one extra free day a week, would it stay free?</li>
+  </ol>
+  <div class="hintbox">Useful: <em>up to a point, I'd say…, that's certainly true of…, in my circle it's more…, I'd like to think I'd…</em></div>
+  <textarea class="note" placeholder="Нотатки / виправлення викладача…"></textarea>
+</div>
+<section class="part">
+  <p class="part-tag">Part three</p>
+  <h2>Present simple vs continuous</h2>
+  <p class="part-note">Грамматика юніту + вимова: як слова зчіплюються у мовленні.</p>
+</section>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">10</div>
+    <div><span class="kicker">Grammar · reference</span><h3>Two presents, two jobs</h3></div>
+  </div>
+  <div class="tri">
+    <div class="tri-col">
+      <div class="tri-lbl">Present simple</div>
+      <p class="tri-ex">I <b>work</b> ten hours a day.</p>
+      <p class="tri-note">Постійне, регулярне, завжди так. Розклади, факти, звички, стани.</p>
+    </div>
+    <div class="tri-col">
+      <div class="tri-lbl">Present continuous</div>
+      <p class="tri-ex">I'm <b>working</b> ten hours a day.</p>
+      <p class="tri-note">Тимчасове, зараз або в цей період життя. Також зміни й тенденції.</p>
+    </div>
+  </div>
+  <div class="rules">
+    <div class="lbl">Reference</div>
+    <ul>
+      <li>Маркери simple: <em>always, usually, every day, on Mondays, twice a week, never</em>. Маркери continuous: <em>at the moment, right now, today, this week, these days, currently</em>.</li>
+      <li><b>State verbs</b> зазвичай не вживаються в continuous: <em>know, believe, understand, need, want, like, love, hate, prefer, mean, belong, own, seem, agree</em>. → <em>I need a break</em>, не <s>I'm needing</s>.</li>
+      <li>Але деякі змінюють значення: <em>I think it's true</em> (думка) / <em>I'm thinking about it</em> (процес); <em>I have a car</em> (володіння) / <em>I'm having lunch</em> (дія); <em>It tastes good</em> / <em>I'm tasting the soup</em>.</li>
+      <li><code>always + -ing</code> = роздратування або здивування: <em>He's always taking on too much!</em> — не факт, а емоція.</li>
+      <li>Тенденції та зміни — тільки continuous: <em>People are working longer hours than they used to.</em></li>
+    </ul>
+  </div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">11</div>
+    <div><span class="kicker">Grammar · choose</span><h3>Simple or continuous?</h3></div>
+  </div>
+  <ol class="items">
+    <li>I usually ______ at seven, but this week I ______ at six because of the project.
+      <div class="opts" data-answer="start / am starting"><button class="opt">start / am starting</button><button class="opt">am starting / start</button><button class="opt">start / start</button></div></li>
+    <li>Sorry, I can't talk — I ______ a report for tomorrow.
+      <div class="opts" data-answer="'m finishing"><button class="opt">finish</button><button class="opt">'m finishing</button><button class="opt">am used to finish</button></div></li>
+    <li>She ______ what you mean, she just doesn't agree.
+      <div class="opts" data-answer="understands"><button class="opt">is understanding</button><button class="opt">understands</button><button class="opt">understand</button></div></li>
+    <li>More and more people ______ from home these days.
+      <div class="opts" data-answer="are working"><button class="opt">work</button><button class="opt">are working</button><button class="opt">works</button></div></li>
+    <li>He ______ complaining about his workload — every single morning!
+      <div class="opts" data-answer="is always"><button class="opt">always</button><button class="opt">is always</button><button class="opt">always is</button></div></li>
+    <li>This soup ______ strange. ______ you ______ salt in it?
+      <div class="opts" data-answer="tastes / Did you put"><button class="opt">is tasting / Are you putting</button><button class="opt">tastes / Did you put</button><button class="opt">taste / Do you put</button></div></li>
+    <li>I ______ of changing jobs, but I ______ it's too risky right now.
+      <div class="opts" data-answer="'m thinking / think"><button class="opt">think / 'm thinking</button><button class="opt">'m thinking / think</button><button class="opt">think / think</button></div></li>
+    <li>The train ______ at 6.40, so we ______ breakfast at the station.
+      <div class="opts" data-answer="leaves / are having"><button class="opt">is leaving / have</button><button class="opt">leaves / are having</button><button class="opt">leave / having</button></div></li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button></div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">12</div>
+    <div><span class="kicker">Grammar · form</span><h3>Put the verb into the correct present tense</h3></div>
+  </div>
+  <ol class="items">
+    <li>These days I <input type="text" data-answer="am taking on|'m taking on" size="16"> <span class="sub">(take on)</span> far more than I should.</li>
+    <li>She <input type="text" data-answer="always makes" size="14"> <span class="sub">(always / make)</span> time for her friends, however busy she is.</li>
+    <li>Sorry, I can't come — I <input type="text" data-answer="am struggling|'m struggling" size="14"> <span class="sub">(struggle)</span> with a deadline tonight.</li>
+    <li>He <input type="text" data-answer="is always leaving|'s always leaving" size="18"> <span class="sub">(always / leave)</span> his dishes in the sink. It drives me mad.</li>
+    <li>I <input type="text" data-answer="do not need|don't need" size="14"> <span class="sub">(not need)</span> another project right now.</li>
+    <li>Work emails <input type="text" data-answer="are piling up|pile up" size="14"> <span class="sub">(pile up)</span> while I'm on holiday.</li>
+    <li>Our team <input type="text" data-answer="meets" size="10"> <span class="sub">(meet)</span> every Monday at ten.</li>
+    <li>What <input type="text" data-answer="are you working" size="16"> <span class="sub">(you / work)</span> on at the moment?</li>
+    <li>I <input type="text" data-answer="think" size="10"> <span class="sub">(think)</span> busy-ness has become a status symbol.</li>
+    <li>The number of people who work at weekends <input type="text" data-answer="is growing|is rising|is increasing" size="14"> <span class="sub">(grow)</span> every year.</li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">13</div>
+    <div><span class="kicker">Pronunciation · connected speech</span><h3>Where do the words link?</h3></div>
+  </div>
+  <p class="instr">In natural speech a final consonant joins the next word when it begins with a vowel sound: <em>take_on</em> sounds like <em>tay-kon</em>. Tap every join where linking happens — some sentences have more than one. Then say each sentence smoothly, without pauses.</p>
+  <ol class="items">
+    <li><div class="linkline" data-answer="2,3"><span class="lw">I'll</span><button class="j" data-j="1">‿</button><span class="lw">take</span><button class="j" data-j="2">‿</button><span class="lw">it</span><button class="j" data-j="3">‿</button><span class="lw">on.</span></div>
+      <div class="answer">Два з'єднання: take‿it та it‿on — звучить як «tay-ki-ton». Між I'll і take лінкінгу немає: далі йде приголосний /t/.</div></li>
+    <li><div class="linkline" data-answer="4"><span class="lw">She</span><button class="j" data-j="1">‿</button><span class="lw">makes</span><button class="j" data-j="2">‿</button><span class="lw">time</span><button class="j" data-j="3">‿</button><span class="lw">for</span><button class="j" data-j="4">‿</button><span class="lw">us.</span></div>
+      <div class="answer">Лінкується тільки for‿us — «fo-rus». Після makes і time йдуть приголосні, тож там з'єднання немає.</div></li>
+    <li><div class="linkline" data-answer="1"><span class="lw">Keep</span><button class="j" data-j="1">‿</button><span class="lw">up</span><button class="j" data-j="2">‿</button><span class="lw">with</span><button class="j" data-j="3">‿</button><span class="lw">them.</span></div>
+      <div class="answer">keep‿up = «kee-pup». А with them — це не лінкінг, а злиття двох /ð/-звуків в один.</div></li>
+    <li><div class="linkline" data-answer="2"><span class="lw">I</span><button class="j" data-j="1">‿</button><span class="lw">feel</span><button class="j" data-j="2">‿</button><span class="lw">overwhelmed.</span></div>
+      <div class="answer">feel‿overwhelmed = «fee-lover-whelmed». Між I та feel лінкінгу немає — там голосний перед приголосним.</div></li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost revealAll">Пояснення</button></div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">14</div>
+    <div><span class="kicker">Final task · translation</span><h3>Translate into English</h3></div>
+  </div>
+  <p class="instr">Write your version first, then open the key.</p>
+  <ol class="items">
+    <li>Я завалений роботою цього тижня.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I'm overwhelmed by work this week.</div></li>
+    <li>Він постійно бере на себе забагато.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">He's always taking on too much.</div></li>
+    <li>Я не встигаю за всіма змінами.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I can't keep up with all the changes.</div></li>
+    <li>Не давай листам накопичуватися.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">Don't let your emails pile up.</div></li>
+    <li>Я ніяк не контролюю ці дедлайни.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I have no control over these deadlines.</div></li>
+    <li>Вона завжди знаходить час на дітей.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">She always makes time for her children.</div></li>
+    <li>Зараз я працюю над новим проєктом.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I'm working on a new project at the moment.</div></li>
+    <li>Зазвичай я закінчую о шостій, але цього місяця затримуюся.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I usually finish at six, but this month I'm staying late.</div></li>
+    <li>Я не розумію, чому всі пишаються тим, що зайняті.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I don't understand why everyone is so proud of being busy.</div></li>
+    <li>Дедалі більше людей працює з дому.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">More and more people are working from home.</div></li>
+    <li>Мені треба зробити паузу, бо я гасаю з самого ранку.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I need to take time out — I've been racing around since early morning.</div></li>
+    <li>Я маю труднощі з тим, щоб сказати «ні».<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I struggle with saying no.</div></li>
+  </ol>
+</div>
+
+<div class="finish">
+  <h3>Готово</h3>
+  <p>Правильних відповідей: <span class="bigscore"><span id="finalNow">0</span>/<span id="finalMax">0</span></span></p>
+  <p>Скопіюй свої відповіді й надішли викладачу.</p>
+  <div class="controls">
+    <button class="btn" id="copyBtn">Скопіювати мої відповіді</button>
+    <button class="btn ghost" id="resetBtn">Почати спочатку</button>
+  </div>
+  <p class="sig">dinglish</p>
+</div>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var norm = function(s){
+    return (s||"")
+      .toLowerCase()
+      .replace(/[\u2018\u2019\u02BC`]/g,"'")
+      .replace(/[\u2013\u2014]/g,"-")
+      .replace(/[.,!?;:]+$/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  };
+  var accepted = function(el){
+    return (el.getAttribute("data-answer")||"").split("|").map(norm);
+  };
+
+  /* ---------- collect checkable items ---------- */
+  var items = [];
+  document.querySelectorAll(".task").forEach(function(task){
+    task.querySelectorAll("input[type=text][data-answer], select[data-answer], .opts[data-answer], .stressline[data-answer], .linkline[data-answer]").forEach(function(el){
+      var kind = el.classList.contains("opts") ? "opts"
+               : el.classList.contains("stressline") ? "stress"
+               : el.classList.contains("linkline") ? "link"
+               : el.tagName === "SELECT" ? "select" : "input";
+      var it = {el:el, kind:kind, task:task, done:false};
+      items.push(it);
+      el._item = it;
+    });
+  });
+
+  var scoreNow = document.getElementById("scoreNow");
+  var scoreMax = document.getElementById("scoreMax");
+  var finalNow = document.getElementById("finalNow");
+  var finalMax = document.getElementById("finalMax");
+  var barFill  = document.getElementById("barFill");
+  var brew     = document.getElementById("brewFill");
+  scoreMax.textContent = items.length;
+  finalMax.textContent = items.length;
+
+  function refresh(){
+    var n = items.filter(function(i){return i.done;}).length;
+    var pct = items.length ? n/items.length : 0;
+    scoreNow.textContent = n;
+    finalNow.textContent = n;
+    barFill.style.width = (pct*100).toFixed(1) + "%";
+    if (brew) brew.setAttribute("transform","translate(0," + (30 - 30*pct).toFixed(1) + ")");
+  }
+
+  /* ---------- option buttons ---------- */
+  document.querySelectorAll(".opts").forEach(function(box){
+    box.querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click", function(){
+        box.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel","good","bad");});
+        b.classList.add("sel");
+      });
+    });
+  });
+
+  /* ---------- stress words ---------- */
+  document.querySelectorAll(".linkline .j").forEach(function(j){
+    j.addEventListener("click", function(){
+      j.classList.remove("hit","miss");
+      j.classList.toggle("on");
+    });
+  });
+
+  document.querySelectorAll(".stressline .w").forEach(function(w){
+    w.addEventListener("click", function(){
+      w.classList.remove("hit","miss");
+      w.classList.toggle("on");
+    });
+  });
+
+  /* ---------- marks ---------- */
+  function setMark(el, ok){
+    var host = (el.classList && (el.classList.contains("opts") || el.classList.contains("stressline"))) ? el : el;
+    var next = host.nextElementSibling;
+    if (next && next.classList && next.classList.contains("mark")) next.remove();
+    var m = document.createElement("span");
+    m.className = "mark " + (ok ? "y" : "n");
+    m.textContent = ok ? "✓" : "✗";
+    host.parentNode.insertBefore(m, host.nextSibling);
+  }
+
+  function checkItem(it){
+    var el = it.el, ok = false;
+    if (it.kind === "input" || it.kind === "select"){
+      var val = norm(el.value);
+      ok = val !== "" && accepted(el).indexOf(val) > -1;
+      el.classList.remove("ok","no");
+      el.classList.add(ok ? "ok" : "no");
+      setMark(el, ok);
+    } else if (it.kind === "opts"){
+      var want = norm(el.getAttribute("data-answer"));
+      var sel = el.querySelector(".opt.sel");
+      ok = !!sel && norm(sel.textContent) === want;
+      el.querySelectorAll(".opt").forEach(function(b){
+        b.classList.remove("good","bad");
+        if (norm(b.textContent) === want) b.classList.add("good");
+        else if (b.classList.contains("sel")) b.classList.add("bad");
+      });
+    } else if (it.kind === "link"){
+      var want3 = el.getAttribute("data-answer").split(",").map(function(x){return x.trim();});
+      var got = [];
+      el.querySelectorAll(".j").forEach(function(j){
+        j.classList.remove("hit","miss");
+        if (j.classList.contains("on")) got.push(j.getAttribute("data-j"));
+      });
+      ok = got.length === want3.length && want3.every(function(x){return got.indexOf(x) > -1;});
+      el.querySelectorAll(".j").forEach(function(j){
+        var id = j.getAttribute("data-j");
+        if (want3.indexOf(id) > -1){ j.classList.remove("on"); j.classList.add("hit"); }
+        else if (j.classList.contains("on")){ j.classList.add("miss"); }
+      });
+    } else if (it.kind === "stress"){
+      var want2 = el.getAttribute("data-answer").split(",").map(norm);
+      var picked = [];
+      el.querySelectorAll(".w").forEach(function(w){
+        w.classList.remove("hit","miss");
+        if (w.classList.contains("on")) picked.push(norm(w.textContent));
+      });
+      ok = picked.length === want2.length && want2.every(function(x){return picked.indexOf(x) > -1;});
+      el.querySelectorAll(".w").forEach(function(w){
+        var t = norm(w.textContent);
+        if (want2.indexOf(t) > -1){ w.classList.remove("on"); w.classList.add("hit"); }
+        else if (w.classList.contains("on")){ w.classList.add("miss"); }
+      });
+    }
+    if (ok) it.done = true;
+    return ok;
+  }
+
+  /* ---------- buttons ---------- */
+  document.querySelectorAll(".btn.check").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      var mine = items.filter(function(i){return i.task === task;});
+      var right = 0;
+      mine.forEach(function(i){ if (checkItem(i)) right++; });
+      refresh();
+      toast(right + " / " + mine.length + " правильно");
+    });
+  });
+
+  document.querySelectorAll(".btn.showall").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      items.filter(function(i){return i.task === task;}).forEach(function(i){
+        if (i.kind === "input"){
+          if (norm(i.el.value) === "" || accepted(i.el).indexOf(norm(i.el.value)) === -1){
+            i.el.value = (i.el.getAttribute("data-answer")||"").split("|")[0];
+            i.el.classList.remove("ok"); i.el.classList.add("no");
+            setMark(i.el,false);
+          }
+        } else if (i.kind === "select"){
+          i.el.value = (i.el.getAttribute("data-answer")||"").split("|")[0];
+          checkItem(i);
+        }
+      });
+      refresh();
+    });
+  });
+
+  document.querySelectorAll(".btn.reveal").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var box = btn.closest("li").querySelector(".answer");
+      if (!box) return;
+      box.classList.toggle("show");
+      btn.textContent = box.classList.contains("show") ? "Сховати" : (btn.dataset.label || "Ключ");
+    });
+  });
+
+  document.querySelectorAll(".btn.revealAll").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      var boxes = task.querySelectorAll(".answer");
+      var open = btn.dataset.open === "1";
+      boxes.forEach(function(b){ b.classList.toggle("show", !open); });
+      btn.dataset.open = open ? "0" : "1";
+      btn.textContent = open ? "Пояснення" : "Сховати";
+    });
+  });
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById("toast"), tTimer;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(tTimer);
+    tTimer = setTimeout(function(){ toastEl.classList.remove("on"); }, 1900);
+  }
+
+  /* ---------- copy answers ---------- */
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var lines = ["COFFEE DRINKER? — 1.1 · мої відповіді",
+                 "Результат: " + items.filter(function(i){return i.done;}).length + "/" + items.length, ""];
+    document.querySelectorAll(".task").forEach(function(task){
+      var h = task.querySelector("h3");
+      var chunk = [];
+      task.querySelectorAll("li").forEach(function(li, idx){
+        var parts = [];
+        li.querySelectorAll("input[type=text]").forEach(function(inp){
+          if (inp.value.trim()) parts.push(inp.value.trim());
+        });
+        li.querySelectorAll("select").forEach(function(s){ if (s.value) parts.push(s.value); });
+        var sel = li.querySelector(".opt.sel");
+        if (sel) parts.push(sel.textContent.trim());
+        if (parts.length) chunk.push("  " + (idx+1) + ". " + parts.join(" | "));
+      });
+      task.querySelectorAll("textarea").forEach(function(t){
+        if (t.value.trim()) chunk.push("  нотатки: " + t.value.trim().replace(/\n/g," "));
+      });
+      if (chunk.length){ lines.push((h ? h.textContent.trim() : "Task")); lines.push(chunk.join("\n")); lines.push(""); }
+    });
+    var text = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast("Скопійовано ✓"); },
+        function(){ fallback(text); });
+    } else fallback(text);
+  });
+  function fallback(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); toast("Скопійовано ✓"); }
+    catch(e){ toast("Не вдалося скопіювати"); }
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- reset ---------- */
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    document.querySelectorAll("input[type=text], textarea").forEach(function(el){
+      el.value = ""; el.classList.remove("ok","no");
+    });
+    document.querySelectorAll("select").forEach(function(s){ s.value = ""; s.classList.remove("ok","no"); });
+    document.querySelectorAll(".mark").forEach(function(m){ m.remove(); });
+    document.querySelectorAll(".opt").forEach(function(b){ b.classList.remove("sel","good","bad"); });
+    document.querySelectorAll(".w, .j").forEach(function(w){ w.classList.remove("on","hit","miss"); });
+    document.querySelectorAll(".btn.revealAll").forEach(function(b){ b.dataset.open="0"; b.textContent="Пояснення"; });
+    document.querySelectorAll(".answer").forEach(function(a){ a.classList.remove("show"); });
+    document.querySelectorAll(".btn.reveal").forEach(function(b){ b.textContent = "Ключ"; });
+    items.forEach(function(i){ i.done = false; });
+    refresh();
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  /* Enter key checks the current task */
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Enter" && e.target.matches("input[type=text]")){
+      e.preventDefault();
+      var task = e.target.closest(".task");
+      var btn = task && task.querySelector(".btn.check");
+      if (btn) btn.click();
+    }
+  });
+
+  document.querySelectorAll(".btn.reveal").forEach(function(b){ b.dataset.label = b.textContent; });
+  refresh();
+})();
+</script>
+</body>
+</html>
