@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>So much to do · dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F1EFF8; --paper:#FFFFFF; --ink:#221C3A; --muted:#5E5878; --line:#DAD5EA;
+  --accent:#6A4CE0; --on-accent:#FFFFFF; --mark:#FFE15A; --ok:#1D7A52; --okbg:#E1F2E8; --bad:#C9354B; --badbg:#FBE5E9;
+  --sel:#E6E0FB; --b1:#CFC4FA; --b2:#FFD6A5; --b3:#BDE7D3; --b4:#FFC2CE; --b5:#C9E3FF;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#15121F; --paper:#1F1B2E; --ink:#ECE8F7; --muted:#A9A2C2; --line:#352F4A;
+    --accent:#9C86FF; --on-accent:#15121F; --mark:#8C7A1E; --ok:#55C48F; --okbg:#173022; --bad:#F06C82; --badbg:#3A1A22;
+    --sel:#2E2747; --b1:#4B3F86; --b2:#7A5432; --b3:#2F6450; --b4:#7A3646; --b5:#2F4E73;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15121F; --paper:#1F1B2E; --ink:#ECE8F7; --muted:#A9A2C2; --line:#352F4A;
+  --accent:#9C86FF; --on-accent:#15121F; --mark:#8C7A1E; --ok:#55C48F; --okbg:#173022; --bad:#F06C82; --badbg:#3A1A22;
+  --sel:#2E2747; --b1:#4B3F86; --b2:#7A5432; --b3:#2F6450; --b4:#7A3646; --b5:#2F4E73;
+  color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5;overflow-x:hidden}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 56px}
+.hand{font-family:"Caveat","Segoe Print","Comic Sans MS",cursive;font-weight:700}
+
+/* overbooked day strip */
+.day{overflow:hidden;padding:18px 0 4px;border-bottom:1px solid var(--line)}
+.day-row{display:flex;gap:6px;padding:0 20px;min-width:max-content}
+.blk{flex:none;border-radius:8px;padding:8px 12px 7px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap}
+.blk small{display:block;font-weight:500;opacity:.7;font-size:11px}
+.hours{display:flex;gap:0;padding:6px 20px 8px;min-width:max-content;color:var(--muted);font-size:11px}
+.hours span{width:72px;flex:none}
+
+/* hero */
+.hero{padding:26px 0 6px}
+.brand{margin:0 0 4px;color:var(--muted);font-weight:600}
+h1{font-family:"Caveat","Segoe Print",cursive;font-weight:700;font-size:clamp(46px,9vw,68px);line-height:.95;margin:0 0 12px}
+.lede{margin:0;max-width:56ch;color:var(--muted)}
+
+/* task list */
+.cases-head{display:flex;justify-content:space-between;align-items:baseline;margin:28px 0 6px;gap:12px}
+.cases-head h2{margin:0;font-size:20px}
+.muted{color:var(--muted)}
+.case-list{list-style:none;margin:0;padding:0}
+.case{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:14px;width:100%;
+  background:none;border:0;border-bottom:1px dashed var(--line);padding:14px 4px;text-align:left;cursor:pointer}
+.case:hover .case-title{text-decoration:underline;text-underline-offset:3px}
+.box{width:26px;height:26px;border:2.5px solid var(--ink);border-radius:6px;display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--muted)}
+.box.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-size:16px}
+.case-text{display:flex;flex-direction:column;min-width:0}
+.case-title{font-weight:600}
+.case.closed .case-title{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--accent)}
+.case-ua{color:var(--muted);font-size:15px}
+.status{font-size:14px;color:var(--muted);white-space:nowrap}
+.home-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+
+/* buttons */
+.btn{border:2px solid var(--ink);background:var(--paper);border-radius:999px;padding:10px 20px;cursor:pointer;font-weight:600;min-height:46px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.bad{border-color:var(--bad);color:var(--bad)}
+.btn.quiet{border-color:var(--line);font-weight:500}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.row.center{justify-content:center}
+
+/* mode chrome */
+.mode-top{display:flex;justify-content:space-between;align-items:center;margin:14px 0 4px;gap:10px}
+.back{background:none;border:0;padding:8px 0;cursor:pointer;font-weight:600;color:var(--muted)}
+.back:hover{color:var(--ink)}
+.mode-title{font-family:"Caveat","Segoe Print",cursive;font-weight:700;font-size:clamp(38px,7vw,50px);line-height:1;margin:4px 0 8px}
+.instr{margin:0 0 16px;color:var(--muted);max-width:60ch}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:22px}
+.bar span{display:block;height:100%;background:var(--accent);transition:width .3s}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-bottom:16px}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.seg button{background:var(--paper);border:0;padding:7px 13px;cursor:pointer;font-size:15px;font-weight:500}
+.seg button+button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+/* flashcards */
+.flash{perspective:1200px;cursor:pointer;border-radius:18px}
+.flash-inner{display:grid;transition:transform .45s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.flash.is-flipped .flash-inner{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;min-height:260px;background:var(--paper);
+  border:1px solid var(--line);border-radius:18px;padding:26px 22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
+.face.back{transform:rotateY(180deg);border:2px solid var(--accent)}
+.emo{font-size:40px;line-height:1}
+.term{font-size:clamp(26px,5.4vw,34px);font-weight:700;line-height:1.2}
+.term.ua{font-size:clamp(21px,4.4vw,27px);font-weight:600}
+.ex{margin:6px 0 0;font-style:italic;max-width:46ch}
+.note{margin:0;font-size:15px;color:var(--muted)}
+.tap{font-size:14px;color:var(--muted)}
+
+/* options */
+.prompt{font-size:clamp(20px,4.2vw,25px);font-weight:600;line-height:1.4;margin:0 0 18px}
+.scene{font-size:19px;line-height:1.55;margin:0 0 18px}
+.opts{display:grid;gap:10px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{text-align:left;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:12px 16px;cursor:pointer;font-weight:500;min-height:50px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.opt:disabled{cursor:default}
+.fb{margin-top:16px;padding:14px 16px;border-radius:12px;border-left:5px solid var(--ok);background:var(--okbg)}
+.fb.no{border-left-color:var(--bad);background:var(--badbg)}
+.fb p{margin:4px 0}
+mark{background:linear-gradient(transparent 45%,var(--mark) 45%);color:inherit;padding:0 2px}
+
+.blank{display:inline-block;min-width:3.5em;border-bottom:3px solid var(--accent);text-align:center;font-weight:700}
+.gap-line{font-size:clamp(19px,4vw,23px);line-height:1.6;margin:0 0 16px}
+.hint{letter-spacing:.2em;color:var(--muted);margin:8px 0 0;font-family:ui-monospace,Menlo,Consolas,monospace}
+.model{font-weight:600}
+.cell label{display:block;font-size:13px;color:var(--muted);margin-bottom:3px}
+input.ans,textarea.ans{width:100%;border:2px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--bg);font-size:17px}
+input.ans:focus,textarea.ans:focus{border-color:var(--accent);outline:none}
+input.ans.good{border-color:var(--ok);background:var(--okbg)}
+input.ans.nope{border-color:var(--bad);background:var(--badbg)}
+
+/* matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col{display:grid;gap:8px;align-content:start}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;text-align:left;font-weight:600;min-height:48px}
+.tile:hover:not(:disabled){border-color:var(--ink)}
+.tile.sel{border-color:var(--accent);background:var(--sel)}
+.tile.done{border-style:dashed;opacity:.35;cursor:default}
+.tile.shake{animation:shake .35s;border-color:var(--bad)}
+@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.matched{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:6px}
+.matched li{padding:8px 12px;background:var(--okbg);border-radius:10px;font-size:15px}
+@media (max-width:600px){ .opts.two{grid-template-columns:1fr} }
+
+/* finish */
+.finish{text-align:center;padding-top:20px}
+.done-word{display:inline-block;font-family:"Caveat",cursive;font-weight:700;font-size:clamp(56px,13vw,88px);line-height:1;margin:30px 0 12px;padding:0 14px;
+  background:linear-gradient(transparent 52%,var(--mark) 52%) no-repeat;background-size:100% 100%;animation:swipe .7s ease-out both .1s}
+@keyframes swipe{from{background-size:0% 100%}to{background-size:100% 100%}}
+.score{font-size:22px;margin:4px 0}
+.score b{font-size:44px}
+
+dialog{border:2px solid var(--ink);border-radius:16px;background:var(--paper);color:var(--ink);padding:22px;width:min(560px,calc(100% - 32px))}
+dialog::backdrop{background:rgba(20,14,40,.55)}
+dialog h2{margin:0 0 6px;font-family:"Caveat",cursive;font-weight:700;font-size:36px;line-height:1}
+dialog textarea{min-height:220px;font-size:14px;line-height:1.45;resize:vertical}
+
+@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+<div class="day" aria-hidden="true">
+  <div class="day-row" id="dayrow"></div>
+  <div class="hours" id="hours"></div>
+</div>
+<main class="wrap" id="app"></main>
+
+<dialog id="report" aria-labelledby="rep-h">
+  <h2 id="rep-h">Results for your teacher</h2>
+  <p class="muted" style="margin:0 0 14px">Впиши ім'я, скопіюй звіт і надішли вчителю в месенджер.</p>
+  <div class="cell" style="margin-bottom:12px">
+    <label for="rep-name">Your name</label>
+    <input class="ans" id="rep-name" autocomplete="off">
+  </div>
+  <textarea class="ans" id="rep-text" readonly aria-label="Report text"></textarea>
+  <p class="muted" id="rep-status" style="margin:8px 0 0;min-height:1.5em" aria-live="polite"></p>
+  <div class="row">
+    <button class="btn primary" data-act="copy">Copy report</button>
+    <button class="btn quiet" data-act="closeReport">Close</button>
+  </div>
+</dialog>
+
+<script>
+/* ---------- content ---------- */
+const BUSY = [
+  {en:"feel overwhelmed by", ua:"почуватися перевантаженим (через щось)", e:"😵", ex:"I sometimes feel overwhelmed by all my homework."},
+  {en:"race around", ua:"бути як білка в колесі, метушитися", e:"🐿️", ex:"I race around all day and never sit down."},
+  {en:"keep up with", ua:"встигати за, йти в ногу з", e:"🏃", ex:"It's hard to keep up with all the new apps."},
+  {en:"have no control over", ua:"не мати контролю над", e:"🎛️", ex:"We have no control over the weather."},
+  {en:"take on", ua:"брати на себе (роботу, обов'язки)", e:"📥", ex:"Don't take on more work than you can do."},
+  {en:"struggle with", ua:"мати труднощі з, боротися з", e:"🧗", ex:"Many students struggle with maths.", alt:["struggle with sth","struggle with something"]},
+  {en:"let work pile up", ua:"давати роботі накопичуватися", e:"📚", ex:"Try not to let your work pile up.", alt:["let your work pile up"]},
+  {en:"take time out from", ua:"взяти перерву від", e:"⏸️", ex:"She took time out from work to travel."},
+  {en:"make time for", ua:"виділяти час на", e:"⏰", ex:"Always make time for your family."},
+  {en:"backlog", ua:"завал, відставання (по роботі)", e:"🗂️", ex:"I have a backlog of emails to answer."},
+  {en:"leisure / free / spare time", ua:"вільний час", e:"🛋️", ex:"What do you do in your spare time?", alt:["leisure time","free time","spare time"]},
+  {en:"tight schedule", ua:"дуже щільний графік", e:"📅", ex:"I'm on a tight schedule this week."},
+  {en:"from time to time", ua:"час від часу", e:"🔁", ex:"We meet for coffee from time to time."},
+  {en:"put off", ua:"відкладати на потім", e:"⏳", ex:"Stop putting off your homework!", note:"put sth off / put off doing sth", alt:["put sth off","put something off"]},
+  {en:"odd jobs", ua:"випадкові підробітки, дрібна робота", e:"🔧", ex:"He does odd jobs in the summer."},
+  {en:"look forward to", ua:"з нетерпінням чекати", e:"🤩", ex:"I'm looking forward to seeing you!", note:"look forward to + doing", alt:["look forward to doing","look forward to doing something"]}
+];
+const FAMILY = [
+  {en:"take after", ua:"бути схожим на (родича)", e:"👨‍👦", ex:"She takes after her mother."},
+  {en:"hand down", ua:"передавати (наступному поколінню, у спадок)", e:"🎁", ex:"This ring was handed down from my grandmother."},
+  {en:"take over", ua:"перейняти, взяти на себе (керування)", e:"🏢", ex:"He took over the family business."},
+  {en:"bring up children", ua:"виховувати дітей", e:"👶", ex:"They brought up three children.", note:"bring – brought – brought", alt:["bring children up"]},
+  {en:"look into", ua:"досліджувати, розібратися в", e:"🔍", ex:"I'll look into the problem."},
+  {en:"put up with", ua:"терпіти, миритися з", e:"😤", ex:"I can't put up with the noise any more."},
+  {en:"keep from doing", ua:"не дати (щось зробити); утриматися від", e:"🤐", ex:"I couldn't keep from laughing.", alt:["keep from","keep from doing something"]},
+  {en:"generation", ua:"покоління", e:"👵", ex:"Three generations live in this house."},
+  {en:"encourage", ua:"заохочувати, підбадьорювати, надихати", e:"📣", ex:"My parents encouraged me to learn English.", note:"encourage somebody to do something"},
+  {en:"slightly jealous", ua:"трохи заздрісний / ревнивий", e:"😒", ex:"I was slightly jealous of my sister's new phone."}
+];
+const OTHER = [
+  {en:"equated with", ua:"прирівняний до, ототожнений з", e:"🟰", ex:"Success is often equated with money.", note:"equate A with B"},
+  {en:"roughly", ua:"приблизно", e:"📏", ex:"It takes roughly an hour to get there."},
+  {en:"partially", ua:"частково", e:"🌓", ex:"The road is partially closed."},
+  {en:"separate", ua:"відокремлювати, розділяти", e:"✂️", ex:"Separate the white clothes from the coloured ones.", note:"як прикметник: окремий"},
+  {en:"prepare", ua:"готувати, підготувати", e:"📝", ex:"I need to prepare for the exam."},
+  {en:"preparation", ua:"підготовка", e:"🧾", ex:"Good preparation is the key to success."},
+  {en:"it is said that", ua:"кажуть, що", e:"💬", ex:"It is said that the old house is haunted."},
+  {en:"bitter", ua:"гіркий", e:"☕", ex:"Black coffee tastes bitter."},
+  {en:"sour", ua:"кислий", e:"🍋", ex:"Lemons are very sour."},
+  {en:"mashed potatoes", ua:"картопляне пюре", e:"🥔", ex:"We had chicken with mashed potatoes."}
+];
+
+const ALL = [...BUSY.map(x=>({...x,grp:"busy"})), ...FAMILY.map(x=>({...x,grp:"family"})), ...OTHER.map(x=>({...x,grp:"other"}))];
+const BY = Object.fromEntries(ALL.map(x=>[x.en,x]));
+
+const SCEN = [
+  {a:"backlog", s:"Ira was ill for a week. Now she has 200 unread emails and five reports to finish."},
+  {a:"tight schedule", s:"School from 8 to 3, training at 4, a tutor at 6, homework at 8. Not one free minute!"},
+  {a:"take after", s:"Max has his dad's blue eyes, his dad's laugh and even his dad's bad jokes."},
+  {a:"put off", s:"Olia has to clean her room, but every day for a week she says, “I'll do it tomorrow.”"},
+  {a:"odd jobs", s:"In summer, Taras washes cars, walks dogs and paints fences for his neighbours to earn some money."},
+  {a:"put up with", s:"Your neighbour plays loud music every night. You hate it, but you never complain."},
+  {a:"feel overwhelmed by", s:"So many tasks, so many messages, so many deadlines. Ira just wants to hide under a blanket."},
+  {a:"hand down", s:"Grandma gave her old recipe book to Mum, and one day Mum will give it to you."},
+  {a:"take on", s:"Your boss asks who can do one more project. You raise your hand: “I'll do it!”"},
+  {a:"bitter", s:"Strong black coffee with no sugar and no milk. How does it taste?"},
+  {a:"sour", s:"You bite into a lemon. How does it taste?"},
+  {a:"slightly jealous", s:"Your best friend got a new phone. You're happy for her, but you want one too. Just a little bit."},
+  {a:"make time for", s:"Dad works a lot, but every Sunday he finds two hours to play football with his son."},
+  {a:"look forward to", s:"Your holiday starts in three days, and you can't stop thinking about it!"},
+  {a:"race around", s:"Kids to school, then work, then shopping, then the post office, then kids from school. Running all day!"},
+  {a:"take over", s:"When the old manager retired, Andrii became the new head of the team."}
+];
+
+const PART = [
+  {s:"She takes ___ her mother. They have the same smile.", a:"after", o:["after","over","on","off"], k:"take after"},
+  {s:"He took ___ the family business when his dad retired.", a:"over", o:["over","after","on","up"], k:"take over"},
+  {s:"Don't take ___ too many projects at once.", a:"on", o:["on","over","after","off"], k:"take on"},
+  {s:"This watch was handed ___ from my grandfather.", a:"down", o:["down","up","over","out"], k:"hand down"},
+  {s:"It's not easy to bring ___ children in a big city.", a:"up", o:["up","down","on","out"], k:"bring up children"},
+  {s:"I'll look ___ the problem and call you back.", a:"into", o:["into","forward to","after","up"], k:"look into"},
+  {s:"I'm looking ___ seeing you on Friday!", a:"forward to", o:["forward to","into","after","up to"], k:"look forward to"},
+  {s:"How do you put ___ with all this noise?", a:"up", o:["up","off","on","down"], k:"put up with"},
+  {s:"Stop putting ___ your homework!", a:"off", o:["off","up","on","away"], k:"put off"},
+  {s:"You walk so fast, I can't keep ___ with you.", a:"up", o:["up","on","from","off"], k:"keep up with"},
+  {s:"I couldn't keep ___ laughing.", a:"from", o:["from","up","off","with"], k:"keep from doing"},
+  {s:"Try not to let your work pile ___.", a:"up", o:["up","on","down","over"], k:"let work pile up"},
+  {s:"I race ___ all day and never have time for lunch.", a:"around", o:["around","over","up","after"], k:"race around"},
+  {s:"Make time ___ the people you love.", a:"for", o:["for","to","with","from"], k:"make time for"},
+  {s:"She took time out ___ work to travel.", a:"from", o:["from","of","for","to"], k:"take time out from"},
+  {s:"Many teenagers struggle ___ stress.", a:"with", o:["with","for","on","about"], k:"struggle with"},
+  {s:"I often feel overwhelmed ___ all the emails.", a:"by", o:["by","from","at","of"], k:"feel overwhelmed by"},
+  {s:"We have no control ___ the weather.", a:"over", o:["over","on","about","for"], k:"have no control over"},
+  {s:"Happiness is often equated ___ money.", a:"with", o:["with","to","as","by"], k:"equated with"}
+];
+
+const PAIRS = [
+  ["bring up","children"],["tight","schedule"],["odd","jobs"],["mashed","potatoes"],["slightly","jealous"],
+  ["take time out","from work"],["make time","for your family"],["have no control","over the weather"],
+  ["struggle","with stress"],["let your work","pile up"]
+];
+
+const GAPS = [
+  {s:"I'm so busy that I can't ___ up with my emails.", a:["keep"], ua:"Я така зайнята, що не встигаю за своїми листами."},
+  {s:"Don't ___ on more work than you can do.", a:["take"], ua:"Не бери на себе більше роботи, ніж можеш зробити."},
+  {s:"She has to ___ up with her noisy neighbours.", a:["put"], ua:"Їй доводиться терпіти галасливих сусідів."},
+  {s:"Stop ___ off your homework!", a:["putting"], ua:"Перестань відкладати домашнє завдання!"},
+  {s:"He ___ after his father: they're both very tall.", a:["takes"], ua:"Він схожий на тата: вони обидва дуже високі."},
+  {s:"My grandmother ___ down this ring to my mum.", a:["handed"], ua:"Бабуся передала цю каблучку моїй мамі."},
+  {s:"When the manager left, Ira ___ over the team.", a:["took"], ua:"Коли менеджер пішов, Іра перейняла команду."},
+  {s:"They ___ up three children in a small flat.", a:["brought"], ua:"Вони виховали трьох дітей у маленькій квартирі."},
+  {s:"I'm really looking forward to ___ you!", a:["seeing","meeting"], ua:"Я дуже чекаю на зустріч з тобою!"},
+  {s:"Our teacher always ___ us to speak English.", a:["encourages","encouraged"], ua:"Наш учитель завжди заохочує нас говорити англійською."},
+  {s:"It takes ___ two hours to get there.", a:["roughly"], ua:"Дорога туди займає приблизно дві години."},
+  {s:"The road is ___ closed, so drive slowly.", a:["partially"], ua:"Дорога частково перекрита, тож їдь повільно."},
+  {s:"After the holidays, there's always a big ___ of work.", a:["backlog"], ua:"Після свят завжди великий завал роботи."},
+  {s:"It is ___ that the castle is haunted.", a:["said"], ua:"Кажуть, що в замку живуть привиди."},
+  {s:"In my ___ time I play the guitar.", a:["spare","free","leisure"], ua:"У вільний час я граю на гітарі."},
+  {s:"This coffee is too ___. Add some sugar.", a:["bitter"], ua:"Ця кава занадто гірка. Додай цукру."},
+  {s:"Three ___ of our family live in this village.", a:["generations"], ua:"У цьому селі живуть три покоління нашої родини."},
+  {s:"The exam needs a lot of ___.", a:["preparation"], ua:"До іспиту треба багато готуватися."},
+  {s:"Please ___ the white clothes from the coloured ones.", a:["separate"], ua:"Будь ласка, відокрем білий одяг від кольорового."},
+  {s:"I feel ___ by all these deadlines.", a:["overwhelmed"], ua:"Я почуваюся перевантаженою через усі ці дедлайни."},
+  {s:"We go to the theatre from time to ___.", a:["time"], ua:"Ми час від часу ходимо в театр."},
+  {s:"I'm on a very ___ schedule this week.", a:["tight"], ua:"Цього тижня в мене дуже щільний графік."}
+];
+
+const TR = [
+  {ua:"Я почуваюся перевантаженою через роботу.", a:["I feel overwhelmed by work."]},
+  {ua:"Намагайся не відкладати домашнє завдання.", a:["Try not to put off your homework."]},
+  {ua:"Вона схожа на свою бабусю.", a:["She takes after her grandmother."]},
+  {ua:"Цей рецепт передавався з покоління в покоління.", a:["This recipe has been handed down from generation to generation."]},
+  {ua:"Я не встигаю за всіма новинами.", a:["I can't keep up with all the news."]},
+  {ua:"Я з нетерпінням чекаю на канікули.", a:["I'm looking forward to the holidays."]},
+  {ua:"Тобі треба виділяти час на відпочинок.", a:["You need to make time for rest.","You need to make time for relaxing."]},
+  {ua:"Кажуть, що він перейняв батьків бізнес.", a:["It is said that he took over his father's business."]},
+  {ua:"Як ти це терпиш?", a:["How do you put up with it?"]},
+  {ua:"У мене дуже щільний графік і завал роботи.", a:["I have a tight schedule and a backlog of work."]},
+  {ua:"Батьки завжди підбадьорювали мене.", a:["My parents always encouraged me."]},
+  {ua:"Ми виховуємо дітей приблизно так само, як наші батьки.", a:["We bring up our children roughly the same way as our parents did."]}
+];
+
+const CASES = [
+  {id:"cards", en:"Learn the words", ua:"Картки: вивчи слова", instr:"Tap the card to turn it over. Press “Got it” if you knew it, “Again” if you didn't. The card comes back until you know it."},
+  {id:"situ", en:"What's the word?", ua:"Яке слово підходить до ситуації?", instr:"Read the situation and choose the best word or phrase."},
+  {id:"part", en:"Small words, big meaning", ua:"Прийменники та частки у фразових дієсловах", instr:"Choose the missing small word."},
+  {id:"match", en:"Word partners", ua:"Склади словосполучення", instr:"Match the beginning on the left with the ending on the right."},
+  {id:"quiz", en:"Quick quiz", ua:"Швидкий тест EN ↔ UA", instr:"Choose the correct translation."},
+  {id:"gaps", en:"Fill the gaps", ua:"Слова в реченнях", instr:"Type the missing word in the correct form. Need help? Use the hint."},
+  {id:"spell", en:"Spell it", ua:"Напиши англійською", instr:"Read the Ukrainian, listen if you want, and type the English word or phrase. Mistakes come back at the end."},
+  {id:"translate", en:"Translate", ua:"Переклад UA → EN", instr:"Translate the sentence into English, say it aloud, then compare with the answer."}
+];
+const CASE = Object.fromEntries(CASES.map(c=>[c.id,c]));
+
+/* ---------- helpers ---------- */
+const $app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const norm = s => String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,;:]/g,"").replace(/\s+/g," ").trim().replace(/^to /,"");
+const accepts = (input, answers) => { const n=norm(input); if(!n) return false; return answers.some(a=>norm(a)===n); };
+
+/* overbooked day strip */
+(function(){
+  const blocks = [["school run","8:00",130,"--b1"],["work","9:00",200,"--b5"],["emails","11:30",110,"--b2"],["call mum","12:15",96,"--b4"],
+    ["lunch?","12:40",70,"--b3"],["meeting","13:00",150,"--b1"],["shopping","15:00",120,"--b2"],["English","16:30",110,"--b3"],
+    ["cook dinner","18:00",130,"--b4"],["homework","19:30",120,"--b5"],["laundry","21:00",110,"--b2"],["sleep?","23:00",90,"--b1"]];
+  document.getElementById("dayrow").innerHTML = blocks.map(([t,h,w,c])=>`<div class="blk" style="width:${w}px;background:var(${c})">${t}<small>${h}</small></div>`).join("");
+  document.getElementById("hours").innerHTML = Array.from({length:22},(_,k)=>`<span>${String(8+k).padStart(2,"0")}:00</span>`).join("");
+})();
+
+/* storage */
+const KEY = "dinglish-busy-life-v1";
+let store = {best:{}, miss:{}, tr:[], name:""};
+try{ const raw = localStorage.getItem(KEY); if(raw) store = Object.assign(store, JSON.parse(raw)); }catch(e){}
+const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} };
+const miss = w => { store.miss[w] = (store.miss[w]||0)+1; save(); };
+const setBest = (id, score, total) => { const b=store.best[id]; if(!b || score/total >= b.score/b.total) store.best[id]={score,total}; save(); };
+
+/* speech */
+const TTS = ("speechSynthesis" in window) && typeof SpeechSynthesisUtterance !== "undefined";
+let voice = null;
+function pickVoice(){ try{ const vs=speechSynthesis.getVoices(); voice = vs.find(v=>/en[-_]GB/i.test(v.lang)) || vs.find(v=>/^en/i.test(v.lang)) || null; }catch(e){} }
+if(TTS){ pickVoice(); try{ speechSynthesis.onvoiceschanged = pickVoice; }catch(e){} }
+function say(t){ if(!TTS) return; try{ speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(String(t).replace(/\(.*?\)/g,"").replace(/\s*\/\s*/g,", "));
+  u.lang="en-GB"; if(voice) u.voice=voice; u.rate=.9; speechSynthesis.speak(u); }catch(e){} }
+const listenBtn = text => TTS ? `<button class="btn quiet" data-act="say" data-say="${esc(text)}">🔊 Listen</button>` : "";
+
+/* ---------- view plumbing ---------- */
+let V = null;
+const GLOBAL = {
+  home: () => open("home"),
+  say: el => say(el.dataset.say),
+  report: openReport,
+  copy: copyReport,
+  closeReport: () => document.getElementById("report").close()
+};
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-act]"); if(!el) return;
+  const fn = (V && V.act && V.act[el.dataset.act]) || GLOBAL[el.dataset.act];
+  if(fn){ e.preventDefault(); fn(el, e); }
+});
+document.addEventListener("keydown", e => { if(V && V.key) V.key(e); });
+
+function open(id){
+  if(TTS) try{ speechSynthesis.cancel(); }catch(e){}
+  window.scrollTo(0,0);
+  V = (MODES[id] || home)();
+}
+function shell(c, progress, label, inner){
+  return `<div class="mode">
+    <div class="mode-top"><button class="back" data-act="home">‹ All tasks</button><span class="muted">${label||""}</span></div>
+    <h2 class="mode-title">${esc(c.en)}</h2>
+    <p class="instr">${esc(c.instr)}</p>
+    <div class="bar" aria-hidden="true"><span style="width:${Math.round(progress*100)}%"></span></div>
+    ${inner}
+  </div>`;
+}
+function focusSel(sel){ const el=$app.querySelector(sel); if(el) el.focus({preventScroll:true}); }
+
+/* ---------- home ---------- */
+function home(){
+  let armed = false;
+  function render(){
+    const closed = CASES.filter(c=>store.best[c.id]).length;
+    $app.innerHTML = `
+      <section class="hero">
+        <p class="brand">dinglish</p>
+        <h1>So much to do, so little time</h1>
+        <p class="lede">Слова про шалений ритм життя, сім'ю та фразові дієслова: ${ALL.length} слів і фраз. Проходь завдання по черзі й викреслюй їх зі свого списку.</p>
+      </section>
+      <div class="cases-head"><h2>Today's to-do list</h2><span class="muted">${closed} of ${CASES.length} done</span></div>
+      <ol class="case-list">
+        ${CASES.map((c,i)=>{ const b=store.best[c.id];
+          const st = b ? (c.id==="cards" ? "done" : `${b.score}/${b.total}`) : "";
+          return `<li><button class="case ${b?"closed":""}" data-act="go" data-id="${c.id}">
+            <span class="box ${b?"on":""}" aria-hidden="true">${b?"✓":i+1}</span>
+            <span class="case-text"><span class="case-title">${esc(c.en)}</span><span class="case-ua">${esc(c.ua)}</span></span>
+            <span class="status">${st}</span>
+          </button></li>`; }).join("")}
+      </ol>
+      <div class="home-actions">
+        <button class="btn primary" data-act="report">Send results to teacher</button>
+        <button class="btn quiet" data-act="reset">${armed ? "Tap again to erase progress" : "Start over"}</button>
+      </div>`;
+  }
+  render();
+  return {act:{
+    go: el => open(el.dataset.id),
+    reset: () => { if(!armed){ armed=true; render(); return; }
+      store = {best:{}, miss:{}, tr:[], name:store.name}; save(); armed=false; render(); }
+  }};
+}
+
+/* ---------- finish ---------- */
+function finish(id, score, total){
+  setBest(id, score, total);
+  const c = CASE[id], idx = CASES.findIndex(x=>x.id===id), next = CASES[idx+1];
+  const p = score/total;
+  const msg = id==="cards" ? "Усі картки вивчено. Тепер перевір себе в наступному завданні."
+    : p===1 ? "Бездоганно! Жодної помилки." : p>=.8 ? "Дуже добре! Ще трохи, і буде ідеально."
+    : p>=.5 ? "Непогано. Пройди ще раз, щоб закріпити." : "Повтори картки й спробуй ще раз.";
+  $app.innerHTML = `<div class="mode finish">
+    <div class="mode-top"><button class="back" data-act="home">‹ All tasks</button><span></span></div>
+    <div class="done-word" aria-hidden="true">Done!</div>
+    <h2 class="mode-title">${esc(c.en)}</h2>
+    ${id==="cards" ? "" : `<p class="score"><b>${score}</b> / ${total}</p>`}
+    <p class="muted">${msg}</p>
+    <div class="row center">
+      <button class="btn quiet" data-act="retry">Try again</button>
+      ${next ? `<button class="btn primary" data-act="next">Next: ${esc(next.en)}</button>` : `<button class="btn primary" data-act="report">Send results to teacher</button>`}
+    </div></div>`;
+  V = {act:{ retry:()=>open(id), next:()=>open(next ? next.id : "home") }};
+  focusSel('[data-act="next"],[data-act="report"]');
+}
+
+/* ---------- 1. flashcards ---------- */
+function modeCards(){
+  const c = CASE.cards;
+  let dir="en", deck="all", queue, total, known, flipped;
+  function build(){ const src = ALL.filter(e=>deck==="all"||e.grp===deck); queue=shuffle(src); total=src.length; known=0; flipped=false; }
+  build();
+  function render(){
+    if(!queue.length) return finish("cards", total, total);
+    const e = queue[0];
+    const en = `<span class="term">${esc(e.en)}</span>`, ua = `<span class="term ua">${esc(e.ua)}</span>`;
+    const decks = [["all","All"],["busy","Busy life"],["family","Family"],["other","Other"]];
+    $app.innerHTML = shell(c, known/total, `${known} / ${total} learned`, `
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Deck">${decks.map(([k,l])=>`<button data-act="deck" data-v="${k}" aria-pressed="${deck===k}">${l}</button>`).join("")}</div>
+        <div class="seg" role="group" aria-label="Direction">
+          <button data-act="dir" data-v="en" aria-pressed="${dir==="en"}">EN → UA</button><button data-act="dir" data-v="ua" aria-pressed="${dir==="ua"}">UA → EN</button>
+        </div>
+      </div>
+      <div class="flash ${flipped?"is-flipped":""}" data-act="flip" tabindex="0" role="button" aria-label="Turn the card over">
+        <div class="flash-inner">
+          <div class="face front"><span class="emo" aria-hidden="true">${e.e}</span>${dir==="en"?en:ua}<span class="tap">tap to turn over</span></div>
+          <div class="face back">${dir==="en"?ua:en}<p class="ex">${esc(e.ex)}</p>${e.note?`<p class="note">${esc(e.note)}</p>`:""}</div>
+        </div>
+      </div>
+      <div class="row center">
+        ${listenBtn(e.en)}
+        <button class="btn bad" data-act="again">Again</button>
+        <button class="btn primary" data-act="know">Got it</button>
+      </div>`);
+  }
+  render();
+  const act = {
+    flip: () => { flipped=!flipped; const f=$app.querySelector(".flash"); if(f) f.classList.toggle("is-flipped", flipped);
+      if(flipped && dir==="ua") say(queue[0].en); },
+    again: () => { const e=queue.shift(); miss(e.en); queue.push(e); flipped=false; render(); },
+    know: () => { queue.shift(); known++; flipped=false; render(); },
+    deck: el => { deck=el.dataset.v; build(); render(); },
+    dir: el => { dir=el.dataset.v; flipped=false; render(); }
+  };
+  return {act, key: e => {
+    if(e.target.matches("input,textarea")) return;
+    if(e.key===" " || (e.key==="Enter" && e.target.classList.contains("flash"))){ e.preventDefault(); act.flip(); }
+    else if(e.key==="ArrowRight") act.know();
+    else if(e.key==="ArrowLeft") act.again();
+  }};
+}
+
+/* ---------- generic multiple-choice engine ---------- */
+function choiceMode(id, qs, view){
+  const c = CASE[id];
+  let i=0, score=0, picked=null;
+  function render(){
+    const q=qs[i], done=picked!==null, ok = done && q.opts[picked]===q.answer;
+    $app.innerHTML = shell(c, (i+(done?1:0))/qs.length, `${i+1} of ${qs.length} · score ${score}`, `
+      <div class="panel">
+        ${view.prompt(q, done)}
+        <div class="opts ${view.two?"two":""}">${q.opts.map((o,oi)=>{
+          const cls = !done ? "" : o===q.answer ? "right" : oi===picked ? "wrong" : "";
+          return `<button class="opt ${cls}" data-act="pick" data-v="${oi}" ${done?"disabled":""}>${esc(view.label(o,q))}</button>`; }).join("")}</div>
+        ${done ? `${view.feedback ? `<div class="fb ${ok?"":"no"}">${view.feedback(q, ok)}</div>` : ""}
+          <div class="row">${listenBtn(view.sayText(q))}<button class="btn primary" data-act="next">${i+1<qs.length?"Next":"See results"}</button></div>` : ""}
+      </div>`);
+    if(done) focusSel('[data-act="next"]');
+  }
+  render();
+  return {act:{
+    pick: el => { if(picked!==null) return; picked=+el.dataset.v; const q=qs[i];
+      if(q.opts[picked]===q.answer) score++; else miss(view.key(q));
+      if(view.autoSay) say(view.sayText(q)); render(); },
+    next: () => { i++; picked=null; if(i>=qs.length) return finish(id, score, qs.length); render(); }
+  }};
+}
+
+/* ---------- 2. situations ---------- */
+function modeSitu(){
+  const qs = shuffle(SCEN).slice(0,12).map(s=>{
+    const t = BY[s.a];
+    const pool = ALL.filter(x=>x.en!==t.en);
+    const ds = [...shuffle(pool.filter(x=>x.grp===t.grp)), ...shuffle(pool.filter(x=>x.grp!==t.grp))].slice(0,3);
+    return {s:s.s, answer:t, opts:shuffle([t, ...ds])};
+  });
+  return choiceMode("situ", qs, {
+    two:true, autoSay:true,
+    prompt: q => `<p class="scene">${esc(q.s)}</p>`,
+    label: o => o.en,
+    key: q => q.answer.en,
+    sayText: q => q.answer.ex,
+    feedback: (q, ok) => `<p><b>${ok?"Yes!":"Not quite."}</b> <mark>${esc(q.answer.en)}</mark>: ${esc(q.answer.ua)}</p><p><i>${esc(q.answer.ex)}</i></p>`
+  });
+}
+
+/* ---------- 3. particles ---------- */
+function modePart(){
+  const qs = shuffle(PART).slice(0,12).map(p=>({...p, answer:p.a, opts:shuffle(p.o)}));
+  return choiceMode("part", qs, {
+    two:true, autoSay:true,
+    prompt: (q, done) => `<p class="gap-line">${esc(q.s).replace("___", `<span class="blank">${done?esc(q.a):"&nbsp;"}</span>`)}</p>`,
+    label: o => o,
+    key: q => q.k,
+    sayText: q => q.s.replace("___", q.a),
+    feedback: (q, ok) => `<p><b>${ok?"Correct!":"The answer is “"+esc(q.a)+"”."}</b> <mark>${esc(q.k)}</mark>: ${esc(BY[q.k].ua)}</p>`
+  });
+}
+
+/* ---------- 4. matching ---------- */
+function modeMatch(){
+  const c = CASE.match;
+  const L = shuffle(PAIRS.map((p,i)=>({i,t:p[0]}))), R = shuffle(PAIRS.map((p,i)=>({i,t:p[1]})));
+  let sel=null, doneL=new Set(), doneR=new Set(), order=[], mistakes=0;
+  function render(shakeId){
+    $app.innerHTML = shell(c, doneL.size/PAIRS.length, `${doneL.size} / ${PAIRS.length} matched · mistakes: ${mistakes}`, `
+      <div class="match">
+        <div class="col">${L.map(x=>`<button class="tile ${doneL.has(x.i)?"done":""} ${sel===x.i?"sel":""}" data-act="left" data-i="${x.i}" ${doneL.has(x.i)?"disabled":""} aria-pressed="${sel===x.i}">${esc(x.t)}</button>`).join("")}</div>
+        <div class="col">${R.map(x=>`<button class="tile ${doneR.has(x.i)?"done":""}" id="r-${x.i}" data-act="right" data-i="${x.i}" ${doneR.has(x.i)?"disabled":""}>${esc(x.t)}</button>`).join("")}</div>
+      </div>
+      ${order.length?`<ul class="matched">${order.map(i=>`<li><b>${esc(PAIRS[i][0]+" "+PAIRS[i][1])}</b></li>`).join("")}</ul>`:""}`);
+    if(shakeId!=null){ const b=document.getElementById(`r-${shakeId}`); if(b) b.classList.add("shake"); }
+  }
+  render();
+  return {act:{
+    left: el => { sel=+el.dataset.i; render(); focusSel(`[data-act="left"][data-i="${sel}"]`); },
+    right: el => {
+      const ri=+el.dataset.i; if(sel===null) return;
+      if(sel===ri){
+        doneL.add(sel); doneR.add(ri); order.push(sel); say(PAIRS[sel].join(" ")); sel=null; render();
+        if(doneL.size===PAIRS.length) setTimeout(()=>finish("match", Math.max(0, PAIRS.length-mistakes), PAIRS.length), 900);
+      } else { mistakes++; miss(PAIRS[sel].join(" ")); render(ri); }
+    }
+  }};
+}
+
+/* ---------- 5. quiz ---------- */
+function modeQuiz(){
+  const qs = shuffle(ALL).slice(0,15).map(t=>{
+    const dir = Math.random()<.5 ? "en" : "ua";
+    const pool = ALL.filter(x=>x.en!==t.en);
+    const ds = [...shuffle(pool.filter(x=>x.grp===t.grp)), ...shuffle(pool.filter(x=>x.grp!==t.grp))].slice(0,3);
+    return {t, dir, answer:t, opts:shuffle([t, ...ds])};
+  });
+  return choiceMode("quiz", qs, {
+    autoSay:false,
+    prompt: q => `<p class="muted" style="margin:0 0 4px">${q.dir==="en"?"What does it mean?":"How do you say it in English?"}</p><p class="prompt">${esc(q.dir==="en"?q.t.en:q.t.ua)}</p>`,
+    label: (o,q) => q.dir==="en" ? o.ua : o.en,
+    key: q => q.t.en,
+    sayText: q => q.t.en
+  });
+}
+
+/* ---------- typed answer engine ---------- */
+function typedMode(id, items, opts){
+  const c = CASE[id];
+  let queue = items.map(it=>({it,retry:false})), firstTry=0, pos=0, state=null, hintLvl=0, val="";
+  const total = items.length;
+  function render(){
+    const q = queue[0], done = state!==null;
+    const main = opts.answers(q.it)[0];
+    const hint = hintLvl ? main.split("").map((ch,ci)=> ch===" " ? "\u00a0\u00a0" : ci<hintLvl ? ch : "_").join("") : "";
+    $app.innerHTML = shell(c, pos/total, `${Math.min(pos+1,total)} of ${total}${q.retry?" · second try":""}`, `
+      <div class="panel">
+        ${opts.prompt(q.it, done, main)}
+        <div class="cell" style="margin-top:6px">
+          <label for="ans">Your answer</label>
+          <input class="ans ${done?(state?"good":"nope"):""}" id="ans" value="${esc(val)}" autocomplete="off" autocapitalize="off" spellcheck="false" ${done?"readonly":""}>
+        </div>
+        ${hint && !done ? `<p class="hint" aria-label="Hint">${esc(hint)}</p>` : ""}
+        ${done ? `<div class="fb ${state?"":"no"}"><p><b>${state?"Correct!":"The answer is:"}</b> <span class="model">${esc(main)}</span></p>${opts.after?opts.after(q.it):""}</div>` : ""}
+        <div class="row">
+          ${done
+            ? `${listenBtn(opts.sayText(q.it))}<button class="btn primary" data-act="next">${queue.length>1?"Next":"See results"}</button>`
+            : `<button class="btn quiet" data-act="hint" ${hintLvl>=main.length?"disabled":""}>Hint</button>${opts.extra?opts.extra(q.it):""}<button class="btn primary" data-act="check">Check</button>`}
+        </div>
+      </div>`);
+    const inp = $app.querySelector("#ans");
+    if(inp){ inp.addEventListener("input", ()=>{ val=inp.value; });
+      inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); done ? act.next() : act.check(); } });
+      if(!done) inp.focus({preventScroll:true}); else focusSel('[data-act="next"]'); }
+  }
+  const act = {
+    check: () => { const q=queue[0]; const ok = accepts(val, opts.answers(q.it));
+      state = ok; if(ok && !q.retry && !hintLvl) firstTry++; if(!ok) miss(opts.key(q.it));
+      say(opts.sayText(q.it)); render(); },
+    hint: () => { hintLvl++; render(); },
+    next: () => { const q=queue.shift();
+      if(state===false && !q.retry && opts.requeue) queue.push({...q, retry:true}); else pos++;
+      state=null; hintLvl=0; val="";
+      if(!queue.length) return finish(id, firstTry, total);
+      render(); }
+  };
+  render();
+  return {act};
+}
+
+function modeGaps(){
+  return typedMode("gaps", shuffle(GAPS).slice(0,12), {
+    answers: g => g.a, key: g => g.a[0],
+    sayText: g => g.s.replace("___", g.a[0]),
+    prompt: (g, done, ans) => `<p class="gap-line">${esc(g.s).replace("___", `<span class="blank">${done?esc(ans):"&nbsp;"}</span>`)}</p>`,
+    after: g => `<p class="muted">${esc(g.ua)}</p>`,
+    requeue: false
+  });
+}
+function modeSpell(){
+  return typedMode("spell", shuffle(ALL).slice(0,12), {
+    answers: t => [t.en, ...(t.alt||[])], key: t => t.en, sayText: t => t.en,
+    prompt: t => `<p class="muted" style="margin:0 0 4px">Write in English</p><p class="prompt">${esc(t.ua)}</p>`,
+    extra: t => listenBtn(t.en),
+    requeue: true
+  });
+}
+
+/* ---------- 8. translation ---------- */
+function modeTranslate(){
+  const c = CASE.translate;
+  let i=0, got=0, shown=false, val="", log=[];
+  function render(){
+    const t = TR[i];
+    $app.innerHTML = shell(c, (i+(shown?1:0))/TR.length, `Sentence ${i+1} of ${TR.length}`, `
+      <div class="panel">
+        <p class="prompt">${esc(t.ua)}</p>
+        <div class="cell"><label for="tr">Your translation</label>
+          <textarea class="ans" id="tr" rows="3" autocomplete="off" autocapitalize="sentences" spellcheck="false" ${shown?"readonly":""}>${esc(val)}</textarea></div>
+        ${shown ? `<div class="fb"><p><b>Answer</b></p>${t.a.map(a=>`<p class="model">${esc(a)}</p>`).join("")}
+            <p class="muted">Say the sentence aloud two times. Was your translation correct?</p></div>
+          <div class="row">${listenBtn(t.a[0])}<button class="btn bad" data-act="rate" data-v="0">I need practice</button><button class="btn primary" data-act="rate" data-v="1">I got it right</button></div>`
+        : `<div class="row"><button class="btn primary" data-act="show">Show answer</button></div>`}
+      </div>`);
+    const ta=$app.querySelector("#tr");
+    if(ta && !shown){ ta.addEventListener("input", ()=>{ val=ta.value; }); ta.focus({preventScroll:true}); }
+  }
+  render();
+  return {act:{
+    show: () => { shown=true; render(); },
+    rate: el => { const ok = el.dataset.v==="1"; if(ok) got++; else miss(TR[i].a[0]);
+      log.push({ua:TR[i].ua, mine:val.trim(), ok}); store.tr = log; save();
+      i++; shown=false; val="";
+      if(i>=TR.length) return finish("translate", got, TR.length); render(); }
+  }};
+}
+
+const MODES = {home, cards:modeCards, situ:modeSitu, part:modePart, match:modeMatch, quiz:modeQuiz, gaps:modeGaps, spell:modeSpell, translate:modeTranslate};
+
+/* ---------- report ---------- */
+function reportText(){
+  let t = `dinglish: So much to do, so little time\nStudent: ${store.name||"-"}\nDate: ${new Date().toLocaleDateString("uk-UA")}\n\nResults\n`;
+  CASES.forEach((c,k)=>{ const b=store.best[c.id];
+    t += `${k+1}. ${c.en}: ${b ? (c.id==="cards" ? "done" : `${b.score}/${b.total}`) : "not done"}\n`; });
+  const m = Object.entries(store.miss).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  t += `\nWords to review\n${m.length ? m.map(([w,n])=>`${w} (${n})`).join(", ") : "none"}\n`;
+  if(store.tr && store.tr.length){
+    t += `\nMy translations\n` + store.tr.map((r,k)=>`${k+1}. ${r.ua}\n   ${r.mine||"(blank)"} ${r.ok?"[ok]":"[needs practice]"}`).join("\n") + "\n";
+  }
+  return t;
+}
+function openReport(){
+  const d=document.getElementById("report"), name=document.getElementById("rep-name");
+  name.value = store.name||""; document.getElementById("rep-text").value = reportText();
+  document.getElementById("rep-status").textContent = "";
+  name.oninput = () => { store.name=name.value.trim(); save(); document.getElementById("rep-text").value = reportText(); };
+  if(typeof d.showModal==="function") d.showModal(); else d.setAttribute("open","");
+}
+function copyReport(){
+  const ta=document.getElementById("rep-text"), st=document.getElementById("rep-status");
+  const okMsg = "Copied. Paste it into a message to your teacher.";
+  const fallback = () => { ta.focus(); ta.select(); try{ document.execCommand("copy"); st.textContent=okMsg; }catch(e){ st.textContent="Select the text and copy it manually."; } };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(()=>st.textContent=okMsg, fallback);
+  else fallback();
+}
+
+open("home");
+</script>
+</body>
+</html>
