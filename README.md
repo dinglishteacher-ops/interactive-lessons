@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| So much to do · dinglish | [So much to do, so little time · dinglish.html](So%20much%20to%20do%2C%20so%20little%20time%20%C2%B7%20dinglish.html) |
 | Crime & investigation · dinglish | [Crime & investigation · dinglish.html](Crime%20%26%20investigation%20%C2%B7%20dinglish.html) |
 | Life is busy — Intermediate Plus 1.2 | [Life is busy — Intermediate Plus 1.2.html](Life%20is%20busy%20%E2%80%94%20Intermediate%20Plus%201.2.html) |
 | To be: am, is, are — dinglish | [to-be-elementary.html](to-be-elementary.html) |
