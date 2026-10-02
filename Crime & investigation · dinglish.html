@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Crime & investigation · dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF0F5; --paper:#FFFFFF; --ink:#15233C; --muted:#56627A; --line:#D2D8E3;
+  --tape:#FFCB2E; --tape-ink:#15233C; --stamp:#C42B2B; --ok:#1C7650; --okbg:#E2F2E9; --badbg:#FBE6E6;
+  --focus:#2F6FEB; --sel:#DBE5FA;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1522; --paper:#182031; --ink:#E7ECF4; --muted:#9BA7BD; --line:#2D374B;
+    --stamp:#F0625F; --ok:#4FC48C; --okbg:#16301F; --badbg:#3A1C1F; --focus:#86A9FF; --sel:#26334D;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1522; --paper:#182031; --ink:#E7ECF4; --muted:#9BA7BD; --line:#2D374B;
+  --stamp:#F0625F; --ok:#4FC48C; --okbg:#16301F; --badbg:#3A1C1F; --focus:#86A9FF; --sel:#26334D;
+  color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5;overflow-x:hidden}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 56px}
+.typed{font-family:"Special Elite","Courier New",Courier,monospace;font-weight:400}
+
+/* police tape */
+.tape-wrap{overflow:hidden;padding:18px 0 10px}
+.tape{background:var(--tape);color:var(--tape-ink);transform:rotate(-1.6deg);margin:0 -30px;
+  white-space:nowrap;border-block:3px solid var(--tape-ink);font-weight:700;letter-spacing:.16em;font-size:13px;padding:6px 0;overflow:hidden}
+.tape span{display:inline-block;padding-right:2.4em}
+
+/* hero */
+.hero{padding:22px 0 8px}
+.brand{margin:0 0 6px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+h1{font-family:"Special Elite","Courier New",monospace;font-weight:400;font-size:clamp(34px,7vw,52px);line-height:1.05;margin:0 0 12px;letter-spacing:-.01em}
+.lede{margin:0;max-width:56ch;color:var(--muted)}
+
+/* case list */
+.cases-head{display:flex;justify-content:space-between;align-items:baseline;margin:28px 0 6px;gap:12px}
+.cases-head h2{margin:0;font-size:20px}
+.muted{color:var(--muted)}
+.case-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.case{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:14px;width:100%;
+  background:none;border:0;border-bottom:1px solid var(--line);padding:14px 4px;text-align:left;cursor:pointer}
+.case:hover .case-title{text-decoration:underline;text-underline-offset:3px}
+.marker{width:38px;height:32px;background:var(--tape);color:var(--tape-ink);display:grid;place-items:end center;padding-bottom:3px;
+  clip-path:polygon(22% 0,78% 0,100% 100%,0 100%);font-family:"Special Elite",monospace;font-size:18px}
+.case-text{display:flex;flex-direction:column;min-width:0}
+.case-title{font-weight:600}
+.case-ua{color:var(--muted);font-size:15px}
+.status{font-size:14px;color:var(--muted);white-space:nowrap}
+.status.closed{color:var(--stamp);font-family:"Special Elite",monospace;font-size:15px;border:2px solid currentColor;padding:1px 8px;border-radius:4px;transform:rotate(-4deg)}
+.home-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+
+/* buttons */
+.btn{border:2px solid var(--ink);background:var(--paper);border-radius:10px;padding:11px 18px;cursor:pointer;font-weight:600;min-height:46px}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.bad{border-color:var(--stamp);color:var(--stamp)}
+.btn.quiet{border-color:var(--line);font-weight:500}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.row.center{justify-content:center}
+
+/* mode chrome */
+.mode-top{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px;gap:10px}
+.back{background:none;border:0;padding:8px 0;cursor:pointer;font-weight:600;color:var(--muted)}
+.back:hover{color:var(--ink)}
+.mode-title{font-family:"Special Elite","Courier New",monospace;font-weight:400;font-size:clamp(28px,5.5vw,38px);line-height:1.1;margin:4px 0 6px}
+.instr{margin:0 0 16px;color:var(--muted);max-width:60ch}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:22px}
+.bar span{display:block;height:100%;background:var(--ink);transition:width .3s}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px}
+
+/* segmented toggles */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-bottom:16px}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:10px;overflow:hidden}
+.seg button{background:var(--paper);border:0;padding:7px 12px;cursor:pointer;font-size:15px;font-weight:500}
+.seg button+button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+/* flashcard */
+.flash{perspective:1200px;cursor:pointer;border-radius:16px}
+.flash-inner{display:grid;transition:transform .45s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.flash.is-flipped .flash-inner{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;min-height:270px;background:var(--paper);
+  border:1px solid var(--line);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
+.face.back{transform:rotateY(180deg);border-color:var(--ink)}
+.emo{font-size:40px;line-height:1}
+.term{font-size:clamp(24px,5vw,32px);font-weight:700;line-height:1.2}
+.term.ua{font-size:clamp(21px,4.4vw,27px);font-weight:600}
+.forms{display:grid;gap:6px;width:100%;max-width:420px}
+.forms div{display:grid;grid-template-columns:76px 1fr;align-items:baseline;gap:10px;text-align:left}
+.forms small{color:var(--muted);font-size:13px;text-align:right}
+.forms b{font-size:clamp(19px,4vw,24px);font-weight:700}
+.forms.ua b{font-weight:600;font-size:clamp(17px,3.6vw,21px)}
+.ex{margin:6px 0 0;font-style:italic;max-width:46ch}
+.note{margin:0;font-size:15px;color:var(--muted)}
+.tap{font-size:14px;color:var(--muted);margin-top:auto}
+
+/* options */
+.prompt{font-size:clamp(20px,4.2vw,25px);font-weight:600;line-height:1.35;margin:0 0 18px}
+.scene{font-size:19px;line-height:1.55;margin:0 0 18px}
+.opts{display:grid;gap:10px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{text-align:left;background:var(--paper);border:2px solid var(--line);border-radius:10px;padding:12px 16px;cursor:pointer;font-weight:500;min-height:50px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--stamp);background:var(--badbg)}
+.opt:disabled{cursor:default}
+.fb{margin-top:16px;padding:14px 16px;border-radius:10px;border-left:5px solid var(--ok);background:var(--okbg)}
+.fb.no{border-left-color:var(--stamp);background:var(--badbg)}
+.fb p{margin:4px 0}
+
+/* word families */
+.fam{display:grid;gap:12px}
+.fam-row{display:grid;grid-template-columns:40px repeat(3,1fr);gap:10px;align-items:end;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px}
+.fam-row .emo{font-size:26px;align-self:center}
+.cell label,.cell .lbl{display:block;font-size:13px;color:var(--muted);margin-bottom:3px}
+.cell .given{display:block;font-weight:700;padding:9px 0;font-size:18px}
+.cell .fix{display:block;font-size:14px;color:var(--ok);margin-top:3px;font-weight:600}
+input.ans,textarea.ans{width:100%;border:2px solid var(--line);border-radius:8px;padding:9px 11px;background:var(--bg);font-size:17px}
+input.ans:focus,textarea.ans:focus{border-color:var(--ink);outline:none}
+input.ans.good{border-color:var(--ok);background:var(--okbg)}
+input.ans.nope{border-color:var(--stamp);background:var(--badbg)}
+@media (max-width:600px){
+  .fam-row{grid-template-columns:1fr 1fr}
+  .fam-row .emo{grid-column:1/-1}
+  .opts.two{grid-template-columns:1fr}
+}
+
+/* matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col{display:grid;gap:8px;align-content:start}
+.tile{background:var(--paper);border:2px solid var(--line);border-radius:10px;padding:11px 12px;cursor:pointer;text-align:left;font-weight:600;min-height:48px}
+.tile:hover:not(:disabled){border-color:var(--ink)}
+.tile.sel{border-color:var(--ink);background:var(--sel)}
+.tile.done{border-style:dashed;opacity:.35;cursor:default}
+.tile.shake{animation:shake .35s;border-color:var(--stamp)}
+@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.matched{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:6px}
+.matched li{padding:8px 12px;background:var(--okbg);border-radius:8px;font-size:15px}
+.matched b{font-weight:700}
+
+/* gap sentence */
+.gap-line{font-size:clamp(19px,4vw,23px);line-height:1.6;margin:0 0 16px}
+.blank{display:inline-block;min-width:4.5em;border-bottom:3px solid var(--ink);text-align:center;font-weight:700}
+.hint{font-family:"Special Elite",monospace;letter-spacing:.2em;color:var(--muted);margin:8px 0 0}
+.model{font-weight:600}
+
+/* finish */
+.finish{text-align:center;padding-top:30px;position:relative}
+.stamp{display:inline-block;font-family:"Special Elite",monospace;font-size:clamp(34px,8vw,54px);color:var(--stamp);border:5px double var(--stamp);
+  border-radius:8px;padding:6px 22px;transform:rotate(-8deg);margin:26px 0 18px;animation:stampin .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes stampin{from{transform:rotate(-8deg) scale(2.2);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
+.score{font-size:22px;margin:4px 0}
+.score b{font-size:44px}
+
+/* dialog */
+dialog{border:2px solid var(--ink);border-radius:14px;background:var(--paper);color:var(--ink);padding:22px;width:min(560px,calc(100% - 32px))}
+dialog::backdrop{background:rgba(10,16,28,.55)}
+dialog h2{margin:0 0 6px;font-family:"Special Elite",monospace;font-weight:400;font-size:28px}
+dialog textarea{min-height:220px;font-size:14px;line-height:1.45;resize:vertical}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="tape-wrap" aria-hidden="true">
+  <div class="tape" id="tape"></div>
+</div>
+<main class="wrap" id="app"></main>
+
+<dialog id="report" aria-labelledby="rep-h">
+  <h2 id="rep-h">Results for your teacher</h2>
+  <p class="muted" style="margin:0 0 14px">Впиши ім'я, скопіюй звіт і надішли вчителю в месенджер.</p>
+  <div class="cell" style="margin-bottom:12px">
+    <label for="rep-name">Your name</label>
+    <input class="ans" id="rep-name" autocomplete="off">
+  </div>
+  <textarea class="ans" id="rep-text" readonly aria-label="Report text"></textarea>
+  <p class="muted" id="rep-status" style="margin:8px 0 0;min-height:1.5em" aria-live="polite"></p>
+  <div class="row">
+    <button class="btn primary" data-act="copy">Copy report</button>
+    <button class="btn quiet" data-act="closeReport">Close</button>
+  </div>
+</dialog>
+
+<script>
+/* ---------- content ---------- */
+const FAM = [
+  {id:"arson", e:"🔥", crime:"arson", person:"arsonist", verb:"set fire to",
+   ua:["підпал","підпалювач","підпалювати"], ex:"Someone set fire to the old barn. The police think it was arson."},
+  {id:"burglary", e:"🏠", crime:"burglary", person:"burglar", verb:"burgle",
+   ua:["крадіжка зі зломом (з проникненням у будинок)","грабіжник, що проникає в будинок","обкрасти будинок (проникнувши всередину)"],
+   ex:"Our flat was burgled while we were on holiday.", note:"Проникнення в будинок чи приміщення + крадіжка."},
+  {id:"drugs", e:"💊", crime:"drug dealing", person:"drug dealer", verb:"deal drugs", verbShow:"deal drugs / sell drugs", verbAlt:["deal drugs","sell drugs"],
+   ua:["торгівля наркотиками","наркоторговець","торгувати наркотиками"], ex:"He had dealt drugs for years before the police caught him.", note:"deal – dealt – dealt"},
+  {id:"looting", e:"🛒", crime:"looting", person:"looter", verb:"loot",
+   ua:["мародерство","мародер","мародерити"], ex:"After the earthquake, looters broke into empty shops."},
+  {id:"mugging", e:"👜", crime:"mugging", person:"mugger", verb:"mug",
+   ua:["вуличне пограбування","вуличний грабіжник","пограбувати людину на вулиці"], ex:"She was mugged on her way home from work.", note:"Напад на людину на вулиці, щоб забрати речі."},
+  {id:"murder", e:"☠️", crime:"murder", person:"murderer", verb:"murder",
+   ua:["вбивство","вбивця","вбивати"], ex:"The murderer was sent to prison for life."},
+  {id:"robbery", e:"🏦", crime:"robbery", person:"robber", verb:"rob", verbShow:"rob (a person or place)",
+   ua:["пограбування (силою або погрозами)","грабіжник (банку, людини)","грабувати (силою або погрозами)"],
+   ex:"Two men robbed a bank in the city centre.", note:"Забрати щось у людини чи з місця силою або погрозами."},
+  {id:"shoplifting", e:"🍫", crime:"shoplifting", person:"shoplifter", verb:"shoplift",
+   ua:["крадіжка в магазині","магазинний злодій","красти в магазині"], ex:"The shoplifter hid two chocolate bars in his pocket."},
+  {id:"smuggling", e:"🧳", crime:"smuggling", person:"smuggler", verb:"smuggle",
+   ua:["контрабанда","контрабандист","займатися контрабандою"], ex:"They tried to smuggle cigarettes across the border."},
+  {id:"theft", e:"🚲", crime:"theft", person:"thief", personShow:"thief (pl. thieves)", personAlt:["thief","thieves"], verb:"steal",
+   ua:["крадіжка (загалом)","злодій","красти"], ex:"A thief stole my bike from outside the library.", note:"thief → thieves; steal – stole – stolen"},
+  {id:"vandalism", e:"🎨", crime:"vandalism", person:"vandal", verb:"vandalize", verbAlt:["vandalize","vandalise"],
+   ua:["вандалізм","вандал","нищити чуже майно"], ex:"Vandals vandalized the bus stop again."}
+];
+const FAMI = Object.fromEntries(FAM.map(f=>[f.id,f]));
+
+const POLICE = [
+  {en:"launch an investigation", v:"launch", n:"an investigation", ua:"розпочати розслідування", e:"📂", ex:"The police have launched an investigation into the fire."},
+  {en:"appeal for witnesses", v:"appeal for", n:"witnesses", ua:"звернутися до свідків", e:"📢", ex:"Police are appealing for witnesses to the robbery."},
+  {en:"search a house", v:"search", n:"a house", ua:"обшукати будинок", e:"🔦", ex:"Officers searched the house and found the stolen jewellery."},
+  {en:"study CCTV footage", v:"study", n:"CCTV footage", ua:"переглянути записи камер відеоспостереження", e:"📹", ex:"Detectives studied CCTV footage from the station."},
+  {en:"interview a suspect", v:"interview", n:"a suspect", ua:"допитати підозрюваного", e:"🗣️", ex:"They interviewed the suspect for six hours."},
+  {en:"identify a culprit", v:"identify", n:"a culprit", ua:"встановити винуватця", e:"👤", ex:"It took a month to identify the culprit."},
+  {en:"make an arrest", v:"make", n:"an arrest", ua:"здійснити арешт, заарештувати", e:"🚔", ex:"The police made an arrest late last night."},
+  {en:"patrol an area", v:"patrol", n:"an area", ua:"патрулювати територію", e:"👮", ex:"More officers will patrol the area at night."},
+  {en:"commit a crime", v:"commit", n:"a crime", ua:"вчинити злочин", e:"⚠️", ex:"He says he didn't commit the crime."},
+  {en:"solve a crime", v:"solve", n:"a crime", ua:"розкрити злочин", e:"🧩", ex:"Sherlock Holmes could solve any crime."}
+];
+
+const OTHER = [
+  {en:"victim", ua:"жертва, потерпілий", e:"🩹", ex:"The victim didn't see the robber's face."},
+  {en:"break into a house", ua:"проникнути в будинок (зі зломом)", e:"🚪", ex:"Someone broke into our neighbour's house last night.", note:"break – broke – broken"},
+  {en:"be fined for speeding", ua:"отримати штраф за перевищення швидкості", e:"🚗", ex:"My dad was fined for speeding on the motorway."},
+  {en:"be banned", ua:"отримати заборону, бути забороненим", e:"🚫", ex:"He was banned from driving for a year."},
+  {en:"motorway / highway", ua:"автомагістраль (BrE / AmE)", e:"🛣️", ex:"The motorway was closed after the accident.", alt:["motorway","highway","motorway/highway","motorway / highway"]},
+  {en:"run out of fuel", ua:"залишитися без пального", e:"⛽", ex:"We ran out of fuel in the middle of nowhere.", note:"run – ran – run"},
+  {en:"invent", ua:"винаходити; вигадувати", e:"💡", ex:"He invented a story about losing his passport."},
+  {en:"ridiculous", ua:"безглуздий, смішний", e:"🙄", ex:"That's a ridiculous excuse!"}
+];
+
+const SCEN = [
+  {a:"burglary", s:"At 3 a.m. someone broke a window, got into the Kovalenkos' flat and took their laptop. Nobody was at home.", w:"Проникли в будинок і вкрали, людей поруч не було."},
+  {a:"robbery", s:"Two men in masks walked into a bank, threatened the staff and left with a bag of money.", w:"Забрали гроші силою та погрозами."},
+  {a:"mugging", s:"Anna was walking home through a dark park when a man pushed her and grabbed her bag.", w:"Напали на людину на вулиці й забрали речі."},
+  {a:"shoplifting", s:"A teenager put two chocolate bars in his pocket and walked out of the supermarket without paying.", w:"Вкрав товар із магазину."},
+  {a:"looting", s:"After the flood, people broke into empty shops and took TVs while the police were busy rescuing people.", w:"Крадуть під час катастрофи чи хаосу."},
+  {a:"vandalism", s:"Someone sprayed paint all over the school walls and broke every bench in the park. Nothing was stolen.", w:"Нищать чуже майно, нічого не крадуть."},
+  {a:"smuggling", s:"At the airport, officers found 3 kg of gold hidden in a woman's suitcase. She wanted to take it across the border secretly.", w:"Таємно перевозять щось через кордон."},
+  {a:"arson", s:"The fire in the old warehouse wasn't an accident. Firefighters found a can of petrol near the door.", w:"Навмисний підпал."},
+  {a:"drugs", s:"Every weekend, a man was selling illegal pills to students outside a nightclub.", w:"Продаж наркотиків."},
+  {a:"theft", s:"Max left his bike outside the library for ten minutes. When he came back, it wasn't there.", w:"Просто крадіжка: без сили, без проникнення в будинок."},
+  {a:"murder", s:"Detectives found a man dead in his flat. Someone had poisoned his coffee.", w:"Навмисне вбивство людини."}
+];
+
+const GAPS = [
+  {s:"The police have ___ an investigation into the fire.", a:["launched"], ua:"Поліція розпочала розслідування пожежі."},
+  {s:"Detectives are ___ for witnesses who saw the accident.", a:["appealing"], ua:"Детективи звертаються до свідків, які бачили аварію."},
+  {s:"Officers ___ the house and found the stolen jewellery.", a:["searched"], ua:"Поліцейські обшукали будинок і знайшли вкрадені прикраси."},
+  {s:"They spent hours studying CCTV ___ from the station.", a:["footage"], ua:"Вони годинами переглядали записи камер з вокзалу."},
+  {s:"The police ___ the suspect for six hours yesterday.", a:["interviewed"], ua:"Учора поліція допитувала підозрюваного шість годин."},
+  {s:"It took them a month to identify the ___.", a:["culprit"], ua:"Їм знадобився місяць, щоб встановити винуватця."},
+  {s:"The police ___ an arrest late last night.", a:["made"], ua:"Пізно ввечері поліція здійснила арешт."},
+  {s:"More officers will ___ the area at night.", a:["patrol"], ua:"Уночі територію патрулюватиме більше поліцейських."},
+  {s:"He says he didn't ___ the crime.", a:["commit"], ua:"Він каже, що не вчиняв цього злочину."},
+  {s:"Sherlock Holmes could ___ any crime.", a:["solve"], ua:"Шерлок Голмс міг розкрити будь-який злочин."},
+  {s:"My dad was ___ for speeding on the motorway.", a:["fined"], ua:"Тата оштрафували за перевищення швидкості на автомагістралі."},
+  {s:"After the accident, he was ___ from driving for a year.", a:["banned"], ua:"Після аварії йому на рік заборонили керувати авто."},
+  {s:"We ran out of ___ in the middle of nowhere.", a:["fuel","petrol"], ua:"У нас закінчилося пальне посеред нізвідки."},
+  {s:"That's a ___ excuse! Nobody will believe it.", a:["ridiculous"], ua:"Це безглузде виправдання! Ніхто не повірить."},
+  {s:"The ___ of the attack is now in hospital.", a:["victim"], ua:"Потерпілий від нападу зараз у лікарні."},
+  {s:"Someone broke ___ our neighbour's house last night.", a:["into"], ua:"Минулої ночі хтось проник у будинок нашого сусіда."},
+  {s:"He ___ a story about losing his passport, but it wasn't true.", a:["invented"], ua:"Він вигадав історію про загублений паспорт, але це була неправда."},
+  {s:"The police caught the gang. They had ___ drugs for years.", a:["dealt","sold"], ua:"Поліція спіймала банду. Вони роками торгували наркотиками."},
+  {s:"Our house was ___ while we were on holiday.", a:["burgled"], ua:"Наш будинок обікрали, поки ми були у відпустці."},
+  {s:"The ___ hid two bottles of perfume under her coat.", a:["shoplifter"], ua:"Крадійка сховала два флакони парфумів під пальто."},
+  {s:"A ___ stole my wallet on the bus.", a:["thief","pickpocket"], ua:"Злодій украв мій гаманець в автобусі."},
+  {s:"Someone ___ fire to the car at night.", a:["set"], ua:"Уночі хтось підпалив машину."}
+];
+
+const TR = [
+  {ua:"Поліція розпочала розслідування підпалу.", a:["The police have launched an investigation into the arson."]},
+  {ua:"Минулого тижня хтось проник у наш будинок.", a:["Someone broke into our house last week.","Our house was burgled last week."]},
+  {ua:"Підпалювач підпалив старий склад.", a:["The arsonist set fire to the old warehouse."]},
+  {ua:"Детективи переглянули записи камер відеоспостереження і встановили винуватця.", a:["The detectives studied the CCTV footage and identified the culprit."]},
+  {ua:"Його оштрафували за перевищення швидкості на автомагістралі.", a:["He was fined for speeding on the motorway."]},
+  {ua:"Посеред дороги в нас закінчилося пальне.", a:["We ran out of fuel in the middle of the road."]},
+  {ua:"Туриста пограбували на вулиці біля вокзалу.", a:["A tourist was mugged near the station."]},
+  {ua:"Поліція звертається до свідків пограбування банку.", a:["The police are appealing for witnesses to the bank robbery."]},
+  {ua:"Контрабандиста заарештували в аеропорту.", a:["The smuggler was arrested at the airport.","The police made an arrest at the airport."]},
+  {ua:"Це безглузда історія! Ти її вигадав.", a:["That's a ridiculous story! You invented it."]},
+  {ua:"Потерпілий не бачив обличчя грабіжника.", a:["The victim didn't see the robber's face."]},
+  {ua:"Після повені мародери грабували порожні магазини.", a:["After the flood, looters broke into empty shops.","After the flood, looters were looting empty shops."]}
+];
+
+/* flashcard entries */
+const ENTRIES = [
+  ...FAM.map(f=>({grp:"crime", e:f.e, key:f.crime, ex:f.ex, note:f.note,
+    say:`${f.crime}. ${f.person}. ${f.verb}.`,
+    en:`<div class="forms"><div><small>crime</small><b>${f.crime}</b></div><div><small>person</small><b>${f.personShow||f.person}</b></div><div><small>verb</small><b>${f.verbShow||f.verb}</b></div></div>`,
+    uaH:`<div class="forms ua"><div><small>злочин</small><b>${f.ua[0]}</b></div><div><small>людина</small><b>${f.ua[1]}</b></div><div><small>дія</small><b>${f.ua[2]}</b></div></div>`})),
+  ...POLICE.map(p=>({grp:"police", e:p.e, key:p.en, ex:p.ex, say:p.en, en:`<span class="term">${p.en}</span>`, uaH:`<span class="term ua">${p.ua}</span>`})),
+  ...OTHER.map(o=>({grp:"other", e:o.e, key:o.en, ex:o.ex, note:o.note, say:o.en, en:`<span class="term">${o.en}</span>`, uaH:`<span class="term ua">${o.ua}</span>`}))
+];
+
+/* single items for quiz & spelling */
+const FLAT = [];
+FAM.forEach(f=>{
+  const same = f.verb===f.crime;
+  FLAT.push({en:f.crime, ua: same ? `${f.ua[0]}; ${f.ua[2]}` : f.ua[0], grp:"crime"});
+  FLAT.push({en:f.person, ua:f.ua[1], grp:"person", alt:f.personAlt});
+  if(!same) FLAT.push({en:f.verb, ua:f.ua[2], grp:"verb", alt:f.verbAlt});
+});
+POLICE.forEach(p=>FLAT.push({en:p.en, ua:p.ua, grp:"police"}));
+OTHER.forEach(o=>FLAT.push({en:o.en, ua:o.ua, grp:"other", alt:o.alt}));
+
+const CASES = [
+  {id:"cards", en:"Study the evidence", ua:"Картки: вивчи слова", instr:"Tap the card to turn it over. Press “Got it” if you knew the word, “Again” if you didn't. The card comes back until you know it."},
+  {id:"who", en:"Who did it?", ua:"Який це злочин?", instr:"Read the case and choose the crime."},
+  {id:"family", en:"Crime, criminal, verb", ua:"Сімейки слів", instr:"Complete each row: the crime, the person who does it and the verb. Then check your answers."},
+  {id:"match", en:"Police work", ua:"Колокації: що робить поліція", instr:"Match the verb on the left with the words on the right."},
+  {id:"quiz", en:"Quick quiz", ua:"Швидкий тест EN ↔ UA", instr:"Choose the correct translation."},
+  {id:"gaps", en:"Fill the gaps", ua:"Слова в реченнях", instr:"Type the missing word in the correct form. Need help? Use the hint."},
+  {id:"spell", en:"Spell it", ua:"Напиши англійською", instr:"Read the Ukrainian, listen if you want, and type the English word or phrase. Mistakes come back at the end."},
+  {id:"translate", en:"Translate", ua:"Переклад UA → EN", instr:"Translate the sentence into English, say it aloud, then compare with the answer."}
+];
+const CASE = Object.fromEntries(CASES.map(c=>[c.id,c]));
+
+/* ---------- helpers ---------- */
+const $app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const norm = s => String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,;:]/g,"").replace(/\s+/g," ").trim().replace(/^to /,"");
+const accepts = (input, answers) => { const n=norm(input); if(!n) return false;
+  return answers.some(a=>{ const m=norm(a); return n===m || n.replace(/^be /,"")===m.replace(/^be /,""); }); };
+
+document.getElementById("tape").innerHTML = Array(14).fill("<span>POLICE LINE&nbsp;&nbsp;DO NOT CROSS</span>").join("");
+
+/* storage (per device) */
+const KEY = "dinglish-crime-vocab-v1";
+let store = {best:{}, miss:{}, tr:[], name:""};
+try{ const raw = localStorage.getItem(KEY); if(raw) store = Object.assign(store, JSON.parse(raw)); }catch(e){}
+const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){} };
+const miss = w => { store.miss[w] = (store.miss[w]||0)+1; save(); };
+const setBest = (id, score, total) => { const b=store.best[id]; if(!b || score/total >= b.score/b.total) store.best[id]={score,total}; save(); };
+
+/* speech */
+const TTS = ("speechSynthesis" in window) && typeof SpeechSynthesisUtterance !== "undefined";
+let voice = null;
+function pickVoice(){ try{ const vs=speechSynthesis.getVoices(); voice = vs.find(v=>/en[-_]GB/i.test(v.lang)) || vs.find(v=>/^en/i.test(v.lang)) || null; }catch(e){} }
+if(TTS){ pickVoice(); try{ speechSynthesis.onvoiceschanged = pickVoice; }catch(e){} }
+function say(t){ if(!TTS) return; try{ speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(String(t).replace(/\(.*?\)/g,"").replace(/\s*\/\s*/g,", "));
+  u.lang="en-GB"; if(voice) u.voice=voice; u.rate=.9; speechSynthesis.speak(u); }catch(e){} }
+const listenBtn = text => TTS ? `<button class="btn quiet" data-act="say" data-say="${esc(text)}">🔊 Listen</button>` : "";
+
+/* ---------- view plumbing ---------- */
+let V = null;
+const GLOBAL = {
+  home: () => open("home"),
+  say: el => say(el.dataset.say),
+  report: openReport,
+  copy: copyReport,
+  closeReport: () => document.getElementById("report").close()
+};
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-act]"); if(!el) return;
+  const name = el.dataset.act;
+  const fn = (V && V.act && V.act[name]) || GLOBAL[name];
+  if(fn){ e.preventDefault(); fn(el, e); }
+});
+document.addEventListener("keydown", e => { if(V && V.key) V.key(e); });
+
+function open(id){
+  if(TTS) try{ speechSynthesis.cancel(); }catch(e){}
+  window.scrollTo(0,0);
+  V = (MODES[id] || home)();
+}
+function shell(c, progress, label, inner){
+  return `<div class="mode">
+    <div class="mode-top"><button class="back" data-act="home">‹ All cases</button><span class="muted">${label||""}</span></div>
+    <h2 class="mode-title">${esc(c.en)}</h2>
+    <p class="instr">${esc(c.instr)}</p>
+    <div class="bar" aria-hidden="true"><span style="width:${Math.round(progress*100)}%"></span></div>
+    ${inner}
+  </div>`;
+}
+function focusSel(sel){ const el=$app.querySelector(sel); if(el) el.focus({preventScroll:true}); }
+
+/* ---------- home ---------- */
+function home(){
+  let armed = false;
+  function render(){
+    const closed = CASES.filter(c=>store.best[c.id]).length;
+    $app.innerHTML = `
+      <section class="hero">
+        <p class="brand">dinglish</p>
+        <h1>Crime &amp; investigation</h1>
+        <p class="lede">Злочини, злочинці та робота поліції: 29 слів і фраз. Проходь справи по черзі, від карток до перекладу, і закрий кожну.</p>
+      </section>
+      <div class="cases-head"><h2>Case files</h2><span class="muted">${closed} of ${CASES.length} closed</span></div>
+      <ol class="case-list">
+        ${CASES.map((c,i)=>{ const b=store.best[c.id];
+          const st = b ? (c.id==="cards" ? "closed" : `${b.score}/${b.total}`) : "open";
+          return `<li><button class="case" data-act="go" data-id="${c.id}">
+            <span class="marker" aria-hidden="true">${i+1}</span>
+            <span class="case-text"><span class="case-title">${esc(c.en)}</span><span class="case-ua">${esc(c.ua)}</span></span>
+            <span class="status ${b?"closed":""}">${st}</span>
+          </button></li>`; }).join("")}
+      </ol>
+      <div class="home-actions">
+        <button class="btn primary" data-act="report">Send results to teacher</button>
+        <button class="btn quiet" data-act="reset">${armed ? "Tap again to erase progress" : "Start over"}</button>
+      </div>`;
+  }
+  render();
+  return {act:{
+    go: el => open(el.dataset.id),
+    reset: () => { if(!armed){ armed=true; render(); return; }
+      store = {best:{}, miss:{}, tr:[], name:store.name}; save(); armed=false; render(); }
+  }};
+}
+
+/* ---------- finish ---------- */
+function finish(id, score, total){
+  setBest(id, score, total);
+  const c = CASE[id], idx = CASES.findIndex(x=>x.id===id), next = CASES[idx+1];
+  const p = score/total;
+  const msg = id==="cards" ? "Усі картки вивчено. Тепер перевір себе в наступній справі."
+    : p===1 ? "Бездоганно! Жодної помилки." : p>=.8 ? "Дуже добре! Ще трохи, і буде ідеально."
+    : p>=.5 ? "Непогано. Пройди ще раз, щоб закріпити." : "Повтори картки й спробуй ще раз.";
+  $app.innerHTML = `<div class="mode finish">
+    <div class="mode-top"><button class="back" data-act="home">‹ All cases</button><span></span></div>
+    <div class="stamp" aria-hidden="true">Case closed</div>
+    <h2 class="mode-title">${esc(c.en)}</h2>
+    ${id==="cards" ? "" : `<p class="score"><b>${score}</b> / ${total}</p>`}
+    <p class="muted">${msg}</p>
+    <div class="row center">
+      <button class="btn quiet" data-act="retry">Try again</button>
+      ${next ? `<button class="btn primary" data-act="next">Next case: ${esc(next.en)}</button>` : `<button class="btn primary" data-act="report">Send results to teacher</button>`}
+    </div></div>`;
+  V = {act:{ retry:()=>open(id), next:()=>open(next ? next.id : "home") }};
+  focusSel('[data-act="next"],[data-act="report"]');
+}
+
+/* ---------- 1. flashcards ---------- */
+function modeCards(){
+  const c = CASE.cards;
+  let dir="en", deck="all", queue, total, known, flipped;
+  function build(){ const src = ENTRIES.filter(e=>deck==="all"||e.grp===deck); queue=shuffle(src); total=src.length; known=0; flipped=false; }
+  build();
+  function render(){
+    if(!queue.length) return finish("cards", total, total);
+    const e = queue[0];
+    const decks = [["all","All"],["crime","Crimes"],["police","Police"],["other","Other"]];
+    $app.innerHTML = shell(c, known/total, `${known} / ${total} learned`, `
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Deck">${decks.map(([k,l])=>`<button data-act="deck" data-v="${k}" aria-pressed="${deck===k}">${l}</button>`).join("")}</div>
+        <div class="seg" role="group" aria-label="Direction">
+          <button data-act="dir" data-v="en" aria-pressed="${dir==="en"}">EN → UA</button><button data-act="dir" data-v="ua" aria-pressed="${dir==="ua"}">UA → EN</button>
+        </div>
+      </div>
+      <div class="flash ${flipped?"is-flipped":""}" data-act="flip" tabindex="0" role="button" aria-label="Turn the card over">
+        <div class="flash-inner">
+          <div class="face front"><span class="emo" aria-hidden="true">${e.e}</span>${dir==="en"?e.en:e.uaH}<span class="tap">tap to turn over</span></div>
+          <div class="face back">${dir==="en"?e.uaH:e.en}<p class="ex">${esc(e.ex)}</p>${e.note?`<p class="note">${esc(e.note)}</p>`:""}</div>
+        </div>
+      </div>
+      <div class="row center">
+        ${listenBtn(e.say)}
+        <button class="btn bad" data-act="again">Again</button>
+        <button class="btn primary" data-act="know">Got it</button>
+      </div>`);
+  }
+  render();
+  const act = {
+    flip: () => { flipped=!flipped; const f=$app.querySelector(".flash"); if(f) f.classList.toggle("is-flipped", flipped);
+      if(flipped && dir==="ua") say(queue[0].say); },
+    again: () => { const e=queue.shift(); miss(e.key); queue.push(e); flipped=false; render(); },
+    know: () => { queue.shift(); known++; flipped=false; render(); },
+    deck: el => { deck=el.dataset.v; build(); render(); },
+    dir: el => { dir=el.dataset.v; flipped=false; render(); }
+  };
+  return {act, key: e => {
+    if(e.target.matches("input,textarea")) return;
+    if(e.key===" " || (e.key==="Enter" && e.target.classList.contains("flash"))){ e.preventDefault(); act.flip(); }
+    else if(e.key==="ArrowRight") act.know();
+    else if(e.key==="ArrowLeft") act.again();
+  }};
+}
+
+/* ---------- 2. who did it ---------- */
+function modeWho(){
+  const c = CASE.who, qs = shuffle(SCEN);
+  let i=0, score=0, picked=null, opts=[];
+  const mk = () => { const q=qs[i]; opts = shuffle([q.a, ...shuffle(FAM.map(f=>f.id).filter(x=>x!==q.a)).slice(0,3)]); };
+  mk();
+  function render(){
+    const q=qs[i], f=FAMI[q.a], done=picked!==null;
+    $app.innerHTML = shell(c, (i+(done?1:0))/qs.length, `Case ${i+1} of ${qs.length}`, `
+      <div class="panel">
+        <p class="scene">${esc(q.s)}</p>
+        <div class="opts two">${opts.map(o=>{
+          const cls = !done ? "" : o===q.a ? "right" : o===picked ? "wrong" : "";
+          return `<button class="opt ${cls}" data-act="pick" data-v="${o}" ${done?"disabled":""}>${FAMI[o].crime}</button>`; }).join("")}</div>
+        ${done ? `<div class="fb ${picked===q.a?"":"no"}">
+            <p><b>${picked===q.a?"Correct!":"Not quite."}</b> It's <b>${f.crime}</b>. ${esc(q.w)}</p>
+            <p>${f.crime} · ${f.personShow||f.person} · ${f.verbShow||f.verb}</p>
+          </div>
+          <div class="row">${listenBtn(`${f.crime}. ${f.person}. ${f.verb}.`)}<button class="btn primary" data-act="next">${i+1<qs.length?"Next case":"See results"}</button></div>` : ""}
+      </div>`);
+    if(done) focusSel('[data-act="next"]');
+  }
+  render();
+  return {act:{
+    pick: el => { if(picked!==null) return; picked=el.dataset.v; const q=qs[i];
+      if(picked===q.a) score++; else { miss(FAMI[q.a].crime); miss(FAMI[picked].crime); } render(); },
+    next: () => { i++; picked=null; if(i>=qs.length) return finish("who", score, qs.length); mk(); render(); }
+  }};
+}
+
+/* ---------- 3. word families ---------- */
+function modeFamily(){
+  const c = CASE.family;
+  const cols = [["crime","Crime"],["person","Criminal"],["verb","Verb"]];
+  const rows = shuffle(FAM).map(f=>({f, given: cols[Math.floor(Math.random()*3)][0]}));
+  let checked=false, score=0, vals={};
+  const answers = (f,k) => k==="crime" ? [f.crime] : k==="person" ? (f.personAlt||[f.person]) : (f.verbAlt||[f.verb]);
+  const show = (f,k) => k==="crime" ? f.crime : k==="person" ? (f.personShow||f.person) : (f.verbShow||f.verb);
+  function render(){
+    const total = rows.length*2;
+    $app.innerHTML = shell(c, checked?1:0, checked?`${score} / ${total} correct`:`${rows.length} rows`, `
+      <div class="fam">${rows.map((r,ri)=>`
+        <div class="fam-row">
+          <span class="emo" aria-hidden="true">${r.f.e}</span>
+          ${cols.map(([k,l])=>{
+            if(k===r.given) return `<div class="cell"><span class="lbl">${l}</span><span class="given">${esc(show(r.f,k))}</span></div>`;
+            const id=`f-${ri}-${k}`, v=vals[id]||"", ok=checked && accepts(v, answers(r.f,k));
+            return `<div class="cell"><label for="${id}">${l}</label>
+              <input class="ans ${checked?(ok?"good":"nope"):""}" id="${id}" value="${esc(v)}" autocomplete="off" autocapitalize="off" spellcheck="false" ${checked?"readonly":""}>
+              ${checked && !ok ? `<span class="fix">${esc(show(r.f,k))}</span>` : ""}</div>`; }).join("")}
+        </div>`).join("")}
+      </div>
+      <div class="row">${checked
+        ? `<button class="btn quiet" data-act="retry">Try new rows</button><button class="btn primary" data-act="done">Close the case</button>`
+        : `<button class="btn primary" data-act="check">Check answers</button>`}</div>`);
+  }
+  render();
+  return {act:{
+    check: () => {
+      $app.querySelectorAll("input.ans").forEach(inp=>vals[inp.id]=inp.value);
+      score=0;
+      rows.forEach((r,ri)=>cols.forEach(([k])=>{ if(k===r.given) return;
+        if(accepts(vals[`f-${ri}-${k}`]||"", answers(r.f,k))) score++; else miss(r.f[k]); }));
+      checked=true; render(); window.scrollTo({top:0});
+    },
+    retry: () => open("family"),
+    done: () => finish("family", score, rows.length*2)
+  }};
+}
+
+/* ---------- 4. matching collocations ---------- */
+function modeMatch(){
+  const c = CASE.match;
+  const L = shuffle(POLICE.map((p,i)=>({i,t:p.v}))), R = shuffle(POLICE.map((p,i)=>({i,t:p.n})));
+  let sel=null, doneL=new Set(), doneR=new Set(), order=[], mistakes=0;
+  function render(shakeId){
+    $app.innerHTML = shell(c, doneL.size/POLICE.length, `${doneL.size} / ${POLICE.length} matched · mistakes: ${mistakes}`, `
+      <div class="match">
+        <div class="col">${L.map(x=>`<button class="tile ${doneL.has(x.i)?"done":""} ${sel===x.i?"sel":""}" data-act="left" data-i="${x.i}" ${doneL.has(x.i)?"disabled":""} aria-pressed="${sel===x.i}">${esc(x.t)}</button>`).join("")}</div>
+        <div class="col">${R.map(x=>`<button class="tile ${doneR.has(x.i)?"done":""}" id="r-${x.i}" data-act="right" data-i="${x.i}" ${doneR.has(x.i)?"disabled":""}>${esc(x.t)}</button>`).join("")}</div>
+      </div>
+      ${order.length?`<ul class="matched">${order.map(i=>`<li><b>${esc(POLICE[i].en)}</b>: ${esc(POLICE[i].ua)}</li>`).join("")}</ul>`:""}`);
+    if(shakeId!=null){ const b=document.getElementById(`r-${shakeId}`); if(b) b.classList.add("shake"); }
+  }
+  render();
+  return {act:{
+    left: el => { sel=+el.dataset.i; render(); focusSel(`[data-act="left"][data-i="${sel}"]`); },
+    right: el => {
+      const ri=+el.dataset.i; if(sel===null) return;
+      if(POLICE[sel].n===POLICE[ri].n){
+        doneL.add(sel); doneR.add(ri); order.push(sel); say(POLICE[sel].en); sel=null; render();
+        if(doneL.size===POLICE.length) setTimeout(()=>finish("match", Math.max(0, POLICE.length-mistakes), POLICE.length), 900);
+      } else { mistakes++; miss(POLICE[sel].en); render(ri); }
+    }
+  }};
+}
+
+/* ---------- 5. quiz ---------- */
+function modeQuiz(){
+  const c = CASE.quiz;
+  const qs = shuffle(FLAT).slice(0,15).map(t=>{
+    const dir = Math.random()<.5 ? "en" : "ua";
+    const shown = x => dir==="en" ? x.ua : x.en;
+    const pool = FLAT.filter(x=>x.en!==t.en && x.ua!==t.ua);
+    const ranked = [...shuffle(pool.filter(x=>x.grp===t.grp)), ...shuffle(pool.filter(x=>x.grp!==t.grp))];
+    const seen = new Set([shown(t)]), ds=[];
+    for(const x of ranked){ if(ds.length===3) break; if(!seen.has(shown(x))){ seen.add(shown(x)); ds.push(x); } }
+    return {t, dir, opts: shuffle([t, ...ds])};
+  });
+  let i=0, score=0, picked=null;
+  function render(){
+    const q=qs[i], done=picked!==null;
+    const prompt = q.dir==="en" ? q.t.en : q.t.ua, label = x => q.dir==="en" ? x.ua : x.en;
+    $app.innerHTML = shell(c, (i+(done?1:0))/qs.length, `Question ${i+1} of ${qs.length} · score ${score}`, `
+      <div class="panel">
+        <p class="muted" style="margin:0 0 4px">${q.dir==="en"?"What does it mean?":"How do you say it in English?"}</p>
+        <p class="prompt">${esc(prompt)}</p>
+        <div class="opts">${q.opts.map((o,oi)=>{
+          const cls = !done ? "" : o===q.t ? "right" : oi===picked ? "wrong" : "";
+          return `<button class="opt ${cls}" data-act="pick" data-v="${oi}" ${done?"disabled":""}>${esc(label(o))}</button>`; }).join("")}</div>
+        ${done?`<div class="row">${listenBtn(q.t.en)}<button class="btn primary" data-act="next">${i+1<qs.length?"Next question":"See results"}</button></div>`:""}
+      </div>`);
+    if(done) focusSel('[data-act="next"]');
+  }
+  render();
+  return {act:{
+    pick: el => { if(picked!==null) return; picked=+el.dataset.v; const q=qs[i];
+      if(q.opts[picked]===q.t) score++; else miss(q.t.en); if(q.dir==="ua") say(q.t.en); render(); },
+    next: () => { i++; picked=null; if(i>=qs.length) return finish("quiz", score, qs.length); render(); }
+  }};
+}
+
+/* ---------- typed answer engine (gaps + spelling) ---------- */
+function typedMode(id, items, opts){
+  const c = CASE[id];
+  let queue = items.map((it,k)=>({it,k,retry:false})), firstTry=0, pos=0, state=null, hintLvl=0, val="";
+  const total = items.length;
+  function render(){
+    const q = queue[0], done = state!==null;
+    const answers = opts.answers(q.it), main = answers[0];
+    const hint = hintLvl ? main.split("").map((ch,ci)=> ch===" " ? "\u00a0\u00a0" : ci<hintLvl ? ch : "_").join("") : "";
+    $app.innerHTML = shell(c, pos/total, `${Math.min(pos+1,total)} of ${total}${q.retry?" · second try":""}`, `
+      <div class="panel">
+        ${opts.prompt(q.it, done, done ? main : null)}
+        <div class="cell" style="margin-top:6px">
+          <label for="ans">Your answer</label>
+          <input class="ans ${done?(state?"good":"nope"):""}" id="ans" value="${esc(val)}" autocomplete="off" autocapitalize="off" spellcheck="false" ${done?"readonly":""}>
+        </div>
+        ${hint && !done ? `<p class="hint" aria-label="Hint">${esc(hint)}</p>` : ""}
+        ${done ? `<div class="fb ${state?"":"no"}"><p><b>${state?"Correct!":"The answer is:"}</b> <span class="model">${esc(main)}</span></p>${opts.after?opts.after(q.it):""}</div>` : ""}
+        <div class="row">
+          ${done
+            ? `${listenBtn(opts.sayText(q.it))}<button class="btn primary" data-act="next">${queue.length>1?"Next":"See results"}</button>`
+            : `<button class="btn quiet" data-act="hint" ${hintLvl>=main.length?"disabled":""}>Hint</button>${opts.extra?opts.extra(q.it):""}<button class="btn primary" data-act="check">Check</button>`}
+        </div>
+      </div>`);
+    const inp = $app.querySelector("#ans");
+    if(inp){ inp.addEventListener("input", ()=>{ val=inp.value; });
+      inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); done ? act.next() : act.check(); } });
+      if(!done) inp.focus({preventScroll:true}); else focusSel('[data-act="next"]'); }
+  }
+  const act = {
+    check: () => { const q=queue[0]; const ok = accepts(val, opts.answers(q.it));
+      state = ok; if(ok && !q.retry && !hintLvl) firstTry++; if(!ok) miss(opts.key(q.it));
+      if(ok || state===false) say(opts.sayText(q.it)); render(); },
+    hint: () => { hintLvl++; render(); },
+    next: () => { const q=queue.shift();
+      if(state===false && !q.retry && opts.requeue) queue.push({...q, retry:true}); else pos++;
+      state=null; hintLvl=0; val="";
+      if(!queue.length) return finish(id, firstTry, total);
+      render(); }
+  };
+  render();
+  return {act};
+}
+
+/* ---------- 6. gaps ---------- */
+function modeGaps(){
+  return typedMode("gaps", shuffle(GAPS).slice(0,12), {
+    answers: g => g.a,
+    key: g => g.a[0],
+    sayText: g => g.s.replace("___", g.a[0]),
+    prompt: (g, done, ans) => `<p class="gap-line">${esc(g.s).replace("___", `<span class="blank">${done?esc(ans):"&nbsp;"}</span>`)}</p>`,
+    after: g => `<p class="muted">${esc(g.ua)}</p>`,
+    requeue: false
+  });
+}
+
+/* ---------- 7. spelling ---------- */
+function modeSpell(){
+  return typedMode("spell", shuffle(FLAT).slice(0,12), {
+    answers: t => [t.en, ...(t.alt||[])],
+    key: t => t.en,
+    sayText: t => t.en,
+    prompt: t => `<p class="muted" style="margin:0 0 4px">Write in English</p><p class="prompt">${esc(t.ua)}</p>`,
+    extra: t => listenBtn(t.en),
+    requeue: true
+  });
+}
+
+/* ---------- 8. translation ---------- */
+function modeTranslate(){
+  const c = CASE.translate;
+  let i=0, got=0, shown=false, val="", log=[];
+  function render(){
+    const t = TR[i];
+    $app.innerHTML = shell(c, (i+(shown?1:0))/TR.length, `Sentence ${i+1} of ${TR.length}`, `
+      <div class="panel">
+        <p class="prompt">${esc(t.ua)}</p>
+        <div class="cell"><label for="tr">Your translation</label>
+          <textarea class="ans" id="tr" rows="3" autocomplete="off" autocapitalize="sentences" spellcheck="false" ${shown?"readonly":""}>${esc(val)}</textarea></div>
+        ${shown ? `<div class="fb"><p><b>Answer</b></p>${t.a.map(a=>`<p class="model">${esc(a)}</p>`).join("")}
+            <p class="muted">Say the sentence aloud two times. Was your translation correct?</p></div>
+          <div class="row">${listenBtn(t.a[0])}<button class="btn bad" data-act="rate" data-v="0">I need practice</button><button class="btn primary" data-act="rate" data-v="1">I got it right</button></div>`
+        : `<div class="row"><button class="btn primary" data-act="show">Show answer</button></div>`}
+      </div>`);
+    const ta=$app.querySelector("#tr");
+    if(ta && !shown){ ta.addEventListener("input", ()=>{ val=ta.value; }); ta.focus({preventScroll:true}); }
+  }
+  render();
+  return {act:{
+    show: () => { shown=true; render(); },
+    rate: el => { const ok = el.dataset.v==="1"; if(ok) got++; else miss(TR[i].a[0]);
+      log.push({ua:TR[i].ua, mine:val.trim(), ok}); store.tr = log; save();
+      i++; shown=false; val="";
+      if(i>=TR.length) return finish("translate", got, TR.length); render(); }
+  }};
+}
+
+const MODES = {home, cards:modeCards, who:modeWho, family:modeFamily, match:modeMatch, quiz:modeQuiz, gaps:modeGaps, spell:modeSpell, translate:modeTranslate};
+
+/* ---------- report ---------- */
+function reportText(){
+  let t = `dinglish: Crime & investigation\nStudent: ${store.name||"-"}\nDate: ${new Date().toLocaleDateString("uk-UA")}\n\nResults\n`;
+  CASES.forEach((c,k)=>{ const b=store.best[c.id];
+    t += `${k+1}. ${c.en}: ${b ? (c.id==="cards" ? "done" : `${b.score}/${b.total}`) : "not done"}\n`; });
+  const m = Object.entries(store.miss).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  t += `\nWords to review\n${m.length ? m.map(([w,n])=>`${w} (${n})`).join(", ") : "none"}\n`;
+  if(store.tr && store.tr.length){
+    t += `\nMy translations\n` + store.tr.map((r,k)=>`${k+1}. ${r.ua}\n   ${r.mine||"(blank)"} ${r.ok?"[ok]":"[needs practice]"}`).join("\n") + "\n";
+  }
+  return t;
+}
+function openReport(){
+  const d=document.getElementById("report"), name=document.getElementById("rep-name");
+  name.value = store.name||""; document.getElementById("rep-text").value = reportText();
+  document.getElementById("rep-status").textContent = "";
+  name.oninput = () => { store.name=name.value.trim(); save(); document.getElementById("rep-text").value = reportText(); };
+  if(typeof d.showModal==="function") d.showModal(); else d.setAttribute("open","");
+}
+function copyReport(){
+  const ta=document.getElementById("rep-text"), st=document.getElementById("rep-status");
+  const okMsg = "Copied. Paste it into a message to your teacher.";
+  const fallback = () => { ta.focus(); ta.select(); try{ document.execCommand("copy"); st.textContent=okMsg; }catch(e){ st.textContent="Select the text and copy it manually."; } };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(()=>st.textContent=okMsg, fallback);
+  else fallback();
+}
+
+open("home");
+</script>
+</body>
+</html>
