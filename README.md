@@ -8,9 +8,9 @@ Repository with interactive English lessons.
 |--------|------|
 | Reported speech: He said he was hiding there | [index-2.html](index-2.html) |
 | am / is / are + 's / of trainer \| dinglish | [be-possessive-trainer.html](be-possessive-trainer.html) |
-| So much to do · dinglish | [So much to do, so little time · dinglish.html](So%20much%20to%20do,%20so%20little%20time%20·%20dinglish.html) |
-| Crime & investigation · dinglish | [Crime & investigation · dinglish.html](Crime%20&%20investigation%20·%20dinglish.html) |
-| Life is busy — Intermediate Plus 1.2 | [Life is busy — Intermediate Plus 1.2.html](Life%20is%20busy%20—%20Intermediate%20Plus%201.2.html) |
+| So much to do · dinglish | [So much to do, so little time · dinglish.html](So%20much%20to%20do%2C%20so%20little%20time%20%C2%B7%20dinglish.html) |
+| Crime & investigation · dinglish | [Crime & investigation · dinglish.html](Crime%20%26%20investigation%20%C2%B7%20dinglish.html) |
+| Life is busy — Intermediate Plus 1.2 | [Life is busy — Intermediate Plus 1.2.html](Life%20is%20busy%20%E2%80%94%20Intermediate%20Plus%201.2.html) |
 | To be: am, is, are — dinglish | [to-be-elementary.html](to-be-elementary.html) |
 | Gerund &amp; Infinitive — тест | [gerund-infinitive-test-2.html](gerund-infinitive-test-2.html) |
 | Speaking cards — have sth done &amp; passive | [speaking-cards-have-done-passive.html](speaking-cards-have-done-passive.html) |
