@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reported speech: He said he was hiding there</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E8EDF2;--sheet:#FFFFFF;--soft:#F1F4F8;--ink:#17233A;--muted:#55627A;--line:#C9D2DD;
+  --tape:#FFD23F;--tape-ink:#17233A;--stripe:#17233A;
+  --ok:#157A4E;--ok-bg:#DDF3E8;--bad:#C4213A;--bad-bg:#FBE1E5;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1726;--sheet:#182235;--soft:#202C44;--ink:#E9EEF6;--muted:#9CA9BF;--line:#2F3D58;
+    --stripe:#0F1726;--ok:#5AD6A0;--ok-bg:#143526;--bad:#FF7A8A;--bad-bg:#40192A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1726;--sheet:#182235;--soft:#202C44;--ink:#E9EEF6;--muted:#9CA9BF;--line:#2F3D58;
+  --stripe:#0F1726;--ok:#5AD6A0;--ok-bg:#143526;--bad:#FF7A8A;--bad-bg:#40192A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.55 "Onest",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--tape);outline-offset:2px}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.bar-in{max-width:760px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font:700 15px/1 "Unbounded","Onest",sans-serif;letter-spacing:-.01em}
+.score{font-weight:600;font-variant-numeric:tabular-nums}
+.score small{color:var(--muted);font-weight:500;font-size:14px}
+.track{height:4px;background:var(--line)}
+.track i{display:block;height:100%;width:0;background:var(--tape);transition:width .3s}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 18px 80px}
+
+/* hero */
+.hero{padding:44px 0 36px}
+.said{display:inline-block;background:var(--sheet);border:1px solid var(--line);border-radius:18px 18px 18px 4px;padding:12px 18px;font-size:19px;margin:0 0 22px}
+.said u{text-decoration:underline;text-decoration-color:var(--tape);text-decoration-thickness:4px;text-underline-offset:4px}
+h1{font:700 clamp(30px,7.4vw,56px)/1.12 "Unbounded","Onest",sans-serif;letter-spacing:-.03em;margin:0 0 22px;max-width:14ch}
+mark{background:var(--tape);color:var(--tape-ink);padding:0 .14em;border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.lede{color:var(--muted);max-width:52ch;margin:0}
+
+/* parts */
+.part{margin:56px 0 0}
+.tape{height:14px;border-radius:3px;background:repeating-linear-gradient(-45deg,var(--tape) 0 14px,var(--stripe) 14px 28px)}
+.part h2{font:700 clamp(22px,5vw,30px)/1.2 "Unbounded","Onest",sans-serif;letter-spacing:-.02em;margin:18px 0 6px}
+.part > p{color:var(--muted);margin:0 0 4px;max-width:60ch}
+
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:22px 20px;margin:20px 0 0}
+.sheet h3{font:700 20px/1.3 "Onest",sans-serif;margin:0 0 4px}
+.rubric{color:var(--muted);margin:0 0 16px;max-width:60ch}
+
+/* rule */
+.rule p{max-width:62ch}
+.rule table{width:100%;border-collapse:collapse;margin:14px 0}
+.rule th,.rule td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.rule th{font-weight:600;color:var(--muted);font-size:15px}
+.rule select{width:100%;min-height:44px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--sheet)}
+.rule select.ok{border-color:var(--ok);background:var(--ok-bg)}
+.rule select.bad{border-color:var(--bad);background:var(--bad-bg)}
+.examples{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.examples li{background:var(--soft);border-radius:10px;padding:10px 14px}
+.examples b{font-weight:700}
+.scroll{overflow-x:auto}
+details{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+.cheat td:nth-child(odd){color:var(--muted)}
+.cheat td:nth-child(even){font-weight:600}
+
+/* items */
+ol.items{list-style:none;counter-reset:n;margin:0;padding:0}
+ol.items > li{counter-increment:n;position:relative;padding:18px 0 18px 34px;border-top:1px solid var(--line)}
+ol.items > li::before{content:counter(n);position:absolute;left:0;top:20px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.direct{display:inline-block;background:var(--soft);border-radius:14px 14px 14px 3px;padding:8px 14px;margin:0 0 10px}
+.direct.ua{border-radius:10px}
+.reported{margin:0 0 12px;font-weight:600;font-size:18px;line-height:1.9}
+.blank{display:inline-block;min-width:64px;text-align:center;border-bottom:2px solid var(--ink);padding:0 6px;font-weight:700}
+.blank.ok{border-color:var(--ok);color:var(--ok)}
+.blank.fixed{border-color:var(--bad);color:var(--ok)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button,.btn{min-height:44px;padding:8px 16px;border:2px solid var(--ink);border-radius:999px;background:transparent;font-weight:600;cursor:pointer}
+.opts button:hover:not(:disabled),.btn:hover{background:var(--tape);color:var(--tape-ink);border-color:var(--tape-ink)}
+.opts button:disabled{cursor:default;opacity:.55}
+.opts button.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);opacity:1}
+.opts button.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);opacity:1;text-decoration:line-through}
+.btn.solid{background:var(--ink);color:var(--sheet)}
+.btn.solid:hover{background:var(--tape);color:var(--tape-ink)}
+.btn.quiet{border-color:var(--line);font-weight:500}
+
+input.gap,input.long{min-height:44px;padding:6px 12px;border:2px solid var(--line);border-radius:10px;background:var(--sheet);font-weight:600}
+input.gap{width:11.5em;max-width:100%;margin:2px 4px}
+input.long{width:100%;margin:6px 0 0;display:block}
+input.is-ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ink);opacity:1}
+input.is-bad{border-color:var(--bad);background:var(--bad-bg);color:var(--ink);opacity:1}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fb{margin:10px 0 0;min-height:0;font-weight:500}
+.fb:empty{display:none}
+.fb.ok{color:var(--ok)}
+.fb.bad{color:var(--bad)}
+.fb strong{color:var(--ink)}
+@keyframes nudge{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.nudge{animation:nudge .25s 2}
+@media (prefers-reduced-motion:reduce){.nudge{animation:none}.track i{transition:none}html{scroll-behavior:auto}}
+
+/* spot the mistake */
+.words{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+.words button{min-height:44px;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--sheet);font-weight:600;font-size:18px;cursor:pointer}
+.words button:hover:not(:disabled){border-color:var(--ink)}
+.words button:disabled{cursor:default}
+.words button.miss{border-color:var(--bad);background:var(--bad-bg)}
+.words button.hit{border-color:var(--bad);background:var(--bad-bg);text-decoration:line-through;color:var(--bad)}
+.words .fix{align-self:center;padding:6px 10px;border-radius:10px;background:var(--ok-bg);color:var(--ok);font-weight:700;font-size:18px}
+
+/* speaking */
+.speak{background:var(--tape);color:var(--tape-ink);border-radius:14px;padding:22px 20px;margin:20px 0 0}
+.speak h3{font:700 20px/1.3 "Onest",sans-serif;margin:0 0 6px}
+.speak p{margin:0 0 10px;max-width:60ch}
+.speak ul{margin:0;padding-left:20px}
+.speak li{margin:4px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
+.card{background:#fff;color:#17233A;border-radius:12px;padding:14px}
+.card h4{margin:0 0 8px;font-size:16px}
+.card p{margin:0 0 6px;font-size:16px}
+
+/* result */
+.result .big{font:700 clamp(40px,11vw,72px)/1 "Unbounded","Onest",sans-serif;letter-spacing:-.03em;margin:6px 0 14px;font-variant-numeric:tabular-nums}
+.result table{width:100%;border-collapse:collapse;margin:0 0 18px}
+.result td{padding:8px 0;border-bottom:1px solid var(--line)}
+.result td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.result label{display:block;font-weight:600;margin-bottom:6px}
+.result input[type=text]{width:100%;min-height:44px;padding:6px 12px;border:2px solid var(--line);border-radius:10px;background:var(--sheet);margin-bottom:12px}
+.result textarea{width:100%;min-height:150px;margin-top:12px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);font:inherit;font-size:15px}
+footer{margin-top:40px;color:var(--muted);font-size:15px}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-in">
+    <span class="brand">dinglish</span>
+    <span class="score" aria-live="polite"><span id="score">0</span> <small>correct of <span id="total">0</span></small></span>
+  </div>
+  <div class="track"><i id="track"></i></div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="said">“<u>I</u> <u>am</u> hiding <u>here</u>,” the thief said.</p>
+    <h1>He said <mark>he</mark> <mark>was</mark> hiding <mark>there</mark>.</h1>
+    <p class="lede">Reported speech for pre-intermediate. Seven tasks and four speaking stops, about 45 minutes. Your answers are saved on this device.</p>
+  </section>
+
+  <div class="speak">
+    <h3>Warm-up: talk first</h3>
+    <p>Answer the questions with your partner or your teacher.</p>
+    <ul>
+      <li>Do you like crime films or detective series? Which one is your favourite?</li>
+      <li>Imagine you see a robbery in a shop. What do you do?</li>
+      <li>What questions does a police officer usually ask a witness?</li>
+    </ul>
+  </div>
+
+  <section class="sheet rule" lang="uk">
+    <h3>Як це працює</h3>
+    <p>Коли ми переказуємо чужі слова після <b>said</b>, дієслово робить один крок назад у минуле. Обери, у що перетворюється кожен час.</p>
+    <table>
+      <thead><tr><th>Direct speech</th><th>Reported speech</th></tr></thead>
+      <tbody id="ruleRows"></tbody>
+    </table>
+    <button class="btn solid" id="ruleCheck" lang="en">Check the table</button>
+    <p class="fb" id="ruleFb" lang="en"></p>
+    <ul class="examples" id="ruleEx" hidden lang="en">
+      <li>“I <b>work</b> at the bank.” → He said he <b>worked</b> at the bank.</li>
+      <li>“I <b>am waiting</b> for a bus.” → She said she <b>was waiting</b> for a bus.</li>
+      <li>“I <b>saw</b> the robber.” → He said he <b>had seen</b> the robber.</li>
+    </ul>
+    <p style="margin-top:14px">Слово <b>that</b> можна ставити, а можна пропускати: <span lang="en">She said <b>(that)</b> she was feeling upset.</span></p>
+    <details>
+      <summary>Look out! Займенники, час і місце теж змінюються</summary>
+      <p>Займенники міняємо за змістом, залежно від того, хто говорив: <span lang="en"><b>I → he / she</b>, <b>my → his / her</b>, <b>we → they</b>, <b>our → their</b>.</span></p>
+      <p lang="en">“You're sitting at my table,” he said. → He said <b>we</b> were sitting at <b>his</b> table.</p>
+      <div class="scroll">
+      <table class="cheat" lang="en">
+        <tbody>
+          <tr><td>yesterday</td><td>the day before</td><td>tonight</td><td>that night</td></tr>
+          <tr><td>today</td><td>that day</td><td>a week ago</td><td>a week earlier</td></tr>
+          <tr><td>here</td><td>there</td><td>last Monday</td><td>the Monday before</td></tr>
+          <tr><td>this month</td><td>that month</td><td>now</td><td>at that moment</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </details>
+  </section>
+
+  <section class="part">
+    <div class="tape"></div>
+    <h2>Part 1. The verb steps back</h2>
+    <p>Only the tense changes here. Pronouns, time and place come in Part 2.</p>
+    <div class="sheet"><h3>Task 1</h3><p class="rubric">Read what the person said. Choose the correct verb form for the reported sentence.</p><div data-task="t1"></div></div>
+    <div class="sheet"><h3>Task 2</h3><p class="rubric">Type the verb in the correct tense. Press Enter to check. You have two tries.</p><div data-task="t2"></div></div>
+    <div class="speak">
+      <h3>Speaking stop: You said…</h3>
+      <p>Say three sentences about yourself. Your partner or teacher reports each one back to you: “You said you…”. Then swap.</p>
+      <ul>
+        <li>I usually … in the evening.</li>
+        <li>Right now I'm …</li>
+        <li>Last weekend I …</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="part">
+    <div class="tape"></div>
+    <h2>Part 2. Who, when and where</h2>
+    <p>The verb still steps back. Now watch the pronouns and the time and place words.</p>
+    <div class="sheet"><h3>Task 3</h3><p class="rubric">Choose the correct time or place expression.</p><div data-task="t3"></div></div>
+    <div class="sheet"><h3>Task 4</h3><p class="rubric">Who is speaking, and to whom? Choose the correct pronouns.</p><div data-task="t4"></div></div>
+    <div class="speak">
+      <h3>Speaking stop: This week's news</h3>
+      <p>Think about people you talked to this week. Report three things they said. Use a time or place expression in each sentence.</p>
+      <ul>
+        <li>My friend said …</li>
+        <li>Someone in my family said …</li>
+        <li>My boss / teacher / neighbour said …</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="part">
+    <div class="tape"></div>
+    <h2>Part 3. Everything together</h2>
+    <p>Tense, pronouns, time and place in one sentence.</p>
+    <div class="sheet"><h3>Task 5</h3><p class="rubric">Rewrite the sentence in reported speech. The beginning is done for you. You have two tries.</p><div data-task="t5"></div></div>
+    <div class="sheet"><h3>Task 6</h3><p class="rubric">Each reported sentence has one mistake. Tap the wrong word.</p><div data-task="t6"></div></div>
+    <div class="speak">
+      <h3>Speaking stop: The robbery</h3>
+      <p>A jewellery shop was robbed ten minutes ago. One of you is a witness: choose a card and read it aloud. The other is a reporter: listen, then report to your editor: “She said she…”. Swap roles with a new card. Working one-to-one? Your teacher is the first witness.</p>
+      <div class="cards">
+        <div class="card"><h4>Iryna, shop assistant</h4><p>“I work here every day.”</p><p>“Two men came in a few minutes ago.”</p><p>“My hands are still shaking now.”</p></div>
+        <div class="card"><h4>Bohdan, taxi driver</h4><p>“I'm waiting for a passenger.”</p><p>“I saw a black car here yesterday.”</p><p>“I don't know the driver.”</p></div>
+        <div class="card"><h4>Mrs Hall, neighbour</h4><p>“I live above the shop.”</p><p>“I heard a loud noise tonight.”</p><p>“My dog is barking at the door.”</p></div>
+      </div>
+      <p style="margin-top:14px">Extra: invent a fourth witness. Say three more sentences for your partner to report.</p>
+    </div>
+    <div class="sheet"><h3>Task 7</h3><p class="rubric">Translate into English. You have two tries, then you see a model answer.</p><div data-task="t7"></div></div>
+  </section>
+
+  <section class="part">
+    <div class="tape"></div>
+    <h2>Your result</h2>
+    <div class="sheet result">
+      <div class="big" id="big">0 / 0</div>
+      <table><tbody id="breakdown"></tbody></table>
+      <label for="who">Your name</label>
+      <input type="text" id="who" autocomplete="name">
+      <div class="row">
+        <button class="btn solid" id="copy">Copy result for your teacher</button>
+        <button class="btn quiet" id="reset">Start again</button>
+      </div>
+      <p class="fb" id="copyFb"></p>
+      <textarea id="copyOut" hidden readonly></textarea>
+    </div>
+  </section>
+
+  <footer>dinglish, reported speech practice</footer>
+</main>
+
+<script>
+const TASKS = [
+ {id:'t1', name:'Task 1, verb forms', type:'choice', items:[
+  {d:"I live near the bank.", r:"She said she ___ near the bank.", opts:["lives","lived","had lived"], a:1},
+  {d:"The robbers are running away.", r:"He said the robbers ___ away.", opts:["were running","ran","are running"], a:0},
+  {d:"I heard a loud noise.", r:"She said she ___ a loud noise.", opts:["heard","had heard","was hearing"], a:1},
+  {d:"We don't know the man.", r:"They said they ___ the man.", opts:["don't know","didn't know","hadn't known"], a:1},
+  {d:"I'm not wearing my glasses.", r:"He said he ___ his glasses.", opts:["wasn't wearing","didn't wear","isn't wearing"], a:0},
+  {d:"The thief took my bag.", r:"She said the thief ___ her bag.", opts:["took","was taking","had taken"], a:2}
+ ]},
+ {id:'t2', name:'Task 2, type the verb', type:'gap', items:[
+  {d:"I work in a jewellery shop.", r:"Anna said she ___ in a jewellery shop.", ans:["worked"]},
+  {d:"The alarm is ringing.", r:"The guard said the alarm ___.", ans:["was ringing"]},
+  {d:"I locked the door.", r:"He said he ___ the door.", ans:["had locked"]},
+  {d:"We are watching the cameras.", r:"The police officers said they ___ the cameras.", ans:["were watching"]},
+  {d:"The shop opens at nine.", r:"She said the shop ___ at nine.", ans:["opened"]},
+  {d:"I didn't see his face.", r:"The witness said she ___ his face.", ans:["hadn't seen"]},
+  {d:"I feel scared.", r:"The boy said he ___ scared.", ans:["felt"]},
+  {d:"Two men broke the window.", r:"He said two men ___ the window.", ans:["had broken"]}
+ ]},
+ {id:'t3', name:'Task 3, time and place', type:'choice', items:[
+  {d:"I saw him yesterday.", r:"She said she had seen him ___.", opts:["that day","the day before","the day after"], a:1},
+  {d:"I'm working today.", r:"He said he was working ___.", opts:["that day","this day","the day before"], a:0},
+  {d:"The money is here.", r:"She said the money was ___.", opts:["here","there","that"], a:1},
+  {d:"We're very busy this month.", r:"They said they were very busy ___.", opts:["last month","the month before","that month"], a:2},
+  {d:"I'm staying at home tonight.", r:"He said he was staying at home ___.", opts:["that night","this night","the night before"], a:0},
+  {d:"I lost my keys a week ago.", r:"She said she had lost her keys ___.", opts:["a week ago","that week","a week earlier"], a:2},
+  {d:"The shop closed early last Monday.", r:"He said the shop had closed early ___.", opts:["that Monday","the Monday before","last Monday"], a:1},
+  {d:"I'm talking to the police now.", r:"She said she was talking to the police ___.", opts:["this moment","at that moment","the moment before"], a:1}
+ ]},
+ {id:'t4', name:'Task 4, pronouns', type:'choice', items:[
+  {d:"", r:"He said ___ were sitting at ___ table.", opts:["you … my","we … his","we … my"], a:1, raw:"“You're sitting at my table,” he said to us."},
+  {d:"", r:"Kate said ___ loved ___ job.", opts:["she … her","I … my","she … my"], a:0, raw:"“I love my job,” Kate said."},
+  {d:"", r:"The men said ___ had left ___ car outside.", opts:["we … our","they … our","they … their"], a:2, raw:"“We left our car outside,” the men said."},
+  {d:"", r:"Tom said ___ brother was helping ___.", opts:["his … him","my … me","his … me"], a:0, raw:"“My brother is helping me,” Tom said."},
+  {d:"", r:"She said ___ looked tired.", opts:["you","she","I"], a:2, raw:"“You look tired,” she said to me."},
+  {d:"", r:"He said ___ didn't like ___ dog.", opts:["I … your","he … my","he … your"], a:1, raw:"“I don't like your dog,” he said to me."}
+ ]},
+ {id:'t5', name:'Task 5, rewrite', type:'rewrite', items:[
+  {d:"I'm waiting for my wife here.", stem:"The man said", ans:["he was waiting for his wife there"]},
+  {d:"I parked my car here yesterday.", stem:"She said", ans:["she had parked her car there the day before","she had parked her car there the previous day"]},
+  {d:"We don't have any money today.", stem:"They said", ans:["they didn't have any money that day","they had no money that day"]},
+  {d:"My sister is working tonight.", stem:"Tom said", ans:["his sister was working that night"]},
+  {d:"I bought my phone a week ago.", stem:"He said", ans:["he had bought his phone a week earlier","he had bought his phone a week before"]},
+  {d:"I'm not feeling well now.", stem:"The cashier said", ans:["she wasn't feeling well at that moment","he wasn't feeling well at that moment","she wasn't feeling well then","he wasn't feeling well then"]},
+  {d:"We saw two men last Monday.", stem:"The neighbours said", ans:["they had seen two men the Monday before","they had seen two men the previous Monday"]},
+  {d:"I know the answer.", stem:"Olha said", ans:["she knew the answer"]}
+ ]},
+ {id:'t6', name:'Task 6, find the mistake', type:'spot', items:[
+  {d:"I am hiding here.", r:"He said he is hiding there.", w:3, fix:"was"},
+  {d:"I saw the thief yesterday.", r:"She said she had seen the thief yesterday.", w:7, fix:"the day before"},
+  {d:"We live here.", r:"They said we lived there.", w:2, fix:"they"},
+  {d:"I lost my wallet.", r:"He said he lost his wallet.", w:3, fix:"had lost"},
+  {d:"I'm calling the police now.", r:"She said she was calling the police now.", w:7, fix:"at that moment"},
+  {d:"“My dad works at night,” Anna said.", r:"Anna said my dad worked at night.", w:2, fix:"her", raw:true}
+ ]},
+ {id:'t7', name:'Task 7, translation', type:'translate', items:[
+  {d:"Він сказав, що живе біля банку.", ans:["He said he lived near the bank","He said he lived next to the bank","He said he lived close to the bank"]},
+  {d:"Вона сказала, що чекає на свого чоловіка.", ans:["She said she was waiting for her husband"]},
+  {d:"Вони сказали, що бачили грабіжника напередодні.", ans:["They said they had seen the robber the day before","They said they had seen the robber the previous day","They said they had seen the thief the day before","They said they had seen the thief the previous day"]},
+  {d:"Охоронець сказав, що не чув сигналізацію.", ans:["The guard said he hadn't heard the alarm","The security guard said he hadn't heard the alarm"]},
+  {d:"Марта сказала, що її брат працює тієї ночі.", ans:["Marta said her brother was working that night","Marta said her brother was working that evening"]},
+  {d:"Ми сказали, що загубили ключі тиждень тому.", ans:["We said we had lost our keys a week earlier","We said we had lost the keys a week earlier","We said we had lost our keys a week before","We said we had lost the keys a week before"]},
+  {d:"Свідок сказав, що в ту мить розмовляє з поліцією.", ans:["The witness said he was talking to the police at that moment","The witness said she was talking to the police at that moment","The witness said he was speaking to the police at that moment","The witness said she was speaking to the police at that moment","The witness said he was talking with the police at that moment","The witness said she was talking with the police at that moment"]},
+  {d:"Вона сказала, що не знає мого імені.", ans:["She said she didn't know my name"]}
+ ]}
+];
+
+const KEY = 'dinglish-reported-speech-v1';
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const quote = s => '“' + s + '”';
+
+function norm(s) {
+  return s.toLowerCase()
+    .replace(/[’‘`]/g, "'")
+    .replace(/\b(was|were|had|did|do|does|is|are)n't\b/g, '$1 not')
+    .replace(/\b(he|she|they|we|i|you)'d\b/g, '$1 had')
+    .replace(/neighbors/g, 'neighbours')
+    .replace(/[.,!?;:"“”]/g, ' ')
+    .replace(/\s+/g, ' ').trim()
+    .replace(/ said that /, ' said ');
+}
+
+function finish(id, ok, v, extra) {
+  state[id] = Object.assign({ ok: ok, v: v }, extra || {});
+  save(); updateScore();
+}
+
+function directLine(it, type) {
+  if (type === 'translate') { const p = el('p', 'direct ua'); p.lang = 'uk'; p.textContent = it.d; return p; }
+  const p = el('p', 'direct');
+  p.textContent = it.raw === true ? it.d : (typeof it.raw === 'string' ? it.raw : quote(it.d));
+  return p;
+}
+
+function choiceItem(task, it, i) {
+  const id = task.id + '-' + i, li = el('li');
+  li.appendChild(directLine(it));
+  const rep = el('p', 'reported'), blanks = [];
+  it.r.split('___').forEach((chunk, k, arr) => {
+    rep.appendChild(document.createTextNode(chunk));
+    if (k < arr.length - 1) { const b = el('span', 'blank', '&nbsp;'); blanks.push(b); rep.appendChild(b); }
+  });
+  li.appendChild(rep);
+  const opts = el('div', 'opts'), fb = el('p', 'fb'), btns = [];
+  const settle = chosen => {
+    const good = chosen === it.a;
+    btns.forEach(b => b.disabled = true);
+    btns[it.a].classList.add('right');
+    if (!good) btns[chosen].classList.add('wrong');
+    it.opts[it.a].split(' … ').forEach((w, k) => { blanks[k].textContent = w; blanks[k].className = 'blank ' + (good ? 'ok' : 'fixed'); });
+    fb.className = 'fb ' + (good ? 'ok' : 'bad');
+    fb.textContent = good ? 'Correct.' : 'Not this time. The right answer is in the sentence now.';
+  };
+  it.opts.forEach((o, k) => {
+    const b = el('button'); b.type = 'button'; b.textContent = o;
+    b.addEventListener('click', () => { settle(k); finish(id, k === it.a, k); });
+    btns.push(b); opts.appendChild(b);
+  });
+  li.appendChild(opts); li.appendChild(fb);
+  if (state[id]) settle(state[id].v);
+  return li;
+}
+
+function typedItem(task, it, i) {
+  const id = task.id + '-' + i, li = el('li'), type = task.type;
+  li.appendChild(directLine(it, type));
+  const input = el('input', type === 'gap' ? 'gap' : 'long');
+  input.type = 'text'; input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
+  input.setAttribute('aria-label', 'Your answer');
+  const rep = el('p', 'reported');
+  let model;
+  if (type === 'gap') {
+    const parts = it.r.split('___');
+    rep.appendChild(document.createTextNode(parts[0])); rep.appendChild(input); rep.appendChild(document.createTextNode(parts[1]));
+    model = it.ans[0];
+  } else if (type === 'rewrite') {
+    rep.appendChild(document.createTextNode(it.stem + ' …')); rep.appendChild(input);
+    model = it.stem + ' ' + it.ans[0] + '.';
+  } else {
+    rep.appendChild(input);
+    model = it.ans[0] + '.';
+  }
+  li.appendChild(rep);
+  const btn = el('button', 'btn solid'); btn.type = 'button'; btn.textContent = 'Check';
+  const fb = el('p', 'fb');
+  li.appendChild(btn); li.appendChild(fb);
+
+  const stem = it.stem ? norm(it.stem) : '';
+  const cmp = x => { let n = norm(x); if (stem && n.indexOf(stem + ' ') === 0) n = n.slice(stem.length + 1); return n.replace(/^that /, ''); };
+  let tries = 0;
+  const settle = (good, val, first) => {
+    input.value = val; input.disabled = true; btn.remove();
+    input.classList.remove('nudge'); input.classList.add(good ? 'is-ok' : 'is-bad');
+    fb.className = 'fb ' + (good ? 'ok' : 'bad');
+    if (good) fb.textContent = first ? 'Correct.' : 'Correct on the second try.';
+    else fb.innerHTML = (type === 'translate' ? 'Model answer: ' : 'Answer: ') + '<strong>' + model + '</strong>';
+  };
+  const check = () => {
+    const val = input.value.trim(); if (!val) { input.focus(); return; }
+    const good = it.ans.some(a => cmp(a) === cmp(val));
+    if (good) { settle(true, val, tries === 0); finish(id, tries === 0, val, { c: true }); return; }
+    tries++;
+    if (tries >= 2) { settle(false, val); finish(id, false, val, { c: false }); return; }
+    fb.className = 'fb bad';
+    fb.textContent = type === 'gap' ? 'Not quite. Which tense is in the direct sentence? Take one step back and try once more.'
+      : 'Not quite. Check the tense, the pronouns and the time or place word, then try once more.';
+    input.classList.remove('nudge'); void input.offsetWidth; input.classList.add('nudge'); input.focus();
+  };
+  btn.addEventListener('click', check);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+  if (state[id]) settle(!!state[id].c, state[id].v, state[id].ok);
+  return li;
+}
+
+function spotItem(task, it, i) {
+  const id = task.id + '-' + i, li = el('li');
+  li.appendChild(directLine(it));
+  const row = el('div', 'words'), fb = el('p', 'fb'), btns = [];
+  let missed = false;
+  const settle = ok => {
+    btns.forEach(b => b.disabled = true);
+    btns[it.w].classList.add('hit');
+    const fix = el('span', 'fix'); fix.textContent = it.fix;
+    btns[it.w].after(fix);
+    fb.className = 'fb ' + (ok ? 'ok' : 'bad');
+    fb.textContent = ok ? 'Correct.' : 'Found it, but not on the first tap.';
+  };
+  it.r.split(' ').forEach((w, k) => {
+    const b = el('button'); b.type = 'button'; b.textContent = w;
+    b.addEventListener('click', () => {
+      if (k === it.w) { settle(!missed); finish(id, !missed, k); }
+      else { missed = true; b.classList.add('miss'); b.disabled = true; fb.className = 'fb bad'; fb.textContent = 'That word is fine. Look again.'; }
+    });
+    btns.push(b); row.appendChild(b);
+  });
+  li.appendChild(row); li.appendChild(fb);
+  if (state[id]) settle(state[id].ok);
+  return li;
+}
+
+function renderAll() {
+  TASKS.forEach(task => {
+    const box = document.querySelector('[data-task="' + task.id + '"]');
+    box.innerHTML = '';
+    const ol = el('ol', 'items');
+    task.items.forEach((it, i) => {
+      ol.appendChild(task.type === 'choice' ? choiceItem(task, it, i) : task.type === 'spot' ? spotItem(task, it, i) : typedItem(task, it, i));
+    });
+    box.appendChild(ol);
+  });
+  updateScore();
+}
+
+const TOTAL = TASKS.reduce((n, t) => n + t.items.length, 0);
+function tally() {
+  let ok = 0, done = 0;
+  const rows = TASKS.map(t => {
+    let o = 0;
+    t.items.forEach((_, i) => { const s = state[t.id + '-' + i]; if (s) { done++; if (s.ok) { o++; ok++; } } });
+    return [t.name, o, t.items.length];
+  });
+  return { ok, done, rows };
+}
+function updateScore() {
+  const t = tally();
+  document.getElementById('score').textContent = t.ok;
+  document.getElementById('total').textContent = TOTAL;
+  document.getElementById('track').style.width = (100 * t.done / TOTAL) + '%';
+  document.getElementById('big').textContent = t.ok + ' / ' + TOTAL;
+  const tb = document.getElementById('breakdown'); tb.innerHTML = '';
+  t.rows.forEach(r => { const tr = el('tr'); tr.appendChild(el('td', '', r[0])); tr.appendChild(el('td', '', r[1] + ' / ' + r[2])); tb.appendChild(tr); });
+}
+
+/* rule table */
+const RULE = [['present simple', 'past simple'], ['present continuous', 'past continuous'], ['past simple', 'past perfect']];
+const RULE_OPTS = ['present perfect', 'past simple', 'past perfect', 'past continuous'];
+const ruleSelects = [];
+function renderRule() {
+  const body = document.getElementById('ruleRows'); body.innerHTML = ''; ruleSelects.length = 0;
+  RULE.forEach(r => {
+    const tr = el('tr'); tr.lang = 'en';
+    tr.appendChild(el('td', '', r[0] + ' →'));
+    const td = el('td'), sel = el('select');
+    sel.setAttribute('aria-label', r[0] + ' changes to');
+    sel.appendChild(new Option('choose…', ''));
+    RULE_OPTS.forEach(o => sel.appendChild(new Option(o, o)));
+    sel.addEventListener('change', () => sel.className = '');
+    ruleSelects.push(sel); td.appendChild(sel); tr.appendChild(td); body.appendChild(tr);
+  });
+  document.getElementById('ruleEx').hidden = true;
+  document.getElementById('ruleFb').textContent = '';
+}
+document.getElementById('ruleCheck').addEventListener('click', () => {
+  let all = true;
+  ruleSelects.forEach((s, i) => { const g = s.value === RULE[i][1]; s.className = g ? 'ok' : 'bad'; if (!g) all = false; });
+  const fb = document.getElementById('ruleFb');
+  fb.className = 'fb ' + (all ? 'ok' : 'bad');
+  fb.textContent = all ? 'Correct. Here is one example for each row.' : 'Not yet. Each tense moves one step back into the past.';
+  document.getElementById('ruleEx').hidden = !all;
+});
+
+/* result */
+const who = document.getElementById('who');
+try { who.value = localStorage.getItem(KEY + '-name') || ''; } catch (e) {}
+who.addEventListener('input', () => { try { localStorage.setItem(KEY + '-name', who.value); } catch (e) {} });
+document.getElementById('copy').addEventListener('click', () => {
+  const t = tally();
+  const text = ['Reported speech (dinglish)', 'Name: ' + (who.value.trim() || 'not given'),
+    'Score: ' + t.ok + ' / ' + TOTAL + ' (answered ' + t.done + ')'].concat(t.rows.map(r => r[0] + ': ' + r[1] + ' / ' + r[2])).join('\n');
+  const fb = document.getElementById('copyFb'), out = document.getElementById('copyOut');
+  const fallback = () => { out.hidden = false; out.value = text; out.focus(); out.select(); fb.className = 'fb'; fb.textContent = 'Copy the text below and send it to your teacher.'; };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => { fb.className = 'fb ok'; fb.textContent = 'Copied. Paste it in a message to your teacher.'; }, fallback);
+  } else fallback();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  const rb = document.getElementById('reset');
+  if (!rb.dataset.armed) { rb.dataset.armed = '1'; rb.textContent = 'Tap again to clear all answers'; setTimeout(() => { delete rb.dataset.armed; rb.textContent = 'Start again'; }, 4000); return; }
+  delete rb.dataset.armed; rb.textContent = 'Start again';
+  state = {}; save(); renderRule(); renderAll();
+  document.getElementById('copyOut').hidden = true; document.getElementById('copyFb').textContent = '';
+  window.scrollTo(0, 0);
+});
+
+renderRule(); renderAll();
+</script>
+</body>
+</html>
