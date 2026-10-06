@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>am / is / are + 's / of trainer | dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2FB; --surface:#FFFFFF; --ink:#18204A; --muted:#5B648C; --line:#D5DCF0;
+  --marker:#FFDD4A; --marker-ink:#18204A; --accent:#3B5BFF; --on-accent:#FFFFFF;
+  --ok:#12855A; --ok-bg:#DDF5EA; --bad:#C8323A; --bad-bg:#FBE1E2;
+  --display:"Unbounded","Onest",system-ui,sans-serif;
+  --body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10142B; --surface:#1A2042; --ink:#EEF1FF; --muted:#A3ABD3; --line:#2E3766;
+    --accent:#8EA2FF; --on-accent:#10142B;
+    --ok:#5FD3A2; --ok-bg:#173A30; --bad:#FF8A8F; --bad-bg:#45202A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10142B; --surface:#1A2042; --ink:#EEF1FF; --muted:#A3ABD3; --line:#2E3766;
+  --accent:#8EA2FF; --on-accent:#10142B;
+  --ok:#5FD3A2; --ok-bg:#173A30; --bad:#FF8A8F; --bad-bg:#45202A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.5;-webkit-text-size-adjust:100%}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:46rem;margin:0 auto;padding:1rem 1.125rem 3rem}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}
+.brand{font-family:var(--display);font-weight:700;font-size:1.125rem;letter-spacing:-.02em}
+.link{background:none;border:0;padding:.5rem 0;color:var(--accent);font-weight:500;text-decoration:underline;text-underline-offset:.2em}
+
+.gap{display:inline-block;min-width:2.6em;text-align:center;background:var(--marker);color:var(--marker-ink);padding:0 .28em;border-radius:.18em .32em .2em .3em;font-weight:700}
+.gap.pop{animation:pop .22s ease-out}
+.gap.miss{background:var(--bad-bg);color:var(--bad)}
+@keyframes pop{from{transform:scale(.86)}to{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){.gap.pop{animation:none}}
+
+/* home */
+.demo{font-family:var(--display);font-weight:500;font-size:clamp(1.9rem,8.2vw,3.5rem);line-height:1.25;letter-spacing:-.03em;margin:0 0 1.25rem}
+.demo .gap{min-width:0}
+h1{font-size:1.25rem;font-weight:700;margin:0 0 .35rem}
+.lede{color:var(--muted);margin:0 0 2rem;max-width:34rem}
+h2{font-family:var(--display);font-weight:500;font-size:1rem;letter-spacing:-.01em;margin:1.9rem 0 .7rem}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.row{width:100%;display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.75rem;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:.9rem;padding:.85rem 1rem}
+.row:hover{border-color:var(--accent)}
+.row .n{font-family:var(--display);font-weight:500;color:var(--muted)}
+.row .t{font-weight:700;display:block}
+.row .k{color:var(--muted);font-size:.9rem;display:block}
+.row .s{font-weight:700;white-space:nowrap;color:var(--muted)}
+.row.done .s{color:var(--ok)}
+.send{margin-top:2.25rem;padding-top:1.5rem;border-top:1.5px solid var(--line)}
+.send label{display:block;font-weight:700;margin-bottom:.4rem}
+.send .line{display:flex;gap:.6rem;flex-wrap:wrap}
+.field{flex:1 1 12rem;min-width:0;background:var(--surface);border:1.5px solid var(--line);border-radius:.7rem;padding:.75rem .9rem}
+textarea.field{width:100%;margin-top:.75rem;min-height:11rem;resize:vertical;font-size:.95rem}
+.note{color:var(--muted);font-size:.92rem;margin:.6rem 0 0}
+
+/* buttons */
+.btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:.8rem;padding:.85rem 1.3rem;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.25rem}
+
+/* exercise */
+.count{color:var(--muted);font-weight:500;white-space:nowrap}
+.extitle{font-family:var(--display);font-weight:500;font-size:1.2rem;letter-spacing:-.02em;margin:0 0 .3rem}
+.instr{margin:0 0 .8rem;color:var(--muted)}
+details.rule{border:1.5px solid var(--line);border-radius:.8rem;padding:.1rem .95rem;margin-bottom:1rem;background:var(--surface)}
+details.rule summary{padding:.6rem 0;font-weight:700;cursor:pointer}
+details.rule ul{margin:.3rem 0 .7rem;padding-left:1.2rem}
+details.rule p{margin:.3rem 0 .7rem}
+.bar{display:flex;gap:3px;margin-bottom:1.1rem}
+.bar i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.bar i.ok{background:var(--ok)} .bar i.bad{background:var(--bad)} .bar i.now{background:var(--ink)}
+.card{background:var(--surface);border-radius:1.25rem;padding:1.6rem 1.35rem;border:1.5px solid var(--line)}
+.ctx{color:var(--muted);margin:0 0 .5rem}
+.sent{font-size:clamp(1.45rem,5.6vw,2.1rem);line-height:1.45;font-weight:500;margin:0;white-space:pre-line;overflow-wrap:anywhere}
+.ua{font-size:clamp(1.3rem,5vw,1.8rem);line-height:1.4;font-weight:500;margin:0}
+.pair{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:clamp(1.25rem,5vw,1.7rem);font-weight:500}
+.pair span{border:1.5px dashed var(--muted);border-radius:.6rem;padding:.15rem .6rem}
+.pair b{color:var(--muted);font-weight:400}
+.opts{display:grid;gap:.6rem;margin-top:1.2rem;grid-template-columns:repeat(var(--cols,3),1fr)}
+.opt{background:var(--bg);border:1.5px solid var(--line);border-radius:.9rem;padding:.95rem .6rem;font-weight:700;font-size:1.15rem;min-height:3.4rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.typed{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem}
+.typed .field{font-size:1.15rem;background:var(--bg)}
+.built{min-height:3.6rem;border-bottom:2px solid var(--ink);display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;padding-bottom:.6rem;font-size:1.35rem;font-weight:500}
+.built .end{font-weight:700}
+.pool{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem;min-height:3.2rem}
+.tile{background:var(--bg);border:1.5px solid var(--line);border-radius:.7rem;padding:.55rem .85rem;font-weight:700;font-size:1.1rem}
+.built .tile{background:var(--marker);color:var(--marker-ink);border-color:transparent}
+.fb{margin-top:1.1rem;padding:.8rem 1rem;border-radius:.8rem;font-weight:500}
+.fb.ok{background:var(--ok-bg);color:var(--ok)}
+.fb.bad{background:var(--bad-bg);color:var(--bad)}
+.fb.hint{background:var(--bg);color:var(--ink);border:1.5px dashed var(--muted)}
+.fb b{font-weight:700}
+
+/* result */
+.score{font-family:var(--display);font-weight:700;font-size:clamp(3rem,16vw,5rem);line-height:1;letter-spacing:-.04em;margin:.4rem 0 .6rem}
+.score small{font-size:.45em;font-weight:500;color:var(--muted)}
+.review{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.45rem}
+.review li{background:var(--surface);border-left:4px solid var(--bad);border-radius:.3rem .7rem .7rem .3rem;padding:.6rem .85rem}
+.speak{margin-top:1.6rem;background:var(--marker);color:var(--marker-ink);border-radius:1rem;padding:1rem 1.15rem}
+.speak b{display:block;font-family:var(--display);font-weight:500;margin-bottom:.25rem}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+"use strict";
+var RULE_BE = "<p>В українській «є» зазвичай пропускаємо: <i>Я студент</i>. В англійській без <b>am / is / are</b> не можна: <b>I am a student.</b></p><ul><li><b>I</b> → am</li><li><b>he, she, it</b> (хтось або щось одне) → is</li><li><b>we, you, they</b> (багато) → are</li></ul><p>Заперечення: додаємо <b>not</b> → I'm not, he isn't, they aren't.<br>Питання: am / is / are ставимо на початок → <b>Is she</b> a doctor? Where <b>are you</b> from?</p>";
+var RULE_POS = "<ul><li>Люди й тварини → <b>'s</b>: Anna's bag, my brother's car, the cat's name.</li><li>Множина на -s → тільки апостроф: my parents<b>'</b> house, the students<b>'</b> books.</li><li>Множина без -s → <b>'s</b>: the children's toys, men's shoes.</li><li>Речі й місця → <b>of</b>: the door of the car, the end of the film.</li></ul>";
+var RULE_IS = "<p><b>'s</b> буває двох видів:</p><ul><li>скорочене <b>is</b>: Anna's happy = Anna is happy;</li><li>присвоєння (чий? чия?): Anna's bag = сумка Анни.</li></ul><p>Підказка: якщо одразу після 's стоїть річ або людина, яка комусь «належить», це присвоєння.</p>";
+
+var BE = ["am", "is", "are"];
+var BE6 = ["am", "is", "are", "'m not", "isn't", "aren't"];
+var ISPOS = ["is", "possession"];
+
+var EX = [
+{ id:"be1", part:"Part 1: am, is, are", title:"Choose am, is or are", kind:"tap", how:"tap",
+  instr:"Tap the right word for the gap.", rule:RULE_BE, options:BE, items:[
+  {s:"I ___ a student.", a:"am", why:"I → am"},
+  {s:"She ___ my sister.", a:"is", why:"she → is"},
+  {s:"We ___ from Ukraine.", a:"are", why:"we → are"},
+  {s:"It ___ cold today.", a:"is", why:"it → is"},
+  {s:"They ___ at home.", a:"are", why:"they → are"},
+  {s:"You ___ late.", a:"are", why:"you → are"},
+  {s:"My name ___ Olha.", a:"is", why:"my name = it → is"},
+  {s:"Tom and Anna ___ friends.", a:"are", why:"Tom and Anna = they → are"},
+  {s:"The keys ___ on the table.", a:"are", why:"the keys = they → are"},
+  {s:"My brother ___ 25 years old.", a:"is", why:"my brother = he → is"},
+  {s:"I ___ hungry.", a:"am", why:"I → am"},
+  {s:"The weather ___ nice.", a:"is", why:"the weather = it → is"},
+  {s:"My parents ___ doctors.", a:"are", why:"my parents = they → are"},
+  {s:"This ___ my phone.", a:"is", why:"this (одне) → is"},
+  {s:"These ___ my books.", a:"are", why:"these (багато) → are"},
+  {s:"Kyiv ___ a big city.", a:"is", why:"Kyiv = it → is"}
+]},
+{ id:"be2", part:"Part 1: am, is, are", title:"Build questions and negatives", kind:"build", how:"build",
+  instr:"Tap the words in the right order. Tap a word in your sentence to take it back.", rule:RULE_BE, items:[
+  {w:["is","she","a teacher"], end:"?", why:"Питання: is на початок."},
+  {w:["I","am","not","tired"], end:".", why:"not стоїть після am."},
+  {w:["where","are","you","from"], end:"?", why:"Питальне слово + are + you."},
+  {w:["are","your parents","at home"], end:"?", why:"Питання: are на початок."},
+  {w:["it","is","not","my bag"], end:".", why:"not стоїть після is."},
+  {w:["how old","is","your brother"], end:"?", why:"How old + is + хто."},
+  {w:["we","are","not","late"], end:".", why:"not стоїть після are."},
+  {w:["what","is","your name"], end:"?", why:"What + is + що."},
+  {w:["are","they","from Poland"], end:"?", why:"Питання: are на початок."},
+  {w:["is","this","your pen"], end:"?", why:"Питання: is на початок."},
+  {w:["my sister","is","not","at work"], end:".", why:"not стоїть після is."},
+  {w:["why","are","you","sad"], end:"?", why:"Питальне слово + are + you."}
+]},
+{ id:"be3", part:"Part 1: am, is, are", title:"Short answers and negatives", kind:"tap", how:"tap",
+  instr:"Tap the right form for the gap.", rule:RULE_BE, options:BE6, cols:3,
+  speak:"Say five true sentences about you and your family with am, is and are. Then ask three questions: Are you…? Is your…? Where is…?",
+  items:[
+  {s:"A: Are you from Lviv?\nB: No, I ___.", a:"'m not", why:"No, I'm not."},
+  {s:"A: Is he your brother?\nB: Yes, he ___.", a:"is", why:"У короткій відповіді «так» не скорочуємо: Yes, he is."},
+  {s:"Paris ___ in Italy. It's in France.", a:"isn't", why:"Paris = it → isn't"},
+  {s:"A: Are they at work?\nB: No, they ___.", a:"aren't", why:"they → aren't"},
+  {s:"I ___ a teacher. I'm a student.", a:"'m not", why:"I → I'm not"},
+  {s:"A: Is it your car?\nB: No, it ___.", a:"isn't", why:"it → isn't"},
+  {s:"Cats ___ big animals. Elephants are big.", a:"aren't", why:"cats = they → aren't"},
+  {s:"A: Are you and Max friends?\nB: Yes, we ___.", a:"are", why:"we → are"},
+  {s:"A: Am I late?\nB: No, you ___.", a:"aren't", why:"you → aren't"},
+  {s:"A: Is your mum at home?\nB: Yes, she ___.", a:"is", why:"she → is"},
+  {s:"A: Are you OK?\nB: Yes, I ___.", a:"am", why:"I → am"},
+  {s:"My phone ___ new. It's five years old.", a:"isn't", why:"my phone = it → isn't"}
+]},
+{ id:"pos1", part:"Part 2: 's and of", title:"Choose 's or of", kind:"tap", how:"tap",
+  instr:"Tap the correct phrase for the gap.", rule:RULE_POS, cols:1, items:[
+  {s:"This is ___.", a:"Anna's bag", o:["Anna's bag","the bag of Anna"], why:"Людина → 's"},
+  {s:"Open ___, please.", a:"the door of the car", o:["the door of the car","the car's door"], why:"Річ → of"},
+  {s:"___ is very small.", a:"My brother's room", o:["My brother's room","The room of my brother"], why:"Людина → 's"},
+  {s:"___ is sad.", a:"The end of the film", o:["The end of the film","The film's end"], why:"Річ → of"},
+  {s:"What is ___?", a:"your teacher's name", o:["your teacher's name","the name of your teacher"], why:"Людина → 's"},
+  {s:"What is ___?", a:"the name of this street", o:["the name of this street","this street's name"], why:"Місце → of"},
+  {c:"I have a mum and a dad.", s:"This is ___.", a:"my parents' house", o:["my parents' house","my parent's house","my parents's house"], why:"Множина на -s → тільки апостроф: parents'"},
+  {s:"___ are on the floor.", a:"The children's toys", o:["The children's toys","The childrens' toys","The toys of children"], why:"children — множина без -s → children's"},
+  {s:"___ is red.", a:"The roof of the house", o:["The roof of the house","The house's roof"], why:"Річ → of"},
+  {s:"Is this ___?", a:"Oleh's phone", o:["Oleh's phone","the phone of Oleh","Olehs phone"], why:"Людина → 's, з апострофом"},
+  {s:"Write your name at ___.", a:"the top of the page", o:["the top of the page","the page's top"], why:"Річ → of"},
+  {c:"I have two friends.", s:"My ___ names are Ira and Max.", a:"friends'", o:["friends'","friend's","friends"], why:"Двоє друзів: friends + апостроф"},
+  {s:"The book is on ___.", a:"the teacher's desk", o:["the teacher's desk","the desk of teacher"], why:"Людина → 's"},
+  {s:"I like ___.", a:"the colour of the walls", o:["the colour of the walls","the walls' colour"], why:"Річ → of"}
+]},
+{ id:"pos2", part:"Part 2: 's and of", title:"Write the phrase", kind:"type", how:"type",
+  instr:"Make one phrase with 's, s' or of. Example: the bag + Anna = Anna's bag.", rule:RULE_POS, items:[
+  {thing:"the phone", owner:"my sister", a:"my sister's phone", re:"my sister's phone", why:"Людина → 's. Артикль the перед річчю зникає."},
+  {thing:"the window", owner:"the room", a:"the window of the room", re:"the window of the room", why:"Річ → of"},
+  {thing:"the car", owner:"Mark", a:"Mark's car", re:"mark's car", why:"Людина → 's"},
+  {thing:"the names", owner:"the students", a:"the students' names", re:"the students' names", why:"Множина на -s → тільки апостроф у кінці."},
+  {thing:"the cat", owner:"our neighbours", a:"our neighbours' cat", re:"our neighbou?rs' cat", why:"Множина на -s → тільки апостроф у кінці."},
+  {thing:"the legs", owner:"the table", a:"the legs of the table", re:"the legs of the table", why:"Річ → of"},
+  {thing:"the birthday", owner:"my mum", a:"my mum's birthday", re:"my (mum|mom|mother)'s birthday", why:"Людина → 's"},
+  {thing:"the bikes", owner:"the children", a:"the children's bikes", re:"the children's bikes", why:"children — множина без -s → 's"},
+  {thing:"the price", owner:"the ticket", a:"the price of the ticket", re:"the price of the ticket", why:"Річ → of"},
+  {thing:"the job", owner:"her husband", a:"her husband's job", re:"her husband's job", why:"Людина → 's"},
+  {thing:"the flat", owner:"James", a:"James's flat", re:"james'(s)? flat", why:"Ім'я на -s: James's (або James')."},
+  {thing:"the beginning", owner:"the lesson", a:"the beginning of the lesson", re:"the beginning of the lesson", why:"Річ → of"}
+]},
+{ id:"pos3", part:"Part 2: 's and of", title:"Is 's short for is, or is it possession?", kind:"tap", how:"tap",
+  instr:"Look at the highlighted word. Tap what 's means here.", rule:RULE_IS, options:ISPOS, cols:2,
+  speak:"Talk about your family and friends. What's your mum's name? What's your best friend's job? What is the name of your street?",
+  items:[
+  {s:"[Anna's] my friend.", a:"is", why:"Anna is my friend."},
+  {s:"[Anna's] friend is a doctor.", a:"possession", why:"Подруга Анни. Дієслово is уже є далі."},
+  {s:"My [dad's] car is black.", a:"possession", why:"Машина тата."},
+  {s:"My [dad's] at work.", a:"is", why:"My dad is at work."},
+  {s:"It's [Tom's] birthday today.", a:"possession", why:"День народження Тома."},
+  {s:"[It's] Tom's birthday today.", a:"is", why:"It is Tom's birthday."},
+  {s:"[Where's] my phone?", a:"is", why:"Where is my phone?"},
+  {s:"The [cat's] name is Murka.", a:"possession", why:"Ім'я кота."},
+  {s:"The [cat's] on the sofa.", a:"is", why:"The cat is on the sofa."},
+  {s:"Maria's [sister's] a nurse.", a:"is", why:"Maria's sister is a nurse."},
+  {s:"[Maria's] sister's a nurse.", a:"possession", why:"Сестра Марії."},
+  {s:"Her [brother's] wife is from Spain.", a:"possession", why:"Дружина брата."},
+  {s:"What's your [teacher's] name?", a:"possession", why:"Ім'я вчителя."},
+  {s:"[He's] twenty.", a:"is", why:"He is twenty."}
+]},
+{ id:"mix1", part:"Mixed practice", title:"Mixed gaps", kind:"tap", how:"tap",
+  instr:"Tap the right option for the gap.", rule:RULE_BE + RULE_POS, cols:3, items:[
+  {s:"This is my ___ car.", a:"father's", o:["father's","fathers","father is"], why:"Машина тата → father's"},
+  {s:"My friends ___ from Odesa.", a:"are", o:BE, why:"my friends = they → are"},
+  {s:"___ your sister a student?", a:"Is", o:["Am","Is","Are"], why:"your sister = she → Is"},
+  {s:"What is the name ___ this street?", a:"of", o:["of","'s","is"], why:"Місце → of"},
+  {s:"My ___ names are Ira and Oleh.", a:"parents'", o:["parents'","parent's","parents"], why:"Множина на -s → parents'"},
+  {s:"Kate ___ my brother's wife.", a:"is", o:BE, why:"Kate = she → is"},
+  {s:"The ___ room is small.", a:"children's", o:["children's","childrens'","children"], why:"children → children's"},
+  {s:"Where ___ my keys?", a:"are", o:BE, why:"my keys = they → are"},
+  {s:"I ___ not at school today.", a:"am", o:BE, why:"I → am"},
+  {s:"It is the end ___ the lesson.", a:"of", o:["of","'s","is"], why:"Річ → of"},
+  {s:"Her ___ name is Bohdan.", a:"husband's", o:["husband's","husbands'","husband is"], why:"Ім'я чоловіка → husband's"},
+  {s:"My brother and I ___ tall.", a:"are", o:BE, why:"my brother and I = we → are"}
+]},
+{ id:"tr", part:"Mixed practice", title:"Translate into English", kind:"type", how:"type", keep:true,
+  instr:"Type the sentence in English.", rule:RULE_BE + RULE_POS,
+  speak:"Describe one person in your family in five sentences. Use am, is, are and 's.",
+  items:[
+  {ua:"Я вчитель.", a:"I am a teacher.", re:"(i am|i'm) a teacher", why:"Не забудь am і артикль a."},
+  {ua:"Вона не вдома.", a:"She isn't at home.", re:"(she is not|she isn't|she's not) at home", why:"she + is + not"},
+  {ua:"Це телефон мого брата.", a:"This is my brother's phone.", re:"(this is|it is|it's|that is|that's) my brother's (phone|mobile phone|mobile|smartphone)", why:"Чий телефон? → my brother's phone"},
+  {ua:"Ви з України?", a:"Are you from Ukraine?", re:"are you from ukraine", why:"Питання: Are на початок."},
+  {ua:"Машина моїх батьків нова.", a:"My parents' car is new.", re:"my parents' car is new", why:"Множина на -s → parents'. І не забудь is."},
+  {ua:"Як звати твою сестру?", a:"What is your sister's name?", re:"(what is|what's) your sister's name", why:"Дослівно: яке ім'я твоєї сестри?"},
+  {ua:"Ми не втомлені.", a:"We aren't tired.", re:"(we are not|we aren't|we're not) tired", why:"we + are + not"},
+  {ua:"Дах будинку червоний.", a:"The roof of the house is red.", re:"the roof of the house is red", why:"Річ → of. І не забудь is."},
+  {ua:"Де ключі Анни?", a:"Where are Anna's keys?", re:"where are ann(a)?'s keys", why:"keys (багато) → are; Анни → Anna's"},
+  {ua:"Мама Олега лікар.", a:"Oleh's mum is a doctor.", re:"ole[hg]'s (mum|mom|mother) is a doctor", why:"Oleh's mum + is + a doctor"},
+  {ua:"Іграшки дітей на підлозі.", a:"The children's toys are on the floor.", re:"(the )?(children's|kids') toys are on the floor", why:"children's toys + are"},
+  {ua:"Кінець фільму сумний.", a:"The end of the film is sad.", re:"the (end|ending) of the (film|movie) is sad", why:"Річ → of"},
+  {ua:"Собака мого друга великий.", a:"My friend's dog is big.", re:"my friend's dog is big", why:"my friend's dog + is"},
+  {ua:"Ці студенти з Києва?", a:"Are these students from Kyiv?", re:"are these students from k(yiv|iev)", why:"Питання: Are на початок."}
+]}
+];
+
+function norm(s){
+  return String(s).toLowerCase().replace(/[\u2019\u2018`\u02BC\u00B4]/g,"'").replace(/[.,!?;:"]/g," ").replace(/\s+/g," ").trim();
+}
+function matches(item, val){ return new RegExp("^(" + item.re + ")$").test(norm(val)); }
+
+if (typeof module !== "undefined") { module.exports = {EX:EX, norm:norm, matches:matches}; }
+
+if (typeof document !== "undefined") (function(){
+  var KEY = "dinglish-be-poss-v1";
+  var app = document.getElementById("app");
+  var store = {best:{}, name:""};
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && p.best) store = p; } } catch(e){}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
+
+  var st = null;        // running exercise state
+  var copyText = "";
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+  function byId(id){ for (var i=0;i<EX.length;i++) if (EX[i].id===id) return EX[i]; }
+  function fill(s, a){
+    var parts = s.split("___");
+    if (parts.length < 2) return null;
+    var before = parts[0];
+    if (a && a.charAt(0) === "'") before = before.replace(/\s$/,"");
+    return [before, parts[1]];
+  }
+
+  /* ---------- home ---------- */
+  function home(){
+    st = null;
+    var done = 0, html = "";
+    html += '<header class="top"><span class="brand">dinglish</span></header>';
+    html += '<p class="demo" aria-hidden="true">I <span class="gap">am</span> Anna<span class="gap">\'s</span> teacher.</p>';
+    html += '<h1>am / is / are and \'s / of</h1>';
+    html += '<p class="lede">Eight short exercises for elementary level. Tap or type your answer and see right away if it is correct.</p>';
+    var part = "";
+    EX.forEach(function(ex, i){
+      if (ex.part !== part){ if (part) html += "</ol>"; part = ex.part; html += "<h2>" + esc(part) + '</h2><ol class="list">'; }
+      var b = store.best[ex.id];
+      if (b) done++;
+      html += '<li><button class="row' + (b ? " done" : "") + '" data-start="' + ex.id + '">' +
+        '<span class="n">' + (i+1) + '</span>' +
+        '<span><span class="t">' + esc(ex.title) + '</span><span class="k">' + ex.items.length + " sentences, " + ex.how + '</span></span>' +
+        '<span class="s">' + (b ? b.score + " / " + b.total : "Start") + '</span></button></li>';
+    });
+    html += "</ol>";
+    html += '<section class="send"><label for="nm">Send your results to your teacher</label>' +
+      '<div class="line"><input class="field" id="nm" placeholder="Your name" autocomplete="off" value="' + esc(store.name || "") + '">' +
+      '<button class="btn" id="copy">Copy results</button></div>' +
+      '<div id="copyout"></div>' +
+      '<p class="note">' + done + " of " + EX.length + ' exercises done. Your best score is saved on this device. <button class="link" id="reset">Clear my results</button></p></section>';
+    app.innerHTML = html;
+    window.scrollTo(0,0);
+  }
+
+  function resultsText(){
+    var lines = ["dinglish trainer: am / is / are + 's / of", "Student: " + (store.name || "-")];
+    var s = 0, t = 0;
+    EX.forEach(function(ex, i){
+      var b = store.best[ex.id];
+      lines.push((i+1) + ". " + ex.title + ": " + (b ? b.score + "/" + b.total : "not done"));
+      if (b){ s += b.score; t += b.total; }
+    });
+    lines.push("Total: " + s + "/" + t);
+    return lines.join("\n");
+  }
+
+  /* ---------- exercise ---------- */
+  function start(id, subset){
+    var ex = byId(id);
+    var idx = subset || ex.items.map(function(_, i){ return i; });
+    if (!ex.keep) idx = shuffle(idx);
+    st = {ex:ex, queue:idx, pos:0, res:[], wrong:[], full:!subset, done:false};
+    enter();
+  }
+  function enter(){
+    var it = st.ex.items[st.queue[st.pos]];
+    st.answered = false; st.ok = null; st.pick = null; st.attempt = 0; st.val = ""; st.hint = false; st.built = [];
+    st.opts = it.o ? shuffle(it.o) : st.ex.options;
+    if (st.ex.kind === "build"){
+      var ord = it.w.map(function(_, i){ return i; }), tries = 0;
+      do { ord = shuffle(ord); tries++; } while (tries < 20 && ord.every(function(v, i){ return v === i; }));
+      st.order = ord;
+    }
+    draw(true);
+  }
+  function settle(ok){
+    st.answered = true; st.ok = ok;
+    st.res[st.pos] = ok ? "ok" : "bad";
+    if (!ok) st.wrong.push(st.queue[st.pos]);
+  }
+
+  function answerHTML(ex, it){
+    if (ex.kind === "build") return esc(cap(it.w.join(" ")) + it.end);
+    if (ex.kind === "type") return esc(it.a);
+    var f = fill(it.s, it.a);
+    if (f) return esc(f[0]) + "<b>" + esc(it.a) + "</b>" + esc(f[1]);
+    return esc(it.s).replace(/\[(.+?)\]/, "<b>$1</b>") + " (" + esc(it.a) + ")";
+  }
+
+  function draw(fresh){
+    var ex = st.ex, it = ex.items[st.queue[st.pos]], n = st.queue.length, h = "";
+    h += '<header class="top"><button class="link" data-home>All exercises</button><span class="count">' + (st.pos+1) + " / " + n + "</span></header>";
+    h += '<h1 class="extitle">' + esc(ex.title) + "</h1>";
+    h += '<p class="instr">' + esc(ex.instr) + "</p>";
+    h += '<details class="rule"><summary>Правило</summary>' + ex.rule + "</details>";
+    h += '<div class="bar" aria-hidden="true">';
+    for (var i=0;i<n;i++) h += '<i class="' + (st.res[i] || (i===st.pos ? "now" : "")) + '"></i>';
+    h += "</div>";
+    h += '<div class="card">';
+
+    if (ex.kind === "tap"){
+      if (it.c) h += '<p class="ctx">' + esc(it.c) + "</p>";
+      var f = fill(it.s, st.answered ? it.a : "");
+      if (f){
+        h += '<p class="sent">' + esc(f[0]) + '<span class="gap' + (st.answered ? " pop" : "") + '">' + (st.answered ? esc(it.a) : "&nbsp;") + "</span>" + esc(f[1]) + "</p>";
+      } else {
+        h += '<p class="sent">' + esc(it.s).replace(/\[(.+?)\]/, '<span class="gap">$1</span>') + "</p>";
+      }
+      h += '<div class="opts" style="--cols:' + (ex.cols || 3) + '">';
+      st.opts.forEach(function(o, k){
+        var c = "";
+        if (st.answered){ if (o === it.a) c = " right"; else if (o === st.pick) c = " wrong"; }
+        h += '<button class="opt' + c + '" data-opt="' + k + '"' + (st.answered ? " disabled" : "") + ">" + esc(o) + "</button>";
+      });
+      h += "</div>";
+    }
+
+    if (ex.kind === "type"){
+      if (it.ua) h += '<p class="ua">' + esc(it.ua) + "</p>";
+      else h += '<div class="pair"><span>' + esc(it.thing) + "</span><b>+</b><span>" + esc(it.owner) + "</span></div>";
+      h += '<div class="typed"><input class="field" id="inp" aria-label="Your answer" placeholder="Type here" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"' + (st.answered ? " disabled" : "") + ">" +
+           (st.answered ? "" : '<button class="btn" data-check>Check answer</button>') + "</div>";
+    }
+
+    if (ex.kind === "build"){
+      h += '<div class="built" aria-label="Your sentence">';
+      st.built.forEach(function(wi, k){
+        h += '<button class="tile" data-back="' + k + '"' + (st.answered ? " disabled" : "") + ">" + esc(k === 0 ? cap(it.w[wi]) : it.w[wi]) + "</button>";
+      });
+      h += '<span class="end">' + esc(it.end) + "</span></div>";
+      h += '<div class="pool">';
+      st.order.forEach(function(wi){
+        if (st.built.indexOf(wi) < 0) h += '<button class="tile" data-word="' + wi + '">' + esc(it.w[wi]) + "</button>";
+      });
+      h += "</div>";
+      if (!st.answered) h += '<div class="actions"><button class="btn" data-check' + (st.built.length === it.w.length ? "" : " disabled") + ">Check answer</button></div>";
+    }
+
+    if (st.hint && !st.answered) h += '<div class="fb hint" role="status">Not yet. Try once more. ' + esc(it.why || "") + "</div>";
+    if (st.answered){
+      if (st.ok) h += '<div class="fb ok" role="status"><b>Correct.</b> ' + (ex.kind === "tap" ? esc(it.why || "") : answerHTML(ex, it)) + "</div>";
+      else h += '<div class="fb bad" role="status"><b>Not quite.</b> ' + (ex.kind === "tap" ? esc(it.why || "") : "Correct answer: " + answerHTML(ex, it) + ". " + esc(it.why || "")) + "</div>";
+      h += '<div class="actions"><button class="btn" id="next" data-next>' + (st.pos + 1 < n ? "Next sentence" : "See my result") + "</button></div>";
+    }
+    h += "</div>";
+    var open = app.querySelector("details.rule");
+    var wasOpen = open && open.open && !fresh;
+    app.innerHTML = h;
+    if (wasOpen) app.querySelector("details.rule").open = true;
+
+    var inp = document.getElementById("inp");
+    if (inp){ inp.value = st.val; if (!st.answered){ inp.focus(); try { inp.setSelectionRange(inp.value.length, inp.value.length); } catch(e){} } }
+    var nx = document.getElementById("next");
+    if (nx) nx.focus();
+    if (fresh) window.scrollTo(0,0);
+  }
+
+  function choose(k){
+    if (!st || st.done || st.answered || st.ex.kind !== "tap") return;
+    var it = st.ex.items[st.queue[st.pos]], o = st.opts[k];
+    if (o === undefined) return;
+    st.pick = o; settle(o === it.a); draw();
+  }
+  function check(){
+    if (!st || st.answered) return;
+    var ex = st.ex, it = ex.items[st.queue[st.pos]], ok;
+    if (ex.kind === "type"){
+      var inp = document.getElementById("inp");
+      st.val = inp ? inp.value : "";
+      if (!norm(st.val)) { if (inp) inp.focus(); return; }
+      ok = matches(it, st.val);
+    } else {
+      if (st.built.length !== it.w.length) return;
+      ok = st.built.map(function(i){ return it.w[i]; }).join(" ") === it.w.join(" ");
+    }
+    if (ok){
+      st.res[st.pos] = st.attempt === 0 ? "ok" : "bad";
+      if (st.attempt > 0) st.wrong.push(st.queue[st.pos]);
+      st.answered = true; st.ok = true;
+    } else if (st.attempt === 0){
+      st.attempt = 1; st.hint = true;
+    } else {
+      settle(false);
+    }
+    draw();
+  }
+  function next(){
+    if (!st || !st.answered) return;
+    if (st.pos + 1 < st.queue.length){ st.pos++; enter(); } else finish();
+  }
+
+  function finish(){
+    var ex = st.ex, n = st.queue.length;
+    var score = st.res.filter(function(r){ return r === "ok"; }).length;
+    st.done = true;
+    if (st.full){
+      var b = store.best[ex.id];
+      if (!b || score > b.score) store.best[ex.id] = {score:score, total:n};
+      save();
+    }
+    var i = EX.indexOf(ex), nextEx = EX[i+1];
+    var msg = score === n ? "Everything is correct." : score / n >= 0.7 ? "Good work. Look at your mistakes below." : "Read the rule again, then practise your mistakes.";
+    var h = '<header class="top"><button class="link" data-home>All exercises</button></header>';
+    h += '<h1 class="extitle">' + esc(ex.title) + "</h1>";
+    h += '<p class="score">' + score + "<small> / " + n + "</small></p><p>" + msg + "</p>";
+    if (st.wrong.length){
+      h += '<ul class="review">';
+      st.wrong.forEach(function(ix){ h += "<li>" + answerHTML(ex, ex.items[ix]) + "</li>"; });
+      h += "</ul>";
+    }
+    h += '<div class="actions">';
+    if (st.wrong.length) h += '<button class="btn" data-redo>Practise my mistakes</button>';
+    if (nextEx) h += '<button class="btn' + (st.wrong.length ? " ghost" : "") + '" data-start="' + nextEx.id + '">Next exercise</button>';
+    h += '<button class="btn ghost" data-start="' + ex.id + '">Do it again</button></div>';
+    if (ex.speak && st.full) h += '<div class="speak"><b>Speaking</b>' + esc(ex.speak) + "</div>";
+    app.innerHTML = h;
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- events ---------- */
+  app.addEventListener("click", function(e){
+    var t = e.target.closest("button");
+    if (!t) return;
+    var d = t.dataset;
+    if (d.start) return start(d.start);
+    if ("home" in d) return home();
+    if (d.opt !== undefined) return choose(+d.opt);
+    if ("check" in d) return check();
+    if ("next" in d) return next();
+    if ("redo" in d) return start(st.ex.id, st.wrong.slice());
+    if (d.word !== undefined){ st.built.push(+d.word); st.hint = false; return draw(); }
+    if (d.back !== undefined){ st.built.splice(+d.back, 1); st.hint = false; return draw(); }
+    if (t.id === "copy"){
+      copyText = resultsText();
+      var out = document.getElementById("copyout");
+      var show = function(note){
+        out.innerHTML = '<textarea class="field" readonly aria-label="Your results"></textarea><p class="note">' + note + "</p>";
+        var ta = out.querySelector("textarea"); ta.value = copyText; ta.focus(); ta.select();
+      };
+      try {
+        navigator.clipboard.writeText(copyText).then(function(){ show("Results copied. Paste them in a message to your teacher."); },
+                                                    function(){ show("Select the text, copy it and send it to your teacher."); });
+      } catch(err){ show("Select the text, copy it and send it to your teacher."); }
+      return;
+    }
+    if (t.id === "reset"){
+      if (window.confirm("Clear all your results on this device?")){ store.best = {}; save(); home(); }
+    }
+  });
+  app.addEventListener("input", function(e){
+    if (e.target.id === "nm"){ store.name = e.target.value.trim(); save(); }
+    if (e.target.id === "inp" && st){ st.val = e.target.value; }
+  });
+  document.addEventListener("keydown", function(e){
+    if (!st || st.done) return;
+    var inField = e.target && e.target.tagName === "INPUT";
+    if (e.key === "Enter" && inField && e.target.id === "inp"){ e.preventDefault(); check(); return; }
+    if (!inField && !e.metaKey && !e.ctrlKey && !e.altKey && /^[1-9]$/.test(e.key)) choose(+e.key - 1);
+  });
+
+  home();
+})();
+</script>
+</body>
+</html>
