@@ -1,0 +1,631 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Тренажер слів НМТ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@500;700;800&display=swap">
+<style>
+/* Layout: a single column "exam desk" — header with progress, filter chips, mode tabs, one working sheet styled like the NMT answer form, word list below. */
+:root{
+  --bg:#EEF1F7; --paper:#FFFFFF; --ink:#141E36; --muted:#5A6580; --line:#D6DCE8;
+  --pen:#2346D6; --pen-soft:#E5EBFF; --ok:#12804E; --ok-soft:#DFF3E8; --bad:#C33A2E; --bad-soft:#FBE6E3; --hl:#FFE36A;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1322; --paper:#161F35; --ink:#E7ECF7; --muted:#9AA5C0; --line:#28334F;
+  --pen:#86A1FF; --pen-soft:#1D2A55; --ok:#4FC98C; --ok-soft:#153829; --bad:#FF7B6F; --bad-soft:#3F1F1C; --hl:#7D6A1E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1322; --paper:#161F35; --ink:#E7ECF7; --muted:#9AA5C0; --line:#28334F;
+  --pen:#86A1FF; --pen-soft:#1D2A55; --ok:#4FC98C; --ok-soft:#153829; --bad:#FF7B6F; --bad-soft:#3F1F1C; --hl:#7D6A1E; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--pen);outline-offset:2px}
+
+/* header */
+.top{display:flex;flex-direction:column;gap:12px}
+.brand{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--muted)}
+.brand b{color:var(--ink);background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 2px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,6vw,42px);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1 span{color:var(--pen)}
+.progress{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
+.bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .4s}
+.progress .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+
+/* chips + tabs */
+.filters{display:flex;flex-direction:column;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:6px 12px;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.chip small{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:inherit;opacity:.7}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pen)}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:4px}
+.tab{border:0;background:transparent;border-radius:9px;padding:10px 4px;font-weight:600;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tab small{font-weight:400;font-size:11px;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--pen);color:#fff}
+.tab[aria-selected="true"] small{color:#fff;opacity:.8}
+
+/* sheet */
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px clamp(16px,4vw,32px) 26px;display:flex;flex-direction:column;gap:18px;min-height:380px;position:relative}
+.task{display:flex;flex-direction:column;gap:4px;border-bottom:1px dashed var(--line);padding-bottom:14px}
+.task-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.task h2{font-family:var(--f-display);font-weight:700;font-size:18px;margin:0}
+.task p{margin:0;color:var(--muted);font-size:14px}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);text-align:center;padding:40px 10px}
+
+.prompt{text-align:center;display:flex;flex-direction:column;gap:6px;padding:10px 0}
+.prompt .w{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,5.5vw,36px);line-height:1.15;text-wrap:balance;overflow-wrap:anywhere}
+.prompt .w.ua{font-family:var(--f-body);font-weight:700}
+.prompt .lab{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.note{font-size:13px;color:var(--muted)}
+
+/* flashcard */
+.card{perspective:1200px;cursor:pointer;border:0;background:none;padding:0;width:100%}
+.card-in{position:relative;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.card.flip .card-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border:2px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--paper)}
+.face.back{transform:rotateY(180deg);border-color:var(--pen);background:var(--pen-soft)}
+.face .tap{position:absolute;bottom:10px;font-size:12px;color:var(--muted)}
+
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:11px 18px;font-weight:600;display:inline-flex;gap:8px;align-items:center}
+.btn.primary{background:var(--pen);border-color:var(--pen);color:#fff}
+.btn.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.btn.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted);font-weight:500}
+.btn kbd{font-family:var(--f-mono);font-size:11px;opacity:.65}
+
+/* answer-sheet options */
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:10px 14px;min-height:54px}
+.opt .box{flex:none;width:30px;height:30px;border:2px solid var(--ink);border-radius:4px;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:14px;position:relative}
+.opt .t{min-width:0;overflow-wrap:anywhere}
+.opt:hover:not([disabled]){border-color:var(--pen)}
+.opt.picked .box::after,.opt.right .box::after{content:"";position:absolute;inset:3px;background:
+  linear-gradient(45deg,transparent 44%,currentColor 44% 56%,transparent 56%),
+  linear-gradient(-45deg,transparent 44%,currentColor 44% 56%,transparent 56%)}
+.opt.picked .box{color:var(--bad);border-color:var(--bad)}
+.opt.picked{background:var(--bad-soft);border-color:var(--bad)}
+.opt.right{background:var(--ok-soft);border-color:var(--ok)}
+.opt.right .box{color:var(--ok);border-color:var(--ok)}
+.opt[disabled]{cursor:default}
+
+/* write */
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.inp{width:100%;font:inherit;font-size:20px;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-family:var(--f-mono)}
+.inp.good{border-color:var(--ok);background:var(--ok-soft)}
+.inp.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.forms .given{font-family:var(--f-mono);font-size:20px;padding:12px 14px;border:2px dashed var(--line);border-radius:10px;overflow-wrap:anywhere}
+.hint{font-family:var(--f-mono);letter-spacing:.2em;color:var(--pen);text-align:center;min-height:1.5em}
+.fb{border-radius:10px;padding:12px 14px;font-size:15px}
+.fb.ok{background:var(--ok-soft);color:var(--ok)}
+.fb.bad{background:var(--bad-soft);color:var(--bad)}
+.fb b{font-family:var(--f-mono)}
+
+/* match */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tile{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:12px;min-height:52px;font-size:15px;text-align:left;overflow-wrap:anywhere;transition:opacity .3s,background .2s}
+.tile.en{font-family:var(--f-mono);font-size:14px}
+.tile.sel{border-color:var(--pen);background:var(--pen-soft)}
+.tile.done{opacity:.25;pointer-events:none;background:var(--ok-soft);border-color:var(--ok)}
+.tile.shake{border-color:var(--bad);background:var(--bad-soft);animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* results */
+.score{font-family:var(--f-display);font-weight:800;font-size:56px;text-align:center;line-height:1;font-variant-numeric:tabular-nums}
+.score small{font-size:22px;color:var(--muted)}
+.mistakes{display:flex;flex-direction:column;gap:6px}
+.mistakes div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:6px 0;font-size:15px}
+.mistakes div span:first-child{font-family:var(--f-mono)}
+.mistakes div span:last-child{color:var(--muted);text-align:right}
+
+/* list */
+details.list{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:0 16px}
+details.list summary{cursor:pointer;padding:14px 0;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+details.list summary small{color:var(--muted);font-weight:400}
+.tbl{overflow-x:auto;padding-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td{padding:7px 6px;border-top:1px solid var(--line);vertical-align:top}
+td:first-child{width:14px}
+td.en{font-family:var(--f-mono);font-size:13px}
+td.ua{color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dot.learning{background:var(--pen)}
+.dot.learned{background:var(--ok)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:6px 0 10px}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.reset{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:6px 0 16px;font-size:14px}
+footer{text-align:center;font-size:13px;color:var(--muted)}
+footer b{font-family:var(--f-mono);color:var(--ink)}
+
+@media (max-width:520px){
+  .tab small{display:none}
+  .tab{font-size:13px;padding:10px 2px}
+  .forms{grid-template-columns:1fr}
+  .tile{font-size:14px;padding:10px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b>dinglish</b> · NMT English</div>
+    <h1>Тренажер слів <span>НМТ</span></h1>
+    <div class="progress"><div class="bar"><i id="barFill"></i></div><span class="num" id="progNum">0 / 0</span><span>вивчено</span></div>
+  </header>
+
+  <section class="filters" aria-label="Filters">
+    <div class="chips" id="chips"></div>
+    <label class="toggle"><input type="checkbox" id="onlyLearning"> Тільки слова, які ще не вивчені</label>
+  </section>
+
+  <nav class="tabs" role="tablist" id="tabs">
+    <button class="tab" role="tab" data-mode="cards">Cards<small>картки</small></button>
+    <button class="tab" role="tab" data-mode="quiz">Quiz<small>тест</small></button>
+    <button class="tab" role="tab" data-mode="write">Write<small>написати</small></button>
+    <button class="tab" role="tab" data-mode="verbs">Verbs<small>3 форми</small></button>
+    <button class="tab" role="tab" data-mode="match">Match<small>пари</small></button>
+  </nav>
+
+  <main class="sheet" id="stage" aria-live="polite"></main>
+
+  <details class="list" id="list">
+    <summary>Усі слова <small id="listCount"></small></summary>
+    <div class="legend"><span><i class="dot"></i>нове</span><span><i class="dot learning"></i>вчу</span><span><i class="dot learned"></i>вивчено (2 правильні відповіді поспіль)</span></div>
+    <div class="tbl"><table><tbody id="listBody"></tbody></table></div>
+    <div class="reset" id="resetBox"><button class="btn ghost" id="resetBtn">Скинути прогрес</button></div>
+  </details>
+
+  <footer>made by <b>dinglish</b> for NMT prep</footer>
+</div>
+
+<script>
+// [english, ukrainian, topic, note]
+const RAW = [
+  // Irregular verbs
+  ["leave, left, left","залишати, покидати","v"],
+  ["hide, hid, hidden","ховати","v"],
+  ["think, thought, thought","думати","v"],
+  ["bring, brought, brought","приносити","v"],
+  ["meet, met, met","зустрічати","v"],
+  ["do, did, done","робити","v"],
+  ["go, went, gone","іти, їхати","v"],
+  ["keep, kept, kept","тримати, зберігати","v"],
+  ["come, came, come","приходити","v"],
+  ["begin, began, begun","починати","v"],
+  ["can, could, been able to","могти","v"],
+  ["hear, heard, heard","чути","v"],
+  ["pay, paid, paid","платити","v"],
+  ["ride, rode, ridden","їздити верхи","v"],
+  ["run, ran, run","бігти","v"],
+  ["sell, sold, sold","продавати","v"],
+  ["stand, stood, stood","стояти","v"],
+  ["teach, taught, taught","навчати","v"],
+  ["try, tried, tried","намагатися, пробувати","v","правильне дієслово: -y → -ied"],
+  ["understand, understood, understood","розуміти","v"],
+  ["wear, wore, worn","носити (одяг)","v"],
+  ["spread, spread, spread","поширювати","v"],
+  // Present Perfect words
+  ["already","вже","pp"],
+  ["yet","ще (не); вже (у питаннях)","pp"],
+  ["ever","коли-небудь","pp"],
+  ["just","щойно","pp"],
+  ["so far","поки що, досі","pp"],
+  ["recently","нещодавно","pp"],
+  ["for","протягом (for two years)","pp"],
+  ["since","з (якогось моменту) (since 2020)","pp"],
+  ["almost","майже","pp"],
+  // Character & feelings
+  ["shy","сором'язливий","char"],
+  ["joyful","радісний","char"],
+  ["good-natured","добродушний","char"],
+  ["reserved","стриманий, замкнутий","char"],
+  ["successful","успішний","char"],
+  ["unrealistic outlook","нереалістичний погляд","char"],
+  // Family & home
+  ["immediate family","найближчі родичі","fam"],
+  ["extended family","розширена родина (далекі родичі)","fam"],
+  ["household chores","робота по дому","fam"],
+  ["mow the lawn","косити газон","fam"],
+  ["community","спільнота, громада","fam"],
+  ["duties, responsibilities","обов'язки, відповідальність","fam"],
+  // Word formation
+  ["simple / simplicity","простий / простота","wf"],
+  ["strong / strength","сильний / сила","wf"],
+  ["happy / happiness","щасливий / щастя","wf"],
+  ["true / truth","правдивий / правда","wf"],
+  ["honest / honesty","чесний / чесність","wf"],
+  ["kind / kindness","добрий / доброта","wf"],
+  ["independent / independence","незалежний / незалежність","wf"],
+  // Phrases & patterns
+  ["suggest doing sth","пропонувати щось зробити","ph","suggest + -ing"],
+  ["avoid doing sth","уникати чогось","ph","avoid + -ing"],
+  ["have difficulty doing sth","мати труднощі з чимось","ph","have difficulty + -ing"],
+  ["be willing to do sth","мати бажання щось робити","ph"],
+  ["take sth into account","брати до уваги","ph"],
+  ["blame sb for sth","звинувачувати когось у чомусь","ph"],
+  ["be aware of","бути обізнаним, знати про","ph"],
+  ["pay attention to","звертати увагу на","ph"],
+  ["tend to","мати тенденцію","ph"],
+  ["set goals","ставити цілі","ph"],
+  ["make an effort","докласти зусиль","ph"],
+  ["break out","раптово початися","ph"],
+  ["somebody else","хтось інший, хтось ще","ph"],
+  ["job interview","співбесіда","ph"],
+  ["real estate market","ринок нерухомості","ph"],
+  // Other words
+  ["trip","спіткнутися","gen","to trip (дієслово)"],
+  ["stage","сцена","gen"],
+  ["power","сила, міць","gen"],
+  ["through","крізь, через","gen"],
+  ["during","протягом (during the lesson)","gen"],
+  ["consider","розглядати, вважати","gen"],
+  ["accomplish","виконувати, досягати","gen"],
+  ["explain","пояснювати","gen"],
+  ["term","термін; семестр","gen"],
+  ["entire","весь, цілий","gen"],
+  ["figure","фігура","gen"],
+  ["ultimate","остаточний, кінцевий","gen"],
+  ["approve","схвалювати, затверджувати","gen"],
+  ["impact / influence","вплив","gen"],
+  ["effort","зусилля, спроба","gen"],
+  ["far, further, the furthest","далеко, далі, найдалі","gen"],
+  ["although","хоча, незважаючи на те, що","gen"],
+  ["demand","вимагати; вимога","gen"],
+  ["value","цінувати; цінність","gen"],
+  ["wrong","неправильний, помилковий","gen"],
+  ["concern","занепокоєння, стурбованість","gen"],
+  ["notice","помічати","gen"],
+  ["spots","прищі","gen"],
+  ["discuss","обговорювати","gen"],
+];
+const TOPICS = [
+  ["all","Усі"],["v","Irregular verbs"],["pp","Present Perfect"],["char","Character"],
+  ["fam","Family & home"],["wf","Word formation"],["ph","Phrases"],["gen","Other words"]
+];
+const WORDS = RAW.map(([en,ua,tag,note]) => ({id:en.toLowerCase().replace(/[^a-z]+/g,"-"), en, ua, tag, note:note||""}));
+
+/* ---------- storage ---------- */
+const KEY = "dinglish-nmt-vocab-v1";
+let stats = {};
+try { stats = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e) { stats = {}; }
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(stats)); } catch(e) {} }
+function st(w){ return stats[w.id] || (stats[w.id] = {s:0,c:0,w:0,k:false}); }
+function isLearned(w){ const s = stats[w.id]; return !!s && (s.k || s.s >= 2); }
+function isStarted(w){ const s = stats[w.id]; return !!s && (s.c + s.w > 0); }
+function record(w, ok){ const s = st(w); if (ok) { s.c++; s.s++; } else { s.w++; s.s = 0; s.k = false; } save(); refreshMeta(); }
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const LETTERS = ["А","Б","В","Г"];
+const ROUND = 10;
+
+function norm(s){
+  s = String(s).toLowerCase().replace(/[’`ʼ]/g,"'").replace(/\(.*?\)/g," ")
+    .replace(/\bsomething\b/g,"sth").replace(/\b(somebody|someone)\b/g,"sb")
+    .replace(/[^a-z' ]/g," ").replace(/\b(sth|sb)\b/g," ").replace(/\s+/g," ").trim();
+  return s.replace(/^to /,"");
+}
+function answers(w){
+  const parts = w.en.split(/\s*[\/,]\s*/);
+  const list = w.tag === "v" ? [w.en, parts[0]] : [w.en, ...parts];
+  return [...new Set(list.map(norm))];
+}
+function lev(a,b){
+  const m=a.length,n=b.length; const d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=1;j<=n;j++) d[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];
+}
+// returns "exact" | "close" | false
+function check(input, targets){
+  const x = norm(input); if (!x) return false;
+  if (targets.includes(x)) return "exact";
+  if (targets.some(t => t.length >= 5 && lev(x,t) === 1)) return "close";
+  return false;
+}
+
+/* ---------- state ---------- */
+const state = { topic:"all", onlyLearning:false, mode:"cards" };
+try { const p = JSON.parse(localStorage.getItem(KEY+"-ui")||"{}"); Object.assign(state, p); } catch(e) {}
+function saveUi(){ try { localStorage.setItem(KEY+"-ui", JSON.stringify(state)); } catch(e) {} }
+let session = null;
+
+function pool(forVerbs){
+  return WORDS.filter(w =>
+    (forVerbs ? w.tag === "v" : (state.topic === "all" || w.tag === state.topic)) &&
+    (!state.onlyLearning || !isLearned(w)));
+}
+
+/* ---------- chrome ---------- */
+function renderChips(){
+  $("#chips").innerHTML = TOPICS.map(([k,l]) => {
+    const n = k === "all" ? WORDS.length : WORDS.filter(w=>w.tag===k).length;
+    return `<button class="chip" data-topic="${k}" aria-pressed="${state.topic===k}">${esc(l)}<small>${n}</small></button>`;
+  }).join("");
+}
+function refreshMeta(){
+  const done = WORDS.filter(isLearned).length;
+  $("#barFill").style.width = (done / WORDS.length * 100) + "%";
+  $("#progNum").textContent = `${done} / ${WORDS.length}`;
+  $("#listCount").textContent = `${WORDS.length} слів`;
+  $("#listBody").innerHTML = WORDS.map(w => {
+    const c = isLearned(w) ? "learned" : isStarted(w) ? "learning" : "";
+    return `<tr><td><i class="dot ${c}"></i></td><td class="en">${esc(w.en)}</td><td class="ua">${esc(w.ua)}</td></tr>`;
+  }).join("");
+}
+function setTabs(){
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.mode === state.mode));
+}
+
+$("#chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  state.topic = b.dataset.topic; saveUi(); renderChips(); start();
+});
+$("#onlyLearning").addEventListener("change", e => { state.onlyLearning = e.target.checked; saveUi(); start(); });
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest(".tab"); if (!b) return;
+  state.mode = b.dataset.mode; saveUi(); setTabs(); start();
+});
+const RESET_IDLE = `<button class="btn ghost" id="resetBtn">Скинути прогрес</button>`;
+$("#resetBox").addEventListener("click", e => {
+  const id = e.target.closest("button")?.id;
+  if (id === "resetBtn") $("#resetBox").innerHTML = `<span>Скинути весь прогрес?</span><button class="btn bad" id="resYes">Так, скинути</button><button class="btn ghost" id="resNo">Скасувати</button>`;
+  if (id === "resNo") $("#resetBox").innerHTML = RESET_IDLE;
+  if (id === "resYes") { stats = {}; save(); refreshMeta(); $("#resetBox").innerHTML = RESET_IDLE; start(); }
+});
+
+/* ---------- task headers ---------- */
+const TASKS = {
+  cards:["Flashcards","Read the word and say the translation out loud. Tap the card to check. Then mark if you know it."],
+  quiz:["Choose the answer","Choose the correct translation, A–Г. Like on the NMT answer sheet, only one answer is correct."],
+  write:["Write the word","Read the Ukrainian translation and write the English word or phrase. Spelling counts."],
+  verbs:["Three forms","Write the Past Simple (V2) and Past Participle (V3) forms of each irregular verb."],
+  match:["Match the pairs","Tap an English word, then tap its Ukrainian translation. Find all pairs."],
+};
+function head(extra){
+  const [t,p] = TASKS[state.mode];
+  return `<div class="task"><div class="task-head"><h2>${t}</h2><span class="count">${extra||""}</span></div><p>${p}</p></div>`;
+}
+function emptyMsg(){
+  const verbs = state.mode === "verbs";
+  return head() + `<div class="empty">${state.onlyLearning
+    ? "У цій темі всі слова вже вивчені. Зніміть галочку «Тільки не вивчені» або оберіть іншу тему."
+    : verbs ? "Немає дієслів для тренування." : "Для цього режиму потрібно щонайменше 4 слова. Оберіть іншу тему."}</div>`;
+}
+
+/* ---------- session ---------- */
+function start(items){
+  const verbs = state.mode === "verbs";
+  let p = items || shuffle(pool(verbs));
+  const need = state.mode === "quiz" || state.mode === "match" ? (items ? 1 : 4) : 1;
+  if (p.length < need) { $("#stage").innerHTML = emptyMsg(); return; }
+  if (state.mode === "match") { session = {items:p.slice(0,6), mistakes:[], wrongCount:0}; return renderMatch(); }
+  if (state.mode !== "cards") p = p.slice(0, ROUND);
+  session = {items:p, i:0, right:0, mistakes:[], answered:false};
+  render();
+}
+function render(){
+  if (session.i >= session.items.length) return renderResults();
+  ({cards:renderCard, quiz:renderQuiz, write:renderWrite, verbs:renderVerbs})[state.mode]();
+}
+function next(){ session.i++; render(); }
+function counter(){ return `${session.i+1} / ${session.items.length}`; }
+
+/* cards */
+function renderCard(){
+  const w = session.items[session.i];
+  $("#stage").innerHTML = head(counter()) + `
+    <button class="card" id="card" aria-label="Flip card">
+      <div class="card-in">
+        <div class="face"><span class="prompt"><span class="w">${esc(w.en)}</span></span><span class="tap">tap to flip · Space</span></div>
+        <div class="face back"><span class="prompt"><span class="w ua">${esc(w.ua)}</span>${w.note?`<span class="note">${esc(w.note)}</span>`:""}</span></div>
+      </div>
+    </button>
+    <div class="row">
+      <button class="btn bad" id="cNo">Still learning <kbd>1</kbd></button>
+      <button class="btn ok" id="cYes">I know it <kbd>2</kbd></button>
+    </div>`;
+  $("#card").onclick = () => $("#card").classList.toggle("flip");
+  $("#cNo").onclick = () => cardMark(false);
+  $("#cYes").onclick = () => cardMark(true);
+}
+function cardMark(ok){
+  const w = session.items[session.i];
+  const s = st(w);
+  if (ok) { s.k = true; s.c++; session.right++; } else { s.k = false; s.s = 0; session.mistakes.push(w); }
+  save(); refreshMeta(); next();
+}
+
+/* quiz */
+function renderQuiz(){
+  const w = session.items[session.i];
+  const enFirst = Math.random() < .5;
+  const same = shuffle(WORDS.filter(x => x !== w && x.tag === w.tag));
+  const other = shuffle(WORDS.filter(x => x !== w && x.tag !== w.tag));
+  const dis = []; const key = x => enFirst ? x.ua : x.en;
+  for (const x of [...same, ...other]) { if (dis.length === 3) break; if (key(x) !== key(w) && !dis.some(d => key(d) === key(x))) dis.push(x); }
+  const opts = shuffle([w, ...dis]);
+  session.answered = false;
+  $("#stage").innerHTML = head(counter()) + `
+    <div class="prompt"><span class="lab">${enFirst ? "English → українська" : "українська → English"}</span>
+      <span class="w ${enFirst?"":"ua"}">${esc(enFirst ? w.en : w.ua)}</span></div>
+    <div class="opts">${opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="box">${LETTERS[i]}</span><span class="t">${esc(key(o))}</span></button>`).join("")}</div>
+    <div class="row" id="qNext"></div>`;
+  document.querySelectorAll(".opt").forEach(b => b.onclick = () => quizPick(+b.dataset.i, opts, w));
+}
+function quizPick(i, opts, w){
+  if (session.answered) return; session.answered = true;
+  const ok = opts[i] === w;
+  document.querySelectorAll(".opt").forEach((b,j) => {
+    b.disabled = true;
+    if (opts[j] === w) b.classList.add("right"); else if (j === i) b.classList.add("picked");
+  });
+  record(w, ok); if (ok) session.right++; else session.mistakes.push(w);
+  $("#qNext").innerHTML = `<button class="btn primary" id="nx">Next <kbd>Enter</kbd></button>`;
+  $("#nx").onclick = next; $("#nx").focus();
+}
+
+/* write */
+function renderWrite(){
+  const w = session.items[session.i];
+  session.answered = false; session.hint = 0;
+  $("#stage").innerHTML = head(counter()) + `
+    <div class="prompt"><span class="lab">Write in English</span><span class="w ua">${esc(w.ua)}</span>${w.note?`<span class="note">${esc(w.note)}</span>`:""}</div>
+    <div class="field"><label for="wIn">Your answer</label>
+      <input class="inp" id="wIn" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+    <div class="hint" id="hint"></div>
+    <div id="fb"></div>
+    <div class="row" id="wBtns"><button class="btn ghost" id="hBtn">Hint</button><button class="btn ghost" id="skip">I don't know</button><button class="btn primary" id="chk">Check <kbd>Enter</kbd></button></div>`;
+  const inp = $("#wIn"); inp.focus();
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); session.answered ? next() : writeCheck(); } });
+  $("#chk").onclick = writeCheck;
+  $("#skip").onclick = () => { inp.value = ""; writeCheck(true); };
+  $("#hBtn").onclick = () => {
+    const a = w.tag === "v" ? w.en.split(",")[0] : w.en.split(/\s*[\/,]\s*/)[0];
+    session.hint = Math.min(session.hint + 1, a.length);
+    $("#hint").textContent = a.split("").map((c,k) => c === " " ? "  " : k < session.hint ? c : "_").join("");
+    inp.focus();
+  };
+}
+function writeCheck(gaveUp){
+  if (session.answered) return;
+  const w = session.items[session.i]; const inp = $("#wIn");
+  if (!gaveUp && !inp.value.trim()) { inp.focus(); return; }
+  const r = gaveUp ? false : check(inp.value, answers(w));
+  session.answered = true; inp.readOnly = true;
+  inp.classList.add(r ? "good" : "wrong");
+  record(w, !!r); if (r) session.right++; else session.mistakes.push(w);
+  $("#fb").innerHTML = r === "exact" ? `<div class="fb ok">Correct! <b>${esc(w.en)}</b></div>`
+    : r === "close" ? `<div class="fb ok">Almost — check the spelling: <b>${esc(w.en)}</b></div>`
+    : `<div class="fb bad">Correct answer: <b>${esc(w.en)}</b></div>`;
+  $("#wBtns").innerHTML = `<button class="btn primary" id="nx">Next <kbd>Enter</kbd></button>`;
+  $("#nx").onclick = next; inp.focus();
+}
+
+/* verbs */
+function renderVerbs(){
+  const w = session.items[session.i]; const f = w.en.split(/,\s*/);
+  session.answered = false;
+  $("#stage").innerHTML = head(counter()) + `
+    <div class="prompt"><span class="lab">${esc(w.ua)}</span>${w.note?`<span class="note">${esc(w.note)}</span>`:""}</div>
+    <div class="forms">
+      <div class="field"><label>V1 · infinitive</label><div class="given">${esc(f[0])}</div></div>
+      <div class="field"><label for="v2">V2 · past simple</label><input class="inp" id="v2" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+      <div class="field"><label for="v3">V3 · past participle</label><input class="inp" id="v3" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+    </div>
+    <div id="fb"></div>
+    <div class="row" id="wBtns"><button class="btn ghost" id="skip">I don't know</button><button class="btn primary" id="chk">Check <kbd>Enter</kbd></button></div>`;
+  $("#v2").focus();
+  $("#v2").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); session.answered ? next() : $("#v3").focus(); } });
+  $("#v3").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); session.answered ? next() : verbCheck(); } });
+  $("#chk").onclick = () => verbCheck();
+  $("#skip").onclick = () => verbCheck(true);
+}
+function verbCheck(gaveUp){
+  if (session.answered) return;
+  const w = session.items[session.i]; const f = w.en.split(/,\s*/);
+  const a = $("#v2"), b = $("#v3");
+  if (!gaveUp && (!a.value.trim() || !b.value.trim())) { (!a.value.trim() ? a : b).focus(); return; }
+  const ok2 = !gaveUp && norm(a.value) === norm(f[1]);
+  const ok3 = !gaveUp && norm(b.value) === norm(f[2]);
+  session.answered = true; a.readOnly = b.readOnly = true;
+  a.classList.add(ok2 ? "good" : "wrong"); b.classList.add(ok3 ? "good" : "wrong");
+  const ok = ok2 && ok3;
+  record(w, ok); if (ok) session.right++; else session.mistakes.push(w);
+  $("#fb").innerHTML = ok ? `<div class="fb ok">Correct! <b>${esc(w.en)}</b></div>` : `<div class="fb bad">Correct forms: <b>${esc(w.en)}</b></div>`;
+  $("#wBtns").innerHTML = `<button class="btn primary" id="nx">Next <kbd>Enter</kbd></button>`;
+  $("#nx").onclick = next; $("#nx").focus();
+}
+
+/* match */
+function renderMatch(){
+  const items = session.items;
+  const left = shuffle(items), right = shuffle(items);
+  session.sel = null; session.found = 0; session.t0 = Date.now();
+  $("#stage").innerHTML = head(`${items.length} pairs`) + `
+    <div class="match">
+      <div class="col">${left.map(w=>`<button class="tile en" data-id="${w.id}" data-side="en">${esc(w.en)}</button>`).join("")}</div>
+      <div class="col">${right.map(w=>`<button class="tile" data-id="${w.id}" data-side="ua">${esc(w.ua)}</button>`).join("")}</div>
+    </div>
+    <div class="row"><button class="btn ghost" id="mNew">New pairs</button></div>`;
+  $("#mNew").onclick = () => start();
+  document.querySelectorAll(".tile").forEach(t => t.onclick = () => matchTap(t));
+}
+function matchTap(t){
+  const s = session.sel;
+  if (!s || s.dataset.side === t.dataset.side) {
+    if (s) s.classList.remove("sel");
+    session.sel = (s === t) ? null : t; if (session.sel) t.classList.add("sel"); return;
+  }
+  const w = WORDS.find(x => x.id === s.dataset.id);
+  if (s.dataset.id === t.dataset.id) {
+    s.classList.remove("sel"); s.classList.add("done"); t.classList.add("done");
+    if (!session.mistakes.includes(w)) record(w, true);
+    session.found++; session.sel = null;
+    if (session.found === session.items.length) setTimeout(matchDone, 350);
+  } else {
+    session.wrongCount++;
+    const ew = s.dataset.side === "en" ? w : WORDS.find(x => x.id === t.dataset.id);
+    if (!session.mistakes.includes(ew)) { session.mistakes.push(ew); record(ew, false); }
+    [s,t].forEach(x => { x.classList.remove("sel"); x.classList.add("shake"); setTimeout(()=>x.classList.remove("shake"), 400); });
+    session.sel = null;
+  }
+}
+function matchDone(){
+  const sec = Math.round((Date.now() - session.t0) / 1000);
+  session.right = session.items.length - session.mistakes.length;
+  renderResults(`${sec} s · ${session.wrongCount} wrong taps`);
+}
+
+/* results */
+function renderResults(extra){
+  const total = session.items.length, r = session.right;
+  const msg = r === total ? "Excellent! No mistakes." : r / total >= .7 ? "Good job! Review the words below." : "Keep practising. Review the words below and try again.";
+  $("#stage").innerHTML = head(extra || "") + `
+    <div class="score">${r}<small> / ${total}</small></div>
+    <p style="text-align:center;margin:0">${msg}</p>
+    ${session.mistakes.length ? `<div class="mistakes">${session.mistakes.map(w=>`<div><span>${esc(w.en)}</span><span>${esc(w.ua)}</span></div>`).join("")}</div>` : ""}
+    <div class="row">
+      ${session.mistakes.length ? `<button class="btn" id="rMist">Repeat mistakes</button>` : ""}
+      <button class="btn primary" id="rNew">New round</button>
+    </div>`;
+  const m = session.mistakes.slice();
+  if ($("#rMist")) $("#rMist").onclick = () => start(shuffle(m));
+  $("#rNew").onclick = () => start();
+}
+
+/* keyboard */
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") return;
+  if (state.mode === "cards" && $("#card")) {
+    if (e.key === " " || e.key === "Enter") { if (document.activeElement && document.activeElement.id !== "card" && document.activeElement.tagName === "BUTTON") return; e.preventDefault(); $("#card").classList.toggle("flip"); }
+    if (e.key === "1") cardMark(false);
+    if (e.key === "2") cardMark(true);
+  }
+  if (state.mode === "quiz") {
+    const k = ["1","2","3","4"].indexOf(e.key);
+    if (k >= 0 && !session.answered) { const b = document.querySelectorAll(".opt")[k]; if (b) b.click(); }
+  }
+});
+
+/* boot */
+$("#onlyLearning").checked = !!state.onlyLearning;
+renderChips(); setTabs(); refreshMeta(); start();
+</script>
+
+</body></html>
