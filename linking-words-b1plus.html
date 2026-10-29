@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Linking Words B1+</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a phonetics notebook — one reading column, sticky tool strip, each task a sheet; orange arcs are the one bold mark */
+:root{
+  --bg:#F3F5F9; --sheet:#FFFFFF; --ink:#1B2238; --muted:#5D6681; --line:#DCE1EC;
+  --accent:#2F4BC9; --accent-soft:#E7EBFB; --arc:#E8590C; --user:#2F4BC9;
+  --good:#1E8E4E; --warn:#C77700; --bad:#D0344B; --note:#FFF6E8; --note-line:#F2D3A6;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-read:"Literata", Georgia, "Times New Roman", serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11141F; --sheet:#1A1F2E; --ink:#E7EAF3; --muted:#9AA3BD; --line:#2C3347;
+  --accent:#8EA2FF; --accent-soft:#252D4A; --arc:#FF8A45; --user:#8EA2FF;
+  --good:#4CC47F; --warn:#F0A73A; --bad:#FF6B81; --note:#2A2418; --note-line:#5A4A2A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11141F; --sheet:#1A1F2E; --ink:#E7EAF3; --muted:#9AA3BD; --line:#2C3347;
+  --accent:#8EA2FF; --accent-soft:#252D4A; --arc:#FF8A45; --user:#8EA2FF;
+  --good:#4CC47F; --warn:#F0A73A; --bad:#FF6B81; --note:#2A2418; --note-line:#5A4A2A; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-read);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:22px}
+
+header{display:flex;flex-direction:column;gap:10px}
+.brand{font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand b{color:var(--accent);font-weight:500}
+.level{border:1px solid var(--line);border-radius:999px;padding:4px 9px}
+h1{font:800 clamp(32px,7vw,52px)/1.02 var(--f-display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1 .demo{white-space:nowrap}
+.lead{margin:0;color:var(--muted);max-width:62ch}
+
+/* sticky tools */
+.tools{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--bg);padding-block:10px;
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--sheet)}
+.seg button{font:500 13px/1 var(--f-display);border:0;background:none;color:var(--muted);padding:9px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+:root[data-theme="dark"] .seg button[aria-pressed="true"]{color:#11141F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#11141F}}
+.tlabel{font:500 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tgroup{display:flex;gap:8px;align-items:center}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav a{font:500 13px/1 var(--f-display);color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 11px;background:var(--sheet)}
+nav a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* callouts */
+.note{background:var(--note);border:1px solid var(--note-line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.note h3{margin:0;font:700 16px/1.2 var(--f-display)}
+.note p{margin:0;font-size:15px}
+
+/* task sheets */
+section.task{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:22px 22px 20px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:72px}
+.thead{display:flex;flex-direction:column;gap:6px}
+.kicker{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font:500 12px/1 var(--f-mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.kicker .num{color:var(--accent)}
+.track{border:1px dashed var(--line);border-radius:6px;padding:3px 6px;text-transform:none;letter-spacing:0}
+h2{font:700 clamp(22px,4.5vw,28px)/1.15 var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+.rubric{margin:0;font:600 15px/1.45 var(--f-read);color:var(--ink)}
+.theory{margin:0;font-size:15px;color:var(--muted);max-width:64ch;border-left:3px solid var(--accent-soft);padding-left:12px}
+.theory b{color:var(--ink)}
+h3.sub{font:700 17px/1.2 var(--f-display);margin:6px 0 0}
+
+/* sentences + arcs */
+.s{font:400 19px/2.1 var(--f-read);margin:0;min-width:0}
+.s strong{font-weight:700}
+.s u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;font-weight:700;text-decoration-color:var(--arc)}
+.s .silent{text-decoration:line-through;text-decoration-color:var(--bad);color:var(--muted)}
+.g{display:inline-block;width:.3em;height:1em;position:relative;vertical-align:baseline}
+.g::after{content:"";display:none;position:absolute;left:-.38em;width:1.06em;bottom:-.36em;height:.42em;border:2px solid var(--arc);border-top:none;border-radius:0 0 1em 1em}
+.g[data-a="1"]::after{display:block}
+body.practice .g{width:.8em;cursor:pointer}
+body.practice .g::before{content:"";position:absolute;left:50%;bottom:-.2em;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--line)}
+body.practice .g:hover::before{background:var(--accent)}
+body.practice .g::after{left:-.2em;width:1.2em}
+body.practice .g[data-a="1"]::after{display:none}
+body.practice .g.u::after{display:block;border-color:var(--user)}
+body.practice .g.ok::after{display:block;border-color:var(--good)}
+body.practice .g.miss::after{display:block;border-color:var(--warn);border-style:dashed}
+body.practice .g.extra::after{display:block;border-color:var(--bad)}
+body.practice .g.u::before,body.practice .g.ok::before,body.practice .g.miss::before,body.practice .g.extra::before{display:none}
+
+/* rows */
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding-block:6px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.n{font:500 13px/1 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.pair{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:4px 18px;align-items:center}
+@media (max-width:560px){.pair{grid-template-columns:minmax(0,1fr)}}
+.pair .s:first-child{color:var(--muted)}
+.btns{display:flex;gap:4px}
+.say{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--sheet);color:var(--accent);display:grid;place-items:center;cursor:pointer;flex:none}
+.say:hover{border-color:var(--accent)}
+.say.on{background:var(--accent);color:var(--sheet);border-color:var(--accent)}
+.say svg{width:16px;height:16px}
+.say small{font:500 10px/1 var(--f-mono)}
+button:focus-visible,a:focus-visible,.g:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* sounds-like cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.card{position:relative;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:14px 14px 12px;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;gap:6px;min-height:92px;font:inherit}
+.card .phrase{font:600 20px/1.2 var(--f-read)}
+.card .sl{font:500 12px/1 var(--f-mono);color:var(--muted);letter-spacing:.04em}
+.card .like{font:italic 400 18px/1.25 var(--f-read);color:var(--arc)}
+.card:not(.open) .like{filter:blur(6px);opacity:.5}
+.card .say{position:absolute;right:10px;top:10px;width:32px;height:32px}
+
+/* dialogues */
+.dlg{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;background:var(--bg)}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:4px}
+.dhead .n{font-size:13px}
+.play{font:600 13px/1 var(--f-display);border:1px solid var(--line);background:var(--sheet);color:var(--accent);border-radius:999px;padding:8px 12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.play.on{background:var(--accent);color:var(--sheet)}
+.line{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center}
+.who{font:700 13px/1 var(--f-display);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.who.b{background:var(--note);color:var(--arc)}
+.foot{font-size:14px;color:var(--muted);margin:0}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+@media (max-width:420px){.dgrid{grid-template-columns:minmax(0,1fr)}}
+
+/* quote */
+blockquote{margin:0;padding:14px 16px;border-radius:12px;background:var(--bg);display:flex;gap:10px;align-items:center}
+blockquote .s{font-style:italic}
+blockquote cite{display:block;font:500 13px/1 var(--f-mono);color:var(--muted);font-style:normal;margin-top:2px}
+
+/* pairs grid */
+.wp{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.wpi{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 12px;background:var(--bg)}
+.wpi .s{font-size:18px;line-height:1.6}
+
+/* check bar */
+.checkbar{display:none;gap:8px;align-items:center;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:12px}
+body.practice .checkbar{display:flex}
+.cbtn{font:600 14px/1 var(--f-display);border-radius:10px;padding:10px 14px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--sheet)}
+.cbtn.ghost{background:none;color:var(--accent)}
+.score{font:500 13px/1.3 var(--f-mono);color:var(--muted)}
+.legend{display:none;gap:14px;flex-wrap:wrap;font:500 12px/1 var(--f-mono);color:var(--muted)}
+body.practice .legend{display:flex}
+.legend span::before{content:"";display:inline-block;width:16px;height:7px;border:2px solid;border-top:0;border-radius:0 0 10px 10px;margin-right:6px;vertical-align:middle}
+.lg-ok::before{border-color:var(--good)!important}.lg-miss::before{border-color:var(--warn)!important;border-style:dashed!important}.lg-ex::before{border-color:var(--bad)!important}.lg-u::before{border-color:var(--user)!important}
+
+.ipa{font-family:var(--f-mono);font-size:.92em}
+footer{text-align:center;font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+footer b{color:var(--accent);font-weight:500}
+.nots{display:none;font-size:13px;color:var(--warn)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.card .like{transition:filter .2s, opacity .2s}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <div class="brand"><b>dinglish</b><span>Pronunciation</span><span class="level">B1+</span></div>
+    <h1>Linking <span class="demo">words‿together</span></h1>
+    <p class="lead">Зв'язне мовлення: як слова «перетікають» одне в одне. Слухай, повторюй, а в режимі практики — розставляй зв'язки сам.</p>
+  </header>
+
+  <div class="tools">
+    <div class="tgroup"><span class="tlabel">Voice</span>
+      <div class="seg" role="group" aria-label="Speech speed">
+        <button id="rate-n" aria-pressed="true" data-rate="0.95">Natural</button>
+        <button id="rate-s" aria-pressed="false" data-rate="0.7">Slow</button>
+      </div>
+    </div>
+    <div class="tgroup"><span class="tlabel">Mode</span>
+      <div class="seg" role="group" aria-label="Mode">
+        <button id="mode-show" aria-pressed="true">Study</button>
+        <button id="mode-practice" aria-pressed="false">Mark the links</button>
+      </div>
+    </div>
+    <span class="nots" id="nots">Озвучка недоступна в цьому браузері</span>
+  </div>
+
+  <nav aria-label="Tasks">
+    <a href="#t1">1 Consonant + vowel</a><a href="#t2">2 Expressions</a><a href="#t3">3 “an”</a><a href="#t4">4 -ing + vowel</a><a href="#t5">5 Stress dialogues</a><a href="#t6">6 Same consonant</a>
+  </nav>
+
+  <div class="note">
+    <h3>Linking ≠ speaking fast</h3>
+    <p>Зв'язувати слова — не означає говорити швидше. Носії звучать не швидко, а <b>плавно</b>: без «рубаних» пауз між словами. Тримай наголос на <b>змістових словах</b> (іменники, дієслова, прикметники) — саме вони сповільнюють тебе в потрібних місцях і роблять мову зрозумілою.</p>
+  </div>
+
+  <div class="legend" aria-hidden="true">
+    <span class="lg-u">your mark</span><span class="lg-ok">correct</span><span class="lg-miss">missed</span><span class="lg-ex">no link here</span>
+  </div>
+
+  <!-- 1 -->
+  <section class="task" id="t1">
+    <div class="thead">
+      <div class="kicker"><span class="num">Task 1</span><span>Rules for linking</span><span class="track">Track 345</span></div>
+      <h2>Linking consonant to vowel</h2>
+      <p class="theory">Якщо слово закінчується на <b>приголосний</b>, а наступне починається з <b>голосного</b>, приголосний «переїжджає» до наступного слова — ніби воно з нього й починається: <i>hold on</i> → <i>hol‿don</i>.</p>
+      <p class="rubric">Say each phrase. Then tap the card to see what it sounds like.</p>
+    </div>
+    <div class="cards" id="cv"></div>
+    <div><button class="cbtn ghost" id="cv-all">Reveal all</button></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="task" id="t2" data-check>
+    <div class="thead">
+      <div class="kicker"><span class="num">Task 2</span><span>Practice sentences</span><span class="track">Track 346</span></div>
+      <h2>Common expressions</h2>
+      <p class="rubric">Listen and repeat the phrase, then the sentence. Link the final consonant to the next vowel. Words in bold carry the main stress.</p>
+    </div>
+    <div class="rows" id="expr"></div>
+    <div class="checkbar"><button class="cbtn" data-do="check">Check my links</button><button class="cbtn ghost" data-do="reset">Reset</button><span class="score"></span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="task" id="t3" data-check>
+    <div class="thead">
+      <div class="kicker"><span class="num">Task 3</span><span>Linking with the article “an”</span><span class="track">Track 347–348</span></div>
+      <h2>Linking with “an”</h2>
+      <p class="theory">Після <b>an</b> завжди йде голосний звук, тому його <b>n</b> чіпляється до наступного слова: <i>an‿apple</i> → «а-неппл». Те саме — перед <b>німим h</b>: <i>an‿hour, an‿honest answer</i>.</p>
+    </div>
+    <blockquote id="quote"></blockquote>
+    <h3 class="sub">Practice sentences</h3>
+    <p class="rubric">Read each sentence aloud. Connect “an” to the next word.</p>
+    <div class="rows" id="an"></div>
+    <div class="checkbar"><button class="cbtn" data-do="check">Check my links</button><button class="cbtn ghost" data-do="reset">Reset</button><span class="score"></span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="task" id="t4" data-check>
+    <div class="thead">
+      <div class="kicker"><span class="num">Task 4</span><span>Practice dialogues</span><span class="track">Track 349–350</span></div>
+      <h2>Linking <i>-ing</i> + vowel</h2>
+      <p class="theory">Не «ковтай» кінцевий звук <span class="ipa">/ŋ/</span>: <i>going‿on</i>, а не <i>goin' on</i>. Задня частина язика коротко торкається піднебіння — і цей носовий звук плавно переходить у голосний наступного слова.</p>
+      <p class="rubric">Read the dialogues in pairs (or with your teacher). Swap roles and read again.</p>
+    </div>
+    <div class="dgrid" id="ing"></div>
+    <p class="foot">*У займеннику <b>him</b> звук <b>h</b> часто випадає: <i>dating‿(h)im</i> → «дейтін-гім».</p>
+    <div class="checkbar"><button class="cbtn" data-do="check">Check my links</button><button class="cbtn ghost" data-do="reset">Reset</button><span class="score"></span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="task" id="t5" data-check>
+    <div class="thead">
+      <div class="kicker"><span class="num">Task 5</span><span>Practice dialogues</span><span class="track">Track 351</span></div>
+      <h2>Linking + stress</h2>
+      <p class="rubric">Read the mini-dialogues in pairs. Link the words and stress the words in bold.</p>
+    </div>
+    <div class="dgrid" id="stress"></div>
+    <div class="checkbar"><button class="cbtn" data-do="check">Check my links</button><button class="cbtn ghost" data-do="reset">Reset</button><span class="score"></span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="task" id="t6">
+    <div class="thead">
+      <div class="kicker"><span class="num">Task 6</span><span>Rules for linking</span><span class="track">Track 352–353</span></div>
+      <h2>Consonant to same consonant</h2>
+      <p class="theory">Коли одне слово закінчується, а наступне починається з <b>того самого приголосного</b>, вимовляй його <b>один раз</b>. Без паузи — просто трохи довше або з більшою енергією: <i>bla<u>ck</u> <u>c</u>at</i> звучить як «black at».</p>
+      <p class="rubric">Say each phrase. Then tap the card to see what it sounds like.</p>
+    </div>
+    <div class="cards" id="same"></div>
+    <h3 class="sub">Word pairs for practice</h3>
+    <p class="rubric">Say each pair. Pronounce the shared consonant only once.</p>
+    <div class="wp" id="pairs"></div>
+  </section>
+
+  <footer><b>dinglish</b> · Linking words · B1+</footer>
+</div>
+
+<script>
+// _ = link, ** = stress, [x] = shared consonant, ~h~ = silent letter
+const D={
+ cv:[["hold on","whole Don"],["I like it","I lie kit"],["deep end","depend"],["get up late","get a plate"],["picked out","pick doubt"],["this guy","the sky"]],
+ expr:[["Good_evening.","Have_a good_**evening**."],["Hold_on.","Please hold_on_a **minute**."],["good_idea","That's_a really good_**idea**."],["I like_it.","I like_it_a **lot**."],["speak_English","Do you speak_**English**?"],["cup_of coffee","I'd like_a cup_of **coffee.**"],["Just_a minute.","I'll be there_in just_a **minute**."],["where_are","Where_are you **from**?"],["there_are","There_are_a lot_of **people** here."],["kind_of","I'm kind_of **hungry**."]],
+ quote:"Every child is_**an**_artist. The problem_is how to remain_**an**_artist once_he grows_up.",
+ an:["I ate_an_apple and_an_orange.","I have_an_iPad and_an_iPhone.","I made_an_offer to buy an_amazing house.","He has_an_American_accent.","Give me an_honest_answer.","That's_an_interesting question.","That's_an_unbelievable story.","That's_an_unusual situation.","I live_in_an_apartment.","I'll be there_in_an_hour."],
+ ing:[
+  [["A","What_are you planning_on doing tonight?"],["B","Nothing special. Just hanging_out with some friends. Are you going_out?"],["A","No, I think_I'll be staying_in and watching_a movie."]],
+  [["A","I'm shopping_around for_a car."],["B","Are you planning_on buying_a new car or_a used car?"],["A","I'm thinking_about getting_a used car."]],
+  [["A","Why did you hang_up on me?"],["B","I hung_up because you were yelling_at me."]],
+  [["A","I'm breaking_up with my boyfriend."],["B","You're kidding! Are you really doing_it? Why?"],["A","Well, it's just not working_out between us."],["B","But you've been dating_~h~im* a long time. I thought you were planning_on getting_engaged."],["A","We're not getting_along any more. We've been arguing_a lot."],["B","How long has this been going_on?"],["A","As long_as_I can remember."]]
+ ],
+ stress:[
+  [["A","Can_I come_**in**?"],["B","Yes, come_**on**_in. The door_is_**open**."]],
+  [["A","Should_I leave_it_**on**?"],["B","No, turn_it_**off**."]],
+  [["A","What **time**_is_it?"],["B","It's_**already** five_**o'clock**."]],
+  [["A","Let's take_a **walk**."],["B","That's_a good_**idea**."]],
+  [["A","How **far**_is_it?"],["B","**Four**_and_a half_**hours**_away."]],
+  [["A","This_is_a good **film**."],["B","Too bad_it's sold_**out**."]],
+  [["A","I have_an_awful **headache**."],["B","Take_an_**aspirin**."]],
+  [["A","This_is my **brother**-_in-law."],["B","We've_already **met**."]]
+ ],
+ same:[["She speak[s] [S]panish.","She speak Spanish."],["turne[d] [d]own","turn down"],["hel[p] [P]aul","help all"],["we[ll] [l]it","well it"],["bla[ck] [c]at","black at"],["foreig[n] [n]ame","foreign aim"]],
+ pairs:["bi[g] [g]ame","we[ll] [l]it","ca[n] [n]ever","goo[d] [d]ay","thi[s] [S]aturday","fa[r] [r]ight","sto[p] [p]laying","To[m] [m]ight","boo[k] [c]lub","wha[t] [t]ime"]
+};
+
+const ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const inline=t=>esc(t).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/~(.)~/g,'<s class="silent">$1</s>').replace(/\[(.+?)\]/g,"<u>$1</u>");
+const plain=t=>t.replace(/-_/g,"-").replace(/\*\*/g,"").replace(/_/g," ").replace(/[\[\]~*]/g,"");
+function sent(str,tag="p"){
+  const parts=str.split(/([ _])/);let h="";
+  parts.forEach((p,i)=>{ if(i%2===0) h+=inline(p); else h+=`<span class="g" data-a="${p==="_"?1:0}"></span>&#8203;`; });
+  return `<${tag} class="s">${h}</${tag}>`;
+}
+const sayBtn=(text,label)=>`<button class="say" data-say="${esc(plain(text)).replace(/"/g,"&quot;")}" aria-label="Listen: ${esc(plain(text)).replace(/"/g,"&quot;")}">${label?`<small>${label}</small>`:ICON}</button>`;
+
+// Task 1
+document.getElementById("cv").innerHTML=D.cv.map(([a,b])=>`<div class="card" role="button" tabindex="0" aria-label="${a}"><span class="phrase">${a}</span><span class="sl">sounds like</span><span class="like">“${b}”</span>${sayBtn(a)}</div>`).join("");
+// Task 2
+document.getElementById("expr").innerHTML=D.expr.map(([a,b],i)=>`<div class="row"><span class="n">${i+1}</span><div class="pair">${sent(a)}${sent(b)}</div><div class="btns">${sayBtn(a)}${sayBtn(b)}</div></div>`).join("");
+// Task 3
+document.getElementById("quote").innerHTML=`<div style="min-width:0;flex:1">${sent(D.quote)}<cite>— Pablo Picasso</cite></div>${sayBtn(D.quote)}`;
+document.getElementById("an").innerHTML=D.an.map((s,i)=>`<div class="row"><span class="n">${i+1}</span>${sent(s)}<div class="btns">${sayBtn(s)}</div></div>`).join("");
+// Dialogues
+function dialogs(id,list){
+  document.getElementById(id).innerHTML=list.map((d,i)=>`<div class="dlg"><div class="dhead"><span class="n">Dialogue ${i+1}</span><button class="play" data-dlg="${id}-${i}">${ICON.replace('aria-hidden','width="14" height="14" aria-hidden')} Play</button></div>${d.map(([w,s])=>`<div class="line"><span class="who ${w==="B"?"b":""}">${w}</span>${sent(s)}${sayBtn(s)}</div>`).join("")}</div>`).join("");
+}
+dialogs("ing",D.ing);dialogs("stress",D.stress);
+// Task 6
+document.getElementById("same").innerHTML=D.same.map(([a,b])=>`<div class="card" role="button" tabindex="0" aria-label="${plain(a)}"><span class="phrase s" style="font-size:20px;line-height:1.3">${inline(a)}</span><span class="sl">sounds like</span><span class="like">“${b}”</span>${sayBtn(a)}</div>`).join("");
+document.getElementById("pairs").innerHTML=D.pairs.map((p,i)=>`<div class="wpi"><span class="s"><span class="n" style="margin-right:8px">${i+1}</span>${inline(p)}</span>${sayBtn(p)}</div>`).join("");
+
+// Cards reveal
+document.querySelectorAll(".card").forEach(c=>{
+  const t=()=>c.classList.toggle("open");
+  c.addEventListener("click",e=>{ if(!e.target.closest(".say")) t(); });
+  c.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target===c){e.preventDefault();t();} });
+});
+document.getElementById("cv-all").addEventListener("click",()=>document.querySelectorAll("#cv .card").forEach(c=>c.classList.add("open")));
+
+// Speech
+const tts="speechSynthesis" in window ? window.speechSynthesis : null;
+let rate=0.95, voices=[];
+function loadVoices(){ if(!tts) return; const all=tts.getVoices(); voices=all.filter(v=>/^en[-_]US/i.test(v.lang)); if(!voices.length) voices=all.filter(v=>/^en/i.test(v.lang)); }
+if(tts){ loadVoices(); try{tts.onvoiceschanged=loadVoices;}catch(e){} } else { document.getElementById("nots").style.display="inline"; document.querySelectorAll(".say,.play").forEach(b=>b.hidden=true); }
+let activeBtn=null;
+function stop(){ if(tts) tts.cancel(); document.querySelectorAll(".say.on,.play.on").forEach(b=>b.classList.remove("on")); }
+function speak(text,voiceIdx=0){
+  return new Promise(res=>{
+    const u=new SpeechSynthesisUtterance(text); u.lang="en-US"; u.rate=rate;
+    if(voices.length) u.voice=voices[Math.min(voiceIdx,voices.length-1)];
+    u.onend=res; u.onerror=res; tts.speak(u);
+  });
+}
+document.addEventListener("click",async e=>{
+  const b=e.target.closest(".say"); if(!b||!tts) return;
+  e.stopPropagation(); stop(); b.classList.add("on"); await speak(b.dataset.say); b.classList.remove("on");
+});
+let runId=0;
+document.addEventListener("click",async e=>{
+  const b=e.target.closest(".play"); if(!b||!tts) return;
+  const was=b.classList.contains("on"); stop(); const my=++runId; if(was) return;
+  b.classList.add("on");
+  const lines=b.closest(".dlg").querySelectorAll(".line");
+  for(const l of lines){ if(my!==runId) return; const who=l.querySelector(".who").textContent; const sb=l.querySelector(".say"); sb.classList.add("on"); await speak(sb.dataset.say, who==="B"?1:0); sb.classList.remove("on"); }
+  b.classList.remove("on");
+});
+document.querySelectorAll("[data-rate]").forEach(b=>b.addEventListener("click",()=>{ rate=+b.dataset.rate; document.querySelectorAll("[data-rate]").forEach(x=>x.setAttribute("aria-pressed",x===b)); }));
+
+// Practice mode
+function setMode(p){
+  document.body.classList.toggle("practice",p);
+  document.getElementById("mode-show").setAttribute("aria-pressed",!p);
+  document.getElementById("mode-practice").setAttribute("aria-pressed",p);
+  document.querySelectorAll("section[data-check] .g").forEach(g=>{ if(p){g.tabIndex=0;g.setAttribute("role","button");g.setAttribute("aria-label","word gap");} else {g.removeAttribute("tabindex");g.removeAttribute("role");g.removeAttribute("aria-label");} });
+}
+document.getElementById("mode-show").addEventListener("click",()=>setMode(false));
+document.getElementById("mode-practice").addEventListener("click",()=>setMode(true));
+function toggleGap(g){ const sec=g.closest("section[data-check]"); if(!sec||sec.dataset.done) return; g.classList.toggle("u"); }
+document.addEventListener("click",e=>{ const g=e.target.closest(".g"); if(g&&document.body.classList.contains("practice")) toggleGap(g); });
+document.addEventListener("keydown",e=>{ const g=e.target.closest&&e.target.closest(".g"); if(g&&(e.key==="Enter"||e.key===" ")&&document.body.classList.contains("practice")){e.preventDefault();toggleGap(g);} });
+document.querySelectorAll("section[data-check]").forEach(sec=>{
+  const score=sec.querySelector(".score");
+  sec.querySelector('[data-do="check"]').addEventListener("click",()=>{
+    let ok=0,total=0,extra=0;
+    sec.querySelectorAll(".g").forEach(g=>{
+      const a=g.dataset.a==="1", u=g.classList.contains("u");
+      g.classList.remove("ok","miss","extra");
+      if(a) total++;
+      if(a&&u){g.classList.add("ok");ok++;} else if(a){g.classList.add("miss");} else if(u){g.classList.add("extra");extra++;}
+      g.classList.remove("u");
+    });
+    sec.dataset.done="1";
+    score.textContent=`${ok} / ${total} links found${extra?` · ${extra} extra`:""}`;
+  });
+  sec.querySelector('[data-do="reset"]').addEventListener("click",()=>{
+    sec.querySelectorAll(".g").forEach(g=>g.classList.remove("u","ok","miss","extra"));
+    delete sec.dataset.done; score.textContent="";
+  });
+});
+</script>
+
+</body>
+</html>
