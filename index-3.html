@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Revision: Unit 1 | dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F7F6; --surface:#FFFFFF; --ink:#1C2A2E; --muted:#56666A;
+  --teal:#17444F; --on-teal:#FFFFFF; --teal-soft:#E2EDEF;
+  --magenta:#B23C7A; --magenta-soft:#F8E7F0; --mint:#DCEFE6;
+  --line:#C9D6D2; --ok:#1E7A52; --ok-soft:#E0F2E9;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Roboto,Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1719; --surface:#172225; --ink:#E4ECEA; --muted:#9DB0AE;
+    --teal:#7EC3CF; --on-teal:#0F1719; --teal-soft:#1B3238;
+    --magenta:#E58BB9; --magenta-soft:#3A2130; --mint:#16302A;
+    --line:#2C3D40; --ok:#6FD3A4; --ok-soft:#153327;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1719; --surface:#172225; --ink:#E4ECEA; --muted:#9DB0AE;
+  --teal:#7EC3CF; --on-teal:#0F1719; --teal-soft:#1B3238;
+  --magenta:#E58BB9; --magenta-soft:#3A2130; --mint:#16302A;
+  --line:#2C3D40; --ok:#6FD3A4; --ok-soft:#153327;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--body)}
+.wrap{max-width:800px;margin:0 auto;padding:28px 16px 60px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0}
+p{margin:.5em 0}
+:focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+
+.hero{background:var(--teal);color:var(--on-teal);border-radius:22px;padding:26px 22px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end}
+.hero small{opacity:.85}
+.hero h1{font-size:clamp(2.6rem,9vw,4.4rem);font-weight:800;letter-spacing:-.02em;margin-top:4px}
+.hero p{margin:6px 0 0;opacity:.9}
+.scorecard{background:var(--surface);color:var(--ink);border-radius:16px;padding:12px 18px;text-align:center;min-width:140px}
+.scorecard b{display:block;font:800 2rem var(--display);color:var(--magenta)}
+.scorecard span{font-size:.8rem;color:var(--muted)}
+@media (max-width:560px){.hero{grid-template-columns:1fr}.scorecard{justify-self:start}}
+
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:18px}
+.howto ol{margin:6px 0 0;padding-left:22px}
+.howto input{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:5px 10px;width:100%;max-width:300px;margin-top:6px}
+
+.part{margin:52px 0 16px;padding-bottom:10px;border-bottom:3px solid var(--magenta)}
+.part h2{font-size:clamp(1.6rem,5vw,2.2rem);color:var(--magenta)}
+.part p{color:var(--muted);margin:4px 0 0}
+.task{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 18px 18px;margin:18px 0}
+.task h3{font-size:1.25rem;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.task h3 .num{font-weight:800;color:var(--magenta);min-width:1.4em}
+.ref{font:400 .78rem var(--body);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 10px;white-space:nowrap}
+.rubric{margin-top:8px}
+.note{background:var(--mint);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:.95rem}
+.rows{display:grid;gap:8px;margin-top:14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 10px;border-radius:10px;border:1px solid transparent}
+.row .n{font-weight:700;color:var(--muted);min-width:1.4em}
+.row .q{flex:1 1 260px}
+.row.ok{background:var(--ok-soft);border-color:var(--ok)}
+.row.bad{background:var(--magenta-soft);border-color:var(--magenta)}
+.row .model{display:none;width:100%;font-size:.9rem;color:var(--muted);padding-left:2em}
+.row.shown .model{display:block}
+select,input[type=text]{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:4px 8px;max-width:100%}
+input.wide{width:100%;margin-top:6px}
+.bar{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.btn{font:700 .95rem var(--body);background:var(--teal);color:var(--on-teal);border:2px solid var(--teal);border-radius:999px;padding:7px 16px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--teal)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.score{font-weight:700;color:var(--teal)}
+.hint{font-size:.85rem;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{font:inherit;font-size:.93rem;background:var(--paper);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer}
+.opts button[aria-pressed="true"]{background:var(--teal);color:var(--on-teal);border-color:var(--teal)}
+.textgap{line-height:2.3;margin-top:12px}
+.textgap input{width:13ch}
+.textgap input.ok{border-color:var(--ok);background:var(--ok-soft)}
+.textgap input.bad{border-color:var(--magenta);background:var(--magenta-soft)}
+.textgap .gn{font-weight:700;color:var(--magenta);font-size:.85rem}
+details.model{margin-top:6px;font-size:.95rem}
+details.model summary{cursor:pointer;color:var(--teal);font-weight:700}
+details.model div{padding:6px 0 0 14px;border-left:3px solid var(--mint);margin-top:6px}
+.open-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.open-item:last-child{border-bottom:0}
+.open-item p{margin:0;font-weight:700}
+.selfmark{display:none;gap:8px;margin-top:8px;flex-wrap:wrap}
+.open-item.revealed .selfmark{display:flex}
+.selfmark button{font:inherit;font-size:.9rem;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer}
+.selfmark button[aria-pressed="true"].yes{background:var(--ok);color:var(--surface);border-color:var(--ok)}
+.selfmark button[aria-pressed="true"].no{background:var(--magenta);color:var(--surface);border-color:var(--magenta)}
+
+/* reading + highlighter */
+.hl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:2;background:var(--paper);padding:10px 0 8px;border-bottom:1px solid var(--line)}
+.hl-btn{font:inherit;font-size:.9rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:14px;border-radius:50%;display:inline-block}
+.sw.y,mark.hl.y{background:#FFE36E}
+.sw.g,mark.hl.g{background:#A8E6C1}
+.sw.p,mark.hl.p{background:#F7B6D2}
+mark.hl{color:#1C2A2E;border-radius:3px;padding:0 1px;cursor:pointer}
+.reading{max-height:65vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:0 18px 10px;margin-bottom:6px;background:var(--paper);margin-top:6px;line-height:1.7}
+.reading h4{font:800 1.5rem var(--display);color:var(--teal);margin:12px 0 4px}
+.reading p{margin:12px 0}
+.pl{display:inline-grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--teal);color:var(--on-teal);font:800 .9rem var(--display);margin-right:6px;user-select:none;-webkit-user-select:none}
+
+/* results */
+.results{background:var(--surface);border:2px solid var(--teal);border-radius:18px;padding:22px 20px;margin-top:20px}
+.results table{width:100%;border-collapse:collapse;font-size:.95rem;margin-top:12px}
+.results td{padding:6px 8px;border-bottom:1px solid var(--line)}
+.results td:last-child{text-align:right;font-weight:700}
+.meter{height:8px;background:var(--line);border-radius:999px;overflow:hidden;min-width:70px}
+.meter i{display:block;height:100%;background:var(--teal)}
+.big{font:800 clamp(2.4rem,8vw,3.4rem) var(--display);color:var(--magenta)}
+.verdict{font-weight:700;color:var(--teal)}
+textarea.copy{width:100%;min-height:120px;font:.9rem var(--body);color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:8px;margin-top:10px;display:none}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+footer b{font-family:var(--display);color:var(--teal);font-size:1.1rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <small>dinglish · B2+/C1 · Homework</small>
+    <h1>Revision: Unit 1</h1>
+    <p>Identity: personality, values, thinking verbs, relationships and continuous &amp; perfect tenses</p>
+  </div>
+  <div class="scorecard" aria-live="polite"><b id="total">0</b><span>of <span id="max">0</span> points</span></div>
+</header>
+
+<section class="howto">
+  <b>How it works</b>
+  <ol>
+    <li>Do each task, then click <b>Check</b>. Green means correct, pink means try again.</li>
+    <li>You can check as many times as you like. <b>Show answers</b> unlocks after your first check.</li>
+    <li>At the end, click <b>See my results</b> and send them to your teacher.</li>
+  </ol>
+  <label>Your name <input id="name" type="text" placeholder="Type your name" autocomplete="off"></label>
+</section>
+
+<!-- PART 1 -->
+<section class="part"><h2>Part 1: Personality</h2><p>Idioms, compound adjectives, values</p></section>
+
+<article class="task" id="t-idioms" data-title="Personality idioms">
+  <h3><span class="num">1</span>Who's who?</h3>
+  <p class="rubric">Choose the idiom that best describes each person.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-odd" data-title="Odd one out">
+  <h3><span class="num">2</span>Odd one out</h3>
+  <p class="rubric">Click the word or phrase that doesn't belong. Think about why.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+  <details class="model"><summary>Why?</summary><div lang="uk">1 протилежне до решти. 2 позитивне, решта означає «скупий». 3 псує настрій, решта енергійні. 4 «розрізняти», а не робити висновок. 5 прикметник, решта іменники. 6 «віддалятися», решта про зближення. 7 перевірка розуміння, а не підсумок. 8 набуте, а не вроджене.</div></details>
+</article>
+
+<article class="task" id="t-better" data-title="Say it better">
+  <h3><span class="num">3</span>Say it better</h3>
+  <p class="rubric">Rewrite each sentence. Replace the underlined part with a word or expression from the unit.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-wf" data-title="Word formation">
+  <h3><span class="num">4</span>What makes a great first impression?</h3>
+  <p class="rubric">Complete the text with the correct form of the words in capitals.</p>
+  <div class="textgap"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<!-- PART 2 -->
+<section class="part"><h2>Part 2: Words in context</h2><p>Relationships, nature and nurture, thinking verbs, paraphrasing</p></section>
+
+<article class="task" id="t-rel" data-title="Relationships and lifestyle">
+  <h3><span class="num">5</span>Relationships and lifestyle</h3>
+  <p class="rubric">Complete the sentences with the words and phrases from the list.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-nature" data-title="Nature, nurture and rules">
+  <h3><span class="num">6</span>Nature, nurture and rules</h3>
+  <p class="rubric">Choose the word that completes each sentence.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-pairs" data-title="Tricky pairs">
+  <h3><span class="num">7</span>Tricky pairs</h3>
+  <p class="rubric">Choose the correct word for each sentence.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+  <div class="note" lang="uk"><b>Пам'ятка:</b> <i>deduce</i> — швидкий висновок з фактів, <i>conclude</i> — після роздумів. <i>Grasp</i> — збагнути складне, <i>pick up</i> — засвоїти природно. <i>Eventually</i> — врешті-решт, після довгого часу, <i>ultimately</i> — зрештою, у підсумку. <i>Take up</i> — хобі, <i>take on</i> — роль, відповідальність.</div>
+</article>
+
+<article class="task" id="t-phrases" data-title="Paraphrasing phrases">
+  <h3><span class="num">8</span>Complete the phrase</h3>
+  <p class="rubric">Type the missing word in each phrase for checking understanding and summarising.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<!-- PART 3 -->
+<section class="part"><h2>Part 3: Tenses</h2><p>Continuous and perfect forms</p></section>
+
+<article class="task" id="t-light" data-title="Tenses: choose the form">
+  <h3><span class="num">9</span>Lightning round</h3>
+  <p class="rubric">Choose the correct form.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+  <details class="model"><summary>Why?</summary><div lang="uk">
+    1 <i>know</i> — стативне дієслово. 2 процес з видимим результатом (фарба на одязі). 3 дія завершилася до іншої дії в минулому. 4 дія в процесі в конкретний момент майбутнього. 5 <i>always + continuous</i> = роздратування. 6 завершений результат до моменту в майбутньому. 7 <i>is being</i> = тимчасова поведінка, а не характер. 8 кількість завершених речей → Present Perfect Simple.
+  </div></details>
+</article>
+
+<article class="task" id="t-fix" data-title="Tenses: fix it">
+  <h3><span class="num">10</span>Fix it</h3>
+  <p class="rubric">Each sentence has one mistake. Rewrite the whole sentence correctly.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-verbs" data-title="Tenses: my year abroad">
+  <h3><span class="num">11</span>My year abroad</h3>
+  <p class="rubric">Put the verbs in brackets into the correct tense.</p>
+  <div class="textgap"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<!-- READING -->
+<section class="part"><h2>Part 4: Reading</h2><p>First impressions</p></section>
+
+<article class="task" id="t-read" data-title="Reading: first impressions">
+  <h3><span class="num">12</span>First impressions</h3>
+  <p class="rubric">Read five texts about first impressions. For questions 1–10, choose from texts A–E. Each text may be chosen more than once.</p>
+  <div class="reading" id="reading">
+  <div class="hl-bar" role="toolbar" aria-label="Highlighter">
+    <span class="hint">Select words, then pick a colour · click a highlight to remove it</span>
+    <button type="button" class="hl-btn" data-c="y" aria-label="Yellow highlight"><i class="sw y"></i>Yellow</button>
+    <button type="button" class="hl-btn" data-c="g" aria-label="Green highlight"><i class="sw g"></i>Green</button>
+    <button type="button" class="hl-btn" data-c="p" aria-label="Pink highlight"><i class="sw p"></i>Pink</button>
+    <button type="button" class="hl-btn" id="hlClear">Clear all</button>
+  </div>
+    <h4>First Impressions</h4>
+    <p><b class="pl">A</b> They say it takes about seven seconds to form a first impression, and most of that time we aren't even talking. Most of us assume that our words matter most, but people tend to perceive us through our posture long before we open our mouths. Slouching may make you seem underconfident, while constantly checking your phone suggests you're absent-minded or simply not interested. The good news is that these are habits, and habits can be broken. Practising an open, relaxed posture in front of a mirror may feel silly at first, but it's one of the quickest ways to come across as more approachable.</p>
+    <p><b class="pl">B</b> These days, a first impression is often made before we meet anyone at all. A potential employer, a landlord or a date will probably have looked at your profile photo and scrolled through your posts. From what they find, they will deduce all sorts of things about you, many of them wrong. A holiday photo with a drink in your hand may be perceived as fun-loving by one person and irresponsible by another. Frustratingly, you can't control who sees what, but you can make the most of your online presence by keeping it honest and up to date.</p>
+    <p><b class="pl">C</b> What counts as a good first impression is not universal. People in the UK or the USA set great store by a firm handshake and direct eye contact, but in some parts of East Asia, too much eye contact can come across as aggressive. In Brazil, a stranger may greet you with a kiss on the cheek, while in Finland people tend to keep their distance until they know you well. Someone who is seen as warm and touchy-feely at home may seem rude abroad, and vice versa. It takes time to grasp these subtle distinctions, but it's well worth the effort.</p>
+    <p><b class="pl">D</b> Research suggests that once we've formed a negative opinion of someone, we start looking for evidence that confirms it and ignore anything that doesn't. Psychologists call this "confirmation bias". So if a new colleague seemed conceited on their first day, we're likely to interpret their later confidence as arrogance too. Changing that impression is not impossible, but it ultimately takes many positive encounters, not just one; some studies suggest as many as eight. The lesson? It's far easier to get it right the first time than to fix it later.</p>
+    <p><b class="pl">E</b> I'll never forget my first day at a new job. I'd been so nervous all morning that when I finally met my manager, I hardly said a word. I later found out she had assumed I was a cold fish who didn't want to be there. It was only months later, at an office party, that she saw the real me: chatty, laid-back and a bit of a live wire. We laughed about it, but it taught me a lesson. Nerves can easily be mistaken for unfriendliness, so these days I make a point of smiling and asking a question or two, even when I'm terrified.</p>
+  </div>
+  <p class="rubric"><b>Which text…</b></p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<!-- TRANSLATION -->
+<section class="part"><h2>Part 5: Translate</h2><p>Everything together</p></section>
+
+<article class="task" id="t-tr" data-title="Translation">
+  <h3><span class="num">13</span>Translate into English</h3>
+  <p class="rubric">Translate each sentence, then open the model answer. Be honest: mark your translation as right if it means the same and uses the target word or tense.</p>
+  <div id="translate"></div>
+  <div class="bar"><output class="score" id="trScore"></output></div>
+</article>
+
+<!-- RESULTS -->
+<section class="part"><h2>Your results</h2><p>See how you did and send it to your teacher</p></section>
+<section class="results" id="results">
+  <div class="bar" style="margin-top:0"><button class="btn" id="seeResults">See my results</button></div>
+  <div id="resultsBody" hidden>
+    <div class="big" id="pct">0%</div>
+    <p class="verdict" id="verdict"></p>
+    <table id="resultsTable"></table>
+    <div class="bar"><button class="btn ghost" id="copyBtn">Copy results for my teacher</button><span class="hint" id="copyMsg" aria-live="polite"></span></div>
+    <textarea class="copy" id="copyText" readonly aria-label="Results text"></textarea>
+  </div>
+</section>
+
+<footer><b>dinglish</b><span>Revision: Unit 1</span></footer>
+</div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm = s => String(s).toLowerCase().replace(/[’‘`]/g, "'").replace(/[‐–—-]/g, ' ').replace(/[.!?,:;]+/g, '').replace(/\s+/g, ' ').trim();
+const exact = (v, a) => [].concat(a).some(x => norm(x) === norm(v));
+const contains = (v, a) => { const n = norm(v); return n.length > 0 && [].concat(a).some(x => n.includes(norm(x))); };
+
+/* ---------- scoring ---------- */
+const scores = {}, maxes = {}, revealed = {};
+function setMax(id, n){ maxes[id] = n; $('#max').textContent = Object.values(maxes).reduce((a, b) => a + b, 0); }
+function report(id, n){ scores[id] = n; $('#total').textContent = Object.values(scores).reduce((a, b) => a + b, 0); }
+
+function wire(box, n, check, reveal, rows){
+  setMax(box.id, n);
+  const score = $('.score', box), rev = $('.do-reveal', box);
+  $('.do-check', box).addEventListener('click', () => {
+    const res = check();
+    if (rows) rows.forEach((r, i) => { r.classList.toggle('ok', res[i]); r.classList.toggle('bad', !res[i]); });
+    const k = res.filter(Boolean).length;
+    score.textContent = k + ' / ' + res.length;
+    if (!revealed[box.id]) report(box.id, k);
+    rev.disabled = false;
+  });
+  rev.addEventListener('click', () => {
+    revealed[box.id] = true;
+    reveal();
+    if (rows) rows.forEach(r => { r.classList.remove('bad'); r.classList.add('ok', 'shown'); });
+    score.textContent = 'Answers shown · your score: ' + (scores[box.id] || 0) + ' / ' + n;
+  });
+}
+function row(i, html){
+  const r = document.createElement('div'); r.className = 'row';
+  r.innerHTML = `<span class="n">${i + 1}</span><span class="q">${html}</span>`;
+  return r;
+}
+function pickTask(id, items){
+  const box = document.getElementById(id), list = $('.rows', box), rows = [];
+  items.forEach((it, i) => {
+    const r = row(i, it.q || '');
+    const g = document.createElement('div'); g.className = 'opts'; g.setAttribute('role', 'group');
+    it.opts.forEach((o, k) => {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = o; b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', () => { [...g.children].forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); it.choice = k; });
+      g.appendChild(b);
+    });
+    r.appendChild(g); it.g = g; list.appendChild(r); rows.push(r);
+  });
+  wire(box, items.length, () => items.map(it => it.choice === it.a),
+    () => items.forEach(it => { it.choice = it.a; [...it.g.children].forEach((x, k) => x.setAttribute('aria-pressed', String(k === it.a))); }), rows);
+}
+function selectTask(id, items, pool, inline){
+  const box = document.getElementById(id), list = $('.rows', box), rows = [];
+  items.forEach((it, i) => {
+    const sel = document.createElement('select'); sel.setAttribute('aria-label', 'Answer ' + (i + 1));
+    sel.innerHTML = '<option value="">choose…</option>' + pool.map(p => `<option>${esc(p)}</option>`).join('');
+    let r;
+    if (inline){
+      const [a, b] = it.q.split('___');
+      r = row(i, esc(a)); $('.q', r).appendChild(sel); $('.q', r).insertAdjacentText('beforeend', b || '');
+    } else { r = row(i, it.q); r.appendChild(sel); }
+    it.sel = sel; list.appendChild(r); rows.push(r);
+  });
+  wire(box, items.length, () => items.map(it => it.sel.value === it.a), () => items.forEach(it => it.sel.value = it.a), rows);
+}
+function keyTask(id, items){
+  const box = document.getElementById(id), list = $('.rows', box), rows = [];
+  items.forEach((it, i) => {
+    const r = row(i, it.q + `<input type="text" class="wide" aria-label="Answer ${i + 1}" autocomplete="off" spellcheck="false">`);
+    const m = document.createElement('span'); m.className = 'model'; m.textContent = '→ ' + it.model; r.appendChild(m);
+    it.inp = $('input', r); list.appendChild(r); rows.push(r);
+  });
+  wire(box, items.length, () => items.map(it => contains(it.inp.value, it.keys)), () => {}, rows);
+}
+function wordTask(id, items){
+  const box = document.getElementById(id), list = $('.rows', box), rows = [];
+  items.forEach((it, i) => {
+    const w = Math.max(...[].concat(it.a).map(a => a.length)) + 2;
+    const r = row(i, `${it.pre} <input type="text" size="${w}" aria-label="Gap ${i + 1}" autocomplete="off" spellcheck="false"> ${it.post || ''}`);
+    it.inp = $('input', r); list.appendChild(r); rows.push(r);
+  });
+  wire(box, items.length, () => items.map(it => exact(it.inp.value, it.a)), () => items.forEach(it => it.inp.value = [].concat(it.a)[0]), rows);
+}
+function textGap(id, html, answers){
+  const box = document.getElementById(id), wrap = $('.textgap', box);
+  wrap.innerHTML = html.replace(/\{(\d+)\}/g, (_, n) => `<span class="gn">${n}</span> <input type="text" aria-label="Gap ${n}" autocomplete="off" spellcheck="false">`);
+  const inputs = $$('input', wrap);
+  wire(box, inputs.length, () => {
+    const res = inputs.map((inp, i) => exact(inp.value, answers[i]));
+    inputs.forEach((inp, i) => { inp.classList.toggle('ok', res[i]); inp.classList.toggle('bad', !res[i]); });
+    return res;
+  }, () => inputs.forEach((inp, i) => { inp.value = [].concat(answers[i])[0]; inp.classList.add('ok'); inp.classList.remove('bad'); }));
+}
+
+/* ---------- 1 idioms ---------- */
+selectTask('t-idioms', [
+  { q: 'Ira never smiles at parties and never seems to show any feelings.', a: 'a cold fish' },
+  { q: 'Nobody knew Tom could sing. Then he won the talent show.', a: 'a dark horse' },
+  { q: 'Anna gets up at 5 a.m., runs her own business and has a five-year plan.', a: 'a go-getter' },
+  { q: 'The mayor\'s best friend is the one who really decides what happens in this city.', a: 'a mover and shaker' },
+  { q: 'Max always corrects the teacher, and never in a nice way.', a: 'a smart alec' },
+  { q: 'My little sister found a way to save half the money on our holiday.', a: 'a smart cookie' },
+  { q: 'Dad always gives my brother money whenever he asks.', a: 'a soft touch' },
+  { q: 'Lena dances on tables and talks to everyone in the room.', a: 'a live wire' },
+  { q: "Every time we plan something fun, Oleh says it's a bad idea.", a: 'a wet blanket' }
+], ['a cold fish', 'a dark horse', 'a go-getter', 'a live wire', 'a mover and shaker', 'a smart alec', 'a smart cookie', 'a soft touch', 'a wet blanket']);
+
+/* ---------- 2 odd one out ---------- */
+pickTask('t-odd', [
+  { opts: ['laid-back', 'easy-going', 'highly-strung', 'relaxed'], a: 2 },
+  { opts: ['tight-fisted', 'generous', 'stingy', 'mean'], a: 1 },
+  { opts: ['a go-getter', 'a mover and shaker', 'a live wire', 'a wet blanket'], a: 3 },
+  { opts: ['deduce', 'conclude', 'assume', 'distinguish'], a: 3 },
+  { opts: ['humility', 'sincerity', 'discreet', 'mercy'], a: 2 },
+  { opts: ['bond over', 'click with', 'drift apart', 'get on well'], a: 2 },
+  { opts: ['In a nutshell', 'Simply put', 'Essentially', 'Let me get this straight'], a: 3 },
+  { opts: ['hereditary', 'inherited', 'genetic', 'nurtured'], a: 3 }
+]);
+
+/* ---------- 3 say it better ---------- */
+keyTask('t-better', [
+  { q: 'My uncle <u>never wants to spend any money</u>.', keys: ['tight fisted', 'tightfisted'], model: 'My uncle is tight-fisted.' },
+  { q: 'She <u>gets upset if you criticise her even a little</u>.', keys: ['thin skinned'], model: "She's really thin-skinned." },
+  { q: '<u>Nobody knew he could paint so well. He surprised everyone.</u>', keys: ['dark horse'], model: "He's a real dark horse." },
+  { q: 'He <u>always spoils the fun</u> at parties.', keys: ['wet blanket'], model: "He's a wet blanket at parties." },
+  { q: 'My parents <u>think honesty is very important</u>.', keys: ['great store by'], model: 'My parents set great store by honesty.' },
+  { q: 'We <u>immediately got on really well</u>.', keys: ['clicked'], model: 'We clicked immediately.' },
+  { q: 'In the end, I <u>chose</u> the cheaper flat.', keys: ['plumped for'], model: 'In the end, I plumped for the cheaper flat.' },
+  { q: 'My sister and her husband <u>are together all the time and never give each other any space</u>.', keys: ["each other's pockets", 'each others pockets'], model: "My sister and her husband live in each other's pockets." },
+  { q: 'I passed the exam <u>purely by chance</u>.', keys: ['fluke'], model: 'Passing the exam was a (complete) fluke.' },
+  { q: 'Her new job <u>matches</u> her values.', keys: ['in line with'], model: 'Her new job is in line with her values.' }
+]);
+
+/* ---------- 4 word formation ---------- */
+textGap('t-wf',
+  'Most of us assume that confidence is everything. But research suggests that people value {1} (SINCERE) more than charm. A little {2} (HUMBLE) goes a long way, because nobody likes someone who boasts. At the same time, {3} (ASSERT) shows that you know what you want. In a job interview, {4} (COMMIT) to the company\'s values matters, and so does {5} (DISCREET): never criticise your old boss! Interestingly, showing a little {6} (VULNERABLE) can make you more likeable. If you\'re the one interviewing, show some {7} (MERCIFUL), because everyone gets nervous. Finally, a bit of {8} (FRANK) is fine, as long as it\'s tactful.',
+  ['sincerity', ['humility', 'humbleness'], 'assertiveness', 'commitment', 'discretion', 'vulnerability', 'mercy', 'frankness']);
+
+/* ---------- 5 relationships ---------- */
+selectTask('t-rel', [
+  { q: 'My sister and I ___ our love of horror films.', a: 'bonded over' },
+  { q: "They're together 24/7. They really ___.", a: "live in each other's pockets" },
+  { q: "We're a very ___ family: we have Sunday lunch together every week.", a: 'close-knit' },
+  { q: 'After school, we slowly ___. There was no argument, just different lives.', a: 'drifted apart' },
+  { q: 'My dad and I often ___ politics.', a: 'clash over' },
+  { q: 'Working from home has given me a very ___ lifestyle. I barely move.', a: 'sedentary' },
+  { q: 'She sold her flat and now travels the world in a van: a truly ___ lifestyle.', a: 'nomadic' }
+], ['bonded over', 'clash over', 'close-knit', 'drifted apart', "live in each other's pockets", 'nomadic', 'sedentary'], true);
+
+/* ---------- 6 nature, nurture, rules ---------- */
+selectTask('t-nature', [
+  { q: "She has such a calm, cheerful ___. I've never seen her angry.", a: 'disposition' },
+  { q: 'Short-sightedness is often ___, so if your parents wear glasses, you might too.', a: 'hereditary' },
+  { q: 'Lions protect their ___ for the first two years of their lives.', a: 'offspring' },
+  { q: "Are you trying to ___ that I'm lazy?", a: 'imply' },
+  { q: "Good teachers ___ their students' talents instead of just testing them.", a: 'nurture' },
+  { q: 'Saying that all teenagers are lazy is a huge ___.', a: 'oversimplification' },
+  { q: 'Admitting your ___ can actually make you stronger.', a: 'vulnerability' },
+  { q: "I didn't study at all, so passing was a complete ___.", a: 'fluke' },
+  { q: 'My little brother is so ___. He asks "why?" a hundred times a day.', a: 'inquisitive' },
+  { q: 'A good ___ is to spend less than you earn.', a: 'rule of thumb' },
+  { q: "I'm not a rebel, but sometimes it's OK to ___ the rules a little.", a: 'bend' },
+  { q: 'Our school has so many ___: no hats, no phones, no water in class!', a: 'petty rules' }
+], ['bend', 'disposition', 'fluke', 'hereditary', 'imply', 'inquisitive', 'nurture', 'offspring', 'oversimplification', 'petty rules', 'rule of thumb', 'vulnerability'], true);
+
+/* ---------- 7 tricky pairs ---------- */
+pickTask('t-pairs', [
+  { q: "From the sand in his shoes, I ___ he'd been to the beach.", opts: ['deduced', 'concluded'], a: 0 },
+  { q: "After months of thinking, she ___ that city life wasn't for her.", opts: ['deduced', 'concluded'], a: 1 },
+  { q: "I ___ you'd already eaten, so I didn't cook.", opts: ['assumed', 'grasped'], a: 0 },
+  { q: 'Kids ___ slang incredibly quickly.', opts: ['grasp', 'pick up'], a: 1 },
+  { q: 'It took me a while to ___ the idea behind the theory.', opts: ['grasp', 'pick up'], a: 0 },
+  { q: 'We waited for two hours, and ___ the bus arrived.', opts: ['ultimately', 'eventually'], a: 1 },
+  { q: '___, the choice is yours.', opts: ['Ultimately', 'Eventually'], a: 0 },
+  { q: "I've just ___ pottery.", opts: ['taken on', 'taken up'], a: 1 },
+  { q: 'When she moved to Paris, she seemed to ___ a whole new identity.', opts: ['take on', 'take up'], a: 0 },
+  { q: "It's hard to ___ how much stress costs a company.", opts: ['quantify', 'measure'], a: 0 },
+  { q: 'I can never ___ between the twins.', opts: ['distinguish', 'recognise'], a: 0 },
+  { q: '___, I lost my notes the night before the exam.', opts: ['Frustratingly', 'Exactly'], a: 0 },
+  { q: "I can't ___ life without the internet.", opts: ['conceive of', 'contemplate'], a: 0 },
+  { q: "She's ___ moving to Lisbon.", opts: ['contemplating', 'conceiving of'], a: 0 }
+]);
+
+/* ---------- 8 phrases ---------- */
+wordTask('t-phrases', [
+  { pre: 'Let me get this', post: ': you sold your car to buy a horse?', a: 'straight' },
+  { pre: 'In a', post: ', the meeting was a waste of time.', a: 'nutshell' },
+  { pre: 'So, what it boils', post: 'to is that we can\'t afford it.', a: 'down' },
+  { pre: "If I'm", post: 'you correctly, you want to quit tomorrow?', a: 'hearing' },
+  { pre: 'To put it', post: 'way, he\'s a bit of a wet blanket.', a: 'another' },
+  { pre: 'Simply', post: ', she\'s the best person for the job.', a: 'put' },
+  { pre: 'In', post: 'words, you\'re not coming to the party.', a: 'other' },
+  { pre: "So you're", post: 'that we should start again?', a: 'saying' }
+]);
+
+/* ---------- 9 lightning round ---------- */
+pickTask('t-light', [
+  { q: 'I ___ her for ten years.', opts: ['have known', 'have been knowing'], a: 0 },
+  { q: "Sorry, I'm covered in paint. I ___ the fence.", opts: ['have painted', 'have been painting'], a: 1 },
+  { q: 'By the time she arrived, the film ___.', opts: ['started', 'had started'], a: 1 },
+  { q: 'This time tomorrow, I ___ on a beach.', opts: ['will lie', 'will be lying'], a: 1 },
+  { q: 'She ___ my clothes without asking. So annoying!', opts: ['is always borrowing', 'always borrows'], a: 0 },
+  { q: 'By 2030, I ___ my degree.', opts: ['will have finished', 'will have been finishing'], a: 0 },
+  { q: "He ___ really rude today. That's not like him at all.", opts: ['is being', 'is'], a: 0 },
+  { q: 'I ___ three books this month.', opts: ['have read', 'have been reading'], a: 0 }
+]);
+
+/* ---------- 10 fix it ---------- */
+keyTask('t-fix', [
+  { q: "I've been owning this car since 2019.", keys: ["i've had this", 'i have had this', "i've owned this", 'i have owned this'], model: "I've had / I've owned this car since 2019." },
+  { q: 'When I got to the station, the train already left.', keys: ['had already left', 'had left already'], model: 'When I got to the station, the train had already left.' },
+  { q: "She's lived in Brazil when she was a child.", keys: ['she lived in brazil'], model: 'She lived in Brazil when she was a child.' },
+  { q: "Next June, I'll be working here for five years.", keys: ['will have been working', "'ll have been working"], model: "Next June, I'll have been working here for five years." },
+  { q: 'How long are you learning English?', keys: ['have you been learning'], model: 'How long have you been learning English?' },
+  { q: 'I was wondering if you can help me.', keys: ['could help'], model: 'I was wondering if you could help me.' },
+  { q: "By the time we get there, they'll be eating everything.", keys: ['will have eaten', "'ll have eaten"], model: "By the time we get there, they'll have eaten everything." },
+  { q: "He's been calling me five times today.", keys: ['has called', "'s called"], model: "He's called me five times today." }
+]);
+
+/* ---------- 11 verbs text ---------- */
+textGap('t-verbs',
+  'When I first {1} (move) to Lisbon, I {2} (never / live) abroad before. For the first few weeks, I {3} (be) completely infatuated with the city. But by the time winter came, I {4} (start) to feel homesick. I {5} (miss) my family terribly, and I {6} (not / sleep) well for weeks. Now I {7} (live) here for two years, and I {8} (finally / pick up) enough Portuguese to chat with my neighbours. By next summer, I {9} (finish) my course, and this time next year I {10} (probably / work) here full-time.',
+  ['moved', 'had never lived', 'was', 'had started', ['missed', 'was missing'], ["hadn't been sleeping", 'had not been sleeping'], ['have been living', "'ve been living", 'have lived'], ['have finally picked up', "'ve finally picked up"], ['will have finished', "'ll have finished"], ['will probably be working', "'ll probably be working"]]);
+
+/* ---------- 12 reading ---------- */
+selectTask('t-read', [
+  { q: 'claims that people notice how we stand before they notice what we say?', a: 'A' },
+  { q: 'points out that the same detail can be interpreted in opposite ways?', a: 'B' },
+  { q: 'explains why a bad impression can be difficult to change?', a: 'D' },
+  { q: 'describes a situation in which the writer was judged unfairly?', a: 'E' },
+  { q: 'warns that behaviour seen as polite in one place may seem impolite elsewhere?', a: 'C' },
+  { q: 'mentions that impressions are now often formed before a face-to-face meeting?', a: 'B' },
+  { q: 'suggests a simple way to practise improving the impression we make?', a: 'A' },
+  { q: 'gives a number of experiences that may be needed to change an opinion?', a: 'D' },
+  { q: 'suggests that learning certain social rules requires patience?', a: 'C' },
+  { q: 'explains how a feeling can be misread by other people?', a: 'E' }
+], ['A', 'B', 'C', 'D', 'E']);
+
+/* ---------- highlighter ---------- */
+(function(){
+  const box = $('#reading');
+  let saved = null;
+  document.addEventListener('selectionchange', () => {
+    const sel = getSelection();
+    if (sel.rangeCount && !sel.isCollapsed && box.contains(sel.getRangeAt(0).commonAncestorContainer)) saved = sel.getRangeAt(0).cloneRange();
+  });
+  function paint(c){
+    const sel = getSelection();
+    let range = (sel.rangeCount && !sel.isCollapsed) ? sel.getRangeAt(0) : saved;
+    if (!range || range.collapsed || !box.contains(range.commonAncestorContainer)) return;
+    const root = range.commonAncestorContainer.nodeType === 1 ? range.commonAncestorContainer : range.commonAncestorContainer.parentNode;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const jobs = [];
+    while (walker.nextNode()){
+      const n = walker.currentNode;
+      if (!range.intersectsNode(n) || n.parentNode.closest('.pl, h4')) continue;
+      const s = n === range.startContainer ? range.startOffset : 0;
+      const e = n === range.endContainer ? range.endOffset : n.length;
+      if (e > s && n.data.slice(s, e).trim()) jobs.push([n, s, e]);
+    }
+    jobs.forEach(([n, s, e]) => {
+      let t = n;
+      if (e < t.length) t.splitText(e);
+      if (s > 0) t = t.splitText(s);
+      const old = t.parentNode.closest('mark');
+      if (old && t.parentNode === old && old.childNodes.length === 1){ old.className = 'hl ' + c; return; }
+      const m = document.createElement('mark'); m.className = 'hl ' + c;
+      t.parentNode.insertBefore(m, t); m.appendChild(t);
+    });
+    sel.removeAllRanges(); saved = null;
+  }
+  function unwrap(m){ const p = m.parentNode; while (m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); }
+  $$('.hl-btn[data-c]').forEach(b => {
+    b.addEventListener('pointerdown', e => e.preventDefault());
+    b.addEventListener('mousedown', e => e.preventDefault());
+    b.addEventListener('click', () => paint(b.dataset.c));
+  });
+  $('#hlClear').addEventListener('click', () => $$('mark.hl', box).forEach(unwrap));
+  box.addEventListener('click', e => {
+    const m = e.target.closest('mark.hl');
+    if (m && getSelection().isCollapsed) unwrap(m);
+  });
+})();
+
+/* ---------- 13 translation (self-marked) ---------- */
+(function(){
+  const items = [
+    ['Чесно кажучи, я завжди припускав, що він скупий.', 'Frankly, I always assumed he was tight-fisted.'],
+    ['Ми зблизилися на ґрунті любові до старих фільмів.', 'We bonded over our love of old films.'],
+    ['З роками ми поступово віддалилися одне від одного.', 'Over the years, we gradually drifted apart.'],
+    ['Вона справжня пробивна людина: за рік її двічі підвищили.', "She's a real go-getter: she's been promoted twice in a year."],
+    ['Я вже місяць збираюся записатися на йогу.', "I've been meaning to take up yoga for a month."],
+    ['Мені знадобилися роки, щоб збагнути, що мною рухає.', 'It took me years to grasp what makes me tick.'],
+    ['Тобто ти кажеш, що перше враження — це не все?', "So you're saying (that) first impressions aren't everything?"],
+    ['Коли я приїхав, вони вже посварилися через гроші.', 'When I arrived, they had already clashed over money.'],
+    ['До кінця року я прочитаю двадцять книжок.', "By the end of the year, I'll have read twenty books."],
+    ['Ми надаємо великого значення щирості та скромності.', 'We set great store by sincerity and humility.'],
+    ['Діти засвоюють мови набагато швидше за дорослих.', 'Children pick up languages much faster than adults.'],
+    ['Я не можу уявити собі сидячого способу життя.', "I can't conceive of a sedentary lifestyle."]
+  ];
+  const marks = Array(items.length).fill(null);
+  setMax('t-tr', items.length);
+  const wrap = $('#translate');
+  wrap.innerHTML = items.map(([ua, en], i) => `
+    <div class="open-item" data-i="${i}">
+      <p lang="uk">${i + 1}. ${esc(ua)}</p>
+      <input type="text" class="wide" aria-label="Your translation ${i + 1}" autocomplete="off">
+      <details class="model"><summary>Model answer</summary><div>${esc(en)}</div></details>
+      <div class="selfmark" role="group" aria-label="Mark your answer ${i + 1}">
+        <button type="button" class="yes" aria-pressed="false">✓ Mine is right</button>
+        <button type="button" class="no" aria-pressed="false">✗ Not quite</button>
+      </div>
+    </div>`).join('');
+  $$('.open-item', wrap).forEach(item => {
+    const i = +item.dataset.i;
+    $('details', item).addEventListener('toggle', e => { if (e.target.open) item.classList.add('revealed'); });
+    $$('.selfmark button', item).forEach(b => b.addEventListener('click', () => {
+      $$('.selfmark button', item).forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      marks[i] = b.classList.contains('yes');
+      const k = marks.filter(Boolean).length;
+      $('#trScore').textContent = k + ' / ' + items.length + ' marked right';
+      report('t-tr', k);
+    }));
+  });
+})();
+
+/* ---------- results ---------- */
+function buildResults(){
+  const tasks = $$('.task[data-title]');
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  const max = Object.values(maxes).reduce((a, b) => a + b, 0);
+  const pct = max ? Math.round(total / max * 100) : 0;
+  $('#pct').textContent = pct + '%';
+  $('#verdict').textContent = pct >= 90 ? 'Brilliant! You really know this unit.'
+    : pct >= 75 ? 'Great work! Review the pink answers once more.'
+    : pct >= 50 ? 'Good effort. Go back to the tasks with the lowest scores.'
+    : 'Keep going! Revise the vocabulary list and try the tasks again.';
+  const name = $('#name').value.trim();
+  const lines = [`Revision: Unit 1${name ? ' — ' + name : ''}`, `Total: ${total} / ${max} (${pct}%)`, ''];
+  $('#resultsTable').innerHTML = tasks.map(t => {
+    const s = scores[t.id], m = maxes[t.id] || 0;
+    const done = s !== undefined;
+    lines.push(`${t.dataset.title}: ${done ? s + ' / ' + m : 'not done'}${revealed[t.id] ? ' (answers shown)' : ''}`);
+    const w = done && m ? Math.round(s / m * 100) : 0;
+    return `<tr><td>${esc(t.dataset.title)}</td><td style="width:30%"><div class="meter" aria-hidden="true"><i style="width:${w}%"></i></div></td><td>${done ? s + ' / ' + m : '—'}</td></tr>`;
+  }).join('');
+  $('#copyText').value = lines.join('\n');
+  $('#resultsBody').hidden = false;
+}
+$('#seeResults').addEventListener('click', buildResults);
+$('#copyBtn').addEventListener('click', async () => {
+  buildResults();
+  const txt = $('#copyText').value;
+  try { await navigator.clipboard.writeText(txt); $('#copyMsg').textContent = 'Copied! Paste it in a message to your teacher.'; }
+  catch (e) { const ta = $('#copyText'); ta.style.display = 'block'; ta.select(); $('#copyMsg').textContent = 'Select the text below and copy it.'; }
+});
+</script>
+</body>
+</html>
