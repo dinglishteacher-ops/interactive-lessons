@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Revision: Unit 1 | dinglish | [index-3.html](index-3.html) |
 | Linking Words B1+ | [linking-words-b1plus.html](linking-words-b1plus.html) |
 | Тренажер слів НМТ | [Тренажер слів НМТ.html](Тренажер слів НМТ.html) |
 | Prepositions of time and place: практика до НМТ | [Prepositions of time and place_ практика до НМТ.html](Prepositions of time and place_ практика до НМТ.html) |
