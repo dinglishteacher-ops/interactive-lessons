@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Present Simple vs Continuous · dinglish | [present-simple-vs-continuous.html](present-simple-vs-continuous.html) |
 | Revision: Unit 1 | dinglish | [index-3.html](index-3.html) |
 | Linking Words B1+ | [linking-words-b1plus.html](linking-words-b1plus.html) |
 | Тренажер слів НМТ | [Тренажер слів НМТ.html](Тренажер слів НМТ.html) |
