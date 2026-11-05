@@ -6,27 +6,28 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Busy-ness vocabulary — flashcards & practice | [busyness-vocabulary-cards.html](busyness-vocabulary-cards.html) |
 | Present Simple vs Continuous · dinglish | [present-simple-vs-continuous.html](present-simple-vs-continuous.html) |
-| Revision: Unit 1 | dinglish | [index-3.html](index-3.html) |
+| Revision: Unit 1 \| dinglish | [index-3.html](index-3.html) |
 | Linking Words B1+ | [linking-words-b1plus.html](linking-words-b1plus.html) |
 | Тренажер слів НМТ | [Тренажер слів НМТ.html](Тренажер слів НМТ.html) |
 | Prepositions of time and place: практика до НМТ | [Prepositions of time and place_ практика до НМТ.html](Prepositions of time and place_ практика до НМТ.html) |
 | Reported speech: He said he was hiding there | [index-2.html](index-2.html) |
-| am / is / are + 's / of trainer | dinglish | [be-possessive-trainer.html](be-possessive-trainer.html) |
+| am / is / are + 's / of trainer \| dinglish | [be-possessive-trainer.html](be-possessive-trainer.html) |
 | So much to do · dinglish | [So much to do, so little time · dinglish.html](So much to do, so little time · dinglish.html) |
 | Crime & investigation · dinglish | [Crime & investigation · dinglish.html](Crime & investigation · dinglish.html) |
 | Life is busy — Intermediate Plus 1.2 | [Life is busy — Intermediate Plus 1.2.html](Life is busy — Intermediate Plus 1.2.html) |
 | To be: am, is, are — dinglish | [to-be-elementary.html](to-be-elementary.html) |
-| Gerund &amp; Infinitive — тест | [gerund-infinitive-test-2.html](gerund-infinitive-test-2.html) |
-| Speaking cards — have sth done &amp; passive | [speaking-cards-have-done-passive.html](speaking-cards-have-done-passive.html) |
+| Gerund & Infinitive — тест | [gerund-infinitive-test-2.html](gerund-infinitive-test-2.html) |
+| Speaking cards — have sth done & passive | [speaking-cards-have-done-passive.html](speaking-cards-have-done-passive.html) |
 | Living your way — Intermediate Plus 1.1 (part 2) | [living-your-way-1.1b.html](living-your-way-1.1b.html) |
 | How Instagram decides what you see — dinglish | [instagram-ranking-lesson.html](instagram-ranking-lesson.html) |
 | Тренажер слів · dinglish | [vocab-trainer-b1.html](vocab-trainer-b1.html) |
-| Food — Revision (Elementary) | dinglish | [food-revision-elementary.html](food-revision-elementary.html) |
-| Speaking · The Passive · B1+ | dinglish | [passive-speaking.html](passive-speaking.html) |
+| Food — Revision (Elementary) \| dinglish | [food-revision-elementary.html](food-revision-elementary.html) |
+| Speaking · The Passive · B1+ \| dinglish | [passive-speaking.html](passive-speaking.html) |
 | ’s чи of? — Elementary practice | [possessive-practice.html](possessive-practice.html) |
-| Gerund &amp; Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
-| Grammar Revision — NMT Practice | dinglish | [grammar-revision-nmt-b1.html](grammar-revision-nmt-b1.html) |
+| Gerund & Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
+| Grammar Revision — NMT Practice \| dinglish | [grammar-revision-nmt-b1.html](grammar-revision-nmt-b1.html) |
 | Skincare English — Revision Lesson | [skincare-english-revision.html](skincare-english-revision.html) |
 | Revision Lesson · Units 1–6 | [revision-lesson.html](revision-lesson.html) |
 | Coffee drinker? — Intermediate Plus 1.1 | [coffee-drinker-1.1.html](coffee-drinker-1.1.html) |
