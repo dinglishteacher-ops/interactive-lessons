@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Busy-ness vocabulary — flashcards &amp; practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;0,800;1,700&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B1A12;
+  --roast:#4A2C1D;
+  --paper:#EFE7DA;
+  --foam:#FFFBF4;
+  --cherry:#B23A2F;
+  --caramel:#D6A354;
+  --leaf:#4A7C59;
+  --line:rgba(43,26,18,.16);
+  --line-soft:rgba(43,26,18,.08);
+  --display:"Alegreya",Georgia,serif;
+  --body:"Manrope",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+}
+img{max-width:100%}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--roast);
+  background-image:radial-gradient(circle at 88% 20%,rgba(214,163,84,.22),transparent 45%);
+  color:var(--foam);
+  padding:46px 22px 38px;
+}
+.mast-inner{max-width:880px;margin:0 auto}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--caramel);
+  margin:0 0 14px;
+}
+.masthead h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(40px,9vw,68px);
+  line-height:.98;
+  margin:0 0 12px;
+  letter-spacing:-.01em;
+}
+.masthead h1 em{font-style:italic;color:var(--caramel)}
+.mast-sub{
+  margin:0 0 22px;
+  max-width:34em;
+  color:rgba(255,251,244,.82);
+  font-size:16px;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  border:1px solid rgba(255,251,244,.32);
+  border-radius:999px;
+  padding:6px 12px;
+  color:rgba(255,251,244,.9);
+}
+
+/* ---------- sticky progress ---------- */
+.tracker{
+  position:sticky;top:0;z-index:20;
+  background:rgba(239,231,218,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.tracker-inner{
+  max-width:880px;margin:0 auto;
+  padding:10px 22px;
+  display:flex;align-items:center;gap:14px;
+}
+.cup{flex:0 0 auto;width:38px;height:42px}
+.cup .body-line{fill:none;stroke:var(--roast);stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round}
+.cup .brew{fill:var(--cherry);transition:transform .55s cubic-bezier(.2,.8,.25,1)}
+.track-text{flex:1;min-width:0}
+.track-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--roast);opacity:.75;
+}
+.bar{height:6px;background:rgba(43,26,18,.12);border-radius:99px;margin-top:5px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:var(--cherry);border-radius:99px;transition:width .45s ease}
+.score{font-family:var(--mono);font-size:13px;font-weight:700;white-space:nowrap}
+
+/* ---------- layout ---------- */
+main{max-width:880px;margin:0 auto;padding:8px 22px 90px}
+.part{
+  margin:44px 0 26px;
+  padding-top:26px;
+  border-top:2px solid var(--ink);
+}
+.part-tag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cherry);margin:0 0 6px;
+}
+.part h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(27px,5.4vw,38px);line-height:1.05;margin:0 0 6px;
+}
+.part p.part-note{margin:0;color:rgba(43,26,18,.68);font-size:15px}
+
+.task{
+  background:var(--foam);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px 22px;
+  margin:20px 0;
+}
+.task-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:6px}
+.ring{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+  border:2px solid var(--ink);
+  display:grid;place-items:center;
+  font-family:var(--mono);font-weight:700;font-size:14px;
+  box-shadow:0 0 0 4px var(--foam),0 0 0 5px var(--line-soft);
+}
+.task h3{
+  font-family:var(--display);font-weight:700;font-size:23px;
+  line-height:1.2;margin:4px 0 0;
+}
+.kicker{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--cherry);display:block;margin-bottom:3px;
+}
+.instr{margin:10px 0 16px;font-size:16px}
+.instr .ua{display:block;color:rgba(43,26,18,.6);font-size:14.5px;margin-top:3px}
+
+/* ---------- items ---------- */
+ol.items{margin:0;padding:0;list-style:none;counter-reset:it}
+ol.items>li{
+  counter-increment:it;
+  position:relative;
+  padding:11px 0 11px 30px;
+  border-top:1px solid var(--line-soft);
+}
+ol.items>li:first-child{border-top:none}
+ol.items>li::before{
+  content:counter(it);
+  position:absolute;left:0;top:13px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  color:rgba(43,26,18,.42);
+}
+.sub{font-size:14px;color:rgba(43,26,18,.6);font-family:var(--mono)}
+
+input[type=text]{
+  font-family:var(--body);font-size:16px;color:var(--ink);
+  background:transparent;
+  border:none;border-bottom:2px dotted var(--line);
+  padding:2px 4px;min-width:130px;width:auto;
+  transition:border-color .2s,background .2s;
+}
+input[type=text]:focus{outline:none;border-bottom-color:var(--cherry);background:rgba(214,163,84,.12)}
+input.wide{min-width:min(100%,420px);width:min(100%,420px)}
+input.mid{min-width:min(100%,260px)}
+select{
+  font-family:var(--body);font-size:15px;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line);
+  border-radius:8px;padding:7px 9px;max-width:100%;
+}
+select:focus{outline:2px solid var(--cherry);outline-offset:1px}
+textarea{
+  width:100%;font-family:var(--body);font-size:15.5px;color:var(--ink);
+  background:rgba(43,26,18,.03);border:1px dashed var(--line);
+  border-radius:10px;padding:11px 12px;min-height:76px;resize:vertical;
+}
+textarea:focus{outline:none;border-color:var(--cherry);border-style:solid}
+
+.ok{border-bottom-color:var(--leaf)!important;background:rgba(74,124,89,.13)!important}
+.no{border-bottom-color:var(--cherry)!important;background:rgba(178,58,47,.11)!important}
+select.ok{border-color:var(--leaf);background:rgba(74,124,89,.13)}
+select.no{border-color:var(--cherry);background:rgba(178,58,47,.11)}
+.mark{font-family:var(--mono);font-size:14px;font-weight:700;margin-left:7px}
+.mark.y{color:var(--leaf)}
+.mark.n{color:var(--cherry)}
+
+/* buttons */
+.btn{
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  border:1.5px solid var(--ink);background:var(--ink);color:var(--foam);
+  border-radius:999px;padding:9px 17px;cursor:pointer;
+  transition:transform .12s ease,background .2s;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:rgba(43,26,18,.07)}
+.btn:focus-visible,button:focus-visible{outline:3px solid var(--caramel);outline-offset:2px}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;align-items:center}
+
+/* choice buttons (T/F + MCQ) */
+.opts{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.opt{
+  font-family:var(--body);font-size:15px;
+  border:1.5px solid var(--line);background:var(--paper);color:var(--ink);
+  border-radius:999px;padding:6px 14px;cursor:pointer;transition:.18s;
+}
+.opt:hover{border-color:var(--ink)}
+.opt.sel{background:var(--ink);color:var(--foam);border-color:var(--ink)}
+.opt.good{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.opt.bad{background:var(--cherry);border-color:var(--cherry);color:#fff}
+
+/* reading */
+.article{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-left:5px solid var(--cherry);
+  border-radius:12px;padding:22px 22px 6px;margin:16px 0 0;
+}
+.article h4{
+  font-family:var(--display);font-weight:800;font-size:26px;
+  line-height:1.1;margin:0 0 4px;
+}
+.article .lead{
+  font-family:var(--display);font-style:italic;font-size:19px;
+  line-height:1.45;margin:10px 0 20px;color:var(--roast);
+}
+.facts{margin:0;padding:0;list-style:none;counter-reset:f}
+.facts li{
+  counter-increment:f;position:relative;
+  padding:0 0 18px 42px;font-size:16px;
+}
+.facts li::before{
+  content:counter(f);
+  position:absolute;left:0;top:-2px;
+  font-family:var(--display);font-weight:800;font-size:26px;color:var(--caramel);
+}
+.hl{background:rgba(214,163,84,.34);padding:0 2px;border-radius:3px}
+
+/* rules box */
+.rules{
+  border:1.5px solid var(--cherry);border-radius:12px;
+  padding:16px 18px;margin:16px 0 0;background:rgba(178,58,47,.045);
+}
+.rules .lbl{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cherry);margin-bottom:8px;
+}
+.rules ul{margin:0;padding-left:19px}
+.rules li{margin-bottom:7px}
+.rules li:last-child{margin-bottom:0}
+code{
+  font-family:var(--mono);font-size:14px;
+  background:rgba(43,26,18,.07);padding:1px 5px;border-radius:4px;
+}
+
+/* stress task */
+.stressline{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:4px}
+.w{
+  font-size:17px;padding:3px 7px;border-radius:7px;cursor:pointer;
+  border:1.5px solid transparent;transition:.15s;user-select:none;
+}
+.w:hover{background:rgba(43,26,18,.06)}
+.w.on{background:var(--ink);color:var(--foam);font-weight:700}
+.w.hit{background:var(--leaf);color:#fff;font-weight:700}
+.w.miss{border-color:var(--cherry);border-style:dashed}
+
+/* photos */
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 18px}
+.photo{margin:0;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
+.photo img{display:block;width:100%;height:270px;object-fit:cover}
+.photo figcaption{
+  position:absolute;left:10px;top:10px;
+  background:rgba(43,26,18,.8);color:var(--foam);
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  padding:3px 10px;border-radius:999px;letter-spacing:.06em;
+}
+.ipa{
+  font-family:var(--mono);font-size:12.5px;
+  color:var(--roast);opacity:.62;white-space:nowrap;
+}
+@media (max-width:620px){.photo img{height:180px}.ipa{font-size:11.5px}}
+
+
+/* two-column compare */
+.tri{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 4px}
+.tri-col{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--paper)}
+.tri-col:nth-child(2){border-color:var(--cherry);background:rgba(178,58,47,.05)}
+.tri-lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cherry);margin-bottom:7px}
+.tri-ex{font-family:var(--display);font-size:19px;line-height:1.25;margin:0 0 8px}
+.tri-note{font-size:14px;color:rgba(43,26,18,.7);margin:0}
+
+/* speech bubbles */
+.bubbles{display:grid;gap:12px;margin:8px 0 4px}
+.bub{border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--paper);position:relative}
+.bub.b1{border-color:rgba(74,124,89,.5);background:rgba(74,124,89,.06)}
+.bub.b2{border-color:rgba(178,58,47,.45);background:rgba(178,58,47,.05)}
+.bub.b3{border-color:rgba(214,163,84,.7);background:rgba(214,163,84,.1)}
+.b-name{font-family:var(--display);font-weight:800;font-size:19px;margin-bottom:5px}
+.bub p{margin:0;font-size:16px}
+
+/* linking */
+.linkline{display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin-top:4px;font-size:18px}
+.lw{padding:2px 1px}
+.j{
+  border:1px dashed var(--line);background:transparent;cursor:pointer;
+  font-family:var(--mono);font-size:15px;line-height:1;color:rgba(43,26,18,.45);
+  min-width:30px;height:30px;padding:0;border-radius:8px;transition:.15s;
+  display:inline-grid;place-items:center;
+}
+.j:hover{background:rgba(43,26,18,.08);color:var(--ink)}
+.j.on{background:var(--ink);color:var(--foam);border-style:solid;border-color:var(--ink)}
+.j.hit{background:var(--leaf);color:#fff;border-style:solid;border-color:var(--leaf)}
+.j.miss{outline:2px dashed var(--cherry);outline-offset:-2px;color:var(--cherry)}
+
+.gloss li{margin-bottom:6px;font-size:15.5px}
+.gloss b{font-family:var(--body);font-weight:700}
+.sig{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--caramel);margin:18px 0 0!important;opacity:.85}
+
+@media (max-width:620px){
+  .tri{grid-template-columns:1fr}
+  .tri-ex{font-size:18px}
+  .linkline{font-size:17px}
+}
+
+
+/* flashcard deck */
+.deckbar{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 16px;align-items:center}
+.stage{perspective:1600px;min-height:300px;display:flex}
+.vcard{position:relative;width:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,.8,.3,1);cursor:pointer}
+.vcard.flipped{transform:rotateY(180deg)}
+.vface{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:18px;padding:24px 22px;display:flex;flex-direction:column;overflow-y:auto;
+}
+.vfront{background:var(--paper);border:1.5px solid var(--line);box-shadow:0 12px 26px -20px rgba(43,26,18,.5)}
+.vback{transform:rotateY(180deg);background:var(--roast);color:var(--foam);border:1.5px solid var(--roast)}
+.vcard.know .vfront{border-color:var(--leaf);box-shadow:0 0 0 2px rgba(74,124,89,.22)}
+.vcard.hard .vfront{border-color:var(--cherry);box-shadow:0 0 0 2px rgba(178,58,47,.2)}
+.vtop{display:flex;align-items:center;gap:9px;margin-bottom:auto}
+.vback .vtop{margin-bottom:14px}
+.vback .vword{margin-top:0}
+.vtag{
+  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--cherry);color:#fff;padding:5px 11px;border-radius:999px;
+}
+.vtag.alt{background:var(--caramel);color:var(--ink)}
+.vnum{font-family:var(--mono);font-size:12px;color:rgba(43,26,18,.45);margin-left:auto}
+.vback .vnum{color:rgba(255,251,244,.5)}
+.vword{font-family:var(--display);font-weight:800;font-size:clamp(25px,6vw,36px);line-height:1.15;margin:18px 0 6px}
+.vipa{font-family:var(--mono);font-size:14px;color:rgba(43,26,18,.55);margin:0}
+.vhint{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(43,26,18,.38);margin-top:auto}
+.vex{font-size:15.5px;font-style:italic;color:rgba(255,251,244,.88);margin:4px 0 12px;border-left:3px solid var(--caramel);padding-left:11px}
+.vnote{font-size:14.5px;color:rgba(255,251,244,.75);margin:0 0 2px}
+.vback b{color:var(--caramel);font-style:normal}
+
+.nav{display:flex;align-items:center;gap:10px;margin-top:16px}
+.round{
+  width:48px;height:48px;border-radius:50%;flex:0 0 auto;border:1.5px solid var(--ink);
+  background:transparent;color:var(--ink);font-size:20px;cursor:pointer;display:grid;place-items:center;transition:.15s;
+}
+.round:hover{background:var(--ink);color:var(--foam)}
+.round:disabled{opacity:.3;cursor:default}
+.round:disabled:hover{background:transparent;color:var(--ink)}
+.mid{flex:1;text-align:center;min-width:0}
+.dots{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(43,26,18,.2);border:none;padding:0;cursor:pointer;transition:.2s}
+.dot.on{background:var(--cherry);transform:scale(1.5)}
+.dot.done{background:var(--leaf)}
+.dot.warn{background:var(--caramel)}
+.counter{font-family:var(--mono);font-size:12px;color:rgba(43,26,18,.55)}
+.tools{display:flex;gap:9px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.tbtn{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:9px 15px;cursor:pointer;transition:.18s;
+}
+.tbtn:hover{border-color:var(--ink)}
+.tbtn.green{border-color:var(--leaf);color:var(--leaf)}
+.tbtn.green.on{background:var(--leaf);color:#fff}
+.tbtn#vhard.on{background:var(--cherry);border-color:var(--cherry);color:#fff}
+.fbtn{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer;transition:.18s;
+}
+.fbtn:hover{border-color:var(--ink)}
+.fbtn.on{background:var(--ink);color:var(--foam);border-color:var(--ink)}
+
+/* list view */
+.listview{margin-top:20px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.lrow{display:grid;grid-template-columns:1.1fr 1fr;gap:12px;padding:10px 13px;border-top:1px solid var(--line-soft);font-size:15px}
+.lrow:first-child{border-top:none}
+.lrow:nth-child(even){background:rgba(43,26,18,.03)}
+.lw{font-weight:700}
+.lu{color:rgba(43,26,18,.72)}
+
+@media (max-width:620px){
+  .stage{min-height:330px}
+  .vface{padding:19px 16px;border-radius:15px}
+  .lrow{grid-template-columns:1fr;gap:2px}
+  .round{width:44px;height:44px}
+}
+
+/* word-formation table */
+.wf{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:6px}
+.wf-head,.wf-row{display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:10px;padding:10px 12px;align-items:center}
+.wf-head{
+  background:var(--roast);color:var(--foam);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+}
+.wf-row{border-top:1px solid var(--line-soft);font-size:15.5px}
+.wf-row:nth-child(even){background:rgba(43,26,18,.03)}
+.wf-row input{min-width:0;width:100%}
+
+/* debate device chips */
+.devcheck{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.dc{
+  font-size:14px;border:1.5px solid var(--line);border-radius:999px;
+  padding:6px 13px;cursor:pointer;transition:.15s;user-select:none;
+}
+.dc:hover{border-color:var(--ink)}
+.dc.on{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.dc.on::before{content:"✓ "}
+
+@media (max-width:620px){
+  .wf-head,.wf-row{grid-template-columns:1fr 1fr;gap:7px;font-size:14.5px}
+  .wf-head span:last-child,.wf-row span:last-child{grid-column:1/-1;padding-top:4px;border-top:1px dashed var(--line-soft)}
+}
+
+/* audio player */
+.player{
+  border:1.5px solid var(--roast);border-radius:14px;background:var(--roast);
+  color:var(--foam);padding:16px 16px 14px;margin-top:18px;
+}
+.pl-row{display:flex;align-items:center;gap:13px}
+.pl-ctrl{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,251,244,.18);flex-wrap:wrap}
+.pl-play{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:9px;
+  background:var(--caramel);color:var(--ink);border:none;border-radius:999px;
+  padding:11px 20px 11px 17px;cursor:pointer;transition:.15s;
+  font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+}
+.pl-play:hover{transform:translateY(-1px)}
+.pl-play .pl-icon{font-size:14px;line-height:1}
+.pl-play.playing{background:var(--foam)}
+.pl-title{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.2}
+.pl-state{font-family:var(--mono);font-size:11.5px;color:rgba(255,251,244,.6);margin-top:2px}
+.pl-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,251,244,.6)}
+.sp{
+  font-family:var(--mono);font-size:11.5px;border:1px solid rgba(255,251,244,.32);
+  background:transparent;color:rgba(255,251,244,.9);border-radius:999px;
+  padding:6px 13px;cursor:pointer;transition:.15s;
+}
+.sp:hover{border-color:var(--foam)}
+.sp.on{background:var(--foam);color:var(--ink);border-color:var(--foam)}
+.player .btn.ghost{color:var(--foam);border-color:rgba(255,251,244,.45)}
+.player .btn.ghost:hover{background:rgba(255,251,244,.12)}
+.pl-warn{
+  margin:12px 0 0;font-size:14px;color:var(--caramel);
+  border-top:1px solid rgba(255,251,244,.18);padding-top:11px;
+}
+.script{
+  margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,251,244,.18);
+  font-size:15.5px;color:rgba(255,251,244,.92);
+}
+.script p{margin:0 0 10px}
+.script p:last-child{margin-bottom:0}
+.opts.col{flex-direction:column;align-items:flex-start}
+.opts.col .opt{text-align:left}
+
+@media (max-width:620px){
+  .pl-title{font-size:17px}
+  .pl-ctrl{gap:7px}
+  .player .btn.ghost{margin-left:0!important;width:100%;margin-top:4px}
+}
+
+/* numbered reasons */
+.reasons li{padding-left:44px;margin-bottom:16px}
+.reasons li b{font-family:var(--body);font-weight:700}
+input.tiny{min-width:46px;width:46px;text-align:center;font-weight:700}
+
+/* agree/disagree rows */
+.agree li{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-left:0}
+.agree li::before{display:none}
+.agree .opts{margin-top:0}
+
+/* plan list */
+.plan li{padding-bottom:16px}
+.plan textarea{margin-top:7px}
+.plan .opts{margin-top:6px}
+
+/* word counter */
+.wc{
+  font-family:var(--mono);font-size:12.5px;color:rgba(43,26,18,.6);
+  margin-top:8px;display:flex;gap:7px;align-items:baseline;
+}
+.wc b{font-size:16px;color:var(--ink)}
+.wc.ok b{color:var(--leaf)}
+.wc.ok .wc-note{color:var(--leaf)}
+.wc.over b{color:var(--cherry)}
+.draft{font-size:16px;line-height:1.6}
+
+.check li{margin-bottom:7px}
+.gloss li{margin-bottom:6px;font-size:15.5px}
+.gloss b{font-family:var(--body);font-weight:700}
+.sig{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--caramel);margin:18px 0 0!important;opacity:.85}
+
+@media (max-width:620px){
+  .reasons li{padding-left:36px}
+  .agree li{gap:7px}
+}
+
+/* speaking */
+.speak{background:rgba(74,124,89,.07);border:1px solid rgba(74,124,89,.32)}
+.speak .ring{border-color:var(--leaf)}
+.prompts{margin:0;padding-left:20px}
+.prompts li{margin-bottom:9px}
+.hintbox{
+  margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;
+  font-size:15px;color:rgba(43,26,18,.72);
+}
+
+/* reveal */
+.answer{
+  display:none;margin-top:9px;padding:10px 13px;
+  background:rgba(74,124,89,.1);border-left:3px solid var(--leaf);
+  border-radius:0 8px 8px 0;font-size:15.5px;
+}
+.answer.show{display:block}
+.answer b{font-family:var(--body)}
+
+/* finish */
+.finish{
+  background:var(--roast);color:var(--foam);
+  border-radius:18px;padding:28px 24px;margin-top:40px;
+}
+.finish h3{font-family:var(--display);font-size:28px;margin:0 0 8px;font-weight:800}
+.finish p{color:rgba(255,251,244,.82);margin:0 0 18px}
+.finish .btn{border-color:var(--caramel);background:var(--caramel);color:var(--ink)}
+.finish .btn.ghost{background:transparent;color:var(--foam);border-color:rgba(255,251,244,.5)}
+.bigscore{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--caramel);line-height:1}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+  background:var(--ink);color:var(--foam);padding:11px 18px;border-radius:999px;
+  font-family:var(--mono);font-size:13px;opacity:0;pointer-events:none;transition:.3s;z-index:60;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:620px){
+  body{font-size:16px}
+  main{padding:8px 14px 70px}
+  .masthead{padding:34px 16px 28px}
+  .task{padding:19px 15px;border-radius:13px}
+  .article{padding:18px 15px 4px}
+  .tracker-inner{padding:8px 14px;gap:10px}
+  .cup{width:30px;height:34px}
+  input.wide{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="mast-inner">
+    <p class="eyebrow">Speakout Intermediate Plus · Unit 1 · Recording 3</p>
+    <h1>Busy-ness: <em>the vocabulary</em></h1>
+    <p class="mast-sub">24 words and phrases from the radio programme — flashcards both ways, six practice tasks and a speaking round.</p>
+    <div class="chips">
+      <span class="chip">B2</span>
+      <span class="chip">24 cards</span>
+      <span class="chip">dinglish</span>
+    </div>
+  </div>
+</header>
+
+<div class="tracker">
+  <div class="tracker-inner">
+    <svg class="cup" viewBox="0 0 40 44" aria-hidden="true">
+      <defs><clipPath id="cupClip"><path d="M7 9 h20 v18 a10 10 0 0 1 -20 0 z"/></clipPath></defs>
+      <g clip-path="url(#cupClip)"><rect class="brew" x="5" y="9" width="24" height="30" transform="translate(0,30)" id="brewFill"/></g>
+      <path class="body-line" d="M7 9 h20 v18 a10 10 0 0 1 -20 0 z"/>
+      <path class="body-line" d="M27 13 h4 a5 5 0 0 1 0 10 h-4"/>
+      <path class="body-line" d="M4 40 h30"/>
+    </svg>
+    <div class="track-text">
+      <div class="track-label">Прогрес тренування</div>
+      <div class="bar"><span id="barFill"></span></div>
+    </div>
+    <div class="score"><span id="scoreNow">0</span>/<span id="scoreMax">0</span></div>
+  </div>
+</div>
+
+<main>
+
+<section class="part">
+  <p class="part-tag">Part one</p>
+  <h2>Flashcards</h2>
+  <p class="part-note">Тисни на картку, щоб перевернути. Напрям EN↔UA перемикається кнопкою.</p>
+</section>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">1</div>
+    <div><span class="kicker">Vocabulary · flashcards</span><h3>24 words from the recording</h3></div>
+  </div>
+
+  <div class="deckbar">
+    <button class="fbtn on" id="dirEn">EN → UA</button>
+    <button class="fbtn" id="dirUa">UA → EN</button>
+    <button class="fbtn" id="deckShuffle" style="margin-left:auto">Перемішати</button>
+    <button class="fbtn" id="deckList">Списком</button>
+  </div>
+
+  <div class="stage">
+    <div class="vcard" id="vcard" tabindex="0" role="button" aria-label="Tap to flip">
+      <div class="vface vfront">
+        <div class="vtop"><span class="vtag" id="vtag">english</span><span class="vnum" id="vnum"></span></div>
+        <p class="vword" id="vfrontText"></p>
+        <p class="vipa" id="vipa"></p>
+        <p class="vhint">tap to flip</p>
+      </div>
+      <div class="vface vback">
+        <div class="vtop"><span class="vtag alt" id="vtag2">українська</span><span class="vnum" id="vnum2"></span></div>
+        <p class="vword" id="vbackText"></p>
+        <p class="vex" id="vex"></p>
+        <p class="vnote" id="vnote"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="round" id="vprev" aria-label="Previous">‹</button>
+    <div class="mid">
+      <div class="dots" id="vdots"></div>
+      <div class="counter"><span id="vcur">1</span> / <span id="vtot">24</span></div>
+    </div>
+    <button class="round" id="vnext" aria-label="Next">›</button>
+  </div>
+  <div class="tools">
+    <button class="tbtn green" id="vknow">Знаю ✓</button>
+    <button class="tbtn" id="vhard">Складне</button>
+    <button class="tbtn" id="vreset">Скинути позначки</button>
+  </div>
+
+  <div class="listview" id="listview" hidden></div>
+</div>
+
+<section class="part">
+  <p class="part-tag">Part two</p>
+  <h2>Practice</h2>
+  <p class="part-note">Шість завдань — від упізнавання до продукції.</p>
+</section>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">2</div>
+    <div><span class="kicker">Practice · recognition</span><h3>Choose the English word</h3></div>
+  </div>
+  <p class="instr">Match the Ukrainian meaning with the word from the recording.</p>
+  <ol class="items">
+    <li>хвалитися чимось<br>
+      <select data-answer="boast about"><option value="">— choose —</option><option>showcase</option><option>boast about</option><option>validate</option><option>proclaim</option><option>exhibit</option><option>persuade</option><option>deliver</option><option>race</option></select></li>
+    <li>подавати щось у вигідному світлі, демонструвати<br>
+      <select data-answer="showcase"><option value="">— choose —</option><option>showcase</option><option>boast about</option><option>validate</option><option>proclaim</option><option>exhibit</option><option>persuade</option><option>deliver</option><option>race</option></select></li>
+    <li>підтверджувати, визнавати важливість<br>
+      <select data-answer="validate"><option value="">— choose —</option><option>showcase</option><option>boast about</option><option>validate</option><option>proclaim</option><option>exhibit</option><option>persuade</option><option>deliver</option><option>race</option></select></li>
+    <li>гучно заявляти, проголошувати<br>
+      <select data-answer="proclaim"><option value="">— choose —</option><option>showcase</option><option>boast about</option><option>validate</option><option>proclaim</option><option>exhibit</option><option>persuade</option><option>deliver</option><option>race</option></select></li>
+    <li>давати результат, виконувати обіцяне<br>
+      <select data-answer="deliver"><option value="">— choose —</option><option>showcase</option><option>boast about</option><option>validate</option><option>proclaim</option><option>exhibit</option><option>persuade</option><option>deliver</option><option>race</option></select></li>
+    <li>мчати, щоб устигнути<br>
+      <select data-answer="race"><option value="">— choose —</option><option>showcase</option><option>boast about</option><option>validate</option><option>proclaim</option><option>exhibit</option><option>persuade</option><option>deliver</option><option>race</option></select></li>
+    <li>удаваний жах<br>
+      <select data-answer="mock horror"><option value="">— choose —</option><option>a badge of honour</option><option>mock horror</option><option>self-importance</option><option>a spare moment</option><option>a canteen</option><option>a pre-programmed response</option><option>a post-holiday ritual</option></select></li>
+    <li>предмет гордості<br>
+      <select data-answer="a badge of honour"><option value="">— choose —</option><option>a badge of honour</option><option>mock horror</option><option>self-importance</option><option>a spare moment</option><option>a canteen</option><option>a pre-programmed response</option><option>a post-holiday ritual</option></select></li>
+    <li>відчуття власної значущості<br>
+      <select data-answer="self-importance"><option value="">— choose —</option><option>a badge of honour</option><option>mock horror</option><option>self-importance</option><option>a spare moment</option><option>a canteen</option><option>a pre-programmed response</option><option>a post-holiday ritual</option></select></li>
+    <li>вільна хвилинка<br>
+      <select data-answer="a spare moment"><option value="">— choose —</option><option>a badge of honour</option><option>mock horror</option><option>self-importance</option><option>a spare moment</option><option>a canteen</option><option>a pre-programmed response</option><option>a post-holiday ritual</option></select></li>
+    <li>їдальня на роботі<br>
+      <select data-answer="a canteen"><option value="">— choose —</option><option>a badge of honour</option><option>mock horror</option><option>self-importance</option><option>a spare moment</option><option>a canteen</option><option>a pre-programmed response</option><option>a post-holiday ritual</option></select></li>
+    <li>завчена, автоматична відповідь<br>
+      <select data-answer="a pre-programmed response"><option value="">— choose —</option><option>a badge of honour</option><option>mock horror</option><option>self-importance</option><option>a spare moment</option><option>a canteen</option><option>a pre-programmed response</option><option>a post-holiday ritual</option></select></li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">3</div>
+    <div><span class="kicker">Practice · collocations</span><h3>Which word goes with which?</h3></div>
+  </div>
+  <p class="instr">These phrases always travel together. Choose the missing part.</p>
+  <ol class="items">
+    <li>roll up your ______
+      <div class="opts" data-answer="sleeves"><button class="opt">sleeves</button><button class="opt">arms</button><button class="opt">hands</button></div></li>
+    <li>a badge of ______
+      <div class="opts" data-answer="honour"><button class="opt">pride</button><button class="opt">honour</button><button class="opt">glory</button></div></li>
+    <li>to lose ______ of how strange it is
+      <div class="opts" data-answer="sight"><button class="opt">view</button><button class="opt">sight</button><button class="opt">look</button></div></li>
+    <li>obsessed ______ demonstrating their busy-ness
+      <div class="opts" data-answer="with"><button class="opt">by</button><button class="opt">of</button><button class="opt">with</button></div></li>
+    <li>'busy' was equated ______ progress
+      <div class="opts" data-answer="with"><button class="opt">with</button><button class="opt">to</button><button class="opt">as</button></div></li>
+    <li>to boast ______ never having a spare moment
+      <div class="opts" data-answer="about"><button class="opt">of</button><button class="opt">about</button><button class="opt">on</button></div></li>
+    <li>______ horror — we look at our phones
+      <div class="opts" data-answer="mock"><button class="opt">false</button><button class="opt">mock</button><button class="opt">fake</button></div></li>
+    <li>pre-conditioned ______ say that you're busy
+      <div class="opts" data-answer="to"><button class="opt">for</button><button class="opt">to</button><button class="opt">into</button></div></li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button></div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">4</div>
+    <div><span class="kicker">Practice · gap-fill</span><h3>Complete the sentences</h3></div>
+  </div>
+  <p class="instr">One word or phrase per gap. Mind the grammar — you may need to change the form.</p>
+  <ol class="items">
+    <li>Nobody asked him, but he keeps <input type="text" data-answer="boasting about|boasting" size="14"> how little sleep he gets.</li>
+    <li>Enthusiasm in a team is <input type="text" data-answer="contagious" size="12"> — one person's energy changes the whole room.</li>
+    <li>She's brilliant at the job, but she's completely <input type="text" data-answer="obsessed with" size="14"> work.</li>
+    <li>The conference is a chance to <input type="text" data-answer="showcase" size="11"> what our team has built this year.</li>
+    <li>I agreed to help, <input type="text" data-answer="albeit" size="9"> reluctantly.</li>
+    <li>We mustn't <input type="text" data-answer="lose sight of" size="13"> why we started this project.</li>
+    <li>He spent the whole morning <input type="text" data-answer="racing" size="9"> around town trying to sign the papers.</li>
+    <li>In this company, a ninety-hour week is treated as a <input type="text" data-answer="badge of honour" size="16">.</li>
+    <li>A good manager doesn't just talk — she <input type="text" data-answer="delivers" size="10">.</li>
+    <li>Success is too often <input type="text" data-answer="equated with" size="13"> money.</li>
+    <li>"How are you?" "Fine, thanks" is a completely <input type="text" data-answer="pre-programmed|preprogrammed" size="16"> response.</li>
+    <li>I haven't had a <input type="text" data-answer="spare moment" size="13"> since Monday.</li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">5</div>
+    <div><span class="kicker">Practice · word building</span><h3>One root, several words</h3></div>
+  </div>
+  <p class="instr">Complete the missing forms.</p>
+  <div class="wf">
+    <div class="wf-head"><span>verb</span><span>noun</span><span>adjective</span></div>
+    <div class="wf-row"><span>persuade</span><span><input type="text" data-answer="persuasion" size="11"></span><span><input type="text" data-answer="persuasive" size="11"></span></div>
+    <div class="wf-row"><span>obsess</span><span><input type="text" data-answer="obsession" size="11"></span><span>obsessed / obsessive</span></div>
+    <div class="wf-row"><span>compete</span><span><input type="text" data-answer="competition" size="12"></span><span><input type="text" data-answer="competitive" size="12"></span></div>
+    <div class="wf-row"><span>proclaim</span><span><input type="text" data-answer="proclamation" size="13"></span><span>—</span></div>
+    <div class="wf-row"><span>—</span><span><input type="text" data-answer="the subconscious|subconscious" size="13"></span><span>subconscious</span></div>
+    <div class="wf-row"><span>validate</span><span><input type="text" data-answer="validation" size="11"></span><span>valid</span></div>
+    <div class="wf-row"><span>boast</span><span>a boast</span><span><input type="text" data-answer="boastful" size="10"></span></div>
+  </div>
+  <div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+  <div class="hintbox">Say a true sentence about your own job with: <em>persuasive · competitive · obsession · validation</em>.</div>
+</div>
+<div class="task">
+  <div class="task-head">
+    <div class="ring">6</div>
+    <div><span class="kicker">Practice · register</span><h3>Formal or neutral?</h3></div>
+  </div>
+  <p class="instr">Some of these words are noticeably formal. Choose the better option for each situation.</p>
+  <ol class="items">
+    <li>Writing a report for the board: "The data ______ a clear upward trend."
+      <div class="opts" data-answer="exhibits"><button class="opt">exhibits</button><button class="opt">shows off</button></div></li>
+    <li>Telling a friend about your colleague: "He never stops ______ about his promotion."
+      <div class="opts" data-answer="boasting"><button class="opt">boasting</button><button class="opt">proclaiming</button></div></li>
+    <li>In an academic essay: "He accepted the terms, ______ with some hesitation."
+      <div class="opts" data-answer="albeit"><button class="opt">albeit</button><button class="opt">even though</button></div></li>
+    <li>In a chat with your team: "Let's ______ and get this finished before five."
+      <div class="opts" data-answer="roll up our sleeves"><button class="opt">roll up our sleeves</button><button class="opt">exhibit our commitment</button></div></li>
+    <li>In a performance review: "She consistently ______ on her targets."
+      <div class="opts" data-answer="delivers"><button class="opt">delivers</button><button class="opt">races</button></div></li>
+  </ol>
+  <div class="controls"><button class="btn check">Перевірити</button></div>
+</div>
+
+<div class="task">
+  <div class="task-head">
+    <div class="ring">7</div>
+    <div><span class="kicker">Practice · translation</span><h3>Translate into English</h3></div>
+  </div>
+  <p class="instr">Use the word from the cards. Write first, then open the key.</p>
+  <ol class="items">
+    <li>Зайнятість стала предметом гордості.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">Busy-ness has become a badge of honour.</div></li>
+    <li>Нам потрібно, щоб інші підтверджували нашу зайнятість.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">We need other people to validate our busy-ness.</div></li>
+    <li>Це як зараза: усі навколо постійно заявляють, що зайняті.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">It's contagious — everyone around you is constantly proclaiming their busy-ness.</div></li>
+    <li>Він схопив книжку, коли мчав на літак.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">He grabbed the book while racing to catch a plane.</div></li>
+    <li>Я зрозумів це, хай і підсвідомо.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">I realised it, albeit subconsciously.</div></li>
+    <li>Якщо ти не зайнятий, тебе вважають ледачим.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">If you're not busy, you are seen as lazy.</div></li>
+    <li>Ми настільки звикли до цього, що випускаємо з уваги, наскільки це дивно.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">We're so used to it that we lose sight of how strange it is.</div></li>
+    <li>Коли відсутність вільної хвилини стала приводом для хвастощів?<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">When did never having a spare moment become something to boast about?</div></li>
+    <li>Статус тепер залежить від того, що ми можемо показати людям.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">Status now comes from the things we can show people we're doing.</div></li>
+    <li>«Зайнятий» прирівняли до прогресу й успіху.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">'Busy' was equated with progress and success.</div></li>
+    <li>Вони одержимі тим, щоб демонструвати свою зайнятість.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">They're obsessed with demonstrating their busy-ness.</div></li>
+    <li>Це була цілком завчена відповідь.<br><input type="text" class="wide note-only">
+      <div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+      <div class="answer">It was a completely pre-programmed response.</div></li>
+  </ol>
+</div>
+
+<section class="part">
+  <p class="part-tag">Part three</p>
+  <h2>Speaking</h2>
+  <p class="part-note">Тепер те саме, але вголос і про себе.</p>
+</section>
+
+<div class="task speak">
+  <div class="task-head">
+    <div class="ring">8</div>
+    <div><span class="kicker">Speaking · personalisation</span><h3>Answer using the target word</h3></div>
+  </div>
+  <p class="instr">The word in bold must appear in your answer, and your answer must be at least two sentences.</p>
+  <ol class="prompts">
+    <li>What is treated as a <b>badge of honour</b> in your industry? Do you buy into it?</li>
+    <li>Is there something you're a bit <b>obsessed with</b> at the moment?</li>
+    <li>When did you last <b>roll up your sleeves</b> and fix something yourself?</li>
+    <li>What's your <b>pre-programmed response</b> when someone asks how you are? Is it honest?</li>
+    <li>Who in your life is most likely to <b>boast about</b> how busy they are?</li>
+    <li>Name a person at work who really <b>delivers</b>. What makes them different?</li>
+    <li>Is success in Ukraine <b>equated with</b> money, status, or something else?</li>
+    <li>What do you <b>lose sight of</b> when you get too busy?</li>
+    <li>When was the last time you were <b>racing</b> to catch something — a plane, a train, a deadline?</li>
+    <li>What would you put in a <b>post-holiday ritual</b> of your own?</li>
+  </ol>
+  <textarea class="note" placeholder="Нотатки / виправлення викладача…"></textarea>
+</div>
+
+<div class="task speak">
+  <div class="task-head">
+    <div class="ring">9</div>
+    <div><span class="kicker">Speaking · challenge</span><h3>Five words, one minute</h3></div>
+  </div>
+  <p class="instr">Tap five words, then speak for one minute on the topic below and fit all five in. Tap each one again as you say it.</p>
+  <div class="devcheck" id="wordchips"></div>
+  <ol class="prompts" style="margin-top:16px">
+    <li>Topic A: the busiest week you've had this year</li>
+    <li>Topic B: why people pretend to be busier than they are</li>
+    <li>Topic C: what status really means to people your age</li>
+    <li>Topic D: a colleague everyone talks about</li>
+  </ol>
+  <div class="hintbox">Варіант складніше: викладач обирає п'ять слів за тебе, і ти дізнаєшся їх лише перед стартом.</div>
+</div>
+
+<div class="task speak">
+  <div class="task-head">
+    <div class="ring">10</div>
+    <div><span class="kicker">Speaking · react</span><h3>Agree or disagree?</h3></div>
+  </div>
+  <p class="instr">React to each line from the programme. Start with a phrase from the box, then give a reason and an example.</p>
+  <ol class="prompts">
+    <li>"Busy has become a brand."</li>
+    <li>"What kind of loser has nowhere he needs to be?"</li>
+    <li>"If you're not busy, you are seen as lazy."</li>
+    <li>"Status comes from the stuff we can share on social media."</li>
+    <li>"It's really hard not to say you're busy."</li>
+  </ol>
+  <div class="hintbox">Reacting: <em>That's exactly it. · I'd push back on that. · That's true of my parents, not of me. · Up to a point — but…</em></div>
+  <textarea class="note" placeholder="Мої аргументи…"></textarea>
+</div>
+
+<div class="finish">
+  <h3>Готово</h3>
+  <p>Правильних відповідей: <span class="bigscore"><span id="finalNow">0</span>/<span id="finalMax">0</span></span></p>
+  <p>Скопіюй відповіді й надішли викладачу — слова, які залишились у «Складне», повторимо наступного разу.</p>
+  <div class="controls">
+    <button class="btn" id="copyBtn">Скопіювати мої відповіді</button>
+    <button class="btn ghost" id="resetBtn">Почати спочатку</button>
+  </div>
+  <p class="sig">dinglish</p>
+</div>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+var WORDS = [
+ {en:"roll up your sleeves", ipa:"rəʊl ʌp jɔː sliːvz", ua:"закатати рукави; взятися до роботи",
+  ex:"We'd roll up our sleeves and hold our forearms together to compare how brown we were.",
+  note:"Буквально й переносно: <em>Let's roll up our sleeves and get this done.</em>"},
+ {en:"a post-holiday ritual", ipa:"ˌpəʊst ˈhɒlədeɪ ˈrɪtʃuəl", ua:"ритуал після відпустки",
+  ex:"If you think about what the post-holiday ritual is now, we come back and look at our phones.",
+  note:"<b>post-</b> = після: post-match, post-war, post-lunch."},
+ {en:"mock horror", ipa:"mɒk ˈhɒrə", ua:"удаваний жах",
+  ex:"We look at our phones with mock horror.",
+  note:"<b>mock</b> = несправжній, удаваний: mock exam, mock surprise, mock anger."},
+ {en:"a badge of honour", ipa:"bædʒ əv ˈɒnə", ua:"предмет гордості, почесний знак",
+  ex:"Saying how many hours you've worked — that's your badge of honour.",
+  note:"Про те, чим пишаються, хоч воно того й не варте."},
+ {en:"a pre-programmed response", ipa:"ˌpriː ˈprəʊɡræmd rɪˈspɒns", ua:"автоматична, завчена відповідь",
+  ex:"The pre-programmed response used to be 'Oh, I'm fine.'",
+  note:"Синоніми: an automatic / a knee-jerk response."},
+ {en:"self-importance", ipa:"ˌself ɪmˈpɔːtns", ua:"відчуття власної значущості",
+  ex:"Somehow it speaks to our self-importance.",
+  note:"Прикметник: <b>self-important</b> — пихатий, самовпевнений."},
+ {en:"essential (to sb/sth)", ipa:"ɪˈsenʃl", ua:"вкрай необхідний, незамінний",
+  ex:"It speaks to how essential we are to our world.",
+  note:"<em>Sleep is essential to recovery. · She's essential to the team.</em>"},
+ {en:"to validate sth", ipa:"ˈvælɪdeɪt", ua:"підтверджувати, визнавати важливість",
+  ex:"There's a need we feel for other people to validate our busy-ness.",
+  note:"Також: validate a ticket / validate someone's feelings."},
+ {en:"to proclaim sth", ipa:"prəˈkleɪm", ua:"проголошувати, гучно заявляти",
+  ex:"Everyone around you is constantly proclaiming their busy-ness.",
+  note:"Сильніше за <em>say</em> — заявляти публічно й упевнено."},
+ {en:"contagious", ipa:"kənˈteɪdʒəs", ua:"заразний (і про хворобу, і про поведінку)",
+  ex:"It's like it's contagious.",
+  note:"<em>contagious laughter, a contagious mood</em>. Близьке: infectious."},
+ {en:"to race to do sth", ipa:"reɪs", ua:"мчати, гнати, щоб устигнути",
+  ex:"He grabbed a copy of the book while racing to catch a plane.",
+  note:"<em>racing to meet a deadline, racing around the office</em>."},
+ {en:"albeit", ipa:"ɔːlˈbiːɪt", ua:"хоча й, нехай і",
+  ex:"I began to realise, albeit subconsciously, that…",
+  note:"Формальне. <em>He agreed, albeit reluctantly.</em>"},
+ {en:"subconsciously", ipa:"sʌbˈkɒnʃəsli", ua:"підсвідомо",
+  ex:"I began to realise, albeit subconsciously…",
+  note:"Іменник: the subconscious. Прикметник: subconscious."},
+ {en:"a canteen", ipa:"kænˈtiːn", ua:"їдальня (на роботі, у школі)",
+  ex:"Whether you're in the lift, whether you're in the canteen…",
+  note:"BrE. AmE частіше: cafeteria."},
+ {en:"to deliver", ipa:"dɪˈlɪvə", ua:"давати результат, виконувати обіцяне",
+  ex:"If you're not busy, you are seen as not somebody that's delivering.",
+  note:"<em>a manager who delivers; the product failed to deliver</em>."},
+ {en:"pre-conditioned to do sth", ipa:"ˌpriːkənˈdɪʃnd", ua:"заздалегідь привчений, налаштований",
+  ex:"You are pre-conditioned to say that you're busy.",
+  note:"Близьке: conditioned, trained, wired to do sth."},
+ {en:"to showcase sth", ipa:"ˈʃəʊkeɪs", ua:"демонструвати, подавати в вигідному світлі",
+  ex:"…to showcase the fact that you're there for a reason.",
+  note:"<em>The event showcases young designers.</em>"},
+ {en:"to lose sight of sth", ipa:"luːz saɪt əv", ua:"випускати з уваги, забувати про",
+  ex:"It's so common you can lose sight of how strange it is.",
+  note:"<em>Don't lose sight of why you started.</em>"},
+ {en:"to boast about sth", ipa:"bəʊst", ua:"хвалитися чимось",
+  ex:"When did never having a spare moment become something to boast about?",
+  note:"Іменник: a boast. Прикметник: boastful."},
+ {en:"a spare moment", ipa:"speə ˈməʊmənt", ua:"вільна хвилинка",
+  ex:"…never having a spare moment…",
+  note:"Також: spare time, a spare key, spare capacity."},
+ {en:"obsessed with sth", ipa:"əbˈsest", ua:"одержимий чимось",
+  ex:"People become ever more obsessed with demonstrating their busy-ness.",
+  note:"Іменник: an obsession. Прикметник: obsessive."},
+ {en:"to be equated with sth", ipa:"ɪˈkweɪtɪd", ua:"прирівнюватися до чогось",
+  ex:"'Busy' was equated with progress and success.",
+  note:"<em>Money is often equated with happiness.</em>"},
+ {en:"to exhibit sth", ipa:"ɪɡˈzɪbɪt", ua:"демонструвати, виявляти",
+  ex:"We are always after success and how best to exhibit that.",
+  note:"Формальне. <em>exhibit symptoms / exhibit confidence</em>."},
+ {en:"to persuade sb (to do sth)", ipa:"pəˈsweɪd", ua:"переконувати когось",
+  ex:"We persuade them with great detail about quite how busy we are.",
+  note:"persuasion (n), persuasive (adj). <em>persuade sb to do</em>, не <s>persuade sb do</s>."}
+];
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  var norm = function(s){
+    return (s||"")
+      .toLowerCase()
+      .replace(/[\u2018\u2019\u02BC`]/g,"'")
+      .replace(/[\u2013\u2014]/g,"-")
+      .replace(/[.,!?;:]+$/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  };
+  var accepted = function(el){
+    return (el.getAttribute("data-answer")||"").split("|").map(norm);
+  };
+
+  /* ---------- collect checkable items ---------- */
+  var items = [];
+  document.querySelectorAll(".task").forEach(function(task){
+    task.querySelectorAll("input[type=text][data-answer], select[data-answer], .opts[data-answer], .stressline[data-answer], .linkline[data-answer]").forEach(function(el){
+      var kind = el.classList.contains("opts") ? "opts"
+               : el.classList.contains("stressline") ? "stress"
+               : el.classList.contains("linkline") ? "link"
+               : el.tagName === "SELECT" ? "select" : "input";
+      var it = {el:el, kind:kind, task:task, done:false};
+      items.push(it);
+      el._item = it;
+    });
+  });
+
+  var scoreNow = document.getElementById("scoreNow");
+  var scoreMax = document.getElementById("scoreMax");
+  var finalNow = document.getElementById("finalNow");
+  var finalMax = document.getElementById("finalMax");
+  var barFill  = document.getElementById("barFill");
+  var brew     = document.getElementById("brewFill");
+  scoreMax.textContent = items.length;
+  finalMax.textContent = items.length;
+
+  function refresh(){
+    var n = items.filter(function(i){return i.done;}).length;
+    var pct = items.length ? n/items.length : 0;
+    scoreNow.textContent = n;
+    finalNow.textContent = n;
+    barFill.style.width = (pct*100).toFixed(1) + "%";
+    if (brew) brew.setAttribute("transform","translate(0," + (30 - 30*pct).toFixed(1) + ")");
+  }
+
+  /* ---------- option buttons ---------- */
+  document.querySelectorAll(".opts").forEach(function(box){
+    box.querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click", function(){
+        box.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel","good","bad");});
+        b.classList.add("sel");
+      });
+    });
+  });
+
+  /* ---------- stress words ---------- */
+  document.querySelectorAll(".linkline .j").forEach(function(j){
+    j.addEventListener("click", function(){
+      j.classList.remove("hit","miss");
+      j.classList.toggle("on");
+    });
+  });
+
+  document.querySelectorAll(".stressline .w").forEach(function(w){
+    w.addEventListener("click", function(){
+      w.classList.remove("hit","miss");
+      w.classList.toggle("on");
+    });
+  });
+
+  /* ---------- marks ---------- */
+  function setMark(el, ok){
+    var host = (el.classList && (el.classList.contains("opts") || el.classList.contains("stressline"))) ? el : el;
+    var next = host.nextElementSibling;
+    if (next && next.classList && next.classList.contains("mark")) next.remove();
+    var m = document.createElement("span");
+    m.className = "mark " + (ok ? "y" : "n");
+    m.textContent = ok ? "✓" : "✗";
+    host.parentNode.insertBefore(m, host.nextSibling);
+  }
+
+  function checkItem(it){
+    var el = it.el, ok = false;
+    if (it.kind === "input" || it.kind === "select"){
+      var val = norm(el.value);
+      ok = val !== "" && accepted(el).indexOf(val) > -1;
+      el.classList.remove("ok","no");
+      el.classList.add(ok ? "ok" : "no");
+      setMark(el, ok);
+    } else if (it.kind === "opts"){
+      var want = norm(el.getAttribute("data-answer"));
+      var sel = el.querySelector(".opt.sel");
+      ok = !!sel && norm(sel.textContent) === want;
+      el.querySelectorAll(".opt").forEach(function(b){
+        b.classList.remove("good","bad");
+        if (norm(b.textContent) === want) b.classList.add("good");
+        else if (b.classList.contains("sel")) b.classList.add("bad");
+      });
+    } else if (it.kind === "link"){
+      var want3 = el.getAttribute("data-answer").split(",").map(function(x){return x.trim();});
+      var got = [];
+      el.querySelectorAll(".j").forEach(function(j){
+        j.classList.remove("hit","miss");
+        if (j.classList.contains("on")) got.push(j.getAttribute("data-j"));
+      });
+      ok = got.length === want3.length && want3.every(function(x){return got.indexOf(x) > -1;});
+      el.querySelectorAll(".j").forEach(function(j){
+        var id = j.getAttribute("data-j");
+        if (want3.indexOf(id) > -1){ j.classList.remove("on"); j.classList.add("hit"); }
+        else if (j.classList.contains("on")){ j.classList.add("miss"); }
+      });
+    } else if (it.kind === "stress"){
+      var want2 = el.getAttribute("data-answer").split(",").map(norm);
+      var picked = [];
+      el.querySelectorAll(".w").forEach(function(w){
+        w.classList.remove("hit","miss");
+        if (w.classList.contains("on")) picked.push(norm(w.textContent));
+      });
+      ok = picked.length === want2.length && want2.every(function(x){return picked.indexOf(x) > -1;});
+      el.querySelectorAll(".w").forEach(function(w){
+        var t = norm(w.textContent);
+        if (want2.indexOf(t) > -1){ w.classList.remove("on"); w.classList.add("hit"); }
+        else if (w.classList.contains("on")){ w.classList.add("miss"); }
+      });
+    }
+    if (ok) it.done = true;
+    return ok;
+  }
+
+  /* ---------- buttons ---------- */
+  document.querySelectorAll(".btn.check").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      var mine = items.filter(function(i){return i.task === task;});
+      var right = 0;
+      mine.forEach(function(i){ if (checkItem(i)) right++; });
+      refresh();
+      toast(right + " / " + mine.length + " правильно");
+    });
+  });
+
+  document.querySelectorAll(".btn.showall").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      items.filter(function(i){return i.task === task;}).forEach(function(i){
+        if (i.kind === "input"){
+          if (norm(i.el.value) === "" || accepted(i.el).indexOf(norm(i.el.value)) === -1){
+            i.el.value = (i.el.getAttribute("data-answer")||"").split("|")[0];
+            i.el.classList.remove("ok"); i.el.classList.add("no");
+            setMark(i.el,false);
+          }
+        } else if (i.kind === "select"){
+          i.el.value = (i.el.getAttribute("data-answer")||"").split("|")[0];
+          checkItem(i);
+        }
+      });
+      refresh();
+    });
+  });
+
+  document.querySelectorAll(".btn.reveal").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var box = btn.closest("li").querySelector(".answer");
+      if (!box) return;
+      box.classList.toggle("show");
+      btn.textContent = box.classList.contains("show") ? "Сховати" : (btn.dataset.label || "Ключ");
+    });
+  });
+
+  document.querySelectorAll(".btn.revealAll").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      var boxes = task.querySelectorAll(".answer");
+      var open = btn.dataset.open === "1";
+      boxes.forEach(function(b){ b.classList.toggle("show", !open); });
+      btn.dataset.open = open ? "0" : "1";
+      btn.textContent = open ? "Пояснення" : "Сховати";
+    });
+  });
+
+
+
+  /* ---------- debate device chips ---------- */
+  document.querySelectorAll(".devcheck .dc").forEach(function(c){
+    c.addEventListener("click", function(){ c.classList.toggle("on"); });
+  });
+
+  /* ---------- speech player ---------- */
+  (function(){
+    var root = document.getElementById("player");
+    if (!root) return;
+    var playBtn = document.getElementById("plPlay"),
+        stateEl = document.getElementById("plState"),
+        warnEl  = document.getElementById("plWarn"),
+        textEl  = document.getElementById("plText"),
+        scriptBtn = document.getElementById("plScript"),
+        label = playBtn.querySelector(".pl-label"),
+        icon  = playBtn.querySelector(".pl-icon");
+
+    scriptBtn.addEventListener("click", function(){
+      var open = textEl.hasAttribute("hidden");
+      if (open) textEl.removeAttribute("hidden"); else textEl.setAttribute("hidden","");
+      scriptBtn.textContent = open ? "Hide transcript" : "Transcript";
+    });
+
+    var synth = window.speechSynthesis;
+    if (!synth) { warnEl.removeAttribute("hidden"); playBtn.disabled = true; return; }
+
+    /* split the transcript into sentences: Chrome cuts long utterances */
+    var sentences = [];
+    textEl.querySelectorAll("p").forEach(function(par){
+      (par.textContent.match(/[^.!?]+[.!?]*/g) || []).forEach(function(s){
+        s = s.trim();
+        if (s) sentences.push(s);
+      });
+    });
+
+    var rate = 0.85, voice = null, playing = false, i = 0, keepAlive = null;
+
+    function pickVoice(){
+      var vs = synth.getVoices() || [];
+      if (!vs.length) return null;
+      return vs.filter(function(v){ return /^en[-_]GB/i.test(v.lang); })[0]
+          || vs.filter(function(v){ return /^en[-_]US/i.test(v.lang); })[0]
+          || vs.filter(function(v){ return /^en/i.test(v.lang); })[0]
+          || null;
+    }
+    function ready(){
+      voice = pickVoice();
+      if (!voice) { warnEl.removeAttribute("hidden"); }
+      else { warnEl.setAttribute("hidden",""); }
+    }
+    ready();
+    if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = ready;
+    setTimeout(ready, 700);
+
+    function setUI(on){
+      playing = on;
+      playBtn.classList.toggle("playing", on);
+      icon.textContent = on ? "■" : "▶";
+      label.textContent = on ? "Stop" : "Play";
+      stateEl.textContent = on ? "playing…" : "about 2 min · 250 words";
+      if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+      if (on) keepAlive = setInterval(function(){
+        if (synth.speaking && !synth.paused) { synth.pause(); synth.resume(); }
+      }, 9000);
+    }
+    function stop(){ synth.cancel(); i = 0; setUI(false); }
+    function speakNext(){
+      if (!playing || i >= sentences.length) { stop(); return; }
+      var u = new SpeechSynthesisUtterance(sentences[i]);
+      if (voice) { u.voice = voice; u.lang = voice.lang; } else { u.lang = "en-GB"; }
+      u.rate = rate; u.pitch = 1;
+      u.onend = function(){ i++; speakNext(); };
+      u.onerror = function(){ i++; if (playing) speakNext(); };
+      synth.speak(u);
+    }
+
+    playBtn.addEventListener("click", function(){
+      if (playing) { stop(); return; }
+      if (!voice) ready();
+      if (!voice) {
+        warnEl.removeAttribute("hidden");
+        textEl.removeAttribute("hidden");
+        scriptBtn.textContent = "Hide transcript";
+        return;
+      }
+      synth.cancel(); i = 0; setUI(true); speakNext();
+    });
+
+    root.querySelectorAll(".sp").forEach(function(b){
+      b.addEventListener("click", function(){
+        root.querySelectorAll(".sp").forEach(function(x){ x.classList.remove("on"); });
+        b.classList.add("on");
+        rate = parseFloat(b.dataset.rate);
+        if (playing) { var at = i; synth.cancel(); i = at; setUI(true); speakNext(); }
+      });
+    });
+
+    window.addEventListener("beforeunload", function(){ synth.cancel(); });
+  })();
+
+  /* ---------- word counter ---------- */
+  document.querySelectorAll("textarea[data-count]").forEach(function(ta){
+    var box = ta.parentNode.querySelector(".wc");
+    if (!box) { var n = ta.nextElementSibling; if (n && n.classList.contains("wc")) box = n; }
+    if (!box) return;
+    var out = box.querySelector(".wc-n");
+    var min = parseInt(ta.getAttribute("data-min") || "0", 10);
+    var max = parseInt(ta.getAttribute("data-max") || "0", 10);
+    function count(){
+      var words = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
+      out.textContent = words;
+      box.classList.toggle("ok", words >= min && (!max || words <= max));
+      box.classList.toggle("over", !!max && words > max);
+    }
+    ta.addEventListener("input", count);
+    count();
+  });
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById("toast"), tTimer;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(tTimer);
+    tTimer = setTimeout(function(){ toastEl.classList.remove("on"); }, 1900);
+  }
+
+  /* ---------- copy answers ---------- */
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var lines = ["COFFEE DRINKER? — 1.1 · мої відповіді",
+                 "Результат: " + items.filter(function(i){return i.done;}).length + "/" + items.length, ""];
+    document.querySelectorAll(".task").forEach(function(task){
+      var h = task.querySelector("h3");
+      var chunk = [];
+      task.querySelectorAll("li").forEach(function(li, idx){
+        var parts = [];
+        li.querySelectorAll("input[type=text]").forEach(function(inp){
+          if (inp.value.trim()) parts.push(inp.value.trim());
+        });
+        li.querySelectorAll("select").forEach(function(s){ if (s.value) parts.push(s.value); });
+        var sel = li.querySelector(".opt.sel");
+        if (sel) parts.push(sel.textContent.trim());
+        if (parts.length) chunk.push("  " + (idx+1) + ". " + parts.join(" | "));
+      });
+      task.querySelectorAll("textarea").forEach(function(t){
+        if (t.value.trim()) chunk.push("  нотатки: " + t.value.trim().replace(/\n/g," "));
+      });
+      if (chunk.length){ lines.push((h ? h.textContent.trim() : "Task")); lines.push(chunk.join("\n")); lines.push(""); }
+    });
+    var text = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast("Скопійовано ✓"); },
+        function(){ fallback(text); });
+    } else fallback(text);
+  });
+  function fallback(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); toast("Скопійовано ✓"); }
+    catch(e){ toast("Не вдалося скопіювати"); }
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- reset ---------- */
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    document.querySelectorAll("input[type=text], textarea").forEach(function(el){
+      el.value = ""; el.classList.remove("ok","no");
+    });
+    document.querySelectorAll("select").forEach(function(s){ s.value = ""; s.classList.remove("ok","no"); });
+    document.querySelectorAll(".mark").forEach(function(m){ m.remove(); });
+    document.querySelectorAll(".opt").forEach(function(b){ b.classList.remove("sel","good","bad"); });
+    document.querySelectorAll(".w, .j, .dc").forEach(function(w){ w.classList.remove("on","hit","miss"); });
+    document.querySelectorAll(".btn.revealAll").forEach(function(b){ b.dataset.open="0"; b.textContent="Пояснення"; });
+    document.querySelectorAll(".answer").forEach(function(a){ a.classList.remove("show"); });
+    document.querySelectorAll(".btn.reveal").forEach(function(b){ b.textContent = "Ключ"; });
+    items.forEach(function(i){ i.done = false; });
+    refresh();
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  /* Enter key checks the current task */
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Enter" && e.target.matches("input[type=text]")){
+      e.preventDefault();
+      var task = e.target.closest(".task");
+      var btn = task && task.querySelector(".btn.check");
+      if (btn) btn.click();
+    }
+  });
+
+  document.querySelectorAll(".btn.reveal").forEach(function(b){ b.dataset.label = b.textContent; });
+  refresh();
+})();
+</script>
+<script>
+(function(){
+"use strict";
+var card=document.getElementById("vcard"), idx=0, dir="en", order=[], mark={};
+WORDS.forEach(function(w,i){ order.push(i); });
+
+function render(){
+  var wi=order[idx], w=WORDS[wi];
+  var enSide = (dir==="en");
+  document.getElementById("vtag").textContent  = enSide ? "english" : "українська";
+  document.getElementById("vtag2").textContent = enSide ? "українська" : "english";
+  document.getElementById("vfrontText").textContent = enSide ? w.en : w.ua;
+  document.getElementById("vipa").innerHTML = enSide ? "/"+w.ipa+"/" : "";
+  document.getElementById("vbackText").textContent = enSide ? w.ua : w.en;
+  document.getElementById("vex").innerHTML = "<b>From the recording:</b> " + w.ex;
+  document.getElementById("vnote").innerHTML = w.note;
+  var n=(idx+1)+" / "+order.length;
+  document.getElementById("vnum").textContent=n;
+  document.getElementById("vnum2").textContent=n;
+  document.getElementById("vcur").textContent=idx+1;
+  document.getElementById("vtot").textContent=order.length;
+  card.classList.remove("know","hard");
+  if (mark[wi]) card.classList.add(mark[wi]);
+  document.getElementById("vknow").classList.toggle("on", mark[wi]==="know");
+  document.getElementById("vhard").classList.toggle("on", mark[wi]==="hard");
+  document.getElementById("vprev").disabled = idx===0;
+  document.getElementById("vnext").disabled = idx===order.length-1;
+  dots();
+}
+function dots(){
+  var box=document.getElementById("vdots"); box.innerHTML="";
+  order.forEach(function(wi,n){
+    var b=document.createElement("button");
+    b.className="dot"+(n===idx?" on":"")+(mark[wi]==="know"?" done":"")+(mark[wi]==="hard"?" warn":"");
+    b.setAttribute("aria-label","Card "+(n+1));
+    b.onclick=function(){ idx=n; card.classList.remove("flipped"); render(); };
+    box.appendChild(b);
+  });
+}
+function go(s){ var n=idx+s; if(n<0||n>=order.length) return; idx=n; card.classList.remove("flipped"); render(); }
+
+card.addEventListener("click", function(){ card.classList.toggle("flipped"); });
+card.addEventListener("keydown", function(e){
+  if(e.key===" "||e.key==="Enter"){ e.preventDefault(); card.classList.toggle("flipped"); }
+});
+document.getElementById("vprev").onclick=function(e){ e.stopPropagation(); go(-1); };
+document.getElementById("vnext").onclick=function(e){ e.stopPropagation(); go(1); };
+document.addEventListener("keydown", function(e){
+  if(e.target.matches("input, textarea, select")) return;
+  if(e.key==="ArrowRight") go(1);
+  if(e.key==="ArrowLeft") go(-1);
+});
+var x0=null;
+card.addEventListener("touchstart",function(e){ x0=e.touches[0].clientX; },{passive:true});
+card.addEventListener("touchend",function(e){
+  if(x0===null) return;
+  var dx=e.changedTouches[0].clientX-x0;
+  if(Math.abs(dx)>60) go(dx<0?1:-1);
+  x0=null;
+},{passive:true});
+
+function setDir(d){
+  dir=d;
+  document.getElementById("dirEn").classList.toggle("on", d==="en");
+  document.getElementById("dirUa").classList.toggle("on", d==="ua");
+  card.classList.remove("flipped");
+  render();
+}
+document.getElementById("dirEn").onclick=function(){ setDir("en"); };
+document.getElementById("dirUa").onclick=function(){ setDir("ua"); };
+
+document.getElementById("deckShuffle").onclick=function(){
+  for(var i=order.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=order[i]; order[i]=order[j]; order[j]=t; }
+  idx=0; card.classList.remove("flipped"); render();
+};
+document.getElementById("vknow").onclick=function(){
+  var wi=order[idx]; mark[wi] = mark[wi]==="know" ? null : "know"; render();
+  if(mark[wi]==="know" && idx<order.length-1) setTimeout(function(){ go(1); },260);
+};
+document.getElementById("vhard").onclick=function(){
+  var wi=order[idx]; mark[wi] = mark[wi]==="hard" ? null : "hard"; render();
+};
+document.getElementById("vreset").onclick=function(){ mark={}; render(); };
+
+/* list view */
+var lv=document.getElementById("listview"), lvBtn=document.getElementById("deckList");
+function buildList(){
+  lv.innerHTML="";
+  WORDS.forEach(function(w){
+    var row=document.createElement("div"); row.className="lrow";
+    row.innerHTML='<div class="lw">'+w.en+' <span class="ipa">/'+w.ipa+'/</span></div><div class="lu">'+w.ua+'</div>';
+    lv.appendChild(row);
+  });
+}
+lvBtn.onclick=function(){
+  var open=lv.hasAttribute("hidden");
+  if(open){ buildList(); lv.removeAttribute("hidden"); lvBtn.textContent="Картками"; }
+  else { lv.setAttribute("hidden",""); lvBtn.textContent="Списком"; }
+};
+
+/* chips for the speaking challenge */
+var chipBox=document.getElementById("wordchips");
+if(chipBox){
+  WORDS.forEach(function(w){
+    var s=document.createElement("span"); s.className="dc"; s.textContent=w.en;
+    s.onclick=function(){ s.classList.toggle("on"); };
+    chipBox.appendChild(s);
+  });
+}
+
+render();
+})();
+</script>
+
+</body>
+</html>
