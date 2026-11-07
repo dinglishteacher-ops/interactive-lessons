@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| On the move · Vocabulary revision · dinglish | [index-4.html](index-4.html) |
 | Busy-ness vocabulary — flashcards & practice | [busyness-vocabulary-cards.html](busyness-vocabulary-cards.html) |
 | Present Simple vs Continuous · dinglish | [present-simple-vs-continuous.html](present-simple-vs-continuous.html) |
 | Revision: Unit 1 \| dinglish | [index-3.html](index-3.html) |
