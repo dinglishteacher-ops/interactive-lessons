@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On the move · Vocabulary revision · dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f1e8; --card:#fffdf8; --ink:#1c2130; --muted:#5d6475;
+  --asphalt:#262b37; --asphalt2:#323846; --yellow:#ffc928; --green:#14734f;
+  --green-l:#e2f3ea; --red:#c8432f; --red-l:#fbe7e2; --blue:#1d4fa3; --line:#e4ded0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 "Nunito Sans",system-ui,sans-serif}
+h1,h2,h3,.disp{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.01em}
+.wrap{max-width:920px;margin:0 auto;padding:0 18px}
+/* HERO */
+.hero{background:var(--asphalt);color:#fff;position:relative;overflow:hidden;padding:44px 0 70px}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:28px;height:6px;
+  background:repeating-linear-gradient(90deg,var(--yellow) 0 46px,transparent 46px 82px)}
+.brand{font-family:"Bricolage Grotesque";font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:lowercase;
+  display:inline-flex;align-items:center;gap:8px;color:var(--yellow)}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--yellow);display:inline-block}
+.hero h1{font-size:clamp(44px,8vw,78px);line-height:.95;margin:18px 0 10px;font-weight:800}
+.hero h1 span{color:var(--yellow)}
+.hero p{margin:0;color:#c9cdd8;max-width:560px}
+.namebox{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.namebox label{font-weight:700;color:#fff}
+.namebox input{background:var(--asphalt2);border:2px solid #4a5163;color:#fff;border-radius:10px;padding:10px 14px;font:inherit;min-width:240px}
+.namebox input:focus{outline:none;border-color:var(--yellow)}
+/* PROGRESS ROAD */
+.progress{position:sticky;top:0;z-index:20;background:var(--asphalt);border-top:1px solid #3a4050;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.progress .wrap{display:flex;align-items:center;gap:14px;padding-top:8px;padding-bottom:8px}
+.road{flex:1;height:30px;position:relative;background:var(--asphalt2);border-radius:20px;overflow:hidden}
+.road:before{content:"";position:absolute;left:12px;right:12px;top:14px;height:2px;
+  background:repeating-linear-gradient(90deg,#8b92a3 0 12px,transparent 12px 22px)}
+.road .done{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#1b5e45,var(--green));transition:width .6s ease;width:0}
+.road .bus{position:absolute;top:1px;font-size:22px;transition:left .6s ease;left:0;transform:scaleX(-1)}
+.road .flag{position:absolute;right:6px;top:2px;font-size:20px}
+.ptext{color:#fff;font-weight:700;font-size:14px;white-space:nowrap;font-family:"Bricolage Grotesque"}
+/* WORD BANK */
+details.bank{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:28px 0 8px;padding:4px 20px}
+details.bank summary{cursor:pointer;font-family:"Bricolage Grotesque";font-weight:700;font-size:19px;padding:12px 0;list-style:none}
+details.bank summary::-webkit-details-marker{display:none}
+details.bank summary:before{content:"📖  "}
+details.bank summary:after{content:"Показати ▾";float:right;font-size:14px;color:var(--muted);font-family:"Nunito Sans";font-weight:600;margin-top:4px}
+details.bank[open] summary:after{content:"Сховати ▴"}
+.bank h4{margin:18px 0 6px;font-family:"Bricolage Grotesque";font-size:16px}
+.bank table{width:100%;border-collapse:collapse;font-size:15px;margin-bottom:10px}
+.bank td{padding:6px 8px;border-top:1px solid var(--line);vertical-align:top}
+.bank td:first-child{font-weight:700;white-space:nowrap}
+.bank td em{color:var(--muted)}
+/* PART SIGN */
+.part{margin:46px 0 18px;display:flex;align-items:stretch;gap:0}
+.part .sign{background:var(--green);color:#fff;border:3px solid #fff;outline:3px solid var(--green);border-radius:10px;
+  padding:12px 22px;display:flex;gap:16px;align-items:center}
+.part .sign b{font-family:"Bricolage Grotesque";font-size:13px;letter-spacing:.12em;opacity:.85}
+.part .sign h2{margin:0;font-size:26px;line-height:1.1}
+.part .sign .arr{font-size:28px;font-weight:800}
+.part.blue .sign{background:var(--blue);outline-color:var(--blue)}
+.part.dark .sign{background:var(--asphalt);outline-color:var(--asphalt)}
+/* TASK CARD */
+.task{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;margin:18px 0;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.thead{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px}
+.dia{flex:0 0 auto;width:44px;height:44px;margin:6px 4px 0;background:var(--yellow);border:2px solid var(--ink);transform:rotate(45deg);
+  display:flex;align-items:center;justify-content:center;border-radius:6px}
+.dia span{transform:rotate(-45deg);font-family:"Bricolage Grotesque";font-weight:800;font-size:18px}
+.dia.speak{background:#fff;border-color:var(--blue)}
+.thead h3{margin:0;font-size:22px;line-height:1.2}
+.thead p{margin:4px 0 0;color:var(--muted)}
+.score{margin-left:auto;font-family:"Bricolage Grotesque";font-weight:700;background:var(--paper);border-radius:999px;padding:4px 12px;font-size:14px;white-space:nowrap;display:none}
+.score.show{display:block}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{font:700 15px "Nunito Sans";border:0;border-radius:10px;padding:10px 18px;cursor:pointer;background:var(--asphalt);color:#fff;transition:transform .1s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn.y{background:var(--yellow);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default;transform:none}
+/* T1 walks */
+.walks{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.walk{border:2px solid var(--line);border-radius:14px;padding:10px;background:#fff}
+.walk .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.walk .lbl{font-family:"Bricolage Grotesque";font-weight:800}
+.play{background:var(--yellow);border:0;border-radius:8px;padding:4px 10px;font-weight:700;cursor:pointer;font-family:inherit}
+.track{position:relative;height:96px;border-radius:10px;overflow:hidden;
+  background:linear-gradient(#cfe7f5 0 60%,#9aa1ad 60% 62%,#6f7684 62%)}
+.track:after{content:"";position:absolute;left:0;right:0;bottom:16px;height:3px;background:repeating-linear-gradient(90deg,#f3f3f3 0 14px,transparent 14px 26px)}
+.mover{position:absolute;left:2%;bottom:20px;font-size:40px;line-height:1;z-index:2}
+.mover .b{display:inline-block;transform-origin:50% 90%}
+.flip{display:inline-block;transform:scaleX(-1)}
+.walk select{width:100%;margin-top:10px}
+select,.gap,textarea,.tin{font:inherit;border:2px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;color:var(--ink)}
+select:focus,.gap:focus,textarea:focus,.tin:focus{outline:none;border-color:var(--blue)}
+.ok{border-color:var(--green)!important;background:var(--green-l)!important}
+.bad{border-color:var(--red)!important;background:var(--red-l)!important}
+.fix{display:block;font-size:14px;color:var(--red);font-weight:700;margin-top:4px}
+.fix.g{color:var(--green)}
+/* keyframes: horizontal X + body B */
+@keyframes x-hobble{0%{left:2%}18%{left:12%}28%{left:13%}46%{left:26%}56%{left:27%}74%{left:40%}84%{left:41%}100%{left:52%}}
+@keyframes b-hobble{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(7px) rotate(-14deg)}60%{transform:translateY(5px) rotate(-10deg)}}
+.play-on .m-hobble{animation:x-hobble 6s linear forwards}.play-on .m-hobble .b{animation:b-hobble 1.1s ease-in-out 5}
+@keyframes x-lurch{0%,28%{left:2%}34%{left:32%}38%{left:28%}62%{left:28%}67%{left:60%}71%{left:56%}100%{left:56%}}
+@keyframes b-lurch{0%,28%{transform:rotate(0)}31%{transform:rotate(-10deg)}36%{transform:rotate(6deg)}42%,62%{transform:rotate(0)}65%{transform:rotate(-10deg)}70%{transform:rotate(6deg)}76%,100%{transform:rotate(0)}}
+.play-on .m-lurch{animation:x-lurch 4.5s linear forwards}.play-on .m-lurch .b{animation:b-lurch 4.5s linear}
+@keyframes x-shuffle{0%{left:2%}100%{left:30%}}
+@keyframes b-shuffle{0%,100%{transform:translateX(0)}50%{transform:translateX(2px) translateY(1px)}}
+.play-on .m-shuffle{animation:x-shuffle 6.5s linear forwards}.play-on .m-shuffle .b{animation:b-shuffle .35s linear 18}
+@keyframes x-stagger{0%{left:2%}100%{left:58%}}
+@keyframes b-stagger{0%{transform:translateY(-14px) rotate(-16deg)}25%{transform:translateY(8px) rotate(12deg)}50%{transform:translateY(-4px) rotate(-6deg)}75%{transform:translateY(12px) rotate(20deg)}100%{transform:translateY(-14px) rotate(-16deg)}}
+.play-on .m-stagger{animation:x-stagger 6s ease-in-out forwards}.play-on .m-stagger .b{animation:b-stagger 1.5s ease-in-out 4}
+@keyframes x-stride{0%{left:2%}100%{left:84%}}
+@keyframes b-stride{0%,100%{transform:translateY(0) scale(1.15)}50%{transform:translateY(-9px) scale(1.15)}}
+.play-on .m-stride{animation:x-stride 3s linear forwards}.play-on .m-stride .b{animation:b-stride .5s ease-in-out 6}
+@keyframes x-stumble{0%{left:2%}38%{left:34%}44%{left:40%}62%{left:40%}100%{left:70%}}
+@keyframes b-stumble{0%{transform:translateY(0) rotate(0)}10%{transform:translateY(-4px)}20%{transform:translateY(0)}30%{transform:translateY(-4px)}38%{transform:translateY(0) rotate(0)}43%{transform:translateY(8px) rotate(48deg)}52%{transform:translateY(6px) rotate(38deg)}60%{transform:translateY(0) rotate(4deg)}64%{transform:rotate(-8deg)}70%,100%{transform:rotate(0)}}
+.play-on .m-stumble{animation:x-stumble 4.5s linear forwards}.play-on .m-stumble .b{animation:b-stumble 4.5s linear}
+@keyframes x-surge{0%,42%{left:2%}50%{left:40%}100%{left:46%}}
+@keyframes b-surge{0%,40%{transform:rotate(0)}10%,30%{transform:translateX(-2px)}20%{transform:translateX(2px)}44%,52%{transform:rotate(14deg)}60%,100%{transform:rotate(0)}}
+.play-on .m-surge{animation:x-surge 4s ease-in forwards}.play-on .m-surge .b{animation:b-surge 4s linear}
+.m-surge{font-size:30px;letter-spacing:-8px}
+@keyframes x-wobble{0%{left:2%}100%{left:50%}}
+@keyframes b-wobble{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+.play-on .m-wobble{animation:x-wobble 6s linear forwards}.play-on .m-wobble .b{animation:b-wobble .75s ease-in-out 8}
+/* T2 nuance */
+.q{padding:12px 0;border-top:1px dashed var(--line)}
+.q:first-of-type{border-top:0}
+.q .s{margin-bottom:8px}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;font:600 15px "Nunito Sans";color:var(--ink)}
+.opt.sel{border-color:var(--ink);background:var(--ink);color:#fff}
+.opt.ok{color:var(--ink)}.opt.bad{color:var(--ink)}
+.expl{font-size:14px;color:var(--muted);margin-top:6px;display:none}
+.expl.show{display:block}
+/* gaps */
+.gl{padding:9px 0;border-top:1px dashed var(--line)}
+.gl:first-child{border-top:0}
+.gl .n,.q .n{font-family:"Bricolage Grotesque";font-weight:800;margin-right:6px;color:var(--muted)}
+.gap{width:150px;padding:4px 8px;margin:0 3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.chip{background:var(--paper);border:1px dashed #c9c1ad;border-radius:8px;padding:3px 10px;font-weight:700;font-size:15px}
+/* L/F */
+.lf{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px dashed var(--line)}
+.lf:first-child{border-top:0}
+.lf .s{flex:1}
+.lf .opts{flex:0 0 auto}
+/* match */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.match .col{display:flex;flex-direction:column;gap:8px}
+.mb{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;cursor:pointer;font:700 16px "Nunito Sans";text-align:left;color:var(--ink);transition:background .2s}
+.mb.sel{border-color:var(--blue);background:#e7eefb}
+.mb.done{border-color:var(--green);background:var(--green-l);cursor:default;opacity:.85}
+.mb.shake{animation:shake .35s;border-color:var(--red);background:var(--red-l)}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.mstat{margin-top:10px;color:var(--muted);font-size:14px}
+/* chat */
+.chat{border-top:1px dashed var(--line);padding:14px 0}
+.chat:first-child{border-top:0}
+.bub{max-width:80%;padding:10px 14px;border-radius:16px;margin-bottom:8px;font-size:16px}
+.bub.a{background:#eceae3;border-bottom-left-radius:4px}
+.bub.bq{background:#dce8fb;margin-left:auto;border-bottom-right-radius:4px;font-style:italic;color:var(--muted)}
+.chat .opts{justify-content:flex-end}
+/* speaking */
+.task.speaking{border:2px solid var(--blue);background:linear-gradient(#fff,#f6f8fd)}
+.prompts{margin:0;padding-left:20px}
+.prompts li{margin:6px 0}
+.timer{font-family:"Bricolage Grotesque";font-weight:800;font-size:28px;min-width:80px}
+textarea{width:100%;min-height:80px;margin-top:12px;resize:vertical}
+.wheelbox{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.wheelwrap{position:relative;width:260px;height:260px;flex:0 0 auto}
+.wheel{width:100%;height:100%;border-radius:50%;border:6px solid var(--asphalt);position:relative;
+  background:conic-gradient(#ffc928 0 45deg,#9ad1b8 45deg 90deg,#b9c7f0 90deg 135deg,#f4a99b 135deg 180deg,#ffe28a 180deg 225deg,#7fc2a6 225deg 270deg,#d2c3f2 270deg 315deg,#f7c3b8 315deg 360deg);
+  transition:transform 4s cubic-bezier(.15,.85,.2,1)}
+.wheel span{position:absolute;left:50%;top:50%;font-family:"Bricolage Grotesque";font-weight:800;font-size:22px;width:30px;margin:-15px 0 0 -15px;text-align:center;height:30px}
+.pin{position:absolute;top:-14px;left:50%;margin-left:-14px;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:26px solid var(--red);z-index:3;filter:drop-shadow(0 2px 1px rgba(0,0,0,.3))}
+.hub{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px;border-radius:50%;background:var(--asphalt);z-index:2;border:4px solid #fff}
+.wq{flex:1;min-width:240px}
+.wq .big{font-family:"Bricolage Grotesque";font-weight:700;font-size:24px;line-height:1.25;min-height:90px}
+.wq .used{font-size:14px;color:var(--muted)}
+/* KWT */
+.kw{border-top:1px dashed var(--line);padding:14px 0}
+.kw:first-child{border-top:0}
+.kw .orig{margin-bottom:6px}
+.key{display:inline-block;background:var(--asphalt);color:var(--yellow);font-family:"Bricolage Grotesque";font-weight:800;letter-spacing:.08em;padding:2px 10px;border-radius:6px;font-size:15px;margin-bottom:6px}
+.kw .tin{width:230px;padding:4px 8px;margin:0 3px}
+/* translation */
+.tr{border-top:1px dashed var(--line);padding:12px 0}
+.tr:first-child{border-top:0}
+.tr .ua{font-weight:700;margin-bottom:6px}
+.tr textarea{min-height:52px;margin-top:0}
+.model{font-size:15px;margin-top:6px;display:none;background:var(--paper);border-radius:8px;padding:6px 10px}
+.model.show{display:block}
+/* finish */
+.finish{background:var(--asphalt);color:#fff;border-radius:22px;padding:28px;margin:46px 0 30px;position:relative;overflow:hidden}
+.finish h2{margin:0 0 6px;font-size:32px}
+.finish h2 span{color:var(--yellow)}
+.finish p{color:#c9cdd8;margin:0 0 14px}
+.sumgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin:16px 0}
+.sum{background:var(--asphalt2);border-radius:12px;padding:10px 12px;font-size:14px}
+.sum b{display:block;font-family:"Bricolage Grotesque";font-size:20px;color:var(--yellow)}
+.total{font-family:"Bricolage Grotesque";font-weight:800;font-size:48px;color:var(--yellow);line-height:1}
+#report{width:100%;min-height:160px;background:#1b1f29;color:#dfe3ec;border-color:#3a4050;font:13px/1.5 ui-monospace,Menlo,monospace;display:none}
+#copied{color:var(--yellow);font-weight:700;margin-left:6px}
+footer{text-align:center;color:var(--muted);font-size:14px;padding:10px 0 40px}
+@media (max-width:640px){
+  .task{padding:18px 16px}
+  .lf{flex-direction:column;align-items:flex-start}
+  .match{gap:8px 10px}.mb{font-size:14px;padding:8px}
+  .gap{width:120px}.kw .tin{width:100%;margin:6px 0}
+  .part .sign h2{font-size:21px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><i></i>dinglish</div>
+    <h1>On the <span>move</span></h1>
+    <p>Vocabulary revision · B2+/C1<br>Verbs of movement · literal &amp; figurative meanings · travel idioms</p>
+    <div class="namebox">
+      <label for="sname">Your name:</label>
+      <input id="sname" placeholder="Type your name here" autocomplete="name">
+    </div>
+  </div>
+</header>
+
+<div class="progress">
+  <div class="wrap">
+    <div class="road"><div class="done" id="pdone"></div><div class="flag">🏁</div><div class="bus" id="pbus">🚌</div></div>
+    <div class="ptext" id="ptext">0 / 9 stops</div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<details class="bank">
+  <summary>Словничок уроку</summary>
+  <h4>Verbs of movement — дієслова руху</h4>
+  <table>
+    <tr><td>hobble</td><td>шкутильгати</td><td><em>hobble on crutches</em></td></tr>
+    <tr><td>lurch</td><td>хитнутися, різко смикнутися</td><td><em>the bus lurched forward</em></td></tr>
+    <tr><td>shuffle</td><td>човгати</td><td><em>shuffle in slippers</em></td></tr>
+    <tr><td>stagger</td><td>хитатися, ледь іти</td><td><em>stagger under a heavy bag</em></td></tr>
+    <tr><td>stride (strode, stridden)</td><td>крокувати впевнено</td><td><em>stride into the room</em></td></tr>
+    <tr><td>stumble</td><td>спіткнутися</td><td><em>stumble over a step</em></td></tr>
+    <tr><td>surge</td><td>ринути (про натовп)</td><td><em>the crowd surged forward</em></td></tr>
+    <tr><td>wobble</td><td>хитатися, похитуватися</td><td><em>wobble on a bike / in heels</em></td></tr>
+  </table>
+  <h4>Literal → figurative — пряме і переносне значення</h4>
+  <table>
+    <tr><td>sail</td><td>легко пройти</td><td><em>sail through an exam</em></td></tr>
+    <tr><td>drive</td><td>змушувати, підганяти</td><td><em>drive yourself too hard</em></td></tr>
+    <tr><td>fly</td><td>промчати</td><td><em>fly down the road</em></td></tr>
+    <tr><td>jump</td><td>проскочити</td><td><em>jump the lights / the queue</em></td></tr>
+    <tr><td>park</td><td>відкласти</td><td><em>let’s park that idea</em></td></tr>
+    <tr><td>stagger</td><td>приголомшити</td><td><em>I was staggered by the price</em></td></tr>
+    <tr><td>stumble</td><td>затнутися</td><td><em>stumble over a word</em></td></tr>
+    <tr><td>backpedal</td><td>відмовитися від своїх слів</td><td><em>the minister backpedalled</em></td></tr>
+  </table>
+  <h4>Idioms — ідіоми</h4>
+  <table>
+    <tr><td>whatever floats your boat</td><td>кому що подобається</td></tr>
+    <tr><td>drive sb up the wall</td><td>доводити до сказу</td></tr>
+    <tr><td>steer clear of sth</td><td>триматися подалі</td></tr>
+    <tr><td>plain sailing</td><td>як по маслу</td></tr>
+    <tr><td>the driving force</td><td>рушійна сила</td></tr>
+    <tr><td>go downhill</td><td>котитися донизу, погіршуватися</td></tr>
+    <tr><td>in the same boat</td><td>в одному човні</td></tr>
+    <tr><td>be taken for a ride</td><td>бути обдуреним</td></tr>
+  </table>
+</details>
+
+<!-- PART 1 -->
+<div class="part"><div class="sign"><div><b>PART 1</b><h2>Moving around</h2></div><span class="arr">→</span></div></div>
+
+<section class="task" id="t1">
+  <div class="thead"><div class="dia"><span>1</span></div>
+    <div><h3>Guess the walk</h3><p>Press ▶ to watch each clip. How is the character moving? Choose the verb.</p></div>
+    <div class="score" id="s-t1"></div></div>
+  <div class="walks" id="walks"></div>
+  <div class="btnrow"><button class="btn" onclick="checkT1()">Check</button><button class="btn ghost" onclick="playAll()">▶ Play all</button></div>
+</section>
+
+<section class="task" id="t2">
+  <div class="thead"><div class="dia"><span>2</span></div>
+    <div><h3>Nuance check</h3><p>Choose the verb that fits best. Think about <b>how</b> the movement happens.</p></div>
+    <div class="score" id="s-t2"></div></div>
+  <div id="nuance"></div>
+  <div class="btnrow"><button class="btn" onclick="checkT2()">Check</button></div>
+</section>
+
+<section class="task" id="t3">
+  <div class="thead"><div class="dia"><span>3</span></div>
+    <div><h3>Complete the sentences</h3><p>Write the correct form of a verb from the box. Watch the tense!</p></div>
+    <div class="score" id="s-t3"></div></div>
+  <div class="chips" id="chips3"></div>
+  <div id="gaps1"></div>
+  <div class="btnrow"><button class="btn" onclick="checkGaps('t3')">Check</button></div>
+</section>
+
+<section class="task speaking" id="sA">
+  <div class="thead"><div class="dia speak"><span>🎙</span></div>
+    <div><h3>Speaking: people on the move</h3><p>Choose two questions. Record a 60–90 second voice message and send it to your teacher. Use at least <b>four</b> verbs from Part 1.</p></div></div>
+  <ol class="prompts">
+    <li>Describe the Kyiv metro (or any station) at rush hour. How do people move?</li>
+    <li>Tell a story about a time you stumbled or wobbled in public. What happened next?</li>
+    <li>Which verb describes how you walk on Monday morning? And on Friday evening? Why?</li>
+    <li>Have you ever been in a crowd that surged forward — at a concert, a match, a sale? How did it feel?</li>
+  </ol>
+  <div class="btnrow" style="align-items:center"><button class="btn y" onclick="timer(this,90)">Start 90-sec timer</button><span class="timer" id="tm-sA"></span></div>
+  <textarea id="notesA" placeholder="Optional: write your key words or notes here (they will be included in your results)."></textarea>
+</section>
+
+<!-- PART 2 -->
+<div class="part blue"><div class="sign"><div><b>PART 2</b><h2>Beyond the literal</h2></div><span class="arr">→</span></div></div>
+
+<section class="task" id="t4">
+  <div class="thead"><div class="dia"><span>4</span></div>
+    <div><h3>Literal or figurative?</h3><p>Decide whether the verb in bold is used literally (L) or figuratively (F).</p></div>
+    <div class="score" id="s-t4"></div></div>
+  <div id="lf"></div>
+  <div class="btnrow"><button class="btn" onclick="checkT4()">Check</button></div>
+</section>
+
+<section class="task" id="t5">
+  <div class="thead"><div class="dia"><span>5</span></div>
+    <div><h3>Figuratively speaking</h3><p>Complete the sentences with the correct form of the verbs in the box. All of them are used figuratively.</p></div>
+    <div class="score" id="s-t5"></div></div>
+  <div class="chips" id="chips5"></div>
+  <div id="gaps2"></div>
+  <div class="btnrow"><button class="btn" onclick="checkGaps('t5')">Check</button></div>
+</section>
+
+<section class="task" id="t6">
+  <div class="thead"><div class="dia"><span>6</span></div>
+    <div><h3>Idiom builder</h3><p>Click a beginning, then click its ending. Try to make every match on the first attempt!</p></div>
+    <div class="score" id="s-t6"></div></div>
+  <div class="match"><div class="col" id="mleft"></div><div class="col" id="mright"></div></div>
+  <div class="mstat" id="mstat"></div>
+</section>
+
+<section class="task" id="t7">
+  <div class="thead"><div class="dia"><span>7</span></div>
+    <div><h3>What would you reply?</h3><p>Read each message and choose the most natural reply.</p></div>
+    <div class="score" id="s-t7"></div></div>
+  <div id="chats"></div>
+  <div class="btnrow"><button class="btn" onclick="checkT7()">Check</button></div>
+</section>
+
+<section class="task speaking" id="sB">
+  <div class="thead"><div class="dia speak"><span>🎡</span></div>
+    <div><h3>Speaking: spin the idiom wheel</h3><p>Spin three times. Answer each question in a voice message (about 45 seconds each). Use the idiom in your answer!</p></div></div>
+  <div class="wheelbox">
+    <div class="wheelwrap"><div class="pin"></div><div class="wheel" id="wheel"></div><div class="hub"></div></div>
+    <div class="wq">
+      <div class="big" id="wqtext">Press <b>Spin</b> to get your first question.</div>
+      <div class="btnrow"><button class="btn y" id="spinbtn" onclick="spin()">🎡 Spin</button><button class="btn ghost" onclick="timer(this,45,'tm-sB')">45-sec timer</button><span class="timer" id="tm-sB"></span></div>
+      <div class="used" id="wused"></div>
+    </div>
+  </div>
+  <textarea id="notesB" placeholder="Optional: notes for your answers."></textarea>
+</section>
+
+<!-- PART 3 -->
+<div class="part dark"><div class="sign"><div><b>PART 3</b><h2>Mixed: everything together</h2></div><span class="arr">→</span></div></div>
+
+<section class="task" id="t8">
+  <div class="thead"><div class="dia"><span>8</span></div>
+    <div><h3>Key word transformation</h3><p>Complete the second sentence so that it means the same as the first. Use the word given and <b>2–5 words</b>. Don’t change the word given (exam style — like CAE Part 4).</p></div>
+    <div class="score" id="s-t8"></div></div>
+  <div id="kwt"></div>
+  <div class="btnrow"><button class="btn" onclick="checkT8()">Check</button></div>
+</section>
+
+<section class="task" id="t9">
+  <div class="thead"><div class="dia"><span>9</span></div>
+    <div><h3>Translate into English</h3><p>Translate the sentences. Use the vocabulary from this lesson. When you check, you will see a model answer — compare and correct yourself.</p></div>
+    <div class="score" id="s-t9"></div></div>
+  <div id="trans"></div>
+  <div class="btnrow"><button class="btn" onclick="checkT9()">Check &amp; show model answers</button></div>
+</section>
+
+<section class="finish" id="finish">
+  <h2>🏁 Finish <span>line</span></h2>
+  <p>Check all nine tasks, then copy your results and send them to your teacher (Telegram / Viber / email).</p>
+  <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap">
+    <div class="total" id="total">0 / 0</div><div id="totalpct" style="color:#c9cdd8;padding-bottom:6px"></div>
+  </div>
+  <div class="sumgrid" id="sumgrid"></div>
+  <div class="btnrow"><button class="btn y" onclick="copyReport()">📋 Copy my results</button><span id="copied"></span></div>
+  <textarea id="report" readonly></textarea>
+</section>
+
+</main>
+<footer>dinglish · B2+/C1 · On the move</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm = s => String(s).toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,!?;:"“”()]/g,' ').replace(/[—–]/g,' ').replace(/\s+/g,' ').trim();
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const results = {};
+const TASKS = {t1:'Guess the walk',t2:'Nuance check',t3:'Complete the sentences',t4:'Literal or figurative?',t5:'Figuratively speaking',t6:'Idiom builder',t7:'What would you reply?',t8:'Key word transformation',t9:'Translation'};
+function setResult(id,score,total,lines){
+  results[id]={score,total,lines};
+  const el=$('s-'+id); el.textContent=score+' / '+total; el.classList.add('show');
+  updateProgress();
+}
+function updateProgress(){
+  const n=Object.keys(results).length, pct=n/9;
+  $('pdone').style.width=(pct*100)+'%';
+  $('pbus').style.left='calc('+(pct*100)+'% - '+(pct*34)+'px)';
+  $('ptext').textContent=n+' / 9 stops';
+  let s=0,t=0,html='';
+  Object.keys(TASKS).forEach(id=>{const r=results[id];
+    html+='<div class="sum">'+(id.slice(1))+'. '+TASKS[id]+'<b>'+(r?r.score+' / '+r.total:'—')+'</b></div>';
+    if(r){s+=r.score;t+=r.total;}});
+  $('sumgrid').innerHTML=html;
+  $('total').textContent=s+' / '+t;
+  $('totalpct').textContent=t?Math.round(s/t*100)+'%'+(n<9?' · '+(9-n)+' task(s) left':' · all done! 🎉'):'';
+}
+
+/* ---------- T1 GUESS THE WALK ---------- */
+const VERBS=['hobble','lurch','shuffle','stagger','stride','stumble','surge','wobble'];
+const WALKS={hobble:'🚶',lurch:'🚌',shuffle:'🚶',stagger:'🚶',stride:'🚶',stumble:'🚶',surge:'🧍🧍‍♀️🧍‍♂️🧍',wobble:'🚴'};
+const walkOrder=shuffle(VERBS);
+$('walks').innerHTML=walkOrder.map((v,i)=>{
+  const L='ABCDEFGH'[i];
+  const flip = v==='surge' ? WALKS[v] : '<span class="flip">'+WALKS[v]+'</span>';
+  return '<div class="walk"><div class="top"><span class="lbl">Clip '+L+'</span><button class="play" onclick="playClip('+i+')">▶ Play</button></div>'+
+   '<div class="track" id="tr'+i+'"><div class="mover m-'+v+'"><span class="b">'+flip+'</span></div></div>'+
+   '<select id="w'+i+'"><option value="">— choose a verb —</option>'+VERBS.map(x=>'<option>'+x+'</option>').join('')+'</select>'+
+   '<span class="fix" id="wf'+i+'" style="display:none"></span></div>';
+}).join('');
+function playClip(i){const t=$('tr'+i);t.classList.remove('play-on');void t.offsetWidth;t.classList.add('play-on');}
+function playAll(){walkOrder.forEach((v,i)=>playClip(i));}
+function checkT1(){
+  let sc=0;const lines=[];
+  walkOrder.forEach((v,i)=>{const s=$('w'+i),f=$('wf'+i),ok=s.value===v;
+    s.classList.remove('ok','bad');s.classList.add(ok?'ok':'bad');
+    f.style.display=ok?'none':'block';f.textContent='→ '+v;
+    if(ok)sc++;lines.push('Clip '+'ABCDEFGH'[i]+': '+(s.value||'—')+(ok?' ✓':' ✗ ('+v+')'));});
+  setResult('t1',sc,8,lines);
+}
+
+/* ---------- T2 NUANCE ---------- */
+const NUANCE=[
+ {s:'After the marathon, she could barely ___ to the medical tent — her legs had completely gone.',o:['stagger','stride','surge'],a:'stagger',e:'Stagger = walk unsteadily, as if about to fall (exhausted, drunk, carrying something heavy).'},
+ {s:'The old man ___ across the kitchen in his slippers to put the kettle on.',o:['shuffled','lurched','strode'],a:'shuffled',e:'Shuffle = slowly, without lifting your feet. Slippers are the classic clue!'},
+ {s:'When the doors opened, hundreds of fans ___ towards the stage.',o:['surged','hobbled','wobbled'],a:'surged',e:'Surge is used for a crowd (or water) moving suddenly and powerfully forward.'},
+ {s:'The train ___ suddenly and my coffee went all over my laptop.',o:['lurched','shuffled','strode'],a:'lurched',e:'Lurch = a sudden, uncontrolled movement — typical of vehicles.'},
+ {s:'She ___ into the meeting room as if she owned the place.',o:['strode','stumbled','shuffled'],a:'strode',e:'Stride = long, confident steps. Past simple: strode.'},
+ {s:'I ___ on a loose paving stone and nearly dropped my phone.',o:['stumbled','surged','strode'],a:'stumbled',e:'Stumble = trip or almost fall (stumble on / over something).'},
+ {s:'With his ankle in a bandage, he ___ slowly to the bus stop.',o:['hobbled','surged','strode'],a:'hobbled',e:'Hobble = walk slowly and with difficulty because you are hurt.'},
+ {s:'The café table ___ every time someone put a cup on it.',o:['wobbled','strode','hobbled'],a:'wobbled',e:'Wobble = move unsteadily from side to side — tables, bikes, people in high heels, jelly!'},
+];
+const nuSel={};
+$('nuance').innerHTML=NUANCE.map((q,i)=>'<div class="q"><div class="s"><span class="n">'+(i+1)+'</span>'+esc(q.s).replace('___','<b>______</b>')+'</div><div class="opts">'+
+  shuffle(q.o).map(o=>'<button class="opt" data-q="'+i+'" data-v="'+o+'">'+o+'</button>').join('')+'</div><div class="expl" id="ne'+i+'"></div></div>').join('');
+$('nuance').addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;const q=b.dataset.q;
+  b.parentNode.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel','ok','bad'));b.classList.add('sel');nuSel[q]=b.dataset.v;});
+function checkT2(){
+  let sc=0;const lines=[];
+  NUANCE.forEach((q,i)=>{const v=nuSel[i],ok=v===q.a;
+    document.querySelectorAll('#nuance .opt[data-q="'+i+'"]').forEach(b=>{b.classList.remove('ok','bad','sel');
+      if(b.dataset.v===q.a)b.classList.add('ok');else if(b.dataset.v===v)b.classList.add('bad');});
+    const e=$('ne'+i);e.textContent=(ok?'✓ ':'✗ ')+q.e;e.classList.add('show');
+    if(ok)sc++;lines.push((i+1)+'. '+(v||'—')+(ok?' ✓':' ✗ ('+q.a+')'));});
+  setResult('t2',sc,NUANCE.length,lines);
+}
+
+/* ---------- GAP FILLS (T3, T5) ---------- */
+const GAPS={
+ t3:{box:'hobble · lurch · shuffle · stagger · stride · stumble · surge · wobble',el:'gaps1',chips:'chips3',items:[
+  {s:'By the time we reached the top of the hill, we were ___ with exhaustion.',a:['staggering'],h:'st'},
+  {s:'The bus suddenly ___ forward and half the passengers lost their balance.',a:['lurched'],h:'l'},
+  {s:'Grandad has been ___ around the house since his knee operation.',a:['hobbling'],h:'h'},
+  {s:'Stop ___ your feet and pick them up when you walk!',a:['shuffling'],h:'sh'},
+  {s:'The first time I tried ice skating, I ___ for a few seconds and then fell flat on my back.',a:['wobbled','staggered'],h:'w'},
+  {s:'When the fire alarm went off, panicked shoppers ___ towards the exits.',a:['surged'],h:'su'},
+  {s:'Careful! Don’t ___ over that cable on the floor.',a:['stumble'],h:'st'},
+  {s:'The new manager ___ into the office on Monday and introduced herself to everyone.',a:['strode'],h:'st'},
+ ]},
+ t5:{box:'sail · drive · fly · jump · park · stagger · stumble · backpedal',el:'gaps2',chips:'chips5',items:[
+  {s:'My sister is annoyingly clever — she ___ through all her exams without even revising.',a:['sailed'],h:'sa'},
+  {s:'You’re ___ yourself too hard. Take the weekend off!',a:['driving'],h:'dr'},
+  {s:'I overslept, so I ___ down the road and caught the bus with seconds to spare.',a:['flew'],h:'fl'},
+  {s:'The taxi driver ___ the lights and nearly hit a cyclist.',a:['jumped'],h:'ju'},
+  {s:'We’ll never agree on the budget today, so let’s ___ that issue for now.',a:['park'],h:'pa'},
+  {s:'I was absolutely ___ by the price of a coffee at the airport — €9!',a:['staggered'],h:'st'},
+  {s:'She was so nervous that she ___ over her own name when she introduced herself.',a:['stumbled'],h:'st'},
+  {s:'After the backlash on social media, the company quickly ___ and apologised.',a:['backpedalled','backpedaled'],h:'ba'},
+ ]}
+};
+Object.keys(GAPS).forEach(id=>{const g=GAPS[id];
+  $(g.chips).innerHTML=g.box.split(' · ').map(w=>'<span class="chip">'+w+'</span>').join('');
+  $(g.el).innerHTML=g.items.map((it,i)=>{const p=esc(it.s).split('___');
+    return '<div class="gl"><span class="n">'+(i+1)+'</span>'+p[0]+'<input class="gap" id="'+id+'g'+i+'" autocomplete="off" autocapitalize="off" spellcheck="false">'+p[1]+'<span class="fix" id="'+id+'f'+i+'" style="display:none"></span></div>';}).join('');
+});
+function checkGaps(id){
+  const g=GAPS[id];let sc=0;const lines=[];
+  g.items.forEach((it,i)=>{const inp=$(id+'g'+i),f=$(id+'f'+i),v=norm(inp.value),ok=it.a.includes(v);
+    inp.classList.remove('ok','bad');inp.classList.add(ok?'ok':'bad');
+    f.style.display=ok?'none':'block';f.textContent='→ '+it.a.join(' / ');
+    if(ok)sc++;lines.push((i+1)+'. '+(inp.value.trim()||'—')+(ok?' ✓':' ✗ ('+it.a[0]+')'));});
+  setResult(id,sc,g.items.length,lines);
+}
+
+/* ---------- T4 LITERAL / FIGURATIVE ---------- */
+const LF=[
+ ['The yacht <b>sailed</b> into the harbour just after sunset.','L'],
+ ['He <b>sailed</b> through the interview — they offered him the job on the spot.','F'],
+ ['Don’t <b>drive</b> yourself too hard before the exam.','F'],
+ ['My dad <b>drove</b> us to the airport at five in the morning.','L'],
+ ['The weekend just <b>flew</b> by — I can’t believe it’s Monday again.','F'],
+ ['We <b>flew</b> to Lisbon with a budget airline.','L'],
+ ['Someone tried to <b>jump</b> the queue at the ticket office.','F'],
+ ['Let’s <b>park</b> this question until the next meeting.','F'],
+ ['There was nowhere to <b>park</b>, so we left the car two streets away.','L'],
+ ['I was <b>staggered</b> by how much the repairs cost.','F'],
+ ['He <b>stumbled</b> on the icy steps and hurt his wrist.','L'],
+ ['The politician <b>backpedalled</b> after his comments went viral.','F'],
+];
+const lfSel={};
+$('lf').innerHTML=LF.map((q,i)=>'<div class="lf"><div class="s"><span class="n" style="font-family:Bricolage Grotesque;font-weight:800;color:var(--muted);margin-right:6px">'+(i+1)+'</span>'+q[0]+'</div><div class="opts"><button class="opt" data-q="'+i+'" data-v="L">Literal</button><button class="opt" data-q="'+i+'" data-v="F">Figurative</button></div></div>').join('');
+$('lf').addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;
+  b.parentNode.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel','ok','bad'));b.classList.add('sel');lfSel[b.dataset.q]=b.dataset.v;});
+function checkT4(){
+  let sc=0;const lines=[];
+  LF.forEach((q,i)=>{const v=lfSel[i],ok=v===q[1];
+    document.querySelectorAll('#lf .opt[data-q="'+i+'"]').forEach(b=>{b.classList.remove('ok','bad','sel');
+      if(b.dataset.v===q[1])b.classList.add('ok');else if(b.dataset.v===v)b.classList.add('bad');});
+    if(ok)sc++;lines.push((i+1)+'. '+(v||'—')+(ok?' ✓':' ✗ ('+q[1]+')'));});
+  setResult('t4',sc,LF.length,lines);
+}
+
+/* ---------- T6 IDIOM BUILDER ---------- */
+const PAIRS=[['whatever floats','your boat'],['drive somebody','up the wall'],['steer clear','of something'],['plain','sailing'],['the driving','force'],['go','downhill'],['in the same','boat'],['be taken','for a ride']];
+let mSel=null,mWrong=0,mDone=0,mFirstTry=0;const mTried={};
+$('mleft').innerHTML=shuffle(PAIRS.map((p,i)=>i)).map(i=>'<button class="mb" data-side="L" data-i="'+i+'">'+PAIRS[i][0]+' …</button>').join('');
+$('mright').innerHTML=shuffle(PAIRS.map((p,i)=>i)).map(i=>'<button class="mb" data-side="R" data-i="'+i+'">… '+PAIRS[i][1]+'</button>').join('');
+document.querySelector('.match').addEventListener('click',e=>{
+  const b=e.target.closest('.mb');if(!b||b.classList.contains('done'))return;
+  if(b.dataset.side==='L'){document.querySelectorAll('#mleft .mb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');mSel=b;return;}
+  if(!mSel){b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);$('mstat').textContent='First choose a beginning on the left.';return;}
+  const li=mSel.dataset.i;
+  if(li===b.dataset.i){mSel.classList.remove('sel');mSel.classList.add('done');b.classList.add('done');mDone++;if(!mTried[li])mFirstTry++;mSel=null;}
+  else{mWrong++;mTried[li]=true;b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);}
+  $('mstat').textContent='Matched: '+mDone+' / 8 · wrong attempts: '+mWrong;
+  if(mDone===8){$('mstat').textContent='All matched! 🎉 First-try matches: '+mFirstTry+' / 8 · wrong attempts: '+mWrong;
+    setResult('t6',mFirstTry,8,['First-try matches: '+mFirstTry+'/8, wrong attempts: '+mWrong]);}
+});
+
+/* ---------- T7 CHAT ---------- */
+const CHATS=[
+ {m:'I paid €300 for a “designer” bag on Instagram. It arrived yesterday — it’s plastic 😭',o:['Oh no, I think you were taken for a ride.','Well, it was plain sailing then.','Whatever floats your boat!'],a:0},
+ {m:'My neighbour practises the drums at 6 a.m. every single day.',o:['That would drive me up the wall!','He’s the driving force, then.','At least it’s plain sailing.'],a:0},
+ {m:'Our flight’s cancelled too? Ugh, I can’t believe this.',o:['Well, at least we’re all in the same boat.','Steer clear of it!','It’s really gone downhill.'],a:0},
+ {m:'I collect vintage train tickets. I’ve got about four hundred now.',o:['Whatever floats your boat!','You’ve been taken for a ride.','That drives me up the wall.'],a:0},
+ {m:'So how was moving house? I know you were stressed about it.',o:['Honestly, it was plain sailing — the movers did everything.','We were in the same boat.','It was the driving force.'],a:0},
+ {m:'That café used to be amazing, but since the new owners took over…',o:['Yeah, it’s really gone downhill.','Yeah, it’s plain sailing now.','Yeah, it floats my boat.'],a:0},
+ {m:'Any tips for my first trip to Rome?',o:['Steer clear of the restaurants right next to the Colosseum — total tourist traps.','Go downhill near the Colosseum.','You’ll be in the same boat as the Colosseum.'],a:0},
+ {m:'Who actually organised the whole charity run? It was brilliant!',o:['Olena — she was the driving force behind it.','Olena — she drove us up the wall.','Olena — she was taken for a ride.'],a:0},
+];
+const chSel={};
+$('chats').innerHTML=CHATS.map((c,i)=>'<div class="chat"><div class="bub a">'+esc(c.m)+'</div><div class="bub bq">Your reply…</div><div class="opts">'+
+  shuffle(c.o.map((t,j)=>j)).map(j=>'<button class="opt" data-q="'+i+'" data-v="'+j+'">'+esc(c.o[j])+'</button>').join('')+'</div></div>').join('');
+$('chats').addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;
+  b.parentNode.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel','ok','bad'));b.classList.add('sel');chSel[b.dataset.q]=+b.dataset.v;
+  const bq=b.parentNode.parentNode.querySelector('.bq');bq.textContent=CHATS[b.dataset.q].o[b.dataset.v];bq.style.fontStyle='normal';bq.style.color='var(--ink)';});
+function checkT7(){
+  let sc=0;const lines=[];
+  CHATS.forEach((c,i)=>{const v=chSel[i],ok=v===c.a;
+    document.querySelectorAll('#chats .opt[data-q="'+i+'"]').forEach(b=>{b.classList.remove('ok','bad','sel');
+      if(+b.dataset.v===c.a)b.classList.add('ok');else if(+b.dataset.v===v)b.classList.add('bad');});
+    if(ok)sc++;lines.push((i+1)+'. '+(v===undefined?'—':c.o[v])+(ok?' ✓':' ✗'));});
+  setResult('t7',sc,CHATS.length,lines);
+}
+
+/* ---------- SPEAKING: TIMER + WHEEL ---------- */
+const timers={};
+function timer(btn,sec,outId){
+  const id=outId||('tm-'+btn.closest('section').id);clearInterval(timers[id]);let t=sec;const out=$(id);
+  const fmt=x=>Math.floor(x/60)+':'+String(x%60).padStart(2,'0');out.textContent=fmt(t);out.style.color='';
+  timers[id]=setInterval(()=>{t--;out.textContent=fmt(Math.max(t,0));if(t<=0){clearInterval(timers[id]);out.textContent='⏰ Time!';out.style.color='var(--red)';}},1000);
+}
+const WQ=[
+ 'What drives you up the wall when you travel?',
+ 'What do you always steer clear of when you’re abroad?',
+ 'Have you ever been taken for a ride — by a shop, a taxi, a website? What happened?',
+ 'What’s one thing in your life that has been plain sailing, and one that definitely hasn’t?',
+ 'Who’s the driving force in your family, team or group of friends? Why?',
+ 'What has gone downhill recently — a place, a show, an app, a habit?',
+ 'Tell me about a time when you and other people were all in the same boat.',
+ 'Describe a friend’s hobby that makes you think: “Well, whatever floats your boat!”',
+];
+const wheel=$('wheel');
+wheel.innerHTML=WQ.map((q,i)=>{const ang=i*45+22.5;return '<span style="transform:rotate('+ang+'deg) translateY(-92px) rotate('+(-ang)+'deg)">'+(i+1)+'</span>';}).join('');
+let rot=0;const spun=[];
+function spin(){
+  const btn=$('spinbtn');btn.disabled=true;
+  rot+=360*5+Math.floor(Math.random()*360);
+  wheel.style.transform='rotate('+rot+'deg)';
+  setTimeout(()=>{
+    const a=((360-(rot%360))%360);const idx=Math.floor(a/45)%8;
+    $('wqtext').innerHTML='<span style="color:var(--blue)">'+(idx+1)+'.</span> '+esc(WQ[idx]);
+    spun.push(idx+1);$('wused').textContent='Your questions: '+spun.join(', ');btn.disabled=false;
+  },4100);
+}
+
+/* ---------- T8 KWT ---------- */
+const KWT=[
+ {o:'Things at the club have got much worse since the coach left.',k:'DOWNHILL',pre:'Things at the club',post:'since the coach left.',a:['have gone downhill','have really gone downhill','have gone badly downhill','have gone right downhill']},
+ {o:'The noise from the building site next door annoys me enormously.',k:'WALL',pre:'The noise from the building site next door',post:'.',a:['drives me up the wall','is driving me up the wall','really drives me up the wall','drives me right up the wall']},
+ {o:'If I were you, I’d avoid that part of town at night.',k:'CLEAR',pre:'If I were you, I’d',post:'that part of town at night.',a:['steer clear of','keep clear of','stay clear of']},
+ {o:'The seller cheated us — the car was worth half what we paid.',k:'RIDE',pre:'We',post:'by the seller — the car was worth half what we paid.',a:['were taken for a ride','got taken for a ride','have been taken for a ride','had been taken for a ride']},
+ {o:'Organising the wedding was completely free of problems.',k:'PLAIN',pre:'Organising the wedding',post:'.',a:['was plain sailing','was all plain sailing','was completely plain sailing']},
+ {o:'Let’s stop discussing this idea for now and come back to it later.',k:'PARK',pre:'Let’s',post:'for now and come back to it later.',a:['park this idea','park the idea','park that idea','park it']},
+ {o:'She passed her driving test without any difficulty at all.',k:'SAILED',pre:'She',post:'her driving test.',a:['sailed through','sailed straight through','easily sailed through','sailed right through']},
+ {o:'Sofia’s energy is the main reason the project is happening.',k:'FORCE',pre:'Sofia is',post:'the project.',a:['the driving force behind','the main driving force behind','the real driving force behind']},
+];
+$('kwt').innerHTML=KWT.map((q,i)=>'<div class="kw"><div class="orig"><span class="n" style="font-family:Bricolage Grotesque;font-weight:800;color:var(--muted);margin-right:6px">'+(i+1)+'</span>'+esc(q.o)+'</div><span class="key">'+q.k+'</span><div>'+esc(q.pre)+' <input class="tin" id="k'+i+'" autocomplete="off" autocapitalize="off" spellcheck="false"> '+esc(q.post)+'</div><span class="fix" id="kf'+i+'" style="display:none"></span></div>').join('');
+function checkT8(){
+  let sc=0;const lines=[];
+  KWT.forEach((q,i)=>{const inp=$('k'+i),f=$('kf'+i),v=norm(inp.value),ok=q.a.map(norm).includes(v);
+    inp.classList.remove('ok','bad');inp.classList.add(ok?'ok':'bad');
+    f.style.display=ok?'none':'block';f.textContent='→ '+q.a[0];
+    if(ok)sc++;lines.push((i+1)+'. '+(inp.value.trim()||'—')+(ok?' ✓':' ✗ ('+q.a[0]+')'));});
+  setResult('t8',sc,KWT.length,lines);
+}
+
+/* ---------- T9 TRANSLATION ---------- */
+const TR=[
+ {ua:'Після операції дідусь шкутильгав по квартирі з паличкою.',m:'After the operation, Grandad hobbled around the flat with a stick.',re:[/hobbl/]},
+ {ua:'Щойно відчинили двері, натовп ринув до сцени.',m:'As soon as the doors opened, the crowd surged towards the stage.',re:[/surg/]},
+ {ua:'Мене приголомшила ціна квитків — триста євро!',m:'I was staggered by the price of the tickets — three hundred euros!',re:[/stagger/]},
+ {ua:'Він так нервувався, що затинався майже на кожному слові.',m:'He was so nervous that he stumbled over almost every word.',re:[/stumbl/]},
+ {ua:'Давай відкладемо це питання до понеділка.',m:'Let’s park this question until Monday.',re:[/\bpark/]},
+ {ua:'Чесно кажучи, іспит пройшов як по маслу.',m:'To be honest, the exam was plain sailing. / I sailed through the exam.',re:[/plain sailing|sail(ed)? through/]},
+ {ua:'Ці дзвінки о шостій ранку доводять мене до сказу.',m:'These six a.m. phone calls drive me up the wall.',re:[/up the wall/]},
+ {ua:'Не хвилюйся, ми всі в одному човні.',m:'Don’t worry, we’re all in the same boat.',re:[/same boat/]},
+ {ua:'Тримайся подалі від таксі біля вокзалу, бо тебе обдурять.',m:'Steer clear of the taxis near the station, or you’ll be taken for a ride.',re:[/(steer|keep|stay) clear/,/taken for a ride/]},
+ {ua:'Після скандалу мер швидко відмовився від своїх слів.',m:'After the scandal, the mayor quickly backpedalled.',re:[/backpedal/]},
+];
+$('trans').innerHTML=TR.map((t,i)=>'<div class="tr"><div class="ua"><span class="n" style="font-family:Bricolage Grotesque;font-weight:800;color:var(--muted);margin-right:6px">'+(i+1)+'</span>'+esc(t.ua)+'</div><textarea id="tr'+i+'x" placeholder="Your translation…" spellcheck="true"></textarea><div class="model" id="tm'+i+'"></div></div>').join('');
+function checkT9(){
+  let sc=0;const lines=[];
+  TR.forEach((t,i)=>{const ta=$('tr'+i+'x'),v=norm(ta.value),ok=v.length>0&&t.re.every(r=>r.test(v)),m=$('tm'+i);
+    ta.classList.remove('ok','bad');ta.classList.add(ok?'ok':'bad');
+    m.innerHTML=(ok?'<span style="color:var(--green);font-weight:700">✓ Target vocabulary used.</span> ':'<span style="color:var(--red);font-weight:700">✗ Target vocabulary missing.</span> ')+'<b>Model:</b> '+esc(t.m);
+    m.classList.add('show');if(ok)sc++;
+    lines.push((i+1)+'. '+(ta.value.trim()||'—')+(ok?'  [vocab ✓]':'  [vocab ✗]'));});
+  setResult('t9',sc,TR.length,lines);
+}
+
+/* ---------- REPORT ---------- */
+function buildReport(){
+  const name=$('sname').value.trim()||'(no name)';
+  let s=0,t=0;Object.values(results).forEach(r=>{s+=r.score;t+=r.total;});
+  let out='dinglish · On the move — vocabulary revision (B2+/C1)\nStudent: '+name+'\nDate: '+new Date().toLocaleString('uk-UA')+'\nTotal: '+s+' / '+t+(t?' ('+Math.round(s/t*100)+'%)':'')+'\n';
+  Object.keys(TASKS).forEach(id=>{const r=results[id];
+    out+='\n— Task '+id.slice(1)+'. '+TASKS[id]+': '+(r?r.score+' / '+r.total:'not checked')+'\n';
+    if(r)out+=r.lines.map(l=>'   '+l).join('\n')+'\n';});
+  const nA=$('notesA').value.trim(),nB=$('notesB').value.trim();
+  if(nA)out+='\n— Speaking notes (Part 1):\n   '+nA.replace(/\n/g,'\n   ')+'\n';
+  if(spun.length)out+='\n— Idiom wheel questions: '+spun.join(', ')+'\n';
+  if(nB)out+='— Speaking notes (Part 2):\n   '+nB.replace(/\n/g,'\n   ')+'\n';
+  return out;
+}
+function copyReport(){
+  const txt=buildReport(),r=$('report');r.value=txt;r.style.display='block';
+  const done=()=>{$('copied').textContent='Copied! Paste it in a message to your teacher.';};
+  const fallback=()=>{r.focus();r.select();$('copied').textContent='Select the text below and copy it (Ctrl/Cmd + C).';};
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback);}else fallback();}catch(e){fallback();}
+}
+updateProgress();
+</script>
+</body>
+</html>
