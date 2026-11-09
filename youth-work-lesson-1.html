@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Youth Work in English · Lesson 1: Who's who in youth work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>:root{
+  --azul:#1f4e8c; --azul-d:#163a69; --azul-l:#e8eff9; --sun:#f2b134; --sun-l:#fff5de;
+  --coral:#e2674f; --ok:#2e9b62; --ok-l:#e4f5ec; --bad:#d24b4b; --bad-l:#fbe9e9;
+  --ink:#1d2433; --muted:#5f6b7d; --line:#dfe5ee; --bg:#f6f8fb; --card:#fff;
+  --r:14px; --sh:0 2px 10px rgba(22,58,105,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;font-size:17px}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 60px}
+
+/* header */
+.hero{background:var(--azul);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;opacity:.16;
+  background-image:
+   radial-gradient(circle at 50% 50%, transparent 9px, #fff 10px, #fff 12px, transparent 13px),
+   linear-gradient(45deg, transparent 46%, #fff 47%, #fff 53%, transparent 54%),
+   linear-gradient(-45deg, transparent 46%, #fff 47%, #fff 53%, transparent 54%);
+  background-size:44px 44px}
+.hero .in{position:relative;max-width:900px;margin:0 auto;padding:26px 16px 22px}
+.brand{display:inline-block;font-weight:800;letter-spacing:.5px;background:var(--sun);color:var(--azul-d);padding:3px 10px;border-radius:999px;font-size:14px}
+.hero h1{margin:12px 0 4px;font-size:30px;line-height:1.2}
+.hero .sub{opacity:.92;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:3px 11px;border-radius:999px;font-size:14px}
+.tbar{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;background:rgba(0,0,0,.15);padding:5px 12px;border-radius:999px;user-select:none}
+.toggle input{accent-color:var(--sun)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(246,248,251,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav .in{max-width:900px;margin:0 auto;padding:8px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.nav a{white-space:nowrap;text-decoration:none;color:var(--azul-d);font-weight:700;font-size:14px;padding:5px 11px;border-radius:999px;background:var(--azul-l)}
+.nav a:hover{background:var(--sun-l)}
+
+/* sections */
+.part{margin-top:30px}
+.part-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.part-h h2{margin:0;font-size:24px;color:var(--azul-d)}
+.time{font-size:13px;font-weight:800;color:var(--coral);background:#fdeeea;padding:2px 9px;border-radius:999px}
+.part-intro{color:var(--muted);margin:2px 0 10px}
+.task{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:18px 18px 16px;margin:14px 0}
+.task h3{margin:0 0 4px;font-size:19px}
+.task .rub{margin:0 0 12px;color:var(--muted)}
+.tnote{display:none;background:var(--sun-l);border-left:4px solid var(--sun);padding:9px 12px;border-radius:8px;margin:10px 0;font-size:15px}
+body.teacher .tnote{display:block}
+.tnote b{color:#8a5a00}
+
+/* controls */
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.btn{border:0;border-radius:10px;padding:8px 15px;font-weight:800;cursor:pointer;background:var(--azul);color:#fff}
+.btn:hover{background:var(--azul-d)}
+.btn.ghost{background:var(--azul-l);color:var(--azul-d)}
+.btn.ghost:hover{background:#d6e3f5}
+.btn.sun{background:var(--sun);color:var(--azul-d)}
+.btn:disabled{opacity:.5;cursor:default}
+.score{font-weight:800;color:var(--azul-d)}
+.score.full{color:var(--ok)}
+
+/* glossary */
+.gl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.gc{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fbfcfe}
+.gc .w{font-weight:800;color:var(--azul-d)}
+.gc .ua{color:var(--coral);font-weight:700;font-size:15px}
+.gc .ex{font-size:15px;color:var(--muted);font-style:italic;margin-top:3px}
+.hide-ua .gc .ua{filter:blur(6px);cursor:pointer}
+.hide-ua .gc .ua.peek{filter:none}
+
+/* phrases */
+.ph{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.phg{background:var(--azul-l);border-radius:12px;padding:10px 14px}
+.phg h4{margin:0 0 6px;font-size:15px;color:var(--azul-d);text-transform:uppercase;letter-spacing:.4px}
+.phg ul{margin:0;padding-left:18px}
+.phg li{margin:3px 0}
+
+/* match */
+.mt{display:grid;grid-template-columns:minmax(120px,0.8fr) 1.6fr;gap:8px 12px}
+.mcol{display:flex;flex-direction:column;gap:8px}
+.mi{border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;cursor:pointer;text-align:left;min-height:44px}
+.mi:hover{border-color:#b9c8de}
+.mi.sel{border-color:var(--sun);background:var(--sun-l)}
+.mi.paired{border-color:var(--azul);background:var(--azul-l)}
+.mi .tag{display:inline-block;min-width:22px;font-weight:800;color:var(--azul)}
+.mi.ok{border-color:var(--ok);background:var(--ok-l)}
+.mi.bad{border-color:var(--bad);background:var(--bad-l)}
+
+/* gaps */
+.gs p,.gs li{line-height:2.1}
+.gs ol{padding-left:22px;margin:0}
+select.g,input.g{border:2px solid var(--line);border-radius:8px;padding:2px 6px;background:#fff;max-width:100%}
+input.g{width:170px}
+select.g.ok,input.g.ok{border-color:var(--ok);background:var(--ok-l)}
+select.g.bad,input.g.bad{border-color:var(--bad);background:var(--bad-l)}
+.bank{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;padding:10px;border:2px dashed var(--line);border-radius:12px}
+.bank span{background:var(--sun-l);border-radius:8px;padding:2px 10px;font-weight:700}
+.fix{display:inline-block;color:var(--ok);font-weight:800;font-size:14px;margin-left:4px}
+
+/* sort */
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:46px;padding:10px;border:2px dashed var(--line);border-radius:12px;margin-bottom:10px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:10px;padding:6px 11px;cursor:pointer;text-align:left}
+.chip.sel{border-color:var(--sun);background:var(--sun-l)}
+.chip.ok{border-color:var(--ok);background:var(--ok-l)}
+.chip.bad{border-color:var(--bad);background:var(--bad-l)}
+.buckets{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.bucket{border:2px solid var(--azul-l);border-radius:12px;padding:8px;min-height:120px;cursor:pointer;background:#fbfcfe}
+.bucket.armed{border-color:var(--sun)}
+.bucket h4{margin:2px 4px 8px;color:var(--azul-d)}
+.bucket .chips{display:flex;flex-direction:column;gap:6px}
+
+/* order */
+.ord{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
+.ord li{display:flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:10px;padding:6px 8px;background:#fff}
+.ord li .n{font-weight:800;color:var(--azul);min-width:22px}
+.ord li .t{flex:1}
+.ord li.ok{border-color:var(--ok);background:var(--ok-l)}
+.ord li.bad{border-color:var(--bad);background:var(--bad-l)}
+.ord .mv{border:0;background:var(--azul-l);color:var(--azul-d);border-radius:8px;width:34px;height:34px;cursor:pointer;font-weight:900}
+.ord .mv:disabled{opacity:.35}
+.ladder-labels{display:flex;justify-content:space-between;font-size:13px;font-weight:800;color:var(--muted);margin:0 0 6px}
+
+/* mcq */
+.q{margin:0 0 14px}
+.q .qt{font-weight:700;margin-bottom:6px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{border:2px solid var(--line);background:#fff;border-radius:10px;padding:7px 11px;text-align:left;cursor:pointer}
+.opt.sel{border-color:var(--azul);background:var(--azul-l)}
+.opt.ok{border-color:var(--ok);background:var(--ok-l)}
+.opt.bad{border-color:var(--bad);background:var(--bad-l)}
+.why{display:none;font-size:15px;color:var(--muted);margin-top:4px}
+.q.done .why{display:block}
+
+/* cards (speaking / roleplay / taboo) */
+.deck{display:flex;flex-direction:column;gap:10px}
+.card{border-radius:16px;padding:22px 20px;background:linear-gradient(135deg,var(--azul) 0%,#2c64ad 100%);color:#fff;min-height:150px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.card .cn{position:absolute;top:10px;right:14px;font-size:13px;opacity:.8}
+.card .ct{font-size:21px;font-weight:700;line-height:1.35}
+.card .cs{margin-top:10px;font-size:15px;opacity:.95}
+.card.rp{background:linear-gradient(135deg,#2a3a55 0%,#3f5a86 100%)}
+.card.rp .role{display:inline-block;background:var(--sun);color:var(--azul-d);font-weight:800;font-size:13px;padding:2px 9px;border-radius:999px;margin-bottom:8px}
+.card .forbid{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.card .forbid span{background:rgba(226,103,79,.95);padding:2px 10px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:line-through}
+.card.hidden-word .ct{filter:blur(10px)}
+.dots{display:flex;flex-wrap:wrap;gap:5px}
+.dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:#fff;font-size:13px;font-weight:800;cursor:pointer;color:var(--muted)}
+.dot.cur{border-color:var(--azul);color:var(--azul)}
+.dot.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.hint{display:none;background:var(--sun-l);border-radius:10px;padding:8px 12px;font-size:15px}
+.hint.on{display:block}
+.timer{font-variant-numeric:tabular-nums;font-weight:900;font-size:22px;color:var(--azul-d);min-width:70px}
+.timer.low{color:var(--coral)}
+.timer.end{color:var(--bad)}
+.tscore{font-weight:800}
+
+/* sliders */
+.sl{display:grid;grid-template-columns:1fr 160px 34px;gap:8px 12px;align-items:center}
+.sl input[type=range]{width:100%;accent-color:var(--azul)}
+.sl .v{font-weight:900;color:var(--azul-d);text-align:center}
+
+/* notes / translation */
+textarea{width:100%;border:2px solid var(--line);border-radius:10px;padding:8px 10px;min-height:54px;resize:vertical;background:#fff}
+textarea:focus,input.g:focus,select.g:focus{outline:none;border-color:var(--azul)}
+.tr{margin:0 0 14px}
+.tr .ua{font-weight:700;margin-bottom:5px}
+.tr .ua .num{color:var(--azul);margin-right:6px}
+.model{display:none;margin-top:6px;background:var(--ok-l);border-radius:10px;padding:7px 11px;font-size:16px}
+.model.on{display:block}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0 0 10px}
+.steps li{counter-increment:s;position:relative;padding-left:34px;margin:6px 0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:var(--sun);color:var(--azul-d);font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center}
+.info{background:var(--azul-l);border-radius:12px;padding:12px 14px;margin:6px 0 12px}
+.info p{margin:4px 0}
+
+/* report */
+.report textarea{min-height:160px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.copied{color:var(--ok);font-weight:800}
+.foot{text-align:center;color:var(--muted);font-size:14px;margin-top:40px}
+.foot b{color:var(--azul-d)}
+
+@media (max-width:620px){
+  body{font-size:16px}
+  .hero h1{font-size:24px}
+  .mt{grid-template-columns:1fr 1.4fr;gap:6px 8px}
+  .mi{padding:7px 8px;font-size:15px}
+  .sl{grid-template-columns:1fr 110px 28px}
+  .card .ct{font-size:19px}
+  .task{padding:15px 13px}
+}
+</style></head><body>
+<script>window.LESSON = {
+  title: "Youth Work in English · Lesson 1: Who's who in youth work",
+  short: "Youth Work in English · Lesson 1 · Who's who in youth work",
+  subtitle: "Introduce yourself and your organisation with confidence, and explain the difference between youth work and youth policy.",
+  pills: ["B1–B2", "60 min", "Online 1-to-1", "Speaking focus", "Project in Portugal 🇵🇹"],
+  parts: [
+  {
+    id: "warmup", nav: "Warm-up", title: "Warm-up: Your project in Portugal", time: "6 min",
+    intro: "Let's start with you: your expectations, your worries and your goals.",
+    note: "Ціль — зняти напругу й зрозуміти, які ситуації її лякають найбільше. Не виправляй помилки на цьому етапі. Значення повзунків потрапляють у звіт — у фінальному уроці повторимо шкалу й порівняємо.",
+    tasks: [
+      { type: "cards", variant: "speak", title: "1. Quick questions",
+        rub: "Answer each question in 2–3 sentences. Don't worry about mistakes. Just keep talking!",
+        cards: [
+          { t: "What do you already know about the project in Portugal?", s: "Who organises it? How long is it? Who will be there?" },
+          { t: "What are you most excited about? And what are you most nervous about?" },
+          { t: "Have you ever taken part in an international project, camp or conference?", s: "If yes: what was it like? If no: what do you imagine?" },
+          { t: "Describe your perfect first day of the project.", s: "From the morning to the evening." },
+          { t: "What three things would you like the other participants to know about you?" },
+          { t: "What would you like to bring back home from this project?", s: "Ideas? Contacts? Skills? Confidence?" }
+        ],
+        hint: "<b>Useful language:</b> I'm really looking forward to… · I'm a bit nervous about… · To be honest, I've never… · I hope I'll be able to…"
+      },
+      { type: "sliders", title: "2. How confident do you feel?",
+        rub: "Move the sliders: 1 = terrified 😱, 10 = no problem 😎. We'll come back to this scale at the end of the course.",
+        items: ["Introducing myself", "Explaining what my organisation does", "Giving my opinion in a group discussion", "Asking questions after a presentation", "Small talk at dinner or coffee breaks", "Understanding different accents"]
+      }
+    ]
+  },
+  {
+    id: "partA", nav: "A · Me & my NGO", title: "Part A · Me and my organisation", time: "22 min",
+    intro: "On the first day, everyone introduces themselves and their organisation. Let's make sure you have the words and phrases ready.",
+    tasks: [
+      { type: "gloss", title: "A1. Key vocabulary",
+        rub: "Read the words and examples aloud. Then hide the Ukrainian and test yourself.",
+        note: "Попроси її після кожного слова сказати власний приклад про свою організацію. Наголос: <i>facilitator</i> (fa-CI-li-ta-tor), <i>coordinator</i> (co-OR-di-na-tor), <i>participant</i> (par-TI-ci-pant).",
+        items: [
+          ["NGO (non-governmental organisation)", "громадська організація (ГО)", "I work for a small NGO in Kyiv."],
+          ["non-profit", "неприбутковий", "We're a non-profit organisation, so we rely on grants."],
+          ["grassroots (initiative)", "низова ініціатива, ініціатива «знизу»", "It started as a grassroots initiative of local students."],
+          ["mission", "місія", "Our mission is to help young people find their voice."],
+          ["target group", "цільова група", "Our target group is teenagers aged 14–18."],
+          ["youth worker", "молодіжний працівник / працівниця", "As a youth worker, I organise activities for teenagers."],
+          ["volunteer (n / v)", "волонтер / волонтерити", "I've volunteered there for two years."],
+          ["coordinator", "координатор(ка)", "I'm the project coordinator."],
+          ["partner organisation", "організація-партнер", "We have partner organisations in Poland and Portugal."],
+          ["sending / hosting organisation", "відправляюча / приймаюча організація", "Our sending organisation booked the flights."],
+          ["participant", "учасник / учасниця", "There will be 30 participants from six countries."],
+          ["facilitator", "фасилітатор(ка), ведучий(-а) групи", "The facilitator explained the rules of the workshop."],
+          ["be based in", "базуватися в", "Our organisation is based in Kyiv."],
+          ["run (a project / a club)", "вести, реалізовувати", "We run a summer camp every year."],
+          ["be in charge of", "відповідати за", "I'm in charge of communication."],
+          ["be involved in", "бути залученим(-ою) до", "I'm involved in several local projects."]
+        ]
+      },
+      { type: "match", title: "A2. Match the words to their meanings",
+        rub: "Tap a word, then tap its meaning. Tap a pair again to undo it.",
+        pairs: [
+          ["grassroots", "started by ordinary people in a community, not by the government"],
+          ["target group", "the people your work is designed for"],
+          ["facilitator", "a person who guides a group activity but doesn't lecture from the front"],
+          ["hosting organisation", "the organisation that receives participants and runs the event"],
+          ["sending organisation", "the organisation in your country that sends you to the project"],
+          ["non-profit", "not aiming to make money for owners or shareholders"],
+          ["mission", "the main purpose of an organisation"],
+          ["coordinator", "the person who organises all the different parts of a project"]
+        ]
+      },
+      { type: "gapselect", title: "A3. Meet Olena",
+        rub: "This is how another participant introduced herself on the first day. Choose the correct option for each gap. Then read the whole text aloud.",
+        paras: [
+          "Hi everyone! My name's Olena and I'm from Ukraine. I {work for|work in charge|involve} a small {NGO|participant|facilitator} {based in|located on|founded at} Lviv. We're a {non-profit|hosting|target} organisation, so most of our work is funded by grants.",
+          "Our {mission|coordinator|partner} is to help young people become active citizens. Our main {target group|sending organisation|volunteer} is teenagers aged 15 to 19 from small towns. I'm a {youth worker|target group|mission}, and I'm also {in charge of|involved|based on} social media. Right now I'm {involved in|in charge|run by} a project about media literacy.",
+          "This is my first time in Portugal, and I'm really happy to be here!"
+        ]
+      },
+      { type: "phrases", title: "A4. Useful phrases: introducing yourself and your organisation",
+        rub: "Choose at least <b>five</b> phrases you'll use in your own introduction.",
+        groups: [
+          { h: "You", items: ["My name's … and I'm from …", "I'm originally from …, but now I live in …", "I work for / volunteer at …", "I'm responsible for … / I'm in charge of …"] },
+          { h: "Your organisation", items: ["It's an NGO based in …", "We work with young people aged …", "Our main focus is … / We mainly do …", "We were founded in … by …"] },
+          { h: "Right now", items: ["At the moment, I'm involved in a project on …", "I'm here because …", "I'm hoping to learn more about …", "I'd love to meet people who work on …"] }
+        ]
+      },
+      { type: "speak", title: "A5. Your intro: 90 → 60 → 45 seconds",
+        rub: "Give the <b>same</b> introduction three times, faster each time. Each round, you'll feel more fluent and confident.",
+        note: "Техніка 4-3-2 (скорочена). Не перебивай під час раундів. Після 1-го раунду дай 2–3 корекції, після 3-го — похвали, що стало плавніше. Попроси надиктувати фінальну версію голосовим повідомленням як домашнє.",
+        steps: ["Write <b>key words only</b> (not full sentences) in the box below.", "Round 1: speak for 90 seconds.", "Round 2: say it again in 60 seconds.", "Round 3: say it in 45 seconds. Keep only the most important information."],
+        notes: "Key words for your intro: name, city, NGO, target group, my role, current project, why I'm here…",
+        timers: [90, 60, 45]
+      },
+      { type: "phrases", title: "A6. Survival phrases: when you need time or don't understand",
+        rub: "These phrases will save you when you're nervous. Learn them by heart!",
+        groups: [
+          { h: "Buy time", items: ["That's a good question.", "Let me think for a second…", "How can I put it…", "Well, it depends…"] },
+          { h: "When you don't understand", items: ["Sorry, could you repeat that, please?", "Sorry, could you speak a bit more slowly?", "Do you mean …?", "Sorry, what does … mean?"] },
+          { h: "When you can't find the word", items: ["What's the word… it's a kind of …", "I don't know how to say it in English, but…", "What I mean is …", "Let me say it another way."] }
+        ]
+      },
+      { type: "cards", variant: "speak", title: "A7. People will ask you…",
+        rub: "These are typical questions from other participants. Answer each one, and use a <b>survival phrase</b> from A6 at least three times.",
+        note: "Грай роль учасника з іншої країни, став уточнювальні питання («Really? Why?», «How does that work?»). Це питання, які їй найімовірніше поставлять у перший день.",
+        cards: [
+          { t: "So, what does your organisation actually do?" },
+          { t: "How did you get involved in youth work?" },
+          { t: "How many people work in your organisation? Are they paid staff or volunteers?" },
+          { t: "Who funds your projects?" },
+          { t: "What's the biggest project you've done so far?" },
+          { t: "What's it like to do youth work in Ukraine right now?" },
+          { t: "What do you hope to take back home from this week?" },
+          { t: "Have you been to Portugal before? What do you think of it so far?" }
+        ],
+        hint: "<b>Useful language:</b> Basically, we… · It all started when… · Most of us are volunteers. · We're mainly funded by… · To be honest, it's not easy, because…"
+      }
+    ]
+  },
+  {
+    id: "partB", nav: "B · Youth work vs policy", title: "Part B · Youth work vs youth policy", time: "20 min",
+    intro: "Two key terms for the whole project. <b>Youth policy</b> is about decisions and strategies. <b>Youth work</b> is about what happens with young people every day.",
+    tasks: [
+      { type: "gloss", title: "B1. Key vocabulary",
+        rub: "Read the words and examples aloud. Which of these words do you use in Ukrainian at work?",
+        note: "Розпитай, як ці поняття працюють в її організації. <i>Inclusion</i>, <i>well-being</i>, <i>active citizenship</i> — ключові слова Erasmus+, вони звучатимуть постійно.",
+        items: [
+          ["youth policy", "молодіжна політика", "Youth policy is decided by governments and local authorities."],
+          ["youth work", "молодіжна робота", "Youth work happens in youth centres, clubs, on the street and online."],
+          ["non-formal education", "неформальна освіта", "Non-formal education is planned, but it isn't school."],
+          ["informal learning", "інформальне (спонтанне) навчання", "We learn a lot informally, just by talking to people."],
+          ["youth participation", "участь молоді", "Youth participation means young people take part in decisions."],
+          ["decision-making", "ухвалення рішень", "Young people should be part of decision-making."],
+          ["empower", "розширювати можливості, додавати сил", "Our goal is to empower young people."],
+          ["inclusion", "інклюзія, залучення всіх", "Inclusion is a priority in Erasmus+ projects."],
+          ["young people with fewer opportunities", "молодь з меншими можливостями", "We focus on young people with fewer opportunities, for example from rural areas."],
+          ["youth centre", "молодіжний центр", "The youth centre is open every day after school."],
+          ["local authorities / municipality", "місцева влада / муніципалітет", "The youth centre is funded by the municipality."],
+          ["active citizenship", "активне громадянство", "Volunteering is a great way to develop active citizenship."],
+          ["well-being", "добробут, благополуччя", "Mental well-being is a big topic for young people today."],
+          ["outreach", "аутріч, робота «в полі»", "Through outreach, we meet young people where they are."]
+        ]
+      },
+      { type: "sort", title: "B2. Youth policy or youth work?",
+        rub: "Put each example in the correct box. Then explain <b>one</b> of your choices aloud: “This is youth policy because…”",
+        buckets: ["🏛️ Youth policy", "🤝 Youth work"],
+        items: [
+          ["a national youth strategy for 2025–2030", 0],
+          ["a law that creates youth councils in every city", 0],
+          ["a government funding programme for youth NGOs", 0],
+          ["a city plan to reduce youth unemployment", 0],
+          ["a decision to lower the voting age", 0],
+          ["a weekly drama club at a youth centre", 1],
+          ["a media literacy workshop for teenagers", 1],
+          ["a street outreach session in a park", 1],
+          ["a summer camp with team-building games", 1],
+          ["a peer support group for teenagers", 1]
+        ]
+      },
+      { type: "gaptype", title: "B3. Complete the sentences",
+        rub: "Type one word or phrase from the box into each gap. There are no extra words.",
+        bank: ["municipality", "empower", "non-formal", "inclusion", "participation", "decision-making", "outreach", "policy"],
+        items: [
+          { s: "In many countries, youth centres are funded by the local ___ .", a: ["municipality"] },
+          { s: "A good youth worker doesn't just entertain young people — they ___ them to make their own choices.", a: ["empower"] },
+          { s: "Workshops, simulations and games are typical methods of ___ education.", a: ["non-formal", "non formal", "nonformal"] },
+          { s: "___ means that every young person can take part, whatever their background, health or income.", a: ["inclusion"] },
+          { s: "Real youth ___ means that young people don't just attend events — they help to plan them.", a: ["participation"] },
+          { s: "Young people should have a real place in ___ at city level.", a: ["decision-making", "decision making"] },
+          { s: "Through ___ , youth workers meet teenagers on the streets, in parks and online.", a: ["outreach"] },
+          { s: "Youth ___ is the set of decisions and strategies that governments make for young people.", a: ["policy"] }
+        ]
+      },
+      { type: "cards", variant: "speak", title: "B4. Discussion: youth work in Ukraine",
+        rub: "These topics often come up at international youth projects. Speak for at least one minute on each. Give an example from your own experience.",
+        note: "Тут найважливіше — щоб вона мала готові «історії» про Україну. Питання про війну делікатне, але його майже напевно поставлять; допоможи сформулювати 2–3 речення, які їй комфортно казати. Записуй типові помилки — використаєш у warm-up наступного уроку.",
+        cards: [
+          { t: "What does a typical youth centre in Ukraine look like? Who goes there?" },
+          { t: "Is youth work a real profession in Ukraine? Should it be?" },
+          { t: "Which is more useful for young people: formal or non-formal education? Why?" },
+          { t: "Who are “young people with fewer opportunities” in your community?" },
+          { t: "What do young people in your town need most right now?" },
+          { t: "How has the full-scale war changed the needs of young people in Ukraine?" },
+          { t: "What's one good practice from your organisation that others could copy?" }
+        ],
+        hint: "<b>Useful language:</b> In Ukraine, … · In my experience, … · One thing that works really well is … · The biggest challenge is … · For example, …"
+      }
+    ]
+  },
+  {
+    id: "partC", nav: "C · Mixed practice", title: "Part C · Mixed practice: the first evening", time: "7 min",
+    intro: "Let's put everything together. Imagine it's the first day of the project.",
+    tasks: [
+      { type: "mcq", title: "C1. Quick check",
+        rub: "Choose the best option.",
+        qs: [
+          { q: "“We're an independent NGO — we're not part of the ___.”", o: ["government", "target group", "outreach"], why: "An NGO is a <i>non-governmental</i> organisation." },
+          { q: "The organisation in Portugal that receives you is the ___ organisation.", o: ["hosting", "sending", "grassroots"], why: "Hosting = receives; sending = sends you from your country." },
+          { q: "“I'm ___ social media and communication.”", o: ["in charge of", "involved", "based in"], why: "<i>be in charge of</i> + the thing you're responsible for." },
+          { q: "A drama club for teenagers at a youth centre is an example of…", o: ["youth work", "youth policy", "decision-making"], why: "It's a practical activity with young people." },
+          { q: "Someone asks you a difficult question. What's the best way to buy time?", o: ["“That's a good question. Let me think for a second…”", "“I don't know.”", "“Next question, please.”"], why: "Buying time sounds natural and confident." },
+          { q: "“We want to ___ young people to take action in their communities.”", o: ["empower", "include", "participate"], why: "<i>empower somebody to do something</i>." }
+        ]
+      },
+      { type: "cards", variant: "rp", title: "C2. Role-play: the first evening",
+        rub: "Your teacher plays another participant. Read the situation and start the conversation.",
+        note: "Ти граєш Мігеля / Анну / Лукаса. Будь «живим» співрозмовником: перебивай, жартуй, говори трохи швидше, ніж зазвичай. Після кожної сценки — 1 корекція і 1 похвала.",
+        cards: [
+          { role: "Welcome dinner", t: "You're sitting next to Miguel, a youth worker from a youth centre in Porto.", s: "Introduce yourself, find two things you have in common, and ask him about his youth centre." },
+          { role: "Name game", t: "The facilitator says: “Say your name, your organisation and one thing you expect from this week.”", s: "You have 30 seconds. Go!" },
+          { role: "Coffee break", t: "Anna from Germany asks you: “So, what's youth policy like in Ukraine? Do young people have a say?”", s: "Answer honestly. Use a survival phrase to buy time." },
+          { role: "Misunderstanding", t: "Lukas thinks your NGO is a government agency.", s: "Politely correct him: “Actually, we're not part of the government — we're…”" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "partD", nav: "D · Translation", title: "Part D · Translate into English", time: "5 min",
+    intro: "Say each sentence aloud first, then type it. Compare with the model answer — there can be more than one correct version.",
+    note: "Спочатку усно, потім письмово. Моделі — лише один із правильних варіантів, приймай синоніми.",
+    tasks: [
+      { type: "translate", title: "Ukrainian → English",
+        items: [
+          ["Я працюю в невеликій громадській організації, яка базується в Києві.", "I work for a small NGO (that's) based in Kyiv."],
+          ["Наша цільова група — підлітки з малих міст.", "Our target group is teenagers from small towns."],
+          ["Я відповідаю за соцмережі та комунікацію.", "I'm in charge of social media and communication."],
+          ["Зараз я залучена до проєкту про медіаграмотність.", "At the moment, I'm involved in a project on/about media literacy."],
+          ["Наша місія — допомагати молоді впливати на рішення у своїй громаді.", "Our mission is to help young people influence decisions in their community."],
+          ["Молодіжний центр фінансує місцева влада.", "The youth centre is funded by the local authorities / the municipality."],
+          ["Неформальна освіта допомагає молоді розвивати навички, яких не дає школа.", "Non-formal education helps young people develop skills that school doesn't give them."],
+          ["Це гарне питання. Дайте мені секунду подумати.", "That's a good question. Let me think for a second."]
+        ]
+      },
+      { type: "info", title: "Homework",
+        html: "<p>🎧 <b>Record</b> your 45-second introduction (A5) as a voice message and send it to your teacher.</p><p>✍️ <b>Write</b> three more questions you think people might ask you at the project, and try to answer them.</p><p>🔁 <b>Review</b> the words from Parts A and B. Next lesson starts with a game based on them!</p>"
+      },
+      { type: "report", title: "Send your results to your teacher",
+        rub: "Tap <b>Build my report</b>, then <b>Copy</b>, and send it to your teacher in a message."
+      }
+    ]
+  }
+  ]
+};
+</script>
+<script>(function(){
+"use strict";
+var L = window.LESSON;
+var scores = {};      // taskKey -> {got,total,title}
+var textFields = [];  // {label, get()} for report
+var sliders = [];     // {label, get()}
+
+function el(tag, attrs, kids){
+  var e = document.createElement(tag);
+  if (attrs) for (var k in attrs){
+    if (k === "class") e.className = attrs[k];
+    else if (k === "html") e.innerHTML = attrs[k];
+    else if (k === "text") e.textContent = attrs[k];
+    else if (k.slice(0,2) === "on") e.addEventListener(k.slice(2), attrs[k]);
+    else e.setAttribute(k, attrs[k]);
+  }
+  (kids||[]).forEach(function(c){ if (c==null) return; e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+  return e;
+}
+function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function shuffleNotSame(a){ if (a.length<2) return a.slice(); var s; var n=0; do { s=shuffle(a); n++; } while (n<20 && s.every(function(x,i){return x===a[i];})); return s; }
+function norm(s){ return String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/[.,!?;:"]/g,"").replace(/\s+/g," ").trim(); }
+function btn(label, cls, fn){ return el("button",{class:"btn "+(cls||""), type:"button", onclick:fn}, [label]); }
+function setScore(key, title, got, total, node){
+  scores[key] = {got:got,total:total,title:title};
+  if (node){ node.textContent = got + " / " + total; node.className = "score" + (got===total ? " full" : ""); }
+}
+
+/* ---------- task renderers ---------- */
+var R = {};
+
+R.gloss = function(t, box){
+  var grid = el("div",{class:"gl"});
+  t.items.forEach(function(it){
+    var ua = el("div",{class:"ua", onclick:function(){ ua.classList.toggle("peek"); }},[it[1]]);
+    grid.appendChild(el("div",{class:"gc"},[ el("div",{class:"w"},[it[0]]), ua, el("div",{class:"ex"},[it[2]]) ]));
+  });
+  box.appendChild(grid);
+  var b = btn("Hide Ukrainian (self-test)","ghost",function(){
+    var on = grid.classList.toggle("hide-ua");
+    grid.querySelectorAll(".ua.peek").forEach(function(x){x.classList.remove("peek");});
+    b.textContent = on ? "Show Ukrainian" : "Hide Ukrainian (self-test)";
+  });
+  box.appendChild(el("div",{class:"row"},[b]));
+};
+
+R.phrases = function(t, box){
+  var g = el("div",{class:"ph"});
+  t.groups.forEach(function(gr){
+    var ul = el("ul");
+    gr.items.forEach(function(i){ ul.appendChild(el("li",{html:i})); });
+    g.appendChild(el("div",{class:"phg"},[el("h4",{},[gr.h]), ul]));
+  });
+  box.appendChild(g);
+};
+
+R.info = function(t, box){ box.appendChild(el("div",{class:"info", html:t.html})); };
+
+R.match = function(t, box, key){
+  var n = t.pairs.length, selL = null, selR = null;
+  var pairOf = {}; // leftIdx -> rightIdx(original index)
+  var rights = shuffleNotSame(t.pairs.map(function(_,i){return i;}));
+  var colL = el("div",{class:"mcol"}), colR = el("div",{class:"mcol"});
+  var lBtns = [], rBtns = {};
+  t.pairs.forEach(function(p,i){
+    var b = el("button",{class:"mi", type:"button"},[el("span",{class:"tag"},[(i+1)+". "]), p[0]]);
+    b.addEventListener("click",function(){ clearMarks(); if (pairOf[i]!=null){ delete pairOf[i]; paint(); return; } selL = (selL===i?null:i); tryPair(); paint(); });
+    lBtns.push(b); colL.appendChild(b);
+  });
+  rights.forEach(function(ri){
+    var tag = el("span",{class:"tag"},[""]);
+    var b = el("button",{class:"mi", type:"button"},[tag, t.pairs[ri][1]]);
+    b._tag = tag;
+    b.addEventListener("click",function(){ clearMarks(); var l = leftOf(ri); if (l!=null){ delete pairOf[l]; paint(); return; } selR = (selR===ri?null:ri); tryPair(); paint(); });
+    rBtns[ri] = b; colR.appendChild(b);
+  });
+  function leftOf(ri){ for (var k in pairOf) if (pairOf[k]===ri) return +k; return null; }
+  function tryPair(){ if (selL!=null && selR!=null){ pairOf[selL]=selR; selL=selR=null; } }
+  function paint(){
+    lBtns.forEach(function(b,i){ b.classList.toggle("sel", selL===i); b.classList.toggle("paired", pairOf[i]!=null); });
+    Object.keys(rBtns).forEach(function(ri){ ri=+ri; var b=rBtns[ri], l=leftOf(ri);
+      b.classList.toggle("sel", selR===ri); b.classList.toggle("paired", l!=null); b._tag.textContent = l!=null ? (l+1)+". " : ""; });
+  }
+  function clearMarks(){ box.querySelectorAll(".mi").forEach(function(b){ b.classList.remove("ok","bad"); }); }
+  box.appendChild(el("div",{class:"mt"},[colL,colR]));
+  var sc = el("span",{class:"score"});
+  box.appendChild(el("div",{class:"row"},[
+    btn("Check","",function(){ var got=0; clearMarks();
+      for (var i=0;i<n;i++){ if (pairOf[i]==null) continue; var ok = pairOf[i]===i; if (ok) got++;
+        lBtns[i].classList.add(ok?"ok":"bad"); rBtns[pairOf[i]].classList.add(ok?"ok":"bad"); }
+      setScore(key,t.title,got,n,sc); }),
+    btn("Show answers","ghost",function(){ for (var i=0;i<n;i++) pairOf[i]=i; selL=selR=null; paint(); clearMarks(); }),
+    btn("Reset","ghost",function(){ pairOf={}; selL=selR=null; paint(); clearMarks(); sc.textContent=""; }),
+    sc ]));
+};
+
+R.gapselect = function(t, box, key){
+  var sels = [];
+  function build(str){
+    var frag = document.createDocumentFragment();
+    var re = /\{([^}]+)\}/g, last = 0, m;
+    while ((m = re.exec(str))){
+      frag.appendChild(document.createTextNode(str.slice(last, m.index)));
+      var opts = m[1].split("|"); var correct = opts[0];
+      var s = el("select",{class:"g"}); s._ans = correct;
+      s.appendChild(el("option",{value:""},["— choose —"]));
+      shuffle(opts).forEach(function(o){ s.appendChild(el("option",{value:o},[o])); });
+      s.addEventListener("change",function(){ s.classList.remove("ok","bad"); });
+      sels.push(s); frag.appendChild(s); last = re.lastIndex;
+    }
+    frag.appendChild(document.createTextNode(str.slice(last)));
+    return frag;
+  }
+  var wrap = el("div",{class:"gs"});
+  if (t.lines){ var ol = el("ol"); t.lines.forEach(function(l){ var li=el("li"); li.appendChild(build(l)); ol.appendChild(li); }); wrap.appendChild(ol); }
+  else { t.paras.forEach(function(p){ var pe = el("p"); pe.appendChild(build(p)); wrap.appendChild(pe); }); }
+  box.appendChild(wrap);
+  var sc = el("span",{class:"score"});
+  box.appendChild(el("div",{class:"row"},[
+    btn("Check","",function(){ var got=0; sels.forEach(function(s){ var ok = s.value===s._ans; if (ok) got++; s.classList.remove("ok","bad"); if (s.value) s.classList.add(ok?"ok":"bad"); else s.classList.add("bad"); }); setScore(key,t.title,got,sels.length,sc); }),
+    btn("Show answers","ghost",function(){ sels.forEach(function(s){ s.value=s._ans; s.classList.remove("bad"); s.classList.add("ok"); }); }),
+    btn("Reset","ghost",function(){ sels.forEach(function(s){ s.value=""; s.classList.remove("ok","bad"); }); sc.textContent=""; }),
+    sc ]));
+};
+
+R.gaptype = function(t, box, key){
+  if (t.bank){ var bank = el("div",{class:"bank"}); shuffle(t.bank).forEach(function(w){ bank.appendChild(el("span",{},[w])); }); box.appendChild(bank); }
+  var ins = [];
+  var ol = el("ol",{class:"gs"});
+  t.items.forEach(function(it){
+    var parts = it.s.split("___"); var li = el("li");
+    li.appendChild(document.createTextNode(parts[0]));
+    var inp = el("input",{class:"g", type:"text", autocomplete:"off", autocapitalize:"off", spellcheck:"false"});
+    inp._ans = it.a; inp.addEventListener("input",function(){ inp.classList.remove("ok","bad"); var f=inp.nextSibling; if (f && f.className==="fix") f.remove(); });
+    li.appendChild(inp); li.appendChild(document.createTextNode(parts[1]||""));
+    ins.push(inp); ol.appendChild(li);
+  });
+  box.appendChild(ol);
+  function clearFix(){ box.querySelectorAll(".fix").forEach(function(f){ f.remove(); }); }
+  var sc = el("span",{class:"score"});
+  box.appendChild(el("div",{class:"row"},[
+    btn("Check","",function(){ clearFix(); var got=0; ins.forEach(function(i){ var ok = i._ans.some(function(a){ return norm(a)===norm(i.value); }); if (ok) got++; i.classList.remove("ok","bad"); i.classList.add(ok?"ok":"bad"); }); setScore(key,t.title,got,ins.length,sc); }),
+    btn("Show answers","ghost",function(){ clearFix(); ins.forEach(function(i){ if (!i.classList.contains("ok")) i.after(el("span",{class:"fix"},["→ "+i._ans[0]])); }); }),
+    btn("Reset","ghost",function(){ clearFix(); ins.forEach(function(i){ i.value=""; i.classList.remove("ok","bad"); }); sc.textContent=""; }),
+    sc ]));
+};
+
+R.sort = function(t, box, key){
+  var selected = null;
+  var pool = el("div",{class:"pool"});
+  var chips = shuffle(t.items.map(function(it,i){ return i; })).map(function(i){
+    var c = el("button",{class:"chip", type:"button"},[t.items[i][0]]); c._b = t.items[i][1];
+    c.addEventListener("click",function(ev){ ev.stopPropagation(); clearMarks(); if (selected===c){ c.classList.remove("sel"); selected=null; arm(); return; } if (selected) selected.classList.remove("sel"); selected=c; c.classList.add("sel"); arm(); });
+    pool.appendChild(c); return c;
+  });
+  var buckets = t.buckets.map(function(name,bi){
+    var holder = el("div",{class:"chips"});
+    var b = el("div",{class:"bucket"},[el("h4",{},[name]), holder]); b._i = bi; b._h = holder;
+    b.addEventListener("click",function(){ if (!selected) return; holder.appendChild(selected); selected.classList.remove("sel"); selected=null; arm(); });
+    return b;
+  });
+  pool.addEventListener("click",function(){ if (!selected) return; pool.appendChild(selected); selected.classList.remove("sel"); selected=null; arm(); });
+  function arm(){ buckets.forEach(function(b){ b.classList.toggle("armed", !!selected); }); }
+  function clearMarks(){ chips.forEach(function(c){ c.classList.remove("ok","bad"); }); }
+  box.appendChild(el("p",{class:"rub", html:"<b>Tap</b> a card, then <b>tap</b> a box."}));
+  box.appendChild(pool);
+  box.appendChild(el("div",{class:"buckets"}, buckets));
+  var sc = el("span",{class:"score"});
+  box.appendChild(el("div",{class:"row"},[
+    btn("Check","",function(){ var got=0; clearMarks(); buckets.forEach(function(b){ Array.prototype.forEach.call(b._h.children,function(c){ var ok=c._b===b._i; if(ok)got++; c.classList.add(ok?"ok":"bad"); }); }); chips.forEach(function(c){ if (c.parentNode===pool) c.classList.add("bad"); }); setScore(key,t.title,got,chips.length,sc); }),
+    btn("Show answers","ghost",function(){ clearMarks(); chips.forEach(function(c){ buckets[c._b]._h.appendChild(c); c.classList.add("ok"); }); }),
+    btn("Reset","ghost",function(){ clearMarks(); chips.forEach(function(c){ pool.appendChild(c); }); sc.textContent=""; }),
+    sc ]));
+};
+
+R.order = function(t, box, key){
+  var order = shuffleNotSame(t.items.map(function(_,i){return i;}));
+  var ul = el("ul",{class:"ord"});
+  if (t.labels) box.appendChild(el("div",{class:"ladder-labels"},[el("span",{},["▲ "+t.labels[1]]), el("span",{},[t.labels[0]+" ▼"])]));
+  function paint(marks){
+    ul.innerHTML = "";
+    order.forEach(function(idx,pos){
+      var up = el("button",{class:"mv", type:"button", "aria-label":"up"},["↑"]); up.disabled = pos===0;
+      var dn = el("button",{class:"mv", type:"button", "aria-label":"down"},["↓"]); dn.disabled = pos===order.length-1;
+      up.addEventListener("click",function(){ var x=order[pos-1]; order[pos-1]=order[pos]; order[pos]=x; paint(); });
+      dn.addEventListener("click",function(){ var x=order[pos+1]; order[pos+1]=order[pos]; order[pos]=x; paint(); });
+      var li = el("li",{},[el("span",{class:"n"},[String(t.reverse ? order.length-pos : pos+1)]), el("span",{class:"t"},[t.items[idx]]), up, dn]);
+      if (marks) li.classList.add(idx === target(pos) ? "ok" : "bad");
+      ul.appendChild(li);
+    });
+  }
+  function target(pos){ return t.reverse ? t.items.length-1-pos : pos; }
+  paint();
+  box.appendChild(ul);
+  var sc = el("span",{class:"score"});
+  box.appendChild(el("div",{class:"row"},[
+    btn("Check","",function(){ var got=0; order.forEach(function(idx,pos){ if (idx===target(pos)) got++; }); paint(true); setScore(key,t.title,got,order.length,sc); }),
+    btn("Show answers","ghost",function(){ order = t.items.map(function(_,i){ return target(i); }); paint(true); }),
+    btn("Reset","ghost",function(){ order = shuffleNotSame(t.items.map(function(_,i){return i;})); paint(); sc.textContent=""; }),
+    sc ]));
+};
+
+R.mcq = function(t, box, key){
+  var qs = [];
+  t.qs.forEach(function(q,qi){
+    var wrap = el("div",{class:"q"}); wrap._c = null;
+    wrap.appendChild(el("div",{class:"qt", html:(qi+1)+". "+q.q}));
+    var opts = el("div",{class:"opts"});
+    shuffle(q.o.map(function(o,i){ return {o:o, ok:i===0}; })).forEach(function(o){
+      var b = el("button",{class:"opt", type:"button", html:o.o}); b._ok = o.ok;
+      b.addEventListener("click",function(){ opts.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("sel","ok","bad"); }); wrap.classList.remove("done"); b.classList.add("sel"); wrap._c=b; });
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+    if (q.why) wrap.appendChild(el("div",{class:"why", html:"💡 "+q.why}));
+    box.appendChild(wrap);
+    qs.push({wrap:wrap, opts:opts, get:function(){ return wrap._c; }});
+  });
+  var sc = el("span",{class:"score"});
+  box.appendChild(el("div",{class:"row"},[
+    btn("Check","",function(){ var got=0; qs.forEach(function(q){ var c=q.get(); q.opts.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("ok","bad"); if (x._ok && c) x.classList.add("ok"); }); if (c){ if (c._ok) got++; else c.classList.add("bad"); q.wrap.classList.add("done"); } }); setScore(key,t.title,got,qs.length,sc); }),
+    btn("Reset","ghost",function(){ qs.forEach(function(q){ q.wrap._c=null; q.wrap.classList.remove("done"); q.opts.querySelectorAll(".opt").forEach(function(x){ x.classList.remove("ok","bad","sel"); }); }); sc.textContent=""; }),
+    sc ]));
+};
+
+function makeTimer(defaultSec){
+  var secs = defaultSec, left = secs, h = null;
+  var d = el("span",{class:"timer"});
+  function fmt(){ var m=Math.floor(left/60), s=left%60; d.textContent = m+":"+(s<10?"0":"")+s; d.classList.toggle("low", left<=10 && left>0); d.classList.toggle("end", left===0); }
+  function stop(){ if (h){ clearInterval(h); h=null; } }
+  var start = btn("▶ Start","sun",function(){ if (h){ stop(); start.textContent="▶ Start"; return; } if (left===0) left=secs; start.textContent="❚❚ Pause"; h=setInterval(function(){ left--; fmt(); if (left<=0){ left=0; fmt(); stop(); start.textContent="▶ Start"; } },1000); });
+  var reset = btn("↺","ghost",function(){ stop(); left=secs; fmt(); start.textContent="▶ Start"; });
+  fmt();
+  return { node: el("span",{style:"display:inline-flex;gap:8px;align-items:center"},[d,start,reset]),
+           set:function(s){ stop(); secs=s; left=s; fmt(); start.textContent="▶ Start"; } };
+}
+
+R.cards = function(t, box, key){
+  var cards = t.shuffle===false ? t.cards.slice() : t.cards.slice();
+  var i = 0, done = {}, tabooPts = 0, hideWord = false;
+  var card = el("div",{class:"card"+(t.variant==="rp"?" rp":"")});
+  var dots = el("div",{class:"dots"});
+  var hint = t.hint ? el("div",{class:"hint", html:t.hint}) : null;
+  var timer = t.timer ? makeTimer(t.timer) : null;
+  var pts = el("span",{class:"tscore"});
+  function show(){
+    var c = cards[i]; card.innerHTML = "";
+    card.appendChild(el("span",{class:"cn"},[(i+1)+" / "+cards.length]));
+    if (c.role) card.appendChild(el("span",{class:"role"},[c.role]));
+    card.appendChild(el("div",{class:"ct", html:c.t}));
+    if (c.s) card.appendChild(el("div",{class:"cs", html:c.s}));
+    if (c.forbid){ var f = el("div",{class:"forbid"}); c.forbid.forEach(function(w){ f.appendChild(el("span",{},[w])); }); card.appendChild(el("div",{class:"cs"},["Don't say:"])); card.appendChild(f); }
+    card.classList.toggle("hidden-word", hideWord);
+    if (hideWord){ var fb = card.querySelector(".forbid"); if (fb) fb.style.filter="blur(8px)"; }
+    dots.innerHTML = "";
+    cards.forEach(function(_,k){ var d = el("button",{class:"dot"+(k===i?" cur":"")+(done[k]?" done":""), type:"button"},[String(k+1)]); d.addEventListener("click",function(){ i=k; show(); }); dots.appendChild(d); });
+    if (timer && t.variant==="taboo") timer.set(t.timer);
+  }
+  var row = el("div",{class:"row"});
+  row.appendChild(btn("← Prev","ghost",function(){ i=(i-1+cards.length)%cards.length; show(); }));
+  row.appendChild(btn("Next →","",function(){ i=(i+1)%cards.length; show(); }));
+  row.appendChild(btn("🎲 Random","ghost",function(){ var left=[]; cards.forEach(function(_,k){ if(!done[k] && k!==i) left.push(k); }); if(!left.length) left=cards.map(function(_,k){return k;}); i=left[Math.floor(Math.random()*left.length)]; show(); }));
+  if (t.variant==="taboo"){
+    row.appendChild(btn("✓ Guessed!","sun",function(){ if(!done[i]){ done[i]=true; tabooPts++; pts.textContent="Points: "+tabooPts; scores[key]={got:tabooPts,total:cards.length,title:t.title}; } i=(i+1)%cards.length; show(); }));
+  } else {
+    row.appendChild(btn("✓ Done","sun",function(){ done[i]=!done[i]; show(); }));
+  }
+  box.appendChild(el("div",{class:"deck"},[card, dots, row]));
+  var row2 = el("div",{class:"row"});
+  if (timer) row2.appendChild(timer.node);
+  if (hint){ row2.appendChild(btn("💬 Useful language","ghost",function(){ hint.classList.toggle("on"); })); }
+  if (t.variant==="taboo"){
+    var hb = btn("🙈 Guesser mode: hide the word","ghost",function(){ hideWord=!hideWord; hb.textContent = hideWord ? "👀 Show the word" : "🙈 Guesser mode: hide the word"; show(); });
+    row2.appendChild(hb); row2.appendChild(pts);
+  }
+  if (row2.children.length) box.appendChild(row2);
+  if (hint) box.appendChild(hint);
+  show();
+};
+
+R.sliders = function(t, box){
+  var g = el("div",{class:"sl"});
+  t.items.forEach(function(lbl){
+    var v = el("span",{class:"v"},["5"]);
+    var r = el("input",{type:"range", min:"1", max:"10", value:"5"});
+    r.addEventListener("input",function(){ v.textContent=r.value; });
+    g.appendChild(el("span",{},[lbl])); g.appendChild(r); g.appendChild(v);
+    sliders.push({label:lbl, get:function(){ return r.value; }});
+  });
+  box.appendChild(g);
+};
+
+R.speak = function(t, box){
+  if (t.steps){ var ol = el("ol",{class:"steps"}); t.steps.forEach(function(s){ ol.appendChild(el("li",{html:s})); }); box.appendChild(ol); }
+  if (t.notes){
+    var ta = el("textarea",{placeholder:t.notes});
+    box.appendChild(ta);
+    textFields.push({label:t.title+" — notes", get:function(){ return ta.value; }});
+  }
+  if (t.timers){
+    var tm = makeTimer(t.timers[0]);
+    var row = el("div",{class:"row"},[tm.node]);
+    t.timers.forEach(function(s,k){ row.appendChild(btn("Round "+(k+1)+": "+(s>=60? (s/60)+" min" : s+" sec"),"ghost",function(){ tm.set(s); })); });
+    box.appendChild(row);
+  }
+  if (t.follow){
+    var fl = el("div",{class:"hint", html:"<b>Follow-up questions (teacher):</b><ul style='margin:6px 0 0;padding-left:18px'>"+t.follow.map(function(q){return "<li>"+q+"</li>";}).join("")+"</ul>"});
+    box.appendChild(el("div",{class:"row"},[btn("🎤 Show follow-up questions","ghost",function(){ fl.classList.toggle("on"); })]));
+    box.appendChild(fl);
+  }
+};
+
+R.translate = function(t, box){
+  var models = [];
+  t.items.forEach(function(it,k){
+    var ta = el("textarea",{placeholder:"Your English version…", rows:"2"});
+    var m = el("div",{class:"model", html:"✅ "+it[1]});
+    models.push(m);
+    var w = el("div",{class:"tr"},[ el("div",{class:"ua", html:"<span class='num'>"+(k+1)+".</span>"+it[0]}), ta,
+      el("div",{class:"row", style:"margin-top:6px"},[btn("Show model answer","ghost",function(){ m.classList.toggle("on"); })]), m ]);
+    box.appendChild(w);
+    textFields.push({label:"Translation "+(k+1)+": "+it[0], get:function(){ return ta.value; }});
+  });
+  box.appendChild(el("div",{class:"row"},[btn("Show all model answers","",function(){ models.forEach(function(m){ m.classList.add("on"); }); })]));
+};
+
+R.report = function(t, box){
+  box.classList.add("report");
+  var out = el("textarea",{readonly:"readonly"});
+  var msg = el("span",{class:"copied"});
+  function build(){
+    var lines = ["dinglish · "+L.short, "Date: "+new Date().toLocaleDateString("uk-UA"), ""];
+    if (sliders.length){ lines.push("CONFIDENCE (1–10):"); sliders.forEach(function(s){ lines.push("• "+s.label+": "+s.get()); }); lines.push(""); }
+    var ks = Object.keys(scores);
+    if (ks.length){ lines.push("SCORES:"); ks.forEach(function(k){ var s=scores[k]; lines.push("• "+s.title+": "+s.got+"/"+s.total); }); lines.push(""); }
+    textFields.forEach(function(f){ var v=f.get().trim(); if (v){ lines.push(f.label); lines.push("→ "+v); lines.push(""); } });
+    out.value = lines.join("\n");
+  }
+  box.appendChild(el("div",{class:"row"},[
+    btn("Build my report","",function(){ build(); msg.textContent=""; }),
+    btn("Copy","sun",function(){ build(); out.select(); var done=function(){ msg.textContent="Copied! Send it to your teacher."; };
+      try { navigator.clipboard.writeText(out.value).then(done, function(){ try{ document.execCommand("copy"); done(); }catch(e){ msg.textContent="Select the text and copy it manually."; } }); }
+      catch(e){ try{ document.execCommand("copy"); done(); }catch(e2){ msg.textContent="Select the text and copy it manually."; } } }),
+    msg ]));
+  box.appendChild(out);
+};
+
+/* ---------- page ---------- */
+function render(){
+  document.title = L.title;
+  var hero = el("header",{class:"hero"},[el("div",{class:"in"},[
+    el("span",{class:"brand"},["dinglish"]),
+    el("h1",{},[L.title]),
+    el("p",{class:"sub"},[L.subtitle]),
+    el("div",{class:"meta"}, L.pills.map(function(p){ return el("span",{class:"pill"},[p]); })),
+    el("div",{class:"tbar"},[ (function(){ var cb = el("input",{type:"checkbox"}); cb.checked = location.hash==="#teacher"; if (cb.checked) document.body.classList.add("teacher");
+      cb.addEventListener("change",function(){ document.body.classList.toggle("teacher", cb.checked); }); return el("label",{class:"toggle"},[cb, "Teacher notes"]); })() ])
+  ])]);
+  document.body.appendChild(hero);
+  var nav = el("div",{class:"in"});
+  L.parts.forEach(function(p){ nav.appendChild(el("a",{href:"#"+p.id},[p.nav])); });
+  document.body.appendChild(el("nav",{class:"nav"},[nav]));
+  var wrap = el("main",{class:"wrap"});
+  L.parts.forEach(function(p){
+    var sec = el("section",{class:"part", id:p.id});
+    var h = el("div",{class:"part-h"},[el("h2",{},[p.title])]);
+    if (p.time) h.appendChild(el("span",{class:"time"},["⏱ "+p.time]));
+    sec.appendChild(h);
+    if (p.intro) sec.appendChild(el("p",{class:"part-intro", html:p.intro}));
+    if (p.note) sec.appendChild(el("div",{class:"tnote", html:"<b>Teacher:</b> "+p.note}));
+    p.tasks.forEach(function(t,ti){
+      var key = p.id+"-"+ti;
+      var box = el("div",{class:"task"});
+      if (t.title) box.appendChild(el("h3",{},[t.title]));
+      if (t.rub) box.appendChild(el("p",{class:"rub", html:t.rub}));
+      if (t.note) box.appendChild(el("div",{class:"tnote", html:"<b>Teacher:</b> "+t.note}));
+      R[t.type](t, box, key);
+      sec.appendChild(box);
+    });
+    wrap.appendChild(sec);
+  });
+  wrap.appendChild(el("div",{class:"foot", html:"<b>dinglish</b> · "+L.short}));
+  document.body.appendChild(wrap);
+}
+render();
+window.__scores = scores;
+})();
+</script>
+</body></html>
