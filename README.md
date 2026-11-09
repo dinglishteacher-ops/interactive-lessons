@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Youth Work in English · Lesson 2: Have your say — participation & projects | [youth-work-lesson-2.html](youth-work-lesson-2.html) |
 | Youth Work in English · Lesson 1: Who's who in youth work | [youth-work-lesson-1.html](youth-work-lesson-1.html) |
 | On the move · Vocabulary revision · dinglish | [index-4.html](index-4.html) |
 | Busy-ness vocabulary — flashcards & practice | [busyness-vocabulary-cards.html](busyness-vocabulary-cards.html) |
