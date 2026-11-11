@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seven reasons to be bored — Intermediate Plus 1.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,700;0,800;1,700&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2B1A12;
+  --roast:#4A2C1D;
+  --paper:#EFE7DA;
+  --foam:#FFFBF4;
+  --cherry:#B23A2F;
+  --caramel:#D6A354;
+  --leaf:#4A7C59;
+  --line:rgba(43,26,18,.16);
+  --line-soft:rgba(43,26,18,.08);
+  --display:"Alegreya",Georgia,serif;
+  --body:"Manrope",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+}
+img{max-width:100%}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--roast);
+  background-image:radial-gradient(circle at 88% 20%,rgba(214,163,84,.22),transparent 45%);
+  color:var(--foam);
+  padding:46px 22px 38px;
+}
+.mast-inner{max-width:880px;margin:0 auto}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--caramel);
+  margin:0 0 14px;
+}
+.masthead h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(40px,9vw,68px);
+  line-height:.98;
+  margin:0 0 12px;
+  letter-spacing:-.01em;
+}
+.masthead h1 em{font-style:italic;color:var(--caramel)}
+.mast-sub{
+  margin:0 0 22px;
+  max-width:34em;
+  color:rgba(255,251,244,.82);
+  font-size:16px;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  border:1px solid rgba(255,251,244,.32);
+  border-radius:999px;
+  padding:6px 12px;
+  color:rgba(255,251,244,.9);
+}
+
+/* ---------- sticky progress ---------- */
+.tracker{
+  position:sticky;top:0;z-index:20;
+  background:rgba(239,231,218,.94);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.tracker-inner{
+  max-width:880px;margin:0 auto;
+  padding:10px 22px;
+  display:flex;align-items:center;gap:14px;
+}
+.cup{flex:0 0 auto;width:38px;height:42px}
+.cup .body-line{fill:none;stroke:var(--roast);stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round}
+.cup .brew{fill:var(--cherry);transition:transform .55s cubic-bezier(.2,.8,.25,1)}
+.track-text{flex:1;min-width:0}
+.track-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--roast);opacity:.75;
+}
+.bar{height:6px;background:rgba(43,26,18,.12);border-radius:99px;margin-top:5px;overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:var(--cherry);border-radius:99px;transition:width .45s ease}
+.score{font-family:var(--mono);font-size:13px;font-weight:700;white-space:nowrap}
+
+/* ---------- layout ---------- */
+main{max-width:880px;margin:0 auto;padding:8px 22px 90px}
+.part{
+  margin:44px 0 26px;
+  padding-top:26px;
+  border-top:2px solid var(--ink);
+}
+.part-tag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cherry);margin:0 0 6px;
+}
+.part h2{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(27px,5.4vw,38px);line-height:1.05;margin:0 0 6px;
+}
+.part p.part-note{margin:0;color:rgba(43,26,18,.68);font-size:15px}
+
+.task{
+  background:var(--foam);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px 22px;
+  margin:20px 0;
+}
+.task-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:6px}
+.ring{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+  border:2px solid var(--ink);
+  display:grid;place-items:center;
+  font-family:var(--mono);font-weight:700;font-size:14px;
+  box-shadow:0 0 0 4px var(--foam),0 0 0 5px var(--line-soft);
+}
+.task h3{
+  font-family:var(--display);font-weight:700;font-size:23px;
+  line-height:1.2;margin:4px 0 0;
+}
+.kicker{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--cherry);display:block;margin-bottom:3px;
+}
+.instr{margin:10px 0 16px;font-size:16px}
+.instr .ua{display:block;color:rgba(43,26,18,.6);font-size:14.5px;margin-top:3px}
+
+/* ---------- items ---------- */
+ol.items{margin:0;padding:0;list-style:none;counter-reset:it}
+ol.items>li{
+  counter-increment:it;
+  position:relative;
+  padding:11px 0 11px 30px;
+  border-top:1px solid var(--line-soft);
+}
+ol.items>li:first-child{border-top:none}
+ol.items>li::before{
+  content:counter(it);
+  position:absolute;left:0;top:13px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  color:rgba(43,26,18,.42);
+}
+.sub{font-size:14px;color:rgba(43,26,18,.6);font-family:var(--mono)}
+
+input[type=text]{
+  font-family:var(--body);font-size:16px;color:var(--ink);
+  background:transparent;
+  border:none;border-bottom:2px dotted var(--line);
+  padding:2px 4px;min-width:130px;width:auto;
+  transition:border-color .2s,background .2s;
+}
+input[type=text]:focus{outline:none;border-bottom-color:var(--cherry);background:rgba(214,163,84,.12)}
+input.wide{min-width:min(100%,420px);width:min(100%,420px)}
+input.mid{min-width:min(100%,260px)}
+select{
+  font-family:var(--body);font-size:15px;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line);
+  border-radius:8px;padding:7px 9px;max-width:100%;
+}
+select:focus{outline:2px solid var(--cherry);outline-offset:1px}
+textarea{
+  width:100%;font-family:var(--body);font-size:15.5px;color:var(--ink);
+  background:rgba(43,26,18,.03);border:1px dashed var(--line);
+  border-radius:10px;padding:11px 12px;min-height:76px;resize:vertical;
+}
+textarea:focus{outline:none;border-color:var(--cherry);border-style:solid}
+
+.ok{border-bottom-color:var(--leaf)!important;background:rgba(74,124,89,.13)!important}
+.no{border-bottom-color:var(--cherry)!important;background:rgba(178,58,47,.11)!important}
+select.ok{border-color:var(--leaf);background:rgba(74,124,89,.13)}
+select.no{border-color:var(--cherry);background:rgba(178,58,47,.11)}
+.mark{font-family:var(--mono);font-size:14px;font-weight:700;margin-left:7px}
+.mark.y{color:var(--leaf)}
+.mark.n{color:var(--cherry)}
+
+/* buttons */
+.btn{
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  border:1.5px solid var(--ink);background:var(--ink);color:var(--foam);
+  border-radius:999px;padding:9px 17px;cursor:pointer;
+  transition:transform .12s ease,background .2s;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:rgba(43,26,18,.07)}
+.btn:focus-visible,button:focus-visible{outline:3px solid var(--caramel);outline-offset:2px}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;align-items:center}
+
+/* choice buttons (T/F + MCQ) */
+.opts{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.opt{
+  font-family:var(--body);font-size:15px;
+  border:1.5px solid var(--line);background:var(--paper);color:var(--ink);
+  border-radius:999px;padding:6px 14px;cursor:pointer;transition:.18s;
+}
+.opt:hover{border-color:var(--ink)}
+.opt.sel{background:var(--ink);color:var(--foam);border-color:var(--ink)}
+.opt.good{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.opt.bad{background:var(--cherry);border-color:var(--cherry);color:#fff}
+
+/* reading */
+.article{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-left:5px solid var(--cherry);
+  border-radius:12px;padding:22px 22px 6px;margin:16px 0 0;
+}
+.article h4{
+  font-family:var(--display);font-weight:800;font-size:26px;
+  line-height:1.1;margin:0 0 4px;
+}
+.article .lead{
+  font-family:var(--display);font-style:italic;font-size:19px;
+  line-height:1.45;margin:10px 0 20px;color:var(--roast);
+}
+.facts{margin:0;padding:0;list-style:none;counter-reset:f}
+.facts li{
+  counter-increment:f;position:relative;
+  padding:0 0 18px 42px;font-size:16px;
+}
+.facts li::before{
+  content:counter(f);
+  position:absolute;left:0;top:-2px;
+  font-family:var(--display);font-weight:800;font-size:26px;color:var(--caramel);
+}
+.hl{background:rgba(214,163,84,.34);padding:0 2px;border-radius:3px}
+
+/* rules box */
+.rules{
+  border:1.5px solid var(--cherry);border-radius:12px;
+  padding:16px 18px;margin:16px 0 0;background:rgba(178,58,47,.045);
+}
+.rules .lbl{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cherry);margin-bottom:8px;
+}
+.rules ul{margin:0;padding-left:19px}
+.rules li{margin-bottom:7px}
+.rules li:last-child{margin-bottom:0}
+code{
+  font-family:var(--mono);font-size:14px;
+  background:rgba(43,26,18,.07);padding:1px 5px;border-radius:4px;
+}
+
+/* stress task */
+.stressline{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:4px}
+.w{
+  font-size:17px;padding:3px 7px;border-radius:7px;cursor:pointer;
+  border:1.5px solid transparent;transition:.15s;user-select:none;
+}
+.w:hover{background:rgba(43,26,18,.06)}
+.w.on{background:var(--ink);color:var(--foam);font-weight:700}
+.w.hit{background:var(--leaf);color:#fff;font-weight:700}
+.w.miss{border-color:var(--cherry);border-style:dashed}
+
+/* photos */
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 18px}
+.photo{margin:0;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
+.photo img{display:block;width:100%;height:270px;object-fit:cover}
+.photo figcaption{
+  position:absolute;left:10px;top:10px;
+  background:rgba(43,26,18,.8);color:var(--foam);
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  padding:3px 10px;border-radius:999px;letter-spacing:.06em;
+}
+.ipa{
+  font-family:var(--mono);font-size:12.5px;
+  color:var(--roast);opacity:.62;white-space:nowrap;
+}
+@media (max-width:620px){.photo img{height:180px}.ipa{font-size:11.5px}}
+
+
+/* two-column compare */
+.tri{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 4px}
+.tri-col{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--paper)}
+.tri-col:nth-child(2){border-color:var(--cherry);background:rgba(178,58,47,.05)}
+.tri-lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cherry);margin-bottom:7px}
+.tri-ex{font-family:var(--display);font-size:19px;line-height:1.25;margin:0 0 8px}
+.tri-note{font-size:14px;color:rgba(43,26,18,.7);margin:0}
+
+/* speech bubbles */
+.bubbles{display:grid;gap:12px;margin:8px 0 4px}
+.bub{border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--paper);position:relative}
+.bub.b1{border-color:rgba(74,124,89,.5);background:rgba(74,124,89,.06)}
+.bub.b2{border-color:rgba(178,58,47,.45);background:rgba(178,58,47,.05)}
+.bub.b3{border-color:rgba(214,163,84,.7);background:rgba(214,163,84,.1)}
+.b-name{font-family:var(--display);font-weight:800;font-size:19px;margin-bottom:5px}
+.bub p{margin:0;font-size:16px}
+
+/* linking */
+.linkline{display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin-top:4px;font-size:18px}
+.lw{padding:2px 1px}
+.j{
+  border:1px dashed var(--line);background:transparent;cursor:pointer;
+  font-family:var(--mono);font-size:15px;line-height:1;color:rgba(43,26,18,.45);
+  min-width:30px;height:30px;padding:0;border-radius:8px;transition:.15s;
+  display:inline-grid;place-items:center;
+}
+.j:hover{background:rgba(43,26,18,.08);color:var(--ink)}
+.j.on{background:var(--ink);color:var(--foam);border-style:solid;border-color:var(--ink)}
+.j.hit{background:var(--leaf);color:#fff;border-style:solid;border-color:var(--leaf)}
+.j.miss{outline:2px dashed var(--cherry);outline-offset:-2px;color:var(--cherry)}
+
+.gloss li{margin-bottom:6px;font-size:15.5px}
+.gloss b{font-family:var(--body);font-weight:700}
+.sig{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--caramel);margin:18px 0 0!important;opacity:.85}
+
+@media (max-width:620px){
+  .tri{grid-template-columns:1fr}
+  .tri-ex{font-size:18px}
+  .linkline{font-size:17px}
+}
+
+
+/* word-formation table */
+.wf{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:6px}
+.wf-head,.wf-row{display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:10px;padding:10px 12px;align-items:center}
+.wf-head{
+  background:var(--roast);color:var(--foam);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+}
+.wf-row{border-top:1px solid var(--line-soft);font-size:15.5px}
+.wf-row:nth-child(even){background:rgba(43,26,18,.03)}
+.wf-row input{min-width:0;width:100%}
+
+/* debate device chips */
+.devcheck{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.dc{
+  font-size:14px;border:1.5px solid var(--line);border-radius:999px;
+  padding:6px 13px;cursor:pointer;transition:.15s;user-select:none;
+}
+.dc:hover{border-color:var(--ink)}
+.dc.on{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.dc.on::before{content:"✓ "}
+
+@media (max-width:620px){
+  .wf-head,.wf-row{grid-template-columns:1fr 1fr;gap:7px;font-size:14.5px}
+  .wf-head span:last-child,.wf-row span:last-child{grid-column:1/-1;padding-top:4px;border-top:1px dashed var(--line-soft)}
+}
+
+/* audio player */
+.player{
+  border:1.5px solid var(--roast);border-radius:14px;background:var(--roast);
+  color:var(--foam);padding:16px 16px 14px;margin-top:18px;
+}
+.pl-row{display:flex;align-items:center;gap:13px}
+.pl-ctrl{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,251,244,.18);flex-wrap:wrap}
+.pl-play{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:9px;
+  background:var(--caramel);color:var(--ink);border:none;border-radius:999px;
+  padding:11px 20px 11px 17px;cursor:pointer;transition:.15s;
+  font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+}
+.pl-play:hover{transform:translateY(-1px)}
+.pl-play .pl-icon{font-size:14px;line-height:1}
+.pl-play.playing{background:var(--foam)}
+.pl-title{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.2}
+.pl-state{font-family:var(--mono);font-size:11.5px;color:rgba(255,251,244,.6);margin-top:2px}
+.pl-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,251,244,.6)}
+.sp{
+  font-family:var(--mono);font-size:11.5px;border:1px solid rgba(255,251,244,.32);
+  background:transparent;color:rgba(255,251,244,.9);border-radius:999px;
+  padding:6px 13px;cursor:pointer;transition:.15s;
+}
+.sp:hover{border-color:var(--foam)}
+.sp.on{background:var(--foam);color:var(--ink);border-color:var(--foam)}
+.player .btn.ghost{color:var(--foam);border-color:rgba(255,251,244,.45)}
+.player .btn.ghost:hover{background:rgba(255,251,244,.12)}
+.pl-warn{
+  margin:12px 0 0;font-size:14px;color:var(--caramel);
+  border-top:1px solid rgba(255,251,244,.18);padding-top:11px;
+}
+.script{
+  margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,251,244,.18);
+  font-size:15.5px;color:rgba(255,251,244,.92);
+}
+.script p{margin:0 0 10px}
+.script p:last-child{margin-bottom:0}
+.opts.col{flex-direction:column;align-items:flex-start}
+.opts.col .opt{text-align:left}
+
+@media (max-width:620px){
+  .pl-title{font-size:17px}
+  .pl-ctrl{gap:7px}
+  .player .btn.ghost{margin-left:0!important;width:100%;margin-top:4px}
+}
+
+/* numbered reasons */
+.reasons li{padding-left:44px;margin-bottom:16px}
+.reasons li b{font-family:var(--body);font-weight:700}
+input.tiny{min-width:46px;width:46px;text-align:center;font-weight:700}
+
+/* agree/disagree rows */
+.agree li{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-left:0}
+.agree li::before{display:none}
+.agree .opts{margin-top:0}
+
+/* plan list */
+.plan li{padding-bottom:16px}
+.plan textarea{margin-top:7px}
+.plan .opts{margin-top:6px}
+
+/* word counter */
+.wc{
+  font-family:var(--mono);font-size:12.5px;color:rgba(43,26,18,.6);
+  margin-top:8px;display:flex;gap:7px;align-items:baseline;
+}
+.wc b{font-size:16px;color:var(--ink)}
+.wc.ok b{color:var(--leaf)}
+.wc.ok .wc-note{color:var(--leaf)}
+.wc.over b{color:var(--cherry)}
+.draft{font-size:16px;line-height:1.6}
+
+.check li{margin-bottom:7px}
+.gloss li{margin-bottom:6px;font-size:15.5px}
+.gloss b{font-family:var(--body);font-weight:700}
+.sig{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--caramel);margin:18px 0 0!important;opacity:.85}
+
+@media (max-width:620px){
+  .reasons li{padding-left:36px}
+  .agree li{gap:7px}
+}
+
+/* speaking */
+.speak{background:rgba(74,124,89,.07);border:1px solid rgba(74,124,89,.32)}
+.speak .ring{border-color:var(--leaf)}
+.prompts{margin:0;padding-left:20px}
+.prompts li{margin-bottom:9px}
+.hintbox{
+  margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;
+  font-size:15px;color:rgba(43,26,18,.72);
+}
+
+/* reveal */
+.answer{
+  display:none;margin-top:9px;padding:10px 13px;
+  background:rgba(74,124,89,.1);border-left:3px solid var(--leaf);
+  border-radius:0 8px 8px 0;font-size:15.5px;
+}
+.answer.show{display:block}
+.answer b{font-family:var(--body)}
+
+/* finish */
+.finish{
+  background:var(--roast);color:var(--foam);
+  border-radius:18px;padding:28px 24px;margin-top:40px;
+}
+.finish h3{font-family:var(--display);font-size:28px;margin:0 0 8px;font-weight:800}
+.finish p{color:rgba(255,251,244,.82);margin:0 0 18px}
+.finish .btn{border-color:var(--caramel);background:var(--caramel);color:var(--ink)}
+.finish .btn.ghost{background:transparent;color:var(--foam);border-color:rgba(255,251,244,.5)}
+.bigscore{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--caramel);line-height:1}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+  background:var(--ink);color:var(--foam);padding:11px 18px;border-radius:999px;
+  font-family:var(--mono);font-size:13px;opacity:0;pointer-events:none;transition:.3s;z-index:60;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:620px){
+  body{font-size:16px}
+  main{padding:8px 14px 70px}
+  .masthead{padding:34px 16px 28px}
+  .task{padding:19px 15px;border-radius:13px}
+  .article{padding:18px 15px 4px}
+  .tracker-inner{padding:8px 14px;gap:10px}
+  .cup{width:30px;height:34px}
+  input.wide{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+<div class="mast-inner">
+<p class="eyebrow">Speakout Intermediate Plus · Unit 1.3 · Writing</p>
+<h1>Seven reasons to be <em>bored</em></h1>
+<p class="mast-sub">Listen to a radio segment on the famous fifteen-minute experiment, read a listicle on the same idea, take apart the persuasive devices behind both — then write your own article.</p>
+<div class="chips">
+<span class="chip">B1+ / B2</span>
+<span class="chip">2 заняття</span>
+<span class="chip">dinglish</span>
+</div>
+</div>
+</header>
+<div class="tracker">
+<div class="tracker-inner">
+<svg aria-hidden="true" class="cup" viewbox="0 0 40 44">
+<defs><clippath id="cupClip"><path d="M7 9 h20 v18 a10 10 0 0 1 -20 0 z"></path></clippath></defs>
+<g clip-path="url(#cupClip)"><rect class="brew" height="30" id="brewFill" transform="translate(0,30)" width="24" x="5" y="9"></rect></g>
+<path class="body-line" d="M7 9 h20 v18 a10 10 0 0 1 -20 0 z"></path>
+<path class="body-line" d="M27 13 h4 a5 5 0 0 1 0 10 h-4"></path>
+<path class="body-line" d="M4 40 h30"></path>
+</svg>
+<div class="track-text">
+<div class="track-label">Прогрес уроку</div>
+<div class="bar"><span id="barFill"></span></div>
+</div>
+<div class="score"><span id="scoreNow">0</span>/<span id="scoreMax">0</span></div>
+</div>
+</div>
+<main>
+
+<section class="part">
+  <p class="part-tag">Part one</p>
+  <h2>Listening</h2>
+  <p class="part-note">Радіосюжет про експеримент із нудьгою — слухаємо, не підглядаючи в скрипт.</p>
+</section>
+<div class="task speak">
+<div class="task-head">
+<div class="ring">1</div>
+<div><span class="kicker">Warm-up · speaking</span><h3>Before you listen</h3></div>
+</div>
+<p class="instr">Answer with examples from your own week.</p>
+<ol class="prompts">
+<li>When was the last time you were properly bored — with nothing to look at and nothing to do?</li>
+<li>What do you reach for the moment you have five empty minutes?</li>
+<li>How long could you sit in an empty room doing absolutely nothing? Be honest.</li>
+<li>Can you think of any reasons why being bored might actually be good for you?</li>
+</ol>
+<div class="hintbox">Write down two or three of your predictions. You'll check them twice today — against the recording, and against the article in Part two.</div>
+<textarea class="note" placeholder="My predictions: being bored might help you…"></textarea>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">2</div>
+<div><span class="kicker">Listening · before you listen</span><h3>The boredom experiment</h3></div>
+</div>
+<p class="instr">You're going to hear a radio segment about a famous psychology study. First, predict.</p>
+<ol class="prompts">
+<li>Researchers left people alone in an empty room with nothing to do. How long do you think most people lasted?</li>
+<li>What do you think people did to escape the boredom?</li>
+</ol>
+<div class="rules" style="margin-top:14px">
+<div class="lbl">Words to know first</div>
+<ul class="gloss">
+<li><b>a volunteer</b> <span class="ipa">/ˌvɒlənˈtɪə/</span> — доброволець (учасник експерименту)</li>
+<li><b>tolerance for sth</b> <span class="ipa">/ˈtɒlərəns/</span> — терпимість, здатність витримувати</li>
+<li><b>to deliver a shock</b> — подати розряд</li>
+<li><b>would rather do sth</b> — радше зробити щось</li>
+</ul>
+</div>
+<div class="player" id="player">
+<div class="pl-row">
+<button aria-label="Play the recording" class="pl-play" id="plPlay"><span class="pl-icon">▶</span><span class="pl-label">Play</span></button>
+<div class="pl-meta">
+<div class="pl-title">Radio segment · Fifteen minutes alone</div>
+<div class="pl-state" id="plState">about 2 min · 250 words</div>
+</div>
+</div>
+<div class="pl-row pl-ctrl">
+<span class="pl-lbl">Speed</span>
+<button class="sp on" data-rate="0.85">slow</button>
+<button class="sp" data-rate="1">normal</button>
+<button class="btn ghost" id="plScript" style="margin-left:auto">Transcript</button>
+</div>
+<p class="pl-warn" hidden="" id="plWarn">У цьому браузері немає англійського голосу. Відкрий Transcript — викладач прочитає текст уголос.</p>
+<div class="script" hidden="" id="plText">
+<p>Welcome back. Now — how long could you sit in an empty room doing absolutely nothing? Ten minutes? Fifteen?</p>
+<p>In one of the best-known studies on boredom, researchers at the University of Virginia asked volunteers to do exactly that: fifteen minutes alone with their own thoughts. No phone, no book, nothing at all. Most of them hated it, and nearly half said the experience was genuinely unpleasant.</p>
+<p>And then came the strange part. The researchers left one more thing in the room — a button that delivered a small electric shock. The same shock those volunteers had earlier paid money to avoid. Within fifteen minutes, sixty-seven per cent of the men pressed it, and about a quarter of the women did too.</p>
+<p>Think about that for a second. We would rather give ourselves an electric shock than sit quietly with our own minds.</p>
+<p>Research shows that our tolerance for empty time is collapsing, and the average person now checks their phone around ninety times a day. But here's the thing. Boredom is not the enemy. It is the space where ideas appear, where problems quietly solve themselves, where you finally hear what you actually think.</p>
+<p>So ask yourself this: when did you last give your brain fifteen empty minutes? Try it tomorrow. No phone, no music, no plan. You may find it's the most productive quarter of an hour of your week.</p>
+</div>
+</div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">3</div>
+<div><span class="kicker">Listening · gist</span><h3>Listen once. What is the main point?</h3></div>
+</div>
+<p class="instr">Don't open the transcript yet.</p>
+<ol class="items">
+<li>Choose the best summary.
+      <div class="opts col" data-answer="We find empty time so uncomfortable that we will do almost anything to escape it."><button class="opt">Psychology experiments on volunteers can be dangerous.</button><button class="opt">We find empty time so uncomfortable that we will do almost anything to escape it.</button><button class="opt">Phones are the main reason people feel stressed at work.</button></div></li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button></div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">4</div>
+<div><span class="kicker">Listening · detail</span><h3>Listen again. True or false?</h3></div>
+</div>
+<p class="instr">Play the recording a second time, then decide. Correct the false statements out loud.</p>
+<ol class="items">
+<li>The study was carried out at the University of Virginia.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>The volunteers were allowed to take a book with them.
+      <div class="opts" data-answer="False"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>Nearly half of them described the experience as unpleasant.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>Earlier in the study, the volunteers had paid money to avoid the shock.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>More women than men pressed the button.
+      <div class="opts" data-answer="False"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>The speaker thinks boredom is something to be avoided.
+      <div class="opts" data-answer="False"><button class="opt">True</button><button class="opt">False</button></div></li>
+</ol>
+<p class="instr" style="margin-top:16px">Now write the numbers you heard.</p>
+<ol class="items">
+<li>minutes the volunteers spent alone: <input class="tiny" data-answer="15|fifteen" size="4" type="text"/></li>
+<li>percentage of men who pressed the button: <input class="tiny" data-answer="67|67%|sixty-seven|sixty seven" size="5" type="text"/></li>
+<li>times a day the average person checks their phone: <input class="tiny" data-answer="90|ninety" size="5" type="text"/></li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">5</div>
+<div><span class="kicker">Listening · language</span><h3>Catch the persuasive phrases</h3></div>
+</div>
+<p class="instr">Listen a third time and complete the phrases the speaker uses. They are exactly the devices you'll need for your own article.</p>
+<ol class="items">
+<li>"<input data-answer="research shows that|research shows" size="16" type="text"/> our tolerance for empty time is collapsing…"</li>
+<li>"But <input data-answer="here's the thing|here is the thing" size="14" type="text"/>. Boredom is not the enemy."</li>
+<li>"So <input data-answer="ask yourself this|ask yourself" size="16" type="text"/>: when did you last give your brain fifteen empty minutes?"</li>
+<li>"<input data-answer="think about that|think about that for a second" size="16" type="text"/> for a second."</li>
+<li>"Try it tomorrow. No phone, <input data-answer="no music, no plan|no music no plan" size="16" type="text"/>."</li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+<div class="hintbox">Say which device each phrase is: research / signposting / rhetorical question / direct address / the rule of three. You'll reuse all five in your own article in Part four.</div>
+</div>
+<div class="task speak">
+<div class="task-head">
+<div class="ring">6</div>
+<div><span class="kicker">Speaking · react</span><h3>Could you do it?</h3></div>
+</div>
+<ol class="prompts">
+<li>Could you sit for fifteen minutes with no phone and no book? What would go through your head?</li>
+<li>Does the result of the experiment surprise you, or does it sound completely normal?</li>
+<li>The speaker says boredom is "the space where ideas appear". Has that ever happened to you?</li>
+<li>Ninety phone checks a day — is that about right for you? Would you want to know your real number?</li>
+</ol>
+<textarea class="note" placeholder="Нотатки / нові фрази з обговорення…"></textarea>
+</div>
+<section class="part">
+  <p class="part-tag">Part two</p>
+  <h2>Reading</h2>
+  <p class="part-note">Та сама ідея, але розгорнута в лістикл на сім пунктів.</p>
+</section>
+<div class="task">
+<div class="task-head">
+<div class="ring">7</div>
+<div><span class="kicker">Vocabulary · pre-teach</span><h3>Words you'll meet in the article</h3></div>
+</div>
+<p class="instr">The article makes the same case as the talk, but in seven points. Match each word to its meaning before you read it.</p>
+<ol class="items">
+<li>the part of your mind that works without you noticing<br/>
+<select data-answer="subconscious"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>something that causes a change to start happening<br/>
+<select data-answer="a catalyst"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>caring about other people more than about yourself<br/>
+<select data-answer="altruistic"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>time when you are not working or being active<br/>
+<select data-answer="downtime"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>to accept something willingly, instead of fighting it<br/>
+<select data-answer="to embrace"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>so used to something that it feels normal<br/>
+<select data-answer="accustomed to"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>a short burst of pleasure in the brain from something new<br/>
+<select data-answer="a dopamine hit"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>to prefer one thing over another<br/>
+<select data-answer="to favour"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+<li>made alert and active by something around you<br/>
+<select data-answer="stimulated"><option value="">— choose —</option><option>downtime</option><option>a catalyst</option><option>subconscious</option><option>altruistic</option><option>to embrace</option><option>accustomed to</option><option>a dopamine hit</option><option>stimulated</option><option>to favour</option></select></li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+<div class="rules" style="margin-top:20px">
+<div class="lbl">Словничок</div>
+<ul class="gloss">
+<li><b>boredom</b> <span class="ipa">/ˈbɔːdəm/</span> — нудьга; <b>bored</b> — якому нудно; <b>boring</b> — нудний</li>
+<li><b>subconscious</b> <span class="ipa">/ˌsʌbˈkɒnʃəs/</span> — підсвідомість</li>
+<li><b>a catalyst for sth</b> <span class="ipa">/ˈkætəlɪst/</span> — поштовх, каталізатор</li>
+<li><b>altruistic</b> <span class="ipa">/ˌæltruˈɪstɪk/</span> — альтруїстичний; <b>selflessness</b> — самовідданість</li>
+<li><b>downtime</b> — простій, час без діяльності</li>
+<li><b>to embrace sth</b> <span class="ipa">/ɪmˈbreɪs/</span> — прийняти, обійняти (ідею)</li>
+<li><b>accustomed to sth</b> <span class="ipa">/əˈkʌstəmd/</span> — звиклий до чогось</li>
+<li><b>to favour sth</b> <span class="ipa">/ˈfeɪvə/</span> — надавати перевагу</li>
+</ul>
+</div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">8</div>
+<div><span class="kicker">Reading · the listicle</span><h3>Seven reasons why being bored is good for you</h3></div>
+</div>
+<p class="instr">Read the article. Does it mention any of your ideas from Task 1 — and anything the radio segment left out?</p>
+<div class="article">
+<h4>Seven reasons why being bored is good for you</h4>
+<p class="lead">Society gets busier every year, and even when we are completely alone, we are still being stimulated by a screen and still trying to keep up with everyone else. Have we forgotten how to be bored? We treat boredom as something to escape from — but what if it is doing us good?</p>
+<ol class="facts reasons">
+<li><b>Creativity.</b> Boredom leads to creativity. Your best ideas rarely arrive while you are scrolling; they arrive in the shower, on a long walk, on a train with a dead phone. Only when your mind has empty space can it start building something of its own.</li>
+<li><b>Problem-solving.</b> Your subconscious mind is often better at solving problems than your conscious one, because it is not following rules and procedures. But you only hear it once the noise dies down and your conscious mind has a moment to settle.</li>
+<li><b>Self-reflection.</b> Being bored pushes you to think about where you actually are in life — something that racing around, permanently occupied and permanently engaged, never does. Self-reflection can be the catalyst for changing your job, your city or your whole routine.</li>
+<li><b>Selflessness.</b> According to one study, bored people become more altruistic and more empathetic, and are more likely to take part in selfless activities such as volunteering, giving to charity or donating blood. Boredom, it seems, turns our attention outwards.</li>
+<li><b>Slowing down.</b> The moment we feel bored, it is easy to reach for a phone or a tablet. Yet every time we favour that virtual world, we stop noticing the real one around us. Looking at a tree, a street or a sky slows the mind down and lets it enjoy the ordinary again.</li>
+<li><b>Breaking the cycle.</b> Research shows we get a small dopamine hit every time we experience something new. In a world that changes by the second, we have become completely accustomed to that hit, and we chase it all day. Embrace boredom and you break the cycle — and simple pleasures start to feel like pleasures again.</li>
+<li><b>Taking time out.</b> We live in a world of 24/7 connectivity. There is no downtime, and our minds are never allowed to stop. Boredom gives us time out from the constant buzz of activity. It lets us enter a calmer state and step off the roller coaster that so many of us struggle with. Is that really such a bad thing?</li>
+</ol>
+</div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">9</div>
+<div><span class="kicker">Reading · detail</span><h3>Which reason says this?</h3></div>
+</div>
+<p class="instr">Write the number of the reason (1–7) for each statement.</p>
+<ol class="items">
+<li>Our brains have learned to expect constant novelty. <input class="tiny" data-answer="6" size="3" type="text"/></li>
+<li>Good ideas need empty mental space. <input class="tiny" data-answer="1" size="3" type="text"/></li>
+<li>Boredom can make people more generous towards others. <input class="tiny" data-answer="4" size="3" type="text"/></li>
+<li>Screens stop us noticing what is actually around us. <input class="tiny" data-answer="5" size="3" type="text"/></li>
+<li>It can push you to change something big in your life. <input class="tiny" data-answer="3" size="3" type="text"/></li>
+<li>The part of your mind that isn't following rules works better on problems. <input class="tiny" data-answer="2" size="3" type="text"/></li>
+<li>We are never offline, so our minds never rest. <input class="tiny" data-answer="7" size="3" type="text"/></li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+</div>
+<div class="task speak">
+<div class="task-head">
+<div class="ring">10</div>
+<div><span class="kicker">Speaking · react</span><h3>Agree or disagree?</h3></div>
+</div>
+<p class="instr">Tap ✓ for the points you agree with and ? for the ones you doubt. Then explain each choice.</p>
+<ol class="items agree">
+<li>1 — Creativity <div class="opts" data-free="1"><button class="opt">✓ agree</button><button class="opt">? not sure</button></div></li>
+<li>2 — Problem-solving <div class="opts" data-free="1"><button class="opt">✓ agree</button><button class="opt">? not sure</button></div></li>
+<li>3 — Self-reflection <div class="opts" data-free="1"><button class="opt">✓ agree</button><button class="opt">? not sure</button></div></li>
+<li>4 — Selflessness <div class="opts" data-free="1"><button class="opt">✓ agree</button><button class="opt">? not sure</button></div></li>
+<li>5 — Slowing down <div class="opts" data-free="1"><button class="opt">✓ agree</button><button class="opt">? not sure</button></div></li>
+<li>6 — Breaking the cycle <div class="opts" data-free="1"><button class="opt">✓ agree</button><button class="opt">? not sure</button></div></li>
+<li>7 — Taking time out <div class="opts" data-free="1"><button class="opt">✓ agree</button><button class="opt">? not sure</button></div></li>
+</ol>
+<div class="hintbox">Useful: <em>I'd go along with that, up to a point. · That's a bit of a stretch. · I'm not convinced by number four. · That's exactly what happens to me when…</em></div>
+<textarea class="note" placeholder="The point I disagree with most is… because…"></textarea>
+</div>
+<div class="task" data-id="wordform">
+<div class="task-head">
+<div class="ring">11</div>
+<div><span class="kicker">Vocabulary · word building</span><h3>One root, three words</h3></div>
+</div>
+<p class="instr">Complete the table with the missing forms. All the roots came up in the talk or the article.</p>
+<div class="wf">
+<div class="wf-head"><span>verb</span><span>noun</span><span>adjective</span></div>
+<div class="wf-row"><span>bore</span><span><input data-answer="boredom" size="10" type="text"/></span><span>boring / bored</span></div>
+<div class="wf-row"><span>create</span><span><input data-answer="creativity|creation" size="11" type="text"/></span><span><input data-answer="creative" size="10" type="text"/></span></div>
+<div class="wf-row"><span>reflect</span><span><input data-answer="reflection" size="11" type="text"/></span><span>reflective</span></div>
+<div class="wf-row"><span>stimulate</span><span>stimulation</span><span><input data-answer="stimulating|stimulated" size="12" type="text"/></span></div>
+<div class="wf-row"><span><input data-answer="connect" size="9" type="text"/></span><span>connection / connectivity</span><span>connected</span></div>
+<div class="wf-row"><span>distract</span><span><input data-answer="distraction" size="11" type="text"/></span><span><input data-answer="distracting|distracted" size="12" type="text"/></span></div>
+<div class="wf-row"><span><input data-answer="volunteer" size="10" type="text"/></span><span>volunteer / volunteering</span><span>voluntary</span></div>
+</div>
+<div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+<div class="hintbox">Say one true sentence about yourself with each of these: <em>boredom · creative · distracted · connectivity · voluntary</em>.</div>
+</div>
+<div class="task speak" data-id="deepdisc">
+<div class="task-head">
+<div class="ring">12</div>
+<div><span class="kicker">Speaking · putting it together</span><h3>The talk vs the article</h3></div>
+</div>
+<p class="instr">Use what you heard and what you read. Give reasons and examples.</p>
+<ol class="prompts">
+<li>The talk and the article make the same argument. Which one convinced you more, and why?</li>
+<li>Which single reason from the article would you delete as the weakest? Defend your choice.</li>
+<li>The speaker calls boredom "the space where ideas appear". Where do your own ideas actually come from?</li>
+<li>Is modern boredom even possible, or have we destroyed it for good?</li>
+<li>What advice would you give a teenager who can't go ten minutes without a screen?</li>
+</ol>
+<div class="hintbox">Useful: <em>What convinced me was… · I'd cut number four, because… · That's true in theory, but in practice… · If anything, I'd say the opposite.</em></div>
+<textarea class="note" placeholder="Нотатки / фрази, які виправив викладач…"></textarea>
+</div>
+<section class="part">
+  <p class="part-tag">Part three</p>
+  <h2>Persuasive language</h2>
+  <p class="part-note">Прийоми, які роблять і сюжет, і статтю переконливими.</p>
+</section>
+<div class="task">
+<div class="task-head">
+<div class="ring">13</div>
+<div><span class="kicker">Writing · genre</span><h3>What is a listicle?</h3></div>
+</div>
+<p class="instr">True or false?</p>
+<ol class="items">
+<li>A listicle is an article that is written as a list.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>Listicles are a popular style for blogs and other online articles.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>Listicles are often used in magazines.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>Listicles tend to use very formal language.
+      <div class="opts" data-answer="False"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>Listicles are a good way to grab a reader's attention.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+<li>An odd number in the title (5, 7, 9) tends to work better than an even one.
+      <div class="opts" data-answer="True"><button class="opt">True</button><button class="opt">False</button></div></li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button></div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">14</div>
+<div><span class="kicker">Writing · toolkit</span><h3>Six persuasive devices</h3></div>
+</div>
+<div class="rules" style="margin-top:4px">
+<div class="lbl">Reference</div>
+<ul>
+<li><b>Personal pronouns</b> — <em>I, you, we</em>. «We treat boredom as something to escape from.» Читач стає учасником, а не стороннім.</li>
+<li><b>Rhetorical questions</b> — питання без відповіді. «Is that really such a bad thing?» Змушує читача відповісти подумки.</li>
+<li><b>Research, statistics, figures</b> — «According to one study…», «Research shows…». Додає ваги твердженню.</li>
+<li><b>Declarative sentences</b> — короткі категоричні твердження. «Boredom leads to creativity.» Без <em>maybe</em> і <em>I think</em>.</li>
+<li><b>Direct address &amp; imperatives</b> — «Embrace boredom and you break the cycle.» Звертання прямо до читача.</li>
+<li><b>The rule of three</b> — перелік із трьох: «volunteering, giving to charity or donating blood». Звучить повно й ритмічно.</li>
+</ul>
+</div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">15</div>
+<div><span class="kicker">Writing · analysis</span><h3>Which device is this?</h3></div>
+</div>
+<p class="instr">Six sentences are from the article, two from the talk. Name the device in each one.</p>
+<ol class="items">
+<li>"Have we forgotten how to be bored?"<br/>
+<select data-answer="rhetorical question"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+<li>"According to one study, bored people become more altruistic…"<br/>
+<select data-answer="research / statistics"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+<li>"Boredom leads to creativity."<br/>
+<select data-answer="declarative sentence"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+<li>"…changing your job, your city or your whole routine."<br/>
+<select data-answer="the rule of three"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+<li>"Embrace boredom and you break the cycle."<br/>
+<select data-answer="direct address / imperative"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+<li>"But here's the thing. Boredom is not the enemy." <span class="sub">(the talk)</span><br/>
+<select data-answer="declarative sentence"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+<li>"Try it tomorrow. No phone, no music, no plan." <span class="sub">(the talk)</span><br/>
+<select data-answer="the rule of three"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+<li>"Is that really such a bad thing?"<br/>
+<select data-answer="rhetorical question"><option value="">— choose —</option><option>personal pronouns</option><option>rhetorical question</option><option>research / statistics</option><option>declarative sentence</option><option>direct address / imperative</option><option>the rule of three</option></select></li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button><button class="btn ghost showall">Показати відповіді</button></div>
+<div class="hintbox">Now find <b>one more example of each device</b> in the article yourself, read it out, and say why the writer chose it there.</div>
+</div>
+<div class="task" data-id="intonation">
+<div class="task-head">
+<div class="ring">16</div>
+<div><span class="kicker">Pronunciation · intonation</span><h3>Rising or falling?</h3></div>
+</div>
+<p class="instr">A real yes/no question goes <b>up</b> at the end — you want an answer. A rhetorical question goes <b>down</b> — you already know it. Choose, then say each one twice: once as a real question, once as a rhetorical one.</p>
+<ol class="items">
+<li>"Is that really such a bad thing?" <span class="sub">(from the article)</span>
+<div class="opts" data-answer="↘ falling"><button class="opt">↗ rising</button><button class="opt">↘ falling</button></div></li>
+<li>"Have we forgotten how to be bored?" <span class="sub">(from the article)</span>
+<div class="opts" data-answer="↘ falling"><button class="opt">↗ rising</button><button class="opt">↘ falling</button></div></li>
+<li>"Did you finish the report?" <span class="sub">(a colleague wants an answer)</span>
+<div class="opts" data-answer="↗ rising"><button class="opt">↗ rising</button><button class="opt">↘ falling</button></div></li>
+<li>"When did you last give your brain fifteen empty minutes?" <span class="sub">(from the talk)</span>
+<div class="opts" data-answer="↘ falling"><button class="opt">↗ rising</button><button class="opt">↘ falling</button></div></li>
+<li>"Could you sit there for fifteen minutes?" <span class="sub">(you're asking me, your partner)</span>
+<div class="opts" data-answer="↗ rising"><button class="opt">↗ rising</button><button class="opt">↘ falling</button></div></li>
+</ol>
+<div class="controls"><button class="btn check">Перевірити</button></div>
+<div class="hintbox">Writing tip: a rhetorical question in your article only works if the reader can "hear" that falling tone — so make the answer obvious.</div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">17</div>
+<div><span class="kicker">Writing · rewrite</span><h3>Make it persuasive</h3></div>
+</div>
+<p class="instr">Rewrite each flat sentence using the device in brackets. Then compare with a model version.</p>
+<ol class="items">
+<li>Some people think walking is quite good for your health. <span class="sub">(declarative sentence)</span><br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Model</button></div>
+<div class="answer">Walking changes your health. Thirty minutes a day is all it takes.</div></li>
+<li>It is possible that phones are affecting people's sleep. <span class="sub">(research / statistics)</span><br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Model</button></div>
+<div class="answer">According to a recent study, people who use their phones in bed lose almost an hour of sleep a night.</div></li>
+<li>Maybe readers should try switching off their phone in the evening. <span class="sub">(direct address / imperative)</span><br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Model</button></div>
+<div class="answer">Switch your phone off at nine tonight and see what happens.</div></li>
+<li>People are busy and they do not rest enough. <span class="sub">(personal pronouns)</span><br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Model</button></div>
+<div class="answer">We are busier than ever, and we almost never let ourselves stop.</div></li>
+<li>Cooking at home has several advantages. <span class="sub">(rule of three)</span><br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Model</button></div>
+<div class="answer">Cooking at home saves you money, teaches you a skill and gives you back control of what you eat.</div></li>
+<li>Many people never take a proper holiday. <span class="sub">(rhetorical question)</span><br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Model</button></div>
+<div class="answer">When was the last time you took a holiday and actually switched off?</div></li>
+</ol>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">18</div>
+<div><span class="kicker">Writing · titles</span><h3>Write the title</h3></div>
+</div>
+<p class="instr">A strong listicle title = <b>odd number + adjective + noun + a promise</b>. Write one title for each topic.</p>
+<ol class="items">
+<li>learning a language as an adult<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Example</button></div>
+<div class="answer">Five surprising reasons why learning a language after thirty is easier than you think</div></li>
+<li>leaving your job<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Example</button></div>
+<div class="answer">Seven honest signs it's time to leave your job</div></li>
+<li>living in a small city instead of the capital<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Example</button></div>
+<div class="answer">Nine quiet pleasures of life outside the capital</div></li>
+</ol>
+</div>
+<div class="task speak" data-id="debate">
+<div class="task-head">
+<div class="ring">19</div>
+<div><span class="kicker">Speaking · mini-debate</span><h3>Argue it out loud before you write it</h3></div>
+</div>
+<p class="instr">Take one statement. Speak for one minute in favour, then one minute against. Use <b>at least three</b> persuasive devices in each turn — your partner or teacher ticks them off as you speak.</p>
+<ol class="prompts">
+<li>"Schools should teach children how to be bored."</li>
+<li>"Phones should be banned from restaurants and cafés."</li>
+<li>"Doing nothing is the most productive thing you can do."</li>
+<li>"Our generation has lost the ability to wait."</li>
+</ol>
+<div class="devcheck">
+<span class="dc">personal pronouns</span>
+<span class="dc">rhetorical question</span>
+<span class="dc">research / figures</span>
+<span class="dc">declarative sentence</span>
+<span class="dc">direct address</span>
+<span class="dc">rule of three</span>
+</div>
+<div class="hintbox">Tap a device when you manage to use it. Whatever you say well here, you can reuse in your article — speaking first makes the writing much faster.</div>
+</div>
+<section class="part">
+  <p class="part-tag">Part four</p>
+  <h2>Write your own listicle</h2>
+  <p class="part-note">План → чернетка → самоперевірка. 250–300 слів.</p>
+</section>
+<div class="task">
+<div class="task-head">
+<div class="ring">20</div>
+<div><span class="kicker">Writing · plan</span><h3>Plan it in five steps</h3></div>
+</div>
+<p class="instr">Fill in the plan before you write a single sentence.</p>
+<ol class="items plan">
+<li><b>Topic.</b> Think of it in terms of a number — odd numbers work better.<br/>
+<input class="wide note-only" placeholder="e.g. reasons to walk to work / ways to leave your job" type="text"/></li>
+<li><b>Ideas.</b> Collect more than you need — you can cut later.<br/>
+<textarea class="note" placeholder="1… 2… 3… 4… 5… 6… 7… 8…"></textarea></li>
+<li><b>Title.</b> Number + adjective + noun + promise.<br/>
+<input class="wide note-only" placeholder="e.g. Seven unexpected reasons to…" type="text"/></li>
+<li><b>Style.</b> Choose one and keep it all the way through.
+      <div class="opts" data-free="1"><button class="opt">funny</button><button class="opt">informative</button><button class="opt">chatty</button><button class="opt">serious</button></div>
+<div class="opts" data-free="1"><button class="opt">giving advice</button><button class="opt">just explaining</button></div>
+<div class="opts" data-free="1"><button class="opt">informal</button><button class="opt">semi-formal</button></div></li>
+<li><b>Notes for each point.</b> One sentence of explanation per point, plus an example or a figure.<br/>
+<textarea class="note" placeholder="Point 1 — … / Point 2 — …"></textarea></li>
+</ol>
+<div class="rules" style="margin-top:18px">
+<div class="lbl">Structure that works</div>
+<ul>
+<li><b>Title</b> — number + promise.</li>
+<li><b>Intro (2–3 sentences)</b> — a problem everybody recognises, then a rhetorical question or a surprising claim.</li>
+<li><b>Body</b> — each point: a <b>bold subheading</b> (one or two words), then 2–3 sentences. Keep the pattern identical for every point.</li>
+<li><b>Ending</b> — one line back to the reader: a question, a challenge, or a single short sentence.</li>
+</ul>
+</div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">21</div>
+<div><span class="kicker">Writing · draft</span><h3>Your listicle (250–300 words)</h3></div>
+</div>
+<p class="instr">Write the full article here. The counter turns green when you are inside the word limit.</p>
+<textarea class="note draft" data-count="1" data-max="300" data-min="250" placeholder="Title…
+
+We all know the feeling: …" style="min-height:340px"></textarea>
+<div class="wc">Words: <b><span class="wc-n">0</span></b> <span class="wc-note">— aim for 250–300</span></div>
+<div class="rules" style="margin-top:18px">
+<div class="lbl">Self-check before you send it</div>
+<ul class="check">
+<li>Does my title contain a number and a promise?</li>
+<li>Have I used <b>at least four</b> different persuasive devices?</li>
+<li>Is there at least one rhetorical question and one reference to research?</li>
+<li>Does every point follow the same pattern (subheading + 2–3 sentences)?</li>
+<li>Is my style consistent — no formal sentence dropped into a chatty article?</li>
+<li>Have I used <em>we</em> and <em>you</em> rather than <em>people</em> and <em>one</em>?</li>
+<li>250–300 words?</li>
+</ul>
+</div>
+</div>
+<div class="task speak" data-id="challenge">
+<div class="task-head">
+<div class="ring">22</div>
+<div><span class="kicker">Extra · the 15-minute challenge</span><h3>Try the experiment yourself</h3></div>
+</div>
+<p class="instr">Between this lesson and the next: sit for fifteen minutes with no phone, no music, no book, no plan. Then fill this in — in English, in the past tense.</p>
+<ol class="items">
+<li>Where and when did you do it? <input class="wide note-only" placeholder="…" type="text"/></li>
+<li>How long did it take before you felt uncomfortable? <input class="wide note-only" placeholder="…" type="text"/></li>
+<li>What did you catch yourself thinking about? <input class="wide note-only" placeholder="…" type="text"/></li>
+<li>Did any idea or decision come to you? <input class="wide note-only" placeholder="…" type="text"/></li>
+<li>Would you do it again? Why? <input class="wide note-only" placeholder="…" type="text"/></li>
+</ol>
+<div class="hintbox">Bring your answers to the next lesson — the best line from this is usually the perfect opening for your article.</div>
+</div>
+<div class="task">
+<div class="task-head">
+<div class="ring">23</div>
+<div><span class="kicker">Final task · translation</span><h3>Translate into English</h3></div>
+</div>
+<p class="instr">Write your version first, then open the key.</p>
+<ol class="items">
+<li>Ми забули, як це — нудьгувати.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">We have forgotten how to be bored.</div></li>
+<li>Згідно з одним дослідженням, знуджені люди стають щедрішими.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">According to one study, bored people become more generous.</div></li>
+<li>Нудьга веде до творчості.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">Boredom leads to creativity.</div></li>
+<li>Ми настільки звикли до цього, що більше цього не помічаємо.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">We have become so accustomed to it that we no longer notice it.</div></li>
+<li>Прийми нудьгу — і ти розірвеш це коло.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">Embrace boredom and you'll break the cycle.</div></li>
+<li>Хіба це справді так погано?<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">Is that really such a bad thing?</div></li>
+<li>Самоаналіз може стати поштовхом до зміни роботи.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">Self-reflection can be the catalyst for changing your job.</div></li>
+<li>Коли нам нудно, ми одразу тягнемося до телефона.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">The moment we feel bored, we reach for our phones.</div></li>
+<li>У нас немає жодної хвилини спокою.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">We have no downtime at all.</div></li>
+<li>Це економить гроші, вчить нової навички і повертає тобі контроль.<br/><input class="wide note-only" type="text"/>
+<div class="controls"><button class="btn ghost reveal">Ключ</button></div>
+<div class="answer">It saves you money, teaches you a new skill and gives you back control.</div></li>
+</ol>
+</div>
+<div class="finish">
+<h3>Готово</h3>
+<p>Правильних відповідей: <span class="bigscore"><span id="finalNow">0</span>/<span id="finalMax">0</span></span></p>
+<p>Скопіюй свої відповіді разом зі статтею і надішли викладачу.</p>
+<div class="controls">
+<button class="btn" id="copyBtn">Скопіювати мої відповіді</button>
+<button class="btn ghost" id="resetBtn">Почати спочатку</button>
+</div>
+<p class="sig">dinglish</p>
+</div>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var norm = function(s){
+    return (s||"")
+      .toLowerCase()
+      .replace(/[\u2018\u2019\u02BC`]/g,"'")
+      .replace(/[\u2013\u2014]/g,"-")
+      .replace(/[.,!?;:]+$/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  };
+  var accepted = function(el){
+    return (el.getAttribute("data-answer")||"").split("|").map(norm);
+  };
+
+  /* ---------- collect checkable items ---------- */
+  var items = [];
+  document.querySelectorAll(".task").forEach(function(task){
+    task.querySelectorAll("input[type=text][data-answer], select[data-answer], .opts[data-answer], .stressline[data-answer], .linkline[data-answer]").forEach(function(el){
+      var kind = el.classList.contains("opts") ? "opts"
+               : el.classList.contains("stressline") ? "stress"
+               : el.classList.contains("linkline") ? "link"
+               : el.tagName === "SELECT" ? "select" : "input";
+      var it = {el:el, kind:kind, task:task, done:false};
+      items.push(it);
+      el._item = it;
+    });
+  });
+
+  var scoreNow = document.getElementById("scoreNow");
+  var scoreMax = document.getElementById("scoreMax");
+  var finalNow = document.getElementById("finalNow");
+  var finalMax = document.getElementById("finalMax");
+  var barFill  = document.getElementById("barFill");
+  var brew     = document.getElementById("brewFill");
+  scoreMax.textContent = items.length;
+  finalMax.textContent = items.length;
+
+  function refresh(){
+    var n = items.filter(function(i){return i.done;}).length;
+    var pct = items.length ? n/items.length : 0;
+    scoreNow.textContent = n;
+    finalNow.textContent = n;
+    barFill.style.width = (pct*100).toFixed(1) + "%";
+    if (brew) brew.setAttribute("transform","translate(0," + (30 - 30*pct).toFixed(1) + ")");
+  }
+
+  /* ---------- option buttons ---------- */
+  document.querySelectorAll(".opts").forEach(function(box){
+    box.querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click", function(){
+        box.querySelectorAll(".opt").forEach(function(x){x.classList.remove("sel","good","bad");});
+        b.classList.add("sel");
+      });
+    });
+  });
+
+  /* ---------- stress words ---------- */
+  document.querySelectorAll(".linkline .j").forEach(function(j){
+    j.addEventListener("click", function(){
+      j.classList.remove("hit","miss");
+      j.classList.toggle("on");
+    });
+  });
+
+  document.querySelectorAll(".stressline .w").forEach(function(w){
+    w.addEventListener("click", function(){
+      w.classList.remove("hit","miss");
+      w.classList.toggle("on");
+    });
+  });
+
+  /* ---------- marks ---------- */
+  function setMark(el, ok){
+    var host = (el.classList && (el.classList.contains("opts") || el.classList.contains("stressline"))) ? el : el;
+    var next = host.nextElementSibling;
+    if (next && next.classList && next.classList.contains("mark")) next.remove();
+    var m = document.createElement("span");
+    m.className = "mark " + (ok ? "y" : "n");
+    m.textContent = ok ? "✓" : "✗";
+    host.parentNode.insertBefore(m, host.nextSibling);
+  }
+
+  function checkItem(it){
+    var el = it.el, ok = false;
+    if (it.kind === "input" || it.kind === "select"){
+      var val = norm(el.value);
+      ok = val !== "" && accepted(el).indexOf(val) > -1;
+      el.classList.remove("ok","no");
+      el.classList.add(ok ? "ok" : "no");
+      setMark(el, ok);
+    } else if (it.kind === "opts"){
+      var want = norm(el.getAttribute("data-answer"));
+      var sel = el.querySelector(".opt.sel");
+      ok = !!sel && norm(sel.textContent) === want;
+      el.querySelectorAll(".opt").forEach(function(b){
+        b.classList.remove("good","bad");
+        if (norm(b.textContent) === want) b.classList.add("good");
+        else if (b.classList.contains("sel")) b.classList.add("bad");
+      });
+    } else if (it.kind === "link"){
+      var want3 = el.getAttribute("data-answer").split(",").map(function(x){return x.trim();});
+      var got = [];
+      el.querySelectorAll(".j").forEach(function(j){
+        j.classList.remove("hit","miss");
+        if (j.classList.contains("on")) got.push(j.getAttribute("data-j"));
+      });
+      ok = got.length === want3.length && want3.every(function(x){return got.indexOf(x) > -1;});
+      el.querySelectorAll(".j").forEach(function(j){
+        var id = j.getAttribute("data-j");
+        if (want3.indexOf(id) > -1){ j.classList.remove("on"); j.classList.add("hit"); }
+        else if (j.classList.contains("on")){ j.classList.add("miss"); }
+      });
+    } else if (it.kind === "stress"){
+      var want2 = el.getAttribute("data-answer").split(",").map(norm);
+      var picked = [];
+      el.querySelectorAll(".w").forEach(function(w){
+        w.classList.remove("hit","miss");
+        if (w.classList.contains("on")) picked.push(norm(w.textContent));
+      });
+      ok = picked.length === want2.length && want2.every(function(x){return picked.indexOf(x) > -1;});
+      el.querySelectorAll(".w").forEach(function(w){
+        var t = norm(w.textContent);
+        if (want2.indexOf(t) > -1){ w.classList.remove("on"); w.classList.add("hit"); }
+        else if (w.classList.contains("on")){ w.classList.add("miss"); }
+      });
+    }
+    if (ok) it.done = true;
+    return ok;
+  }
+
+  /* ---------- buttons ---------- */
+  document.querySelectorAll(".btn.check").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      var mine = items.filter(function(i){return i.task === task;});
+      var right = 0;
+      mine.forEach(function(i){ if (checkItem(i)) right++; });
+      refresh();
+      toast(right + " / " + mine.length + " правильно");
+    });
+  });
+
+  document.querySelectorAll(".btn.showall").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      items.filter(function(i){return i.task === task;}).forEach(function(i){
+        if (i.kind === "input"){
+          if (norm(i.el.value) === "" || accepted(i.el).indexOf(norm(i.el.value)) === -1){
+            i.el.value = (i.el.getAttribute("data-answer")||"").split("|")[0];
+            i.el.classList.remove("ok"); i.el.classList.add("no");
+            setMark(i.el,false);
+          }
+        } else if (i.kind === "select"){
+          i.el.value = (i.el.getAttribute("data-answer")||"").split("|")[0];
+          checkItem(i);
+        }
+      });
+      refresh();
+    });
+  });
+
+  document.querySelectorAll(".btn.reveal").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var box = btn.closest("li").querySelector(".answer");
+      if (!box) return;
+      box.classList.toggle("show");
+      btn.textContent = box.classList.contains("show") ? "Сховати" : (btn.dataset.label || "Ключ");
+    });
+  });
+
+  document.querySelectorAll(".btn.revealAll").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var task = btn.closest(".task");
+      var boxes = task.querySelectorAll(".answer");
+      var open = btn.dataset.open === "1";
+      boxes.forEach(function(b){ b.classList.toggle("show", !open); });
+      btn.dataset.open = open ? "0" : "1";
+      btn.textContent = open ? "Пояснення" : "Сховати";
+    });
+  });
+
+
+
+  /* ---------- debate device chips ---------- */
+  document.querySelectorAll(".devcheck .dc").forEach(function(c){
+    c.addEventListener("click", function(){ c.classList.toggle("on"); });
+  });
+
+  /* ---------- speech player ---------- */
+  (function(){
+    var root = document.getElementById("player");
+    if (!root) return;
+    var playBtn = document.getElementById("plPlay"),
+        stateEl = document.getElementById("plState"),
+        warnEl  = document.getElementById("plWarn"),
+        textEl  = document.getElementById("plText"),
+        scriptBtn = document.getElementById("plScript"),
+        label = playBtn.querySelector(".pl-label"),
+        icon  = playBtn.querySelector(".pl-icon");
+
+    scriptBtn.addEventListener("click", function(){
+      var open = textEl.hasAttribute("hidden");
+      if (open) textEl.removeAttribute("hidden"); else textEl.setAttribute("hidden","");
+      scriptBtn.textContent = open ? "Hide transcript" : "Transcript";
+    });
+
+    var synth = window.speechSynthesis;
+    if (!synth) { warnEl.removeAttribute("hidden"); playBtn.disabled = true; return; }
+
+    /* split the transcript into sentences: Chrome cuts long utterances */
+    var sentences = [];
+    textEl.querySelectorAll("p").forEach(function(par){
+      (par.textContent.match(/[^.!?]+[.!?]*/g) || []).forEach(function(s){
+        s = s.trim();
+        if (s) sentences.push(s);
+      });
+    });
+
+    var rate = 0.85, voice = null, playing = false, i = 0, keepAlive = null;
+
+    function pickVoice(){
+      var vs = synth.getVoices() || [];
+      if (!vs.length) return null;
+      return vs.filter(function(v){ return /^en[-_]GB/i.test(v.lang); })[0]
+          || vs.filter(function(v){ return /^en[-_]US/i.test(v.lang); })[0]
+          || vs.filter(function(v){ return /^en/i.test(v.lang); })[0]
+          || null;
+    }
+    function ready(){
+      voice = pickVoice();
+      if (!voice) { warnEl.removeAttribute("hidden"); }
+      else { warnEl.setAttribute("hidden",""); }
+    }
+    ready();
+    if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = ready;
+    setTimeout(ready, 700);
+
+    function setUI(on){
+      playing = on;
+      playBtn.classList.toggle("playing", on);
+      icon.textContent = on ? "■" : "▶";
+      label.textContent = on ? "Stop" : "Play";
+      stateEl.textContent = on ? "playing…" : "about 2 min · 250 words";
+      if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+      if (on) keepAlive = setInterval(function(){
+        if (synth.speaking && !synth.paused) { synth.pause(); synth.resume(); }
+      }, 9000);
+    }
+    function stop(){ synth.cancel(); i = 0; setUI(false); }
+    function speakNext(){
+      if (!playing || i >= sentences.length) { stop(); return; }
+      var u = new SpeechSynthesisUtterance(sentences[i]);
+      if (voice) { u.voice = voice; u.lang = voice.lang; } else { u.lang = "en-GB"; }
+      u.rate = rate; u.pitch = 1;
+      u.onend = function(){ i++; speakNext(); };
+      u.onerror = function(){ i++; if (playing) speakNext(); };
+      synth.speak(u);
+    }
+
+    playBtn.addEventListener("click", function(){
+      if (playing) { stop(); return; }
+      if (!voice) ready();
+      if (!voice) {
+        warnEl.removeAttribute("hidden");
+        textEl.removeAttribute("hidden");
+        scriptBtn.textContent = "Hide transcript";
+        return;
+      }
+      synth.cancel(); i = 0; setUI(true); speakNext();
+    });
+
+    root.querySelectorAll(".sp").forEach(function(b){
+      b.addEventListener("click", function(){
+        root.querySelectorAll(".sp").forEach(function(x){ x.classList.remove("on"); });
+        b.classList.add("on");
+        rate = parseFloat(b.dataset.rate);
+        if (playing) { var at = i; synth.cancel(); i = at; setUI(true); speakNext(); }
+      });
+    });
+
+    window.addEventListener("beforeunload", function(){ synth.cancel(); });
+  })();
+
+  /* ---------- word counter ---------- */
+  document.querySelectorAll("textarea[data-count]").forEach(function(ta){
+    var box = ta.parentNode.querySelector(".wc");
+    if (!box) { var n = ta.nextElementSibling; if (n && n.classList.contains("wc")) box = n; }
+    if (!box) return;
+    var out = box.querySelector(".wc-n");
+    var min = parseInt(ta.getAttribute("data-min") || "0", 10);
+    var max = parseInt(ta.getAttribute("data-max") || "0", 10);
+    function count(){
+      var words = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
+      out.textContent = words;
+      box.classList.toggle("ok", words >= min && (!max || words <= max));
+      box.classList.toggle("over", !!max && words > max);
+    }
+    ta.addEventListener("input", count);
+    count();
+  });
+
+  /* ---------- toast ---------- */
+  var toastEl = document.getElementById("toast"), tTimer;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(tTimer);
+    tTimer = setTimeout(function(){ toastEl.classList.remove("on"); }, 1900);
+  }
+
+  /* ---------- copy answers ---------- */
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var lines = ["COFFEE DRINKER? — 1.1 · мої відповіді",
+                 "Результат: " + items.filter(function(i){return i.done;}).length + "/" + items.length, ""];
+    document.querySelectorAll(".task").forEach(function(task){
+      var h = task.querySelector("h3");
+      var chunk = [];
+      task.querySelectorAll("li").forEach(function(li, idx){
+        var parts = [];
+        li.querySelectorAll("input[type=text]").forEach(function(inp){
+          if (inp.value.trim()) parts.push(inp.value.trim());
+        });
+        li.querySelectorAll("select").forEach(function(s){ if (s.value) parts.push(s.value); });
+        var sel = li.querySelector(".opt.sel");
+        if (sel) parts.push(sel.textContent.trim());
+        if (parts.length) chunk.push("  " + (idx+1) + ". " + parts.join(" | "));
+      });
+      task.querySelectorAll("textarea").forEach(function(t){
+        if (t.value.trim()) chunk.push("  нотатки: " + t.value.trim().replace(/\n/g," "));
+      });
+      if (chunk.length){ lines.push((h ? h.textContent.trim() : "Task")); lines.push(chunk.join("\n")); lines.push(""); }
+    });
+    var text = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast("Скопійовано ✓"); },
+        function(){ fallback(text); });
+    } else fallback(text);
+  });
+  function fallback(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); toast("Скопійовано ✓"); }
+    catch(e){ toast("Не вдалося скопіювати"); }
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- reset ---------- */
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    document.querySelectorAll("input[type=text], textarea").forEach(function(el){
+      el.value = ""; el.classList.remove("ok","no");
+    });
+    document.querySelectorAll("select").forEach(function(s){ s.value = ""; s.classList.remove("ok","no"); });
+    document.querySelectorAll(".mark").forEach(function(m){ m.remove(); });
+    document.querySelectorAll(".opt").forEach(function(b){ b.classList.remove("sel","good","bad"); });
+    document.querySelectorAll(".w, .j, .dc").forEach(function(w){ w.classList.remove("on","hit","miss"); });
+    document.querySelectorAll(".btn.revealAll").forEach(function(b){ b.dataset.open="0"; b.textContent="Пояснення"; });
+    document.querySelectorAll(".answer").forEach(function(a){ a.classList.remove("show"); });
+    document.querySelectorAll(".btn.reveal").forEach(function(b){ b.textContent = "Ключ"; });
+    items.forEach(function(i){ i.done = false; });
+    refresh();
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  /* Enter key checks the current task */
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Enter" && e.target.matches("input[type=text]")){
+      e.preventDefault();
+      var task = e.target.closest(".task");
+      var btn = task && task.querySelector(".btn.check");
+      if (btn) btn.click();
+    }
+  });
+
+  document.querySelectorAll(".btn.reveal").forEach(function(b){ b.dataset.label = b.textContent; });
+  refresh();
+})();
+</script>
+</body>
+</html>
