@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Negative Inversion | dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F7F6; --surface:#FFFFFF; --ink:#1C2A2E; --muted:#56666A;
+  --teal:#17444F; --on-teal:#FFFFFF; --teal-soft:#E2EDEF;
+  --magenta:#B23C7A; --magenta-soft:#F8E7F0; --mint:#DCEFE6;
+  --line:#C9D6D2; --ok:#1E7A52; --ok-soft:#E0F2E9; --why:#FFF6DA; --why-line:#E6C65C;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",Roboto,Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1719; --surface:#172225; --ink:#E4ECEA; --muted:#9DB0AE;
+    --teal:#7EC3CF; --on-teal:#0F1719; --teal-soft:#1B3238;
+    --magenta:#E58BB9; --magenta-soft:#3A2130; --mint:#16302A;
+    --line:#2C3D40; --ok:#6FD3A4; --ok-soft:#153327; --why:#2E2A18; --why-line:#8A7530;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1719; --surface:#172225; --ink:#E4ECEA; --muted:#9DB0AE;
+  --teal:#7EC3CF; --on-teal:#0F1719; --teal-soft:#1B3238;
+  --magenta:#E58BB9; --magenta-soft:#3A2130; --mint:#16302A;
+  --line:#2C3D40; --ok:#6FD3A4; --ok-soft:#153327; --why:#2E2A18; --why-line:#8A7530;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--body)}
+.wrap{max-width:800px;margin:0 auto;padding:28px 16px 60px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;margin:0}
+p{margin:.5em 0}
+:focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+
+.hero{background:var(--teal);color:var(--on-teal);border-radius:22px;padding:26px 22px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end}
+.hero small{opacity:.85}
+.hero h1{font-size:clamp(2.6rem,10vw,4.6rem);font-weight:800;letter-spacing:-.02em;margin-top:4px}
+.hero p{margin:6px 0 0;opacity:.9}
+.scorecard{background:var(--surface);color:var(--ink);border-radius:16px;padding:12px 18px;text-align:center;min-width:140px}
+.scorecard b{display:block;font:800 2rem var(--display);color:var(--magenta)}
+.scorecard span{font-size:.8rem;color:var(--muted)}
+@media (max-width:560px){.hero{grid-template-columns:1fr}.scorecard{justify-self:start}}
+
+.howto{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:18px}
+.howto ol{margin:6px 0 0;padding-left:22px}
+.howto input{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:5px 10px;width:100%;max-width:300px;margin-top:6px}
+
+details.rules{overflow:hidden;min-width:0;background:var(--surface);border:2px solid var(--teal);border-radius:14px;padding:14px 18px;margin-top:18px}
+details.rules summary{cursor:pointer;font:800 1.2rem var(--display);color:var(--teal)}
+.rules table{width:100%;min-width:520px;border-collapse:collapse;font-size:.92rem;margin-top:10px}
+.rules th,.rules td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.rules th{color:var(--teal)}
+.scroll{overflow-x:auto;max-width:100%}
+
+.part{margin:52px 0 16px;padding-bottom:10px;border-bottom:3px solid var(--magenta)}
+.part h2{font-size:clamp(1.6rem,5vw,2.2rem);color:var(--magenta)}
+.part p{color:var(--muted);margin:4px 0 0}
+.task{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 18px 18px;margin:18px 0}
+.task h3{font-size:1.25rem;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.task h3 .num{font-weight:800;color:var(--magenta);min-width:1.4em}
+.rubric{margin-top:8px}
+.hint{font-size:.88rem;color:var(--muted)}
+.rows{display:grid;gap:8px;margin-top:14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 10px;border-radius:10px;border:1px solid transparent}
+.rows>.row{min-width:0}
+.row .q input[type=text]{max-width:100%}
+.row .n{font-weight:700;color:var(--muted);min-width:1.4em}
+.row .q{flex:1 1 240px;min-width:0}
+.row .kw{font-weight:800;color:var(--magenta);letter-spacing:.02em}
+.row.ok{background:var(--ok-soft);border-color:var(--ok)}
+.row.bad{background:var(--magenta-soft);border-color:var(--magenta)}
+.why{display:none;flex:1 1 100%;min-width:0;padding:8px 12px;border-left:4px solid var(--why-line);background:var(--why);border-radius:6px;font-size:.93rem}
+.why .model{display:block;font-weight:700;margin-bottom:2px}
+.row.bad .why,.row.shown .why{display:block}
+select,input[type=text]{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:4px 8px;max-width:100%}
+input.wide{width:100%;margin-top:6px}
+.bar{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.btn{font:700 .95rem var(--body);background:var(--teal);color:var(--on-teal);border:2px solid var(--teal);border-radius:999px;padding:7px 16px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--teal)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.score{font-weight:700;color:var(--teal)}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{font:inherit;font-size:.93rem;background:var(--paper);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:3px 12px;cursor:pointer}
+.opts button[aria-pressed="true"]{background:var(--teal);color:var(--on-teal);border-color:var(--teal)}
+.story{line-height:2.4;margin-top:12px;background:var(--paper);border-radius:12px;padding:14px 16px}
+.story select.ok{border-color:var(--ok);background:var(--ok-soft)}
+.story select.bad{border-color:var(--magenta);background:var(--magenta-soft)}
+.story .gn{font-weight:700;color:var(--magenta);font-size:.85rem}
+.whylist{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.whylist li{display:none;padding:8px 12px;border-left:4px solid var(--why-line);background:var(--why);border-radius:6px;font-size:.93rem}
+.whylist li.on{display:block}
+.open-item{padding:12px 0;border-bottom:1px solid var(--line)}
+.open-item:last-child{border-bottom:0}
+.open-item p{margin:0;font-weight:700}
+details.model{margin-top:6px;font-size:.95rem}
+details.model summary{cursor:pointer;color:var(--teal);font-weight:700}
+details.model div{padding:6px 0 0 14px;border-left:3px solid var(--mint);margin-top:6px}
+.selfmark{display:none;gap:8px;margin-top:8px;flex-wrap:wrap}
+.open-item.revealed .selfmark{display:flex}
+.selfmark button{font:inherit;font-size:.9rem;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:3px 12px;cursor:pointer}
+.selfmark button[aria-pressed="true"].yes{background:var(--ok);color:var(--surface);border-color:var(--ok)}
+.selfmark button[aria-pressed="true"].no{background:var(--magenta);color:var(--surface);border-color:var(--magenta)}
+
+.results{background:var(--surface);border:2px solid var(--teal);border-radius:18px;padding:22px 20px;margin-top:20px}
+.results table{width:100%;border-collapse:collapse;font-size:.95rem;margin-top:12px}
+.results td{padding:6px 8px;border-bottom:1px solid var(--line)}
+.results td:last-child{text-align:right;font-weight:700;white-space:nowrap}
+.meter{height:8px;background:var(--line);border-radius:999px;overflow:hidden;min-width:60px}
+.meter i{display:block;height:100%;background:var(--teal)}
+.big{font:800 clamp(2.4rem,8vw,3.4rem) var(--display);color:var(--magenta)}
+.verdict{font-weight:700;color:var(--teal)}
+textarea.copy{width:100%;min-height:120px;font:.9rem var(--body);color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:8px;margin-top:10px;display:none}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+footer b{font-family:var(--display);color:var(--teal);font-size:1.1rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <small>dinglish · B2+/C1 · Homework</small>
+    <h1>Negative inversion</h1>
+    <p>Part 1–4: Never / Rarely / Seldom · do / does / did · Not only… but also · Hardly / Scarcely / No sooner</p>
+  </div>
+  <div class="scorecard" aria-live="polite"><b id="total">0</b><span>of <span id="max">0</span> points</span></div>
+</header>
+
+<section class="howto">
+  <b>How it works</b>
+  <ol>
+    <li>Do each task, then click <b>Check</b>. Green means correct. Pink means try again, and you'll see an explanation.</li>
+    <li>You can check as many times as you like. <b>Show answers</b> unlocks after your first check, but after that your score for the task stays the same.</li>
+    <li>At the end, click <b>See my results</b> and send them to your teacher.</li>
+  </ol>
+  <label>Your name <input id="name" type="text" placeholder="Type your name" autocomplete="off"></label>
+</section>
+
+<details class="rules">
+  <summary>Rules from our lesson (open if you need help)</summary>
+  <div class="scroll"><table lang="uk">
+    <tr><th>Part</th><th>Формула</th><th>Приклад</th></tr>
+    <tr><td>1. Never / Rarely / Seldom</td><td>слово + <b>допоміжне</b> + підмет + основне дієслово</td><td><i>Never have I been so tired.</i><br><i>Rarely can I sleep on planes.</i></td></tr>
+    <tr><td>2. Немає допоміжного</td><td>Present / Past Simple → додаємо <b>do / does / did</b> + 1 форма дієслова<br>із <b>be</b> просто міняємо місцями</td><td><i>Rarely does he complain.</i><br><i>Never did I think about it.</i><br><i>Rarely is she late.</i></td></tr>
+    <tr><td>3. Not only… but also</td><td>інверсія <b>лише в першій</b> частині; якщо <i>not only</i> не на початку, інверсії немає</td><td><i>Not only did he win, but he also broke the record.</i></td></tr>
+    <tr><td>4. Hardly / Scarcely</td><td>+ <b>had</b> + підмет + V3 + <b>when</b> + Past Simple</td><td><i>Hardly had we left when it started to rain.</i></td></tr>
+    <tr><td>4. No sooner</td><td>+ <b>had</b> + підмет + V3 + <b>than</b> + Past Simple</td><td><i>No sooner had I sat down than the phone rang.</i></td></tr>
+  </table></div>
+</details>
+
+<!-- PART 1-2 -->
+<section class="part"><h2>Part 1–2: Never, rarely, seldom</h2><p>Which auxiliary goes before the subject?</p></section>
+
+<article class="task" id="t-aux" data-title="Choose the auxiliary">
+  <h3><span class="num">1</span>Choose the auxiliary</h3>
+  <p class="rubric">Click the correct option to complete each sentence.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-never" data-title="Rewrite: never / rarely / seldom">
+  <h3><span class="num">2</span>Rewrite with inversion</h3>
+  <p class="rubric">Rewrite each sentence so that it starts with the word(s) in pink.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<!-- PART 3 -->
+<section class="part"><h2>Part 3: Not only… but also</h2><p>«Не лише…, а й…»</p></section>
+
+<article class="task" id="t-notonly" data-title="Not only… but also">
+  <h3><span class="num">3</span>Join the sentences</h3>
+  <p class="rubric">Join the two sentences into one, starting with <b>Not only</b>.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<!-- PART 4 -->
+<section class="part"><h2>Part 4: Hardly, scarcely, no sooner</h2><p>«Щойно… як»</p></section>
+
+<article class="task" id="t-whenthan" data-title="When or than?">
+  <h3><span class="num">4</span>When or than? Had or did?</h3>
+  <p class="rubric">Click the correct option to complete each sentence.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-hardly" data-title="Rewrite: hardly / no sooner">
+  <h3><span class="num">5</span>Rewrite with inversion</h3>
+  <p class="rubric">Rewrite each sentence so that it starts with the word(s) in pink.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<!-- MIXED -->
+<section class="part"><h2>Mixed</h2><p>Parts 1–4 together</p></section>
+
+<article class="task" id="t-spot" data-title="Correct or not?">
+  <h3><span class="num">6</span>Correct or not?</h3>
+  <p class="rubric">Decide if each sentence is correct or has a mistake.</p>
+  <div class="rows"></div>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-story" data-title="Story: my first day in London">
+  <h3><span class="num">7</span>My first day in London</h3>
+  <p class="rubric">Choose the correct option for each gap in the story.</p>
+  <div class="story"></div>
+  <ul class="whylist" lang="uk"></ul>
+  <div class="bar"><button class="btn do-check">Check</button><button class="btn ghost do-reveal" disabled>Show answers</button><output class="score"></output></div>
+</article>
+
+<article class="task" id="t-tr" data-title="Translation">
+  <h3><span class="num">8</span>Translate into English</h3>
+  <p class="rubric">Translate each sentence using inversion. Then open the model answer and mark your translation honestly.</p>
+  <div id="translate"></div>
+  <div class="bar"><output class="score" id="trScore"></output></div>
+</article>
+
+<!-- RESULTS -->
+<section class="part"><h2>Your results</h2><p>See how you did and send it to your teacher</p></section>
+<section class="results">
+  <div class="bar" style="margin-top:0"><button class="btn" id="seeResults">See my results</button></div>
+  <div id="resultsBody" hidden>
+    <div class="big" id="pct">0%</div>
+    <p class="verdict" id="verdict"></p>
+    <table id="resultsTable"></table>
+    <div class="bar"><button class="btn ghost" id="copyBtn">Copy results for my teacher</button><span class="hint" id="copyMsg" aria-live="polite"></span></div>
+    <textarea class="copy" id="copyText" readonly aria-label="Results text"></textarea>
+  </div>
+</section>
+
+<footer><b>dinglish</b><span>Negative inversion: Homework</span></footer>
+</div>
+
+<script>
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm = s => String(s).toLowerCase().replace(/[’‘`]/g, "'").replace(/[‐–—-]/g, ' ').replace(/[.!?,:;"]+/g, '').replace(/\s+/g, ' ').trim();
+
+/* ---------- scoring ---------- */
+const scores = {}, maxes = {}, revealed = {};
+function setMax(id, n){ maxes[id] = n; $('#max').textContent = Object.values(maxes).reduce((a, b) => a + b, 0); }
+function report(id, n){ scores[id] = n; $('#total').textContent = Object.values(scores).reduce((a, b) => a + b, 0); }
+
+function wire(box, n, check, reveal, rows){
+  setMax(box.id, n);
+  const score = $('.score', box), rev = $('.do-reveal', box);
+  $('.do-check', box).addEventListener('click', () => {
+    const res = check();
+    if (rows) rows.forEach((r, i) => { r.classList.toggle('ok', res[i]); r.classList.toggle('bad', !res[i]); });
+    const k = res.filter(Boolean).length;
+    score.textContent = k + ' / ' + res.length;
+    if (!revealed[box.id]) report(box.id, k);
+    rev.disabled = false;
+  });
+  rev.addEventListener('click', () => {
+    revealed[box.id] = true;
+    reveal();
+    if (rows) rows.forEach(r => { r.classList.remove('bad'); r.classList.add('ok', 'shown'); });
+    score.textContent = 'Answers shown · your score: ' + (scores[box.id] || 0) + ' / ' + n;
+  });
+}
+function row(i, html, why, model){
+  const r = document.createElement('div'); r.className = 'row';
+  r.innerHTML = `<span class="n">${i + 1}</span><span class="q">${html}</span>`;
+  r._why = document.createElement('div'); r._why.className = 'why'; r._why.lang = 'uk';
+  r._why.innerHTML = (model ? `<span class="model" lang="en">→ ${esc(model)}</span>` : '') + why;
+  return r;
+}
+
+/* pick an option */
+function pickTask(id, items){
+  const box = document.getElementById(id), list = $('.rows', box), rows = [];
+  items.forEach((it, i) => {
+    const r = row(i, it.q || '', it.why, it.model);
+    const g = document.createElement('div'); g.className = 'opts'; g.setAttribute('role', 'group');
+    it.opts.forEach((o, k) => {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = o; b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', () => { [...g.children].forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); it.choice = k; });
+      g.appendChild(b);
+    });
+    r.appendChild(g); r.appendChild(r._why); it.g = g; list.appendChild(r); rows.push(r);
+  });
+  wire(box, items.length, () => items.map(it => it.choice === it.a),
+    () => items.forEach(it => { it.choice = it.a; [...it.g.children].forEach((x, k) => x.setAttribute('aria-pressed', String(k === it.a))); }), rows);
+}
+
+/* typed answer checked by regex */
+function typeTask(id, items, opts = {}){
+  const box = document.getElementById(id), list = $('.rows', box), rows = [];
+  items.forEach((it, i) => {
+    let html;
+    if (opts.gap){
+      html = `${esc(it.q)} <span class="kw">${esc(it.kw)}</span><br>${esc(it.pre)} <input type="text" size="26" aria-label="Gap ${i + 1}" autocomplete="off" spellcheck="false"> ${esc(it.post)}`;
+    } else {
+      html = `${esc(it.q)} <span class="kw">${esc(it.kw)}</span><input type="text" class="wide" aria-label="Answer ${i + 1}" autocomplete="off" spellcheck="false">`;
+    }
+    const r = row(i, html, it.why, it.model);
+    r.appendChild(r._why);
+    it.inp = $('input', r); list.appendChild(r); rows.push(r);
+  });
+  wire(box, items.length, () => items.map(it => new RegExp(it.re).test(norm(it.inp.value))), () => {}, rows);
+}
+
+/* ---------- 1 auxiliary ---------- */
+pickTask('t-aux', [
+  { q: 'Never ___ I been so cold in my life.', opts: ['have', 'did', 'was'], a: 0,
+    why: 'У звичайному реченні <i>I <b>have</b> never been</i>: допоміжне <b>have</b> вже є, тому його й ставимо перед підметом.' },
+  { q: 'Rarely ___ my grandma use her phone.', opts: ['do', 'does', 'is'], a: 1,
+    why: 'Present Simple, підмет <i>my grandma</i> (вона) → додаємо <b>does</b>.' },
+  { q: 'Never before ___ we seen such a long queue.', opts: ['did', 'have', 'had'], a: 2,
+    why: 'Мова про досвід до певного моменту в минулому (<i>before</i>), тому Past Perfect: <b>had</b> we seen.' },
+  { q: 'Seldom ___ they go to the cinema these days.', opts: ['do', 'does', 'are'], a: 0,
+    why: 'Present Simple, підмет <i>they</i> → <b>do</b>.' },
+  { q: 'Never ___ I forget your kindness.', opts: ['will', 'do', 'am'], a: 0,
+    why: 'Мова про майбутнє (<i>I will never forget</i>) → <b>will</b> перед підметом.' },
+  { q: 'Rarely ___ he on time for meetings.', opts: ['does', 'is', 'has'], a: 1,
+    why: 'Основне дієслово тут <b>be</b> (<i>he is on time</i>), тому просто міняємо місцями: <b>is he</b>. Нічого не додаємо.' },
+  { q: 'Never ___ I imagine that I would live in another country.', opts: ['did', 'had', 'was'], a: 0,
+    why: 'Past Simple (<i>I never imagined</i>) → <b>did</b> + перша форма <i>imagine</i>.' },
+  { q: 'Seldom ___ you find a café with such good coffee.', opts: ['can', 'are', 'does'], a: 0,
+    why: 'У реченні є модальне дієслово <b>can</b> (<i>you can seldom find</i>), воно й стає перед підметом.' },
+  { q: 'Never ___ we so happy as on that holiday.', opts: ['did', 'were', 'had'], a: 1,
+    why: 'Основне дієслово <b>be</b> у минулому (<i>we were</i>) → <b>were we</b>.' },
+  { q: 'Rarely ___ the bus arrive on time in our town.', opts: ['does', 'do', 'is'], a: 0,
+    why: '<i>The bus</i> = it → <b>does</b>. А дієслово <i>arrive</i> стоїть без -s, бо -s уже «забрало» <i>does</i>.' }
+]);
+
+/* ---------- 2 rewrite never / rarely ---------- */
+typeTask('t-never', [
+  { q: 'I have never felt so exhausted.', kw: 'NEVER', re: "^never have i (ever )?felt so exhausted$", model: 'Never have I felt so exhausted.',
+    why: 'Допоміжне <b>have</b> вже є: Never + <b>have I</b> + felt.' },
+  { q: 'She rarely eats meat.', kw: 'RARELY', re: "^rarely does she eat meat$", model: 'Rarely does she eat meat.',
+    why: 'Present Simple, she → <b>does</b>, а дієслово без -s: <i>eat</i>.' },
+  { q: 'We seldom watch TV in the evening.', kw: 'SELDOM', re: "^seldom do we watch tv in the evening(s)?$", model: 'Seldom do we watch TV in the evening.',
+    why: 'Present Simple, we → <b>do</b>.' },
+  { q: 'He never said sorry.', kw: 'NEVER', re: "^never did he say sorry$", model: 'Never did he say sorry.',
+    why: 'Past Simple → <b>did</b> + перша форма: <i>say</i>, а не <i>said</i>.' },
+  { q: 'I had never tried sushi before that evening.', kw: 'NEVER BEFORE', re: "^never before (that evening )?had i tried sushi( before that evening)?$", model: 'Never before had I tried sushi.',
+    why: 'Past Perfect: <b>had I tried</b>. Слово <i>before</i> переходить на початок разом із <i>never</i>.' },
+  { q: 'You will never meet a kinder person.', kw: 'NEVER', re: "^never will you meet a kinder person$", model: 'Never will you meet a kinder person.',
+    why: 'Майбутнє → <b>will you</b> meet.' },
+  { q: 'The children are rarely quiet.', kw: 'RARELY', re: "^rarely are the children quiet$", model: 'Rarely are the children quiet.',
+    why: 'З <b>be</b> просто міняємо місцями: <b>are the children</b>.' },
+  { q: 'I can seldom find a parking space near my office.', kw: 'SELDOM', re: "^seldom can i find a parking (space|spot|place) near my office$", model: 'Seldom can I find a parking space near my office.',
+    why: 'Модальне <b>can</b> стає перед підметом: <b>can I</b> find.' }
+]);
+
+/* ---------- 3 not only ---------- */
+typeTask('t-notonly', [
+  { q: 'The film was long. It was also boring.', kw: 'NOT ONLY', re: "^not only was the film long but (it was )?also boring$|^not only was the film long but it was also boring$", model: 'Not only was the film long, but it was also boring.',
+    why: '<b>Be</b> → просто міняємо місцями: <b>was the film</b>. Друга частина звичайна.' },
+  { q: 'He plays the guitar. He also writes his own songs.', kw: 'NOT ONLY', re: "^not only does he play the guitar but (he )?also writes his own songs$", model: 'Not only does he play the guitar, but he also writes his own songs.',
+    why: 'Present Simple → <b>does he play</b> (без -s). У другій частині порядок звичайний: <i>he also writes</i>.' },
+  { q: 'We lost our luggage. We also missed our connecting flight.', kw: 'NOT ONLY', re: "^not only did we lose our luggage but (we )?also missed our connecting flight$", model: 'Not only did we lose our luggage, but we also missed our connecting flight.',
+    why: 'Past Simple → <b>did we lose</b> (перша форма). Друга частина звичайна: <i>we also missed</i>.' },
+  { q: 'She has learnt Spanish. She has also learnt Portuguese.', kw: 'NOT ONLY', re: "^not only has she learn(t|ed) spanish but (she has |she's )?also learn(t|ed) portuguese$", model: 'Not only has she learnt Spanish, but she has also learnt Portuguese.',
+    why: 'Present Perfect: допоміжне <b>has</b> стає перед підметом.' },
+  { q: 'The new phone is cheaper. It is also faster.', kw: 'NOT ONLY', re: "^not only is the new phone cheaper but (it is |it's )?also faster$", model: 'Not only is the new phone cheaper, but it is also faster.',
+    why: 'Із <b>be</b>: <b>is the new phone</b> cheaper.' },
+  { q: 'They will repair the car. They will also clean it.', kw: 'NOT ONLY', re: "^not only will they repair the car but (they will |they'll )?also clean it$", model: "Not only will they repair the car, but they'll also clean it.",
+    why: 'Майбутнє: <b>will they</b> repair.' }
+]);
+
+/* ---------- 4 when / than ---------- */
+pickTask('t-whenthan', [
+  { q: 'Hardly had I opened the door ___ the dog ran out.', opts: ['when', 'than'], a: 0,
+    why: '<b>Hardly</b> завжди йде з <b>when</b>.' },
+  { q: 'No sooner had we arrived ___ the concert started.', opts: ['when', 'than'], a: 1,
+    why: '<b>No sooner</b> завжди йде з <b>than</b>, бо <i>sooner</i> — порівняльний ступінь, як <i>faster than</i>.' },
+  { q: 'Scarcely had she finished her speech ___ everyone started clapping.', opts: ['when', 'than'], a: 0,
+    why: '<b>Scarcely</b> = <i>hardly</i>, тому теж з <b>when</b>.' },
+  { q: 'No sooner ___ I paid for the dress than I saw it on sale.', opts: ['did', 'had', 'have'], a: 1,
+    why: 'Після <b>No sooner</b> завжди <b>had</b> + V3 (Past Perfect): перша дія сталася раніше за другу.' },
+  { q: 'Hardly had the plane landed when it ___ to snow.', opts: ['had started', 'started', 'starts'], a: 1,
+    why: 'Друга дія (після <i>when</i>) стоїть у <b>Past Simple</b>: <i>started</i>.' },
+  { q: 'Scarcely had he ___ asleep when the alarm went off.', opts: ['fell', 'fall', 'fallen'], a: 2,
+    why: 'Після <b>had</b> потрібна третя форма: <i>fall – fell – <b>fallen</b></i>.' }
+]);
+
+/* ---------- 5 rewrite hardly ---------- */
+typeTask('t-hardly', [
+  { q: 'I had just started cooking when my guests arrived.', kw: 'HARDLY', re: "^hardly had i started cooking when my guests arrived$", model: 'Hardly had I started cooking when my guests arrived.',
+    why: 'Hardly + <b>had I started</b> + <b>when</b>. Слово <i>just</i> зникає, бо <i>hardly</i> вже означає «щойно».' },
+  { q: 'As soon as we got to the beach, it started to rain.', kw: 'NO SOONER', re: "^no sooner had we got(ten)? to the beach than it (started|began) to rain$", model: 'No sooner had we got to the beach than it started to rain.',
+    why: '<i>As soon as</i> → No sooner + <b>had we got</b> + <b>than</b>. Перша дія переходить у Past Perfect.' },
+  { q: 'The lesson had just begun when the lights went out.', kw: 'SCARCELY', re: "^scarcely had the lesson begun when the lights went out$", model: 'Scarcely had the lesson begun when the lights went out.',
+    why: 'Scarcely + <b>had the lesson begun</b> + <b>when</b>.' },
+  { q: 'As soon as she left the house, she remembered her keys.', kw: 'NO SOONER', re: "^no sooner had she left the house than she remembered (her|the) keys$", model: 'No sooner had she left the house than she remembered her keys.',
+    why: 'No sooner + <b>had she left</b> + <b>than</b> + Past Simple.' },
+  { q: 'He had just bought a new laptop when it broke.', kw: 'HARDLY', re: "^hardly had he bought a new laptop when it broke( down)?$", model: 'Hardly had he bought a new laptop when it broke.',
+    why: 'Hardly + <b>had he bought</b> + <b>when</b>.' },
+  { q: 'As soon as I sent the email, I noticed a mistake.', kw: 'NO SOONER', re: "^no sooner had i sent the email than i noticed a mistake$", model: 'No sooner had I sent the email than I noticed a mistake.',
+    why: 'No sooner + <b>had I sent</b> + <b>than</b>.' }
+]);
+
+/* ---------- 6 correct or not ---------- */
+pickTask('t-spot', [
+  { q: 'Never I have tasted such delicious soup.', opts: ['Correct', 'Mistake'], a: 1, model: 'Never have I tasted such delicious soup.',
+    why: 'Після <b>Never</b> на початку допоміжне стоїть перед підметом: <i>have I</i>.' },
+  { q: 'Rarely does she forget anything.', opts: ['Correct', 'Mistake'], a: 0,
+    why: '<b>Does she</b> + перша форма <i>forget</i>. Речення правильне.' },
+  { q: 'Never did I expected to win.', opts: ['Correct', 'Mistake'], a: 1, model: 'Never did I expect to win.',
+    why: '<b>Did</b> уже показує минулий час, тому основне дієслово без -ed: <i>expect</i>.' },
+  { q: 'Seldom are they at home on Sundays.', opts: ['Correct', 'Mistake'], a: 0,
+    why: 'Із <b>be</b> просто міняємо місцями: <i>are they</i>. Речення правильне.' },
+  { q: 'Not only she sings, but she also dances.', opts: ['Correct', 'Mistake'], a: 1, model: 'Not only does she sing, but she also dances.',
+    why: 'Після <b>Not only</b> на початку потрібна інверсія: <i>does she sing</i>.' },
+  { q: 'He not only fixed the bike but also painted it.', opts: ['Correct', 'Mistake'], a: 0,
+    why: '<i>Not only</i> стоїть <b>не на початку</b> речення, тому інверсії не потрібно. Речення правильне.' },
+  { q: 'Not only did they win, but did they also break the record.', opts: ['Correct', 'Mistake'], a: 1, model: 'Not only did they win, but they also broke the record.',
+    why: 'Інверсія лише в <b>першій</b> частині, а після <i>but</i> порядок звичайний.' },
+  { q: 'Hardly had we sat down than the waiter came.', opts: ['Correct', 'Mistake'], a: 1, model: 'Hardly had we sat down when the waiter came.',
+    why: '<b>Hardly</b> йде з <b>when</b>, а не з <i>than</i>.' },
+  { q: 'No sooner had I closed my eyes than the baby started crying.', opts: ['Correct', 'Mistake'], a: 0,
+    why: 'No sooner + had + V3 + <b>than</b>. Речення правильне.' },
+  { q: 'No sooner did we arrive than it started to rain.', opts: ['Correct', 'Mistake'], a: 1, model: 'No sooner had we arrived than it started to rain.',
+    why: 'Після <b>No sooner</b> потрібне <b>had</b> + V3, а не <i>did</i>.' }
+]);
+
+/* ---------- 7 story ---------- */
+(function(){
+  const gaps = [
+    { opts: ['Never had I been', 'Never I had been', 'Never did I be'], a: 0, why: '1: Never + <b>had I</b> + been (Past Perfect, досвід до того дня).' },
+    { opts: ['when', 'than'], a: 0, why: '2: <b>Hardly</b> … <b>when</b>.' },
+    { opts: ['did I understand', 'I understood', 'did I understood'], a: 0, why: '3: Never + <b>did I</b> + перша форма <i>understand</i>.' },
+    { opts: ['was it', 'it was', 'did it be'], a: 0, why: '4: Not only + <b>be</b> → просто міняємо місцями: <b>was it</b>.' },
+    { opts: ['it was also', 'was it also'], a: 0, why: '5: Після <i>but</i> порядок слів звичайний: <i>it was also</i>.' },
+    { opts: ['had I bought', 'did I buy', 'I had bought'], a: 0, why: '6: No sooner + <b>had I bought</b> (had + V3).' },
+    { opts: ['than', 'when'], a: 0, why: '7: <b>No sooner</b> … <b>than</b>.' },
+    { opts: ['do I visit', 'I visit', 'did I visited'], a: 0, why: '8: Present Simple → Rarely + <b>do I visit</b>.' },
+    { opts: ['will I forget', 'I will forget', 'do I forget'], a: 0, why: '9: Майбутнє → Never + <b>will I</b> forget.' }
+  ];
+  const text = `{1} so excited as on my first morning in London. Hardly had I left the hotel {2} it started to rain. Never {3} why everyone carried an umbrella on a sunny day, but now it made sense!<br><br>
+I went to a café for breakfast. Not only {4} expensive, but {5} tiny. No sooner {6} a coffee {7} I spilt it all over my map.<br><br>
+These days, rarely {8} a city without an umbrella in my bag. And never {9} that first rainy morning.`;
+  const box = $('#t-story'), wrap = $('.story', box), wl = $('.whylist', box);
+  wrap.innerHTML = text.replace(/\{(\d+)\}/g, (_, n) => {
+    const g = gaps[n - 1];
+    return `<span class="gn">${n}</span> <select aria-label="Gap ${n}"><option value="">choose…</option>${g.opts.map((o, k) => `<option value="${k}">${esc(o)}</option>`).join('')}</select>`;
+  });
+  wl.innerHTML = gaps.map(g => `<li>${g.why}</li>`).join('');
+  const sels = $$('select', wrap), lis = $$('li', wl);
+  wire(box, gaps.length, () => {
+    const res = sels.map((s, i) => s.value !== '' && +s.value === gaps[i].a);
+    sels.forEach((s, i) => { s.classList.toggle('ok', res[i]); s.classList.toggle('bad', !res[i]); lis[i].classList.toggle('on', !res[i]); });
+    return res;
+  }, () => sels.forEach((s, i) => { s.value = gaps[i].a; s.classList.add('ok'); s.classList.remove('bad'); lis[i].classList.add('on'); }));
+})();
+
+/* ---------- 8 translation ---------- */
+(function(){
+  const items = [
+    ['Ніколи я не був такий утомлений.', 'Never have I been so tired. / Never was I so tired.'],
+    ['Вона рідко п’є каву ввечері.', 'Rarely does she drink coffee in the evening.'],
+    ['Ніколи раніше ми не бачили стільки снігу.', 'Never before had we seen so much snow. / Never before have we seen so much snow.'],
+    ['Він не лише запізнився, а й забув подарунок.', 'Not only was he late, but he also forgot the present. / Not only did he arrive late, but he also forgot the present.'],
+    ['Щойно я ліг спати, як задзвонив телефон.', 'Hardly had I gone to bed when the phone rang. / No sooner had I gone to bed than the phone rang.'],
+    ['Щойно ми вийшли з дому, як почався дощ.', 'No sooner had we left the house than it started to rain. / Hardly had we left the house when it started to rain.']
+  ];
+  const marks = Array(items.length).fill(null);
+  setMax('t-tr', items.length);
+  const wrap = $('#translate');
+  wrap.innerHTML = items.map(([ua, en], i) => `
+    <div class="open-item" data-i="${i}">
+      <p lang="uk">${i + 1}. ${esc(ua)}</p>
+      <input type="text" class="wide" aria-label="Your translation ${i + 1}" autocomplete="off">
+      <details class="model"><summary>Model answer</summary><div>${esc(en)}</div></details>
+      <div class="selfmark" role="group" aria-label="Mark your answer ${i + 1}">
+        <button type="button" class="yes" aria-pressed="false">✓ Mine is right</button>
+        <button type="button" class="no" aria-pressed="false">✗ Not quite</button>
+      </div>
+    </div>`).join('');
+  $$('.open-item', wrap).forEach(item => {
+    const i = +item.dataset.i;
+    $('details', item).addEventListener('toggle', e => { if (e.target.open) item.classList.add('revealed'); });
+    $$('.selfmark button', item).forEach(b => b.addEventListener('click', () => {
+      $$('.selfmark button', item).forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      marks[i] = b.classList.contains('yes');
+      const k = marks.filter(Boolean).length;
+      $('#trScore').textContent = k + ' / ' + items.length + ' marked right';
+      report('t-tr', k);
+    }));
+  });
+})();
+
+/* ---------- results ---------- */
+function buildResults(){
+  const tasks = $$('.task[data-title]');
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  const max = Object.values(maxes).reduce((a, b) => a + b, 0);
+  const pct = max ? Math.round(total / max * 100) : 0;
+  $('#pct').textContent = pct + '%';
+  $('#verdict').textContent = pct >= 90 ? 'Brilliant! Never have I seen such a great result!'
+    : pct >= 75 ? 'Great work! Read the explanations for the pink answers once more.'
+    : pct >= 50 ? 'Good effort. Open the rules at the top and try the weakest tasks again.'
+    : 'Keep going! Read the rules at the top, then do the tasks again.';
+  const name = $('#name').value.trim();
+  const lines = [`Negative inversion homework${name ? ' — ' + name : ''}`, `Total: ${total} / ${max} (${pct}%)`, ''];
+  $('#resultsTable').innerHTML = tasks.map(t => {
+    const s = scores[t.id], m = maxes[t.id] || 0, done = s !== undefined;
+    lines.push(`${t.dataset.title}: ${done ? s + ' / ' + m : 'not done'}${revealed[t.id] ? ' (answers shown)' : ''}`);
+    const w = done && m ? Math.round(s / m * 100) : 0;
+    return `<tr><td>${esc(t.dataset.title)}</td><td style="width:28%"><div class="meter" aria-hidden="true"><i style="width:${w}%"></i></div></td><td>${done ? s + ' / ' + m : '—'}</td></tr>`;
+  }).join('');
+  $('#copyText').value = lines.join('\n');
+  $('#resultsBody').hidden = false;
+}
+$('#seeResults').addEventListener('click', buildResults);
+$('#copyBtn').addEventListener('click', async () => {
+  buildResults();
+  const txt = $('#copyText').value;
+  try { await navigator.clipboard.writeText(txt); $('#copyMsg').textContent = 'Copied! Paste it in a message to your teacher.'; }
+  catch (e) { const ta = $('#copyText'); ta.style.display = 'block'; ta.select(); $('#copyMsg').textContent = 'Select the text below and copy it.'; }
+});
+</script>
+</body>
+</html>
