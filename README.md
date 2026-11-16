@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Inversion Showdown \| dinglish | [index-10.html](index-10.html) |
 | Negative Inversion \| dinglish | [index-9.html](index-9.html) |
 | Seven reasons to be bored — Intermediate Plus 1.3 | [seven-reasons-bored-1.3.html](seven-reasons-bored-1.3.html) |
 | Youth Work in English · Lesson 2: Have your say — participation & projects | [youth-work-lesson-2.html](youth-work-lesson-2.html) |
