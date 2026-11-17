@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero & First Conditionals — Revision · dinglish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F0E6;--card:#FFFDF8;--ink:#1F1B16;--muted:#6B6358;--line:#E3DACA;
+  --zero:#1E6F6A;--zero-bg:#E1EFEC;
+  --first:#CF4F2A;--first-bg:#FBE6DD;
+  --mix:#5A4A9C;--mix-bg:#ECE8F7;
+  --speak:#B97F0C;--speak-bg:#FBF0D4;
+  --ok:#2C7A4B;--ok-bg:#E0F2E6;--bad:#BF3A2B;--bad-bg:#FBE3DF;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0}
+button{font:inherit;cursor:pointer}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(245,240,230,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:960px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.brand{font-family:Fraunces,serif;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand span{color:var(--first)}
+.nav{display:flex;gap:6px;overflow-x:auto;flex:1;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:13px;font-weight:600;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
+.nav a:hover{border-color:var(--ink)}
+.score{white-space:nowrap;font-weight:800;font-size:14px;background:var(--ink);color:#fff;padding:6px 14px;border-radius:99px}
+
+/* hero */
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.hero{padding:48px 0 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.kicker{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.hero h1{font-size:clamp(34px,6vw,56px);font-weight:800;letter-spacing:-1.5px;margin-top:8px}
+.hero p{max-width:560px;color:var(--muted);margin:14px 0 0}
+.badges{display:flex;gap:10px}
+.big-num{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-family:Fraunces,serif;font-weight:800;font-size:44px;color:#fff}
+.big-num.z{background:var(--zero);transform:rotate(-8deg)}
+.big-num.f{background:var(--first);transform:rotate(6deg)}
+
+/* sections */
+section{padding:28px 0 8px}
+section[data-acc=warm]{--acc:var(--speak);--acc-bg:var(--speak-bg)}
+section[data-acc=zero]{--acc:var(--zero);--acc-bg:var(--zero-bg)}
+section[data-acc=first]{--acc:var(--first);--acc-bg:var(--first-bg)}
+section[data-acc=mix]{--acc:var(--mix);--acc-bg:var(--mix-bg)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:18px 0 18px;border-top:3px solid var(--acc);padding-top:16px}
+.sec-head .part{font-weight:800;color:var(--acc);font-size:14px;text-transform:uppercase;letter-spacing:1.5px}
+.sec-head h2{font-size:clamp(26px,4vw,36px);letter-spacing:-.5px}
+
+/* grammar box */
+.gram{background:var(--acc-bg);border-radius:20px;padding:24px 26px;margin-bottom:22px}
+.gram h3{font-size:22px;margin-bottom:10px}
+.formula{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;font-weight:800;margin:6px 0 14px}
+.formula b{background:var(--card);border:2px solid var(--acc);border-radius:10px;padding:4px 10px;font-weight:800}
+.gram ul{margin:0;padding-left:20px}
+.gram li{margin:4px 0}
+.gram em{font-style:normal;font-weight:700;color:var(--acc)}
+.gram .warn{margin-top:12px;background:var(--card);border-radius:12px;padding:10px 14px;font-size:15px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.cols>div{background:var(--card);border-radius:14px;padding:12px 14px;font-size:15px}
+
+/* tasks */
+.task{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 26px;margin-bottom:22px}
+.t-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.num{width:36px;height:36px;border-radius:12px;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
+.t-head h3{font-size:22px;flex:1}
+.tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--acc-bg);color:var(--acc);text-transform:uppercase;letter-spacing:.8px}
+.tscore{font-size:13px;font-weight:800;color:var(--muted)}
+.instr{color:var(--muted);margin:10px 0 18px;font-size:15px}
+.instr b{color:var(--ink)}
+
+.btn{border:0;background:var(--ink);color:#fff;font-weight:700;padding:10px 18px;border-radius:12px;margin-top:16px}
+.btn:hover{opacity:.88}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.row-btns{display:flex;gap:10px;flex-wrap:wrap}
+
+/* fact or myth */
+.fm{display:grid;gap:10px}
+.fm-item{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center}
+.fm-item .s{font-weight:600}
+.fm-btns{display:flex;gap:6px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:6px 12px;font-weight:700;font-size:14px}
+.chip:hover:not(:disabled){border-color:var(--ink)}
+.chip:disabled{cursor:default}
+.chip.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.chip.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.chip.reveal{border-color:var(--ok);color:var(--ok)}
+.expl{grid-column:1/-1;font-size:14px;color:var(--muted);display:none;border-top:1px dashed var(--line);padding-top:8px}
+.expl.show{display:block}
+
+/* match */
+.match{display:grid;gap:10px}
+.m-row{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;align-items:center}
+.m-row .a{font-weight:600}
+select{font:inherit;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);width:100%}
+select.ok,input.ok{border-color:var(--ok)!important;background:var(--ok-bg)}
+select.bad,input.bad{border-color:var(--bad)!important;background:var(--bad-bg)}
+
+/* gaps */
+.gaptext{font-size:17px;line-height:2.4}
+.gaplist{margin:0;padding-left:24px;font-size:17px;line-height:2.3}
+.gaplist li{margin-bottom:4px}
+.gap{white-space:nowrap}
+.gap input{font:inherit;font-weight:700;width:11ch;border:0;border-bottom:2px dashed var(--acc);background:var(--acc-bg);border-radius:6px 6px 0 0;padding:0 6px;color:var(--ink);text-align:center}
+.gap input:focus{outline:2px solid var(--acc)}
+.hint{color:var(--muted);font-size:14px;margin-left:3px}
+.fix{color:var(--ok);font-weight:800;font-size:14px;margin-left:4px}
+.note{font-size:14px;color:var(--muted);font-style:italic}
+
+/* choice */
+.ch-item{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.ch-item .s{font-weight:600;margin-bottom:8px}
+.ch-item .opts{display:flex;gap:6px;flex-wrap:wrap}
+
+/* errors */
+.err-item{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:6px 4px;align-items:center}
+.tok{border:0;background:transparent;padding:2px 5px;border-radius:6px;font-size:17px;font-weight:600;color:var(--ink)}
+.tok:hover:not(:disabled){background:var(--acc-bg)}
+.tok:disabled{cursor:default}
+.tok.ok{background:var(--ok-bg);color:var(--ok);text-decoration:line-through}
+.tok.bad{background:var(--bad-bg);color:var(--bad)}
+.tok.miss{outline:2px solid var(--ok)}
+.err-item .nm{margin-left:auto}
+.corr{flex-basis:100%;font-size:14px;color:var(--ok);font-weight:700;display:none}
+.corr.show{display:block}
+
+/* speaking */
+.speak{background:var(--speak-bg);border-left:4px solid var(--speak);border-radius:0 14px 14px 0;padding:14px 18px;margin-top:18px}
+.speak .lbl{font-weight:800;color:var(--speak);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.speak ul{margin:6px 0 0;padding-left:20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.card .ic{font-size:26px}
+.card b{display:block;margin:4px 0}
+.card small{color:var(--muted);display:block;line-height:1.45}
+
+/* writing */
+.wr{display:grid;gap:10px}
+.wr label{display:grid;grid-template-columns:minmax(180px,.8fr) 1.2fr;gap:12px;align-items:center;font-weight:600}
+.wr input,.tr textarea,.name-in{font:inherit;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;background:#fff;width:100%}
+.wr input:focus,.tr textarea:focus{outline:2px solid var(--acc);border-color:transparent}
+
+/* spinner */
+.spin{text-align:center;padding:10px 0}
+.qcard{background:var(--acc-bg);border-radius:20px;padding:34px 24px;min-height:150px;display:grid;place-items:center;font-family:Fraunces,serif;font-size:clamp(20px,3.4vw,28px);font-weight:600;line-height:1.3}
+.qcount{color:var(--muted);font-size:13px;margin-top:10px}
+
+/* translation */
+.tr{display:grid;gap:14px}
+.tr-item .ua{font-weight:700;margin-bottom:6px}
+.tr-item .ua i{color:var(--muted);font-weight:500;font-size:14px}
+.tr textarea{min-height:46px;resize:vertical}
+.model{display:none;margin-top:6px;background:var(--ok-bg);color:var(--ok);font-weight:700;border-radius:10px;padding:8px 12px;font-size:15px}
+.model.show{display:block}
+.mini{font-size:13px;border:0;background:none;color:var(--muted);text-decoration:underline;padding:4px 0}
+
+/* finish */
+.finish{background:var(--ink);color:#fff;border-radius:24px;padding:30px;margin:30px 0 50px}
+.finish h2{font-size:30px}
+.finish p{color:#cfc7b8}
+.finish .btn{background:var(--first)}
+.finish .btn.ghost{color:#fff;border-color:#fff;background:transparent}
+.finish .name-in{max-width:320px;margin-top:6px;color:var(--ink)}
+#copyOut{display:none;width:100%;min-height:200px;margin-top:14px;font:13px/1.5 monospace;border-radius:12px;padding:12px}
+.toast{margin-top:10px;font-weight:700;color:#9fe0b6;min-height:1.5em}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 40px}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .badges{order:-1}
+  .big-num{width:60px;height:60px;font-size:32px}
+  .task,.gram{padding:18px}
+  .fm-item{grid-template-columns:1fr}
+  .m-row,.wr label,.cols{grid-template-columns:1fr}
+  .gaptext,.gaplist{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="bar-in">
+  <div class="brand">ding<span>lish</span></div>
+  <nav class="nav">
+    <a href="#warmup">Warm-up</a>
+    <a href="#zero">Zero</a>
+    <a href="#first">First</a>
+    <a href="#mix">Zero or First?</a>
+    <a href="#translate">Translate</a>
+    <a href="#finish">Finish</a>
+  </nav>
+  <div class="score" title="Your score"><span id="scoreNum">0</span> / <span id="scoreTot">0</span></div>
+</div></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <div class="kicker">Pre-Intermediate · Grammar revision</div>
+      <h1>Zero &amp; First Conditionals</h1>
+      <p>Myths, superstitions, butterfly effects and a few traps. Повторюємо, коли щось відбувається <b>завжди</b>, а коли — <b>може статися в майбутньому</b>.</p>
+    </div>
+    <div class="badges"><div class="big-num z">0</div><div class="big-num f">1</div></div>
+  </header>
+
+  <!-- WARM-UP -->
+  <section id="warmup" data-acc="warm">
+    <div class="sec-head"><span class="part">Warm-up</span><h2>Fact or Myth?</h2></div>
+    <div class="task">
+      <div class="t-head"><div class="num">★</div><h3>Do you believe it?</h3><span class="tscore" data-score="fm"></span></div>
+      <p class="instr">Read each sentence. Is it a <b>fact</b> or a <b>myth</b>? Make a guess — then read the explanation.</p>
+      <div class="fm" id="fm"></div>
+      <div class="speak">
+        <div class="lbl">🗣 Speaking</div>
+        Which answer surprised you most? Do you know any other “facts” that are actually myths?<br>
+        <span class="note">Look at the sentences again: what tense do we use in both parts? Why?</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZERO -->
+  <section id="zero" data-acc="zero">
+    <div class="sec-head"><span class="part">Part 1</span><h2>Zero Conditional</h2></div>
+
+    <div class="gram">
+      <h3>Коли щось відбувається завжди</h3>
+      <div class="formula"><b>If / When</b> + <b>Present Simple</b> , <b>Present Simple</b></div>
+      <ul>
+        <li><em>факти та закони природи:</em> If you heat ice, it melts.</li>
+        <li><em>звички — те, що з тобою стається щоразу:</em> If I drink coffee late, I can't sleep.</li>
+        <li><em>інструкції та поради</em> — у другій частині наказовий спосіб: If you feel cold, <u>put on</u> a jumper.</li>
+      </ul>
+      <div class="warn">💡 Тут <b>if = when</b> (щоразу, коли). Якщо <b>if</b> на початку — ставимо кому. Якщо в середині — коми немає: <i>Ice melts if you heat it.</i></div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">1</div><h3>How things work</h3><span class="tag">Grammar</span><span class="tscore" data-score="match"></span></div>
+      <p class="instr">Match the beginnings with the endings. One ending is an instruction — find it!</p>
+      <div class="match" id="match"></div>
+      <button class="btn" onclick="checkMatch()">Check</button>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">2</div><h3>My personal rules</h3><span class="tag">Writing + Speaking</span></div>
+      <p class="instr">Finish the sentences so they are true for <b>you</b>. Use the Present Simple in both parts.</p>
+      <div class="wr" id="rules"></div>
+      <div class="speak">
+        <div class="lbl">🗣 Speaking</div>
+        Read your rules to your teacher/partner. Listen to theirs and ask a follow-up question:
+        <ul><li>Does it really help?</li><li>How often does that happen?</li><li>What happens if that doesn't work?</li></ul>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">3</div><h3>The Life Help Robot</h3><span class="tag">Speaking</span></div>
+      <p class="instr">You are a robot that helps people with everyday problems. Give <b>two instructions</b> for each problem: <b>If + Present Simple, imperative</b>.<br>
+      <i>Example: If your laptop is slow, close the tabs you don't need. If that doesn't help, restart it.</i></p>
+      <div class="cards">
+        <div class="card"><div class="ic">💻</div><b>My laptop is very slow.</b></div>
+        <div class="card"><div class="ic">🌱</div><b>My plant's leaves are turning yellow.</b></div>
+        <div class="card"><div class="ic">😴</div><b>I always feel sleepy after lunch.</b></div>
+        <div class="card"><div class="ic">📚</div><b>I can't remember new English words.</b></div>
+        <div class="card"><div class="ic">🔊</div><b>My neighbours are noisy at night.</b></div>
+        <div class="card"><div class="ic">😰</div><b>I get nervous before presentations.</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIRST -->
+  <section id="first" data-acc="first">
+    <div class="sec-head"><span class="part">Part 2</span><h2>First Conditional</h2></div>
+
+    <div class="gram">
+      <h3>Реальна ситуація в майбутньому</h3>
+      <div class="formula"><b>If</b> + <b>Present Simple</b> , <b>will / won't + V</b></div>
+      <p style="margin:0 0 10px">If it rains tomorrow, we'll stay at home. — Можливо, піде дощ, і тоді ось результат.</p>
+      <div class="warn">⚠️ Після <b>if</b> ніколи не ставимо <b>will</b>: ❌ <s>If it will rain</s> → ✅ If it rains. Те саме після <b>when, as soon as, unless</b>.</div>
+      <ul style="margin-top:12px">
+        <li>Замість <b>will</b> можна: <em>might / may</em> (можливо) — If you're lucky, you might win; <em>can</em>; <em>наказовий спосіб</em> — If you see Max, say hi.</li>
+      </ul>
+      <div class="cols">
+        <div><b>if</b> — якщо (може статися, а може й ні)<br><b>when</b> — коли (точно станеться)</div>
+        <div><b>as soon as</b> — щойно, як тільки<br><b>unless</b> = if … not. Після unless — <u>стверджувальна</u> форма: Unless you hurry ✅ / <s>Unless you don't hurry</s> ❌</div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">4</div><h3>The butterfly effect</h3><span class="tag">Grammar</span><span class="tscore" data-score="chain"></span></div>
+      <p class="instr">One small decision — a big result! Put the verbs in brackets in the correct form.</p>
+      <div class="gaptext" id="chain"></div>
+      <button class="btn" onclick="checkGaps('chain')">Check</button>
+      <div class="speak">
+        <div class="lbl">🗣 Speaking</div>
+        Now make your own chain with your teacher/partner. Take turns: each person adds one link. Try to get to 6 links!
+        <ul><li>If I win 10,000 hryvnias tomorrow, …</li><li>If it snows a lot this weekend, …</li><li>If I start learning Spanish next month, …</li></ul>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">5</div><h3>Superstitions</h3><span class="tag">Grammar + Speaking</span><span class="tscore" data-score="sup"></span></div>
+      <p class="instr">Put the verbs in the correct form. <b>Careful:</b> one sentence is an instruction, not a prediction.</p>
+      <ol class="gaplist" id="sup"></ol>
+      <button class="btn" onclick="checkGaps('sup')">Check</button>
+      <div class="speak">
+        <div class="lbl">🗣 Speaking</div>
+        <ul>
+          <li>Which of these superstitions do people in Ukraine believe?</li>
+          <li>Do you or your family follow any superstitions? Tell about one, starting with <b>If…</b></li>
+          <li>Do you know a superstition from another country?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">6</div><h3>if, unless, when or as soon as?</h3><span class="tag">Grammar</span><span class="tscore" data-score="choice"></span></div>
+      <p class="instr">Choose the best word. Read the context — it helps!</p>
+      <div id="choice"></div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">7</div><h3>Let's make a deal</h3><span class="tag">Speaking · Role-play</span></div>
+      <p class="instr">Choose a card. You are <b>A</b>, your teacher/partner is <b>B</b>. Negotiate! Make offers and conditions with <b>If… / Unless… / As soon as…</b><br>
+      <i>Example: — If you let me go to the party, I'll be home by 11. — OK, but if you're late, you won't go out next weekend.</i></p>
+      <div class="cards">
+        <div class="card"><div class="ic">🎉</div><b>Teenager & parent</b><small>A wants to go to a party until midnight. B is not happy about it.</small></div>
+        <div class="card"><div class="ic">💼</div><b>Employee & boss</b><small>A wants to work from home on Fridays. B thinks the team needs A in the office.</small></div>
+        <div class="card"><div class="ic">🍳</div><b>Flatmates</b><small>A is tired of cleaning the kitchen alone. B is always “too busy”.</small></div>
+        <div class="card"><div class="ic">🚲</div><b>Buyer & seller</b><small>A wants to buy B's used bike, but thinks the price is too high.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MIX -->
+  <section id="mix" data-acc="mix">
+    <div class="sec-head"><span class="part">Part 3</span><h2>Zero or First?</h2></div>
+
+    <div class="gram">
+      <h3>Завжди — чи цього разу?</h3>
+      <div class="cols" style="margin-top:0">
+        <div><b>Zero</b> — загальне правило, так буває завжди:<br><i>If you leave chocolate in the sun, it <u>melts</u>.</i></div>
+        <div><b>First</b> — конкретна ситуація в майбутньому:<br><i>If you leave <u>this</u> chocolate in the car <u>today</u>, it <u>will melt</u>.</i></div>
+      </div>
+      <div class="warn">🔎 Підказки: <b>today, tomorrow, tonight, this, my, your</b> + конкретна річ → швидше <b>First</b>. <b>always, usually, people</b>, загальні речі (cacti, chocolate) → швидше <b>Zero</b>.</div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">8</div><h3>Always or this time?</h3><span class="tag">Grammar</span><span class="tscore" data-score="pairs"></span></div>
+      <p class="instr">Read carefully: is it <b>always true</b> or <b>one specific situation</b> in the future? Put the verbs in the correct form.</p>
+      <ol class="gaplist" id="pairs"></ol>
+      <button class="btn" onclick="checkGaps('pairs')">Check</button>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">9</div><h3>Error hunt</h3><span class="tag">Grammar</span><span class="tscore" data-score="err"></span></div>
+      <p class="instr">Some sentences have <b>one wrong word</b>. Click on it. If the sentence is correct, click <b>No mistake</b>. You have only one try!</p>
+      <div id="err"></div>
+    </div>
+
+    <div class="task">
+      <div class="t-head"><div class="num">10</div><h3>What if…?</h3><span class="tag">Speaking</span></div>
+      <p class="instr">Click for a question and answer it in <b>2–3 sentences</b>. Use the same conditional as the question: is it about <b>always</b> or about <b>the future</b>?</p>
+      <div class="spin">
+        <div class="qcard" id="qcard">Click the button to start ✨</div>
+        <button class="btn" onclick="nextQ()">Next question</button>
+        <div class="qcount" id="qcount"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSLATE -->
+  <section id="translate" data-acc="mix">
+    <div class="sec-head"><span class="part">Final task</span><h2>Translate</h2></div>
+    <div class="task">
+      <div class="t-head"><div class="num">11</div><h3>Ukrainian → English</h3><span class="tag">Translation</span></div>
+      <p class="instr">Translate the sentences into English. Then check the model answer — sometimes more than one version is correct.</p>
+      <div class="tr" id="tr"></div>
+      <div class="row-btns"><button class="btn ghost" onclick="showAllModels()">Show all model answers</button></div>
+    </div>
+  </section>
+
+  <section id="finish">
+    <div class="finish">
+      <h2>Well done! 🎉</h2>
+      <p>Your score: <b id="finScore" style="color:#fff">0</b>. Click the button, then paste your answers into a message to your teacher.</p>
+      <input class="name-in" id="sname" placeholder="Your name">
+      <div class="row-btns">
+        <button class="btn" onclick="copyAnswers()">Copy my answers</button>
+        <button class="btn ghost" onclick="resetAll()">Start again</button>
+      </div>
+      <div class="toast" id="toast"></div>
+      <textarea id="copyOut" readonly></textarea>
+    </div>
+  </section>
+</div>
+<footer>dinglish · Zero &amp; First Conditionals · Pre-Intermediate</footer>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+function norm(s){
+  s=(s||"").toLowerCase().replace(/[’‘`´]/g,"'").replace(/\s+/g," ").trim().replace(/[.!?,;]+$/,"");
+  [[/\bwon't\b/g,"will not"],[/\bcan't\b/g,"can not"],[/\bcannot\b/g,"can not"],[/n't\b/g," not"],[/'ll\b/g," will"],[/\bi'm\b/g,"i am"],[/'s\b/g," is"],[/'re\b/g," are"]]
+    .forEach(([r,v])=>{s=s.replace(r,v)});
+  return s.replace(/\s+/g," ").trim();
+}
+function pretty(a){
+  return a.replace(/\bwill not\b/g,"won't").replace(/\bdo not\b/g,"don't").replace(/\bdoes not\b/g,"doesn't").replace(/\bis not\b/g,"isn't");
+}
+const SC={};
+let TOTAL=0;
+function setScore(id,got,tot){
+  SC[id]={got,tot};
+  const el=document.querySelector(`[data-score="${id}"]`); if(el) el.textContent=`${got} / ${tot}`;
+  let g=0; Object.values(SC).forEach(s=>g+=s.got);
+  $("scoreNum").textContent=g; $("finScore").textContent=`${g} / ${TOTAL}`;
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+/* ---------- warm-up: fact or myth ---------- */
+const FACTS=[
+ ["If you crack your knuckles a lot, you get arthritis.","myth","The sound is just gas bubbles in the joint. Studies show no link with arthritis."],
+ ["If you put a banana in the fridge, its skin turns black.","fact","The cold damages the skin, so it goes dark — but the fruit inside is fine."],
+ ["If you cut an earthworm in half, you get two worms.","myth","Usually only the head end can survive and grow a new tail. The other half dies."],
+ ["If you show a goldfish something, it forgets it after three seconds.","myth","Goldfish can remember things for months. Scientists even train them!"],
+ ["If you go up a high mountain, water boils at a lower temperature.","fact","There's less air pressure, so water boils below 100°C. On top of Everest it boils at about 70°C."],
+ ["If you swallow chewing gum, it stays in your stomach for seven years.","myth","Your body can't digest it, but it leaves your body in a few days, like other food."],
+ ["If you touch a baby bird, its mother rejects it.","myth","Most birds have a very weak sense of smell. The parents usually come back."],
+ ["If an octopus loses an arm, it grows a new one.","fact","Octopuses can regrow a lost arm. It takes a few months."]
+];
+const fmState={};
+function renderFM(){
+  $("fm").innerHTML=FACTS.map((f,i)=>`
+   <div class="fm-item">
+     <div class="s">${i+1}. ${esc(f[0])}</div>
+     <div class="fm-btns"><button class="chip" data-v="fact" onclick="answerFM(${i},'fact',this)">Fact</button><button class="chip" data-v="myth" onclick="answerFM(${i},'myth',this)">Myth</button></div>
+     <div class="expl" id="fmx${i}">${f[1]==="fact"?"✅ Fact.":"❌ Myth."} ${esc(f[2])}</div>
+   </div>`).join("");
+}
+function answerFM(i,v,btn){
+  const box=btn.parentElement; const ok=v===FACTS[i][1];
+  box.querySelectorAll("button").forEach(b=>{b.disabled=true; if(b.dataset.v===FACTS[i][1]&&!ok) b.classList.add("reveal")});
+  btn.classList.add(ok?"ok":"bad"); $("fmx"+i).classList.add("show");
+  fmState[i]=ok; setScore("fm",Object.values(fmState).filter(Boolean).length,FACTS.length);
+}
+
+/* ---------- task 1: match ---------- */
+const MATCH=[
+ ["If you leave milk out of the fridge,","it goes sour."],
+ ["If you press Ctrl + Z,","the computer undoes your last action."],
+ ["If you don't charge your phone,","it dies by the evening."],
+ ["If plants don't get enough light,","their leaves turn yellow."],
+ ["If you look at a screen for hours,","your eyes get tired."],
+ ["When I drink coffee after 6 pm,","I can't fall asleep."],
+ ["If you feel cold,","put on a warm jumper."]
+];
+function renderMatch(){
+  const opts=shuffle(MATCH.map(m=>m[1]));
+  $("match").innerHTML=MATCH.map((m,i)=>`
+    <div class="m-row"><div class="a">${esc(m[0])}</div>
+    <select id="m${i}"><option value="">— choose —</option>${opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select></div>`).join("");
+}
+function checkMatch(){
+  let got=0; MATCH.forEach((m,i)=>{const s=$("m"+i);const ok=s.value===m[1];s.classList.toggle("ok",ok);s.classList.toggle("bad",!ok);if(ok)got++});
+  setScore("match",got,MATCH.length);
+}
+
+/* ---------- task 2: rules ---------- */
+const RULES=["If I can't sleep, I…","When I'm in a bad mood, I…","If someone is late for a meeting with me, I…","If I have a free evening, I…","If I forget my phone at home, I…"];
+function renderRules(){
+  $("rules").innerHTML=RULES.map((r,i)=>`<label>${esc(r)}<input id="r${i}" placeholder="…"></label>`).join("");
+}
+
+/* ---------- gap tasks ---------- */
+function gapHTML(t){
+  return esc(t).replace(/\{([^|}]*)\|([^}]*)\}/g,(m,hint,ans)=>
+    `<span class="gap"><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-ans="${ans}" aria-label="${hint}"><span class="hint">(${hint})</span><span class="fix"></span></span>`);
+}
+const CHAIN="If I {stay|stay} up late tonight, I {oversleep|will oversleep} tomorrow. If I {oversleep|oversleep}, I {miss|will miss} the bus. If I {miss|miss} the bus, I {be|will be} late for work. If I {be|am} late, my boss {not be|will not be} happy. If my boss {not be|is not} happy, she {not give|will not give} me a day off on Friday. And if I {not get|do not get} a day off, I {not go|will not go} to the concert!";
+const SUP=[
+ "If you break a mirror, you {have|will have} seven years of bad luck.",
+ "If you {whistle|whistle} inside the house, you won't have any money.",
+ "If a black cat {cross|crosses} your path, something bad {happen|will happen/might happen/may happen}.",
+ "If you {sit|sit} at the corner of the table, you {not get|will not get} married for seven years.",
+ "If your left hand {itch|itches}, you {get|will get/might get/may get} some money.",
+ "If you {go|go} back home because you forgot something, {look|look} in the mirror before you leave again.",
+ "If you {not knock|do not knock} on wood, your good luck {go|will go/might go/may go} away."
+];
+const PAIRS=[
+ "If you {not water|do not water} cacti, they {survive|survive} for months.",
+ "If you {not water|do not water} my cactus while I'm away, it {die|will die}!",
+ "If you {leave|leave} chocolate in the sun, it {melt|melts}.",
+ "If you {leave|leave} that chocolate in the car today, it {melt|will melt} — it's 35 degrees outside!",
+ "My cat always {sleep|sleeps} on my laptop if I {leave|leave} it open.",
+ "If you {not close|do not close} your laptop, the cat {sleep|will sleep} on it again tonight.",
+ "People {feel|feel} more confident if they {practise|practise/practice} speaking every day.",
+ "If you {practise|practise/practice} every day this month, you {feel|will feel} much more confident at your interview."
+];
+function renderGaps(){
+  $("chain").innerHTML=gapHTML(CHAIN);
+  $("sup").innerHTML=SUP.map(s=>`<li>${gapHTML(s)}</li>`).join("");
+  $("pairs").innerHTML=PAIRS.map(s=>`<li>${gapHTML(s)}</li>`).join("");
+}
+function checkGaps(id){
+  let got=0,tot=0;
+  $(id).querySelectorAll("input[data-ans]").forEach(inp=>{
+    tot++; const alts=inp.dataset.ans.split("/");
+    const ok=inp.value.trim()!=="" && alts.some(a=>norm(a)===norm(inp.value));
+    inp.classList.toggle("ok",ok); inp.classList.toggle("bad",!ok);
+    inp.parentElement.querySelector(".fix").textContent= ok?"":"→ "+pretty(alts[0]);
+    if(ok) got++;
+  });
+  setScore(id,got,tot);
+}
+
+/* ---------- task 6: choice ---------- */
+const OPTS=["if","unless","when","as soon as"];
+const CHOICE=[
+ ["___ you hurry, you'll miss the last train.","unless","Unless you hurry = If you don't hurry."],
+ ["I'll call you ___ the plane lands — the very first minute, I promise!","as soon as","“The very first minute” → as soon as."],
+ ["We work in the same office, so ___ I see Olha tomorrow, I'll tell her the news.","when","You're sure you'll see her → when."],
+ ["___ it's sunny on Saturday, we'll have a picnic. But the forecast isn't great…","if","You're not sure it will be sunny → if."],
+ ["You won't get this job ___ you improve your English.","unless","Unless you improve = if you don't improve."],
+ ["___ you don't like the film, we'll leave in the middle.","if","“Unless you don't” is a double negative ✗. With a negative verb, use if."],
+ ["Don't open the door ___ you know who it is.","unless","Don't open it if you don't know who it is → unless."],
+ ["___ I turn 30 next year, I'll have a big party.","when","Your birthday will definitely come → when."]
+];
+const chState={};
+function renderChoice(){
+  $("choice").innerHTML=CHOICE.map((c,i)=>`
+   <div class="ch-item"><div class="s">${i+1}. ${esc(c[0]).replace("___","<b>_____</b>")}</div>
+   <div class="opts">${OPTS.map(o=>`<button class="chip" data-v="${o}" onclick="answerCh(${i},'${o}',this)">${o}</button>`).join("")}</div>
+   <div class="expl" id="chx${i}" style="margin-top:8px">${esc(c[2])}</div></div>`).join("");
+}
+function answerCh(i,v,btn){
+  const box=btn.parentElement; const ok=v===CHOICE[i][1];
+  box.querySelectorAll("button").forEach(b=>{b.disabled=true; if(b.dataset.v===CHOICE[i][1]&&!ok) b.classList.add("reveal")});
+  btn.classList.add(ok?"ok":"bad"); $("chx"+i).classList.add("show");
+  chState[i]=ok; setScore("choice",Object.values(chState).filter(Boolean).length,CHOICE.length);
+}
+
+/* ---------- task 9: error hunt ---------- */
+const ERR=[
+ ["If it *will* rain tomorrow, we'll stay at home.","If it rains tomorrow, we'll stay at home."],
+ ["If you heat water to 100 degrees, it boils.",""],
+ ["I *call* you when I get home tonight.","I'll call you when I get home tonight."],
+ ["Unless you *don't* hurry, you'll be late.","Unless you hurry, you'll be late."],
+ ["If my sister comes on Sunday, I'll introduce you.",""],
+ ["If you *will* mix red and white, you get pink.","If you mix red and white, you get pink."],
+ ["As soon as *I'll* finish this task, I'll send it to you.","As soon as I finish this task, I'll send it to you."],
+ ["If she doesn't study, she won't pass the exam.",""],
+ ["If people *doesn't* drink enough water, they feel tired.","If people don't drink enough water, they feel tired."]
+];
+const errState={};
+function renderErr(){
+  $("err").innerHTML=ERR.map((e,i)=>{
+    const toks=e[0].split(" ").map(t=>`<button class="tok" data-err="${t.includes("*")?1:0}" onclick="answerErr(${i},this)">${esc(t.replace(/\*/g,""))}</button>`).join("");
+    return `<div class="err-item" id="e${i}"><b style="margin-right:4px">${i+1}.</b>${toks}<button class="chip nm" onclick="answerErr(${i},this,true)">No mistake</button>
+    <div class="corr" id="ec${i}">${e[1]?"✔ "+esc(e[1]):"✔ This sentence is correct."}</div></div>`;
+  }).join("");
+}
+function answerErr(i,btn,noMistake){
+  const box=$("e"+i); const hasErr=ERR[i][1]!=="";
+  const ok= noMistake ? !hasErr : btn.dataset.err==="1";
+  box.querySelectorAll("button").forEach(b=>{b.disabled=true; if(!ok && b.dataset.err==="1") b.classList.add("miss")});
+  if(noMistake){btn.classList.add(ok?"ok":"bad"); if(!ok){}} else btn.classList.add(ok?"ok":"bad");
+  if(!ok && !hasErr) box.querySelector(".nm").classList.add("reveal");
+  $("ec"+i).classList.add("show");
+  errState[i]=ok; setScore("err",Object.values(errState).filter(Boolean).length,ERR.length);
+}
+
+/* ---------- task 10: spinner ---------- */
+const QS=[
+ "What do you usually do if you can't fall asleep?",
+ "What will you do if it snows heavily this weekend?",
+ "What happens to you if you drink too much coffee?",
+ "If you have some free time tonight, what will you do?",
+ "What will you buy if you get some extra money this month?",
+ "What do you do if a friend forgets your birthday?",
+ "If the internet goes down tomorrow during your work or study, what will you do?",
+ "What happens in your city if it rains a lot?",
+ "Where will you go if you have a long weekend in spring?",
+ "How do you feel if you don't do any sport for a week?",
+ "What will you cook if friends come over on Saturday?",
+ "What do you do if you get a call from an unknown number?",
+ "If your English teacher gives you no homework this week, what will you do with the free time?",
+ "What do you do if you see a spider in your room?"
+];
+let qOrder=shuffle(QS.map((_,i)=>i)), qPos=-1;
+function nextQ(){
+  qPos++; if(qPos>=qOrder.length){qOrder=shuffle(qOrder);qPos=0}
+  $("qcard").textContent=QS[qOrder[qPos]];
+  $("qcount").textContent=`Question ${qPos+1} of ${QS.length}`;
+}
+
+/* ---------- task 11: translation ---------- */
+const TR=[
+ ["Якщо змішати синій і жовтий, вийде зелений.","","If you mix blue and yellow, you get green."],
+ ["Якщо я не висплюся, я весь день злий.","(так буває завжди)","If I don't get enough sleep, I'm angry all day."],
+ ["Якщо завтра буде сонячно, ми підемо в парк.","","If it's sunny tomorrow, we'll go to the park."],
+ ["Я напишу тобі, щойно приїду до Львова.","","I'll text you as soon as I arrive in Lviv."],
+ ["Якщо ти не поспішиш, ти запізнишся на потяг.","(use unless)","Unless you hurry, you'll miss the train."],
+ ["Якщо в тебе болить голова, випий води.","","If you have a headache, drink some water."],
+ ["Коли я повернуся додому, я приготую вечерю.","","When I get home, I'll cook dinner."],
+ ["Кажуть, якщо розбити дзеркало, буде нещастя.","","They say that if you break a mirror, you'll have bad luck."],
+ ["Якщо Марта не прийде, ми почнемо без неї.","","If Marta doesn't come, we'll start without her."],
+ ["Він не отримає цю роботу, якщо не покращить свою англійську.","(use unless)","He won't get this job unless he improves his English."]
+];
+function renderTR(){
+  $("tr").innerHTML=TR.map((t,i)=>`
+   <div class="tr-item"><div class="ua">${i+1}. ${esc(t[0])} <i>${esc(t[1])}</i></div>
+   <textarea id="t${i}" rows="1" placeholder="Your translation…"></textarea>
+   <button class="mini" onclick="document.getElementById('tm${i}').classList.toggle('show')">Show model answer</button>
+   <div class="model" id="tm${i}">${esc(t[2])}</div></div>`).join("");
+}
+function showAllModels(){TR.forEach((_,i)=>$("tm"+i).classList.add("show"))}
+
+/* ---------- finish ---------- */
+function buildSummary(){
+  const name=$("sname").value.trim()||"—";
+  const L=[]; let g=0; Object.values(SC).forEach(s=>g+=s.got);
+  L.push("dinglish · Zero & First Conditionals (revision)");
+  L.push("Student: "+name);
+  L.push(`Total score: ${g} / ${TOTAL}`);
+  const names={fm:"Warm-up: Fact or Myth",match:"1. How things work",chain:"4. Butterfly effect",sup:"5. Superstitions",choice:"6. if/unless/when/as soon as",pairs:"8. Always or this time?",err:"9. Error hunt"};
+  Object.keys(names).forEach(k=>L.push(`  ${names[k]}: ${SC[k]?SC[k].got+" / "+SC[k].tot:"not done"}`));
+  L.push(""); L.push("2. My personal rules:");
+  RULES.forEach((r,i)=>L.push(`  ${r.replace("…","")} ${$("r"+i).value.trim()||"—"}`));
+  const wrong=[];
+  ["chain","sup","pairs"].forEach(id=>$(id).querySelectorAll("input.bad").forEach(inp=>wrong.push(`  ${inp.getAttribute("aria-label")}: "${inp.value||"—"}" → ${pretty(inp.dataset.ans.split("/")[0])}`)));
+  if(wrong.length){L.push("");L.push("Gap mistakes:");L.push(...wrong)}
+  L.push(""); L.push("11. Translation:");
+  TR.forEach((t,i)=>L.push(`  ${i+1}. ${$("t"+i).value.trim()||"—"}`));
+  return L.join("\n");
+}
+async function copyAnswers(){
+  const txt=buildSummary(); const out=$("copyOut");
+  try{ await navigator.clipboard.writeText(txt); $("toast").textContent="Copied! Paste it into a message to your teacher."; out.style.display="none"; }
+  catch(e){ out.value=txt; out.style.display="block"; out.focus(); out.select(); $("toast").textContent="Select the text below and copy it."; }
+}
+function resetAll(){
+  Object.keys(SC).forEach(k=>delete SC[k]);
+  [fmState,chState,errState].forEach(o=>Object.keys(o).forEach(k=>delete o[k]));
+  document.querySelectorAll(".tscore").forEach(e=>e.textContent="");
+  init(); $("toast").textContent=""; $("copyOut").style.display="none";
+  window.scrollTo({top:0});
+}
+
+function init(){
+  renderFM(); renderMatch(); renderRules(); renderGaps(); renderChoice(); renderErr(); renderTR();
+  TOTAL=FACTS.length+MATCH.length+CHOICE.length+ERR.length+document.querySelectorAll("input[data-ans]").length;
+  $("scoreTot").textContent=TOTAL; $("scoreNum").textContent=0; $("finScore").textContent=`0 / ${TOTAL}`;
+}
+init();
+</script>
+</body>
+</html>
