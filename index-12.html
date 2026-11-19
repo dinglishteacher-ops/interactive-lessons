@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inversion homework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: friendly, focused classroom; instant, clear feedback
+   IDEA: the teacher's Miro board — dotted canvas, sticky-note grammar formulas
+   PICTURE: a normal sentence flipping into inverted order, one sticky note per slot
+   COLOUR and TYPE: light dotted board, sticky grey/yellow/orange/lilac, ink black; Lexend throughout
+   LAYOUT: board header with the flip, sticky task chips + progress, one card per task, send-off at the end */
+:root{color-scheme:light dark;
+--bg:light-dark(#f5f5f7,#131217);--card:light-dark(#fff,#1c1b21);--ink:light-dark(#1b1a20,#ecebf1);--mute:light-dark(#5f5d68,#a6a4b0);
+--line:light-dark(#e2e0e8,#302e37);--dot:light-dark(#cfcdd8,#2d2b34);
+--ok:light-dark(#0f7d48,#63d69e);--okbg:light-dark(#e9f6ef,#14281e);--bad:light-dark(#c1322a,#ff9088);--badbg:light-dark(#fdeeed,#331a1a);
+--g:#e1e4ea;--y:#f6ec7c;--o:#f2a65e;--l:#dcb7f1;--note:#1d1b22;
+--btn:light-dark(#1b1a20,#ecebf1);--btnink:light-dark(#fff,#131217)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Lexend,system-ui,sans-serif;overflow-x:clip}
+html{scroll-padding-top:84px}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:860px;margin:0 auto}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--o);outline-offset:2px}
+
+.top{background:var(--bg) radial-gradient(var(--dot) 1.3px,transparent 1.6px) 0 0/22px 22px;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;font-size:15px;letter-spacing:-.01em}
+.brand i{font-style:normal;background:var(--y);color:var(--note);padding:1px 6px;border-radius:3px}
+h1{font-size:clamp(32px,6vw,50px);line-height:1.05;margin:14px 0 8px;letter-spacing:-.025em;text-wrap:balance}
+.lede{color:var(--mute);margin:0 0 22px;max-width:60ch}
+
+.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,30px);box-shadow:0 18px 40px -28px rgba(0,0,0,.35)}
+.plain{margin:0;font-size:clamp(17px,2.4vw,21px);color:var(--mute)}
+.flipnote{font-size:13px;color:var(--mute);margin:10px 0}
+.row{display:flex;flex-wrap:wrap;gap:10px;min-height:64px;align-items:center}
+.tile{display:inline-flex;align-items:center;padding:.5em .8em;border-radius:4px;font-weight:700;color:var(--note);background:var(--y);border:0;box-shadow:0 1px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35);line-height:1.2}
+.row .tile{font-size:clamp(17px,2.6vw,24px)}
+.tile.g{background:var(--g)}.tile.y{background:var(--y)}.tile.o{background:var(--o)}.tile.l{background:var(--l)}
+.tile.p{background:transparent;box-shadow:none;color:var(--ink);font-weight:500;padding-inline:.2em}
+.drop .tile{animation:drop .5s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes drop{from{opacity:0;transform:translateY(-18px) rotate(-4deg)}to{opacity:1;transform:none}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:18px;font-size:13px;color:var(--mute)}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.dots{display:flex;gap:4px;margin-top:12px}
+.dots button{width:44px;height:28px;border:0;background:none;cursor:pointer;padding:0;display:grid;place-items:center}
+.dots button::after{content:"";width:22px;height:5px;border-radius:3px;background:var(--line)}
+.dots button[aria-current=true]::after{background:var(--ink)}
+
+.who{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px}
+.who b{font-weight:500;margin-right:4px}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-weight:500}
+.chip[aria-pressed=true]{background:var(--btn);color:var(--btnink);border-color:var(--btn)}
+#nm{min-height:44px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);padding:0 16px;font-size:16px;width:180px}
+
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.scroll{overflow-x:auto;display:flex;gap:6px;padding:10px max(5vw,16px);scrollbar-width:none}
+.scroll a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;padding:8px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);white-space:nowrap}
+.scroll a.done{border-color:var(--ok);color:var(--ok)}
+.prog{height:4px;background:var(--line)}.prog i{display:block;height:100%;width:0;background:var(--o);transition:width .4s}
+
+main{padding:clamp(20px,3vw,40px) max(5vw,16px);display:grid;gap:22px}
+.task{max-width:860px;width:100%;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,32px)}
+.th{display:flex;gap:14px;align-items:flex-start}
+.num{flex:none;width:40px;height:40px;border-radius:4px;background:var(--y);color:var(--note);display:grid;place-items:center;font-weight:800;font-size:18px;transform:rotate(-3deg);box-shadow:0 6px 12px -6px rgba(0,0,0,.4)}
+h2{font-size:22px;line-height:1.2;margin:4px 0 4px;letter-spacing:-.01em}
+h3{font-size:17px;margin:26px 0 4px}
+.instr{margin:0;color:var(--mute)}
+.rule{margin:18px 0 6px;border:1.5px dashed var(--line);border-radius:10px;padding:4px 16px}
+.rule summary{cursor:pointer;font-weight:700;padding:10px 0;min-height:44px;display:flex;align-items:center}
+.rule p{margin:8px 0}
+.fm{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}
+.fm .tile{font-size:15px}
+.plus{font-weight:800;color:var(--mute)}
+.ex{background:color-mix(in srgb,var(--g) 35%,transparent);border-radius:8px;padding:8px 12px}
+.warn{font-weight:500}
+.rt{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}
+.rt td{padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
+.rt td:first-child{font-weight:500;width:45%}
+
+ol.items{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:12px;counter-reset:n}
+.it{counter-increment:n;border:1.5px solid var(--line);border-radius:12px;padding:14px 14px 14px 46px;position:relative;transition:border-color .2s,background .2s}
+.it::before{content:counter(n);position:absolute;left:14px;top:14px;font-weight:700;color:var(--mute);font-size:15px}
+.it.ok{border-color:var(--ok);background:var(--okbg)}
+.it.bad{border-color:var(--bad);background:var(--badbg)}
+.s{margin:0 0 10px;font-size:17px}
+.s.ua{font-weight:500}
+.key{display:inline-block;font-size:13px;font-weight:800;background:var(--g);color:var(--note);padding:2px 8px;border-radius:3px;margin-left:4px;vertical-align:1px;letter-spacing:.02em}
+.gapw{font-weight:700;border-bottom:2px solid currentColor;padding:0 4px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{min-height:44px;padding:8px 16px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;text-align:left;font-size:16px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.picked{opacity:1;border-color:var(--ink);font-weight:700}
+.opt.right{opacity:1;border-color:var(--ok);color:var(--ok);font-weight:700}
+.k-mc .opts{flex-direction:column}
+.in{width:100%;min-height:46px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);padding:10px 12px;font-size:16px;resize:vertical}
+.gapline{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0;font-size:17px}
+.gapline .in{flex:1 1 220px;width:auto}
+.fb{margin:10px 0 0;font-size:15px}
+.it.ok .fb b{color:var(--ok)}.it.bad .fb b{color:var(--bad)}
+.model{font-weight:700}
+.link{background:none;border:0;padding:6px 2px;min-height:36px;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-weight:500}
+.hint{font-size:13px;color:var(--mute);margin:6px 0 0}
+.modelbox{margin:10px 0;padding:10px 12px;border-radius:8px;background:color-mix(in srgb,var(--l) 30%,transparent)}
+.modelbox .lbl{font-size:13px;font-weight:700;margin-right:6px}
+.line{min-height:56px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px;border-radius:10px;border:1.5px dashed var(--line);margin-bottom:10px}
+.ph{color:var(--mute);font-size:14px}
+.bank{display:flex;flex-wrap:wrap;gap:8px}
+.it .tile{cursor:pointer;font-size:16px;min-height:44px}
+.line .tile{background:var(--l)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.score b{font-size:20px}
+.btn{min-height:46px;padding:0 22px;border-radius:10px;border:0;background:var(--btn);color:var(--btnink);font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+
+.finish .wrap{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,32px)}
+.finish h2{font-size:clamp(26px,4vw,34px)}
+.bars{display:grid;gap:8px;margin:18px 0}
+.bar{display:grid;grid-template-columns:minmax(0,10em) minmax(0,1fr) 4.5em;gap:10px;align-items:center;font-size:14px}
+.bar .tr{height:12px;border-radius:6px;background:var(--line);overflow:hidden}.bar .tr i{display:block;height:100%;background:var(--o)}
+.bar span:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.total{font-size:clamp(36px,7vw,56px);font-weight:800;line-height:1;margin:6px 0}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+#rep{display:none;margin-top:14px;min-height:180px;font-size:14px}
+#msg{font-size:14px;color:var(--ok);min-height:1.4em;margin:8px 0 0}
+footer{text-align:center;color:var(--mute);font-size:13px;padding:10px 16px 40px}
+@media(max-width:600px){.it{padding-left:40px}.it::before{left:12px}.bar{grid-template-columns:minmax(0,7em) minmax(0,1fr) 4em}#nm{width:100%}}
+@media(prefers-reduced-motion:reduce){.drop .tile{animation:none}.prog i{transition:none}}
+</style>
+</head>
+<body>
+<header class="band top">
+  <div class="wrap">
+    <div class="brand"><i>d</i>inglish</div>
+    <h1>Inversion: homework</h1>
+    <p class="lede">B2+/C1 · Hardly &amp; No sooner · Little · Not until / Only… · Under no circumstances &amp; co. · the traps</p>
+    <div class="hero">
+      <p class="plain" id="hp"></p>
+      <p class="flipnote">↓ flip it</p>
+      <div class="row drop" id="hr" aria-live="polite"></div>
+      <div class="legend"><span style="--c:var(--g)">trigger word</span><span style="--c:var(--y)">auxiliary</span><span style="--c:var(--o)">subject</span><span style="--c:var(--l)">main verb</span></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="who"><b>I am</b>
+      <button class="chip" data-act="name" data-v="Masha">Masha</button>
+      <button class="chip" data-act="name" data-v="Alina">Alina</button>
+      <input id="nm" placeholder="or type your name" autocomplete="off">
+    </div>
+  </div>
+</header>
+<nav><div class="scroll" id="chips"></div><div class="prog"><i id="pg"></i></div></nav>
+<main id="tasks"></main>
+<section class="band finish" id="finish">
+  <div class="wrap">
+    <h2>Finished? Send it to your teacher</h2>
+    <p class="instr">Your answers are saved in this browser. When you're done, copy them and send the text to your teacher in the chat.</p>
+    <div class="total" id="tot">0%</div>
+    <div class="bars" id="bars"></div>
+    <div class="acts">
+      <button class="btn" data-act="copy">Copy my answers</button>
+      <button class="btn ghost" data-act="reset" id="rs">Start again</button>
+    </div>
+    <p id="msg"></p>
+    <textarea class="in" id="rep" readonly></textarea>
+  </div>
+</section>
+<footer>dinglish · inversion homework for Masha &amp; Alina</footer>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s||'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,!?;:"“”()…—–]/g,' ').replace(/realiz/g,'realis').replace(/practicing/g,'practising').replace(/\bgotten\b/g,'got').replace(/\s+/g,' ').trim();
+const expand=p=>{const m=p.match(/\[([^\[\]]*)\]/);if(!m)return[p];return m[1].split('|').flatMap(o=>expand(p.slice(0,m.index)+o+p.slice(m.index+m[0].length)))};
+const matches=(v,acc)=>{const n=norm(v);return !!n&&acc.some(p=>expand(p).some(x=>norm(x)===n))};
+const fm=(...p)=>'<div class="fm">'+p.map(([t,c],i)=>(i&&c!=='p'?'<span class="plus">+</span>':'')+`<span class="tile ${c}">${t}</span>`).join('')+'</div>';
+
+const HERO=[
+ {n:'He had hardly sat down when the phone rang.',i:[['Hardly','g'],['had','y'],['he','o'],['sat down','l'],['when the phone rang.','p']]},
+ {n:'She didn’t know it was a trap.',i:[['Little','g'],['did','y'],['she','o'],['know','l'],['it was a trap.','p']]},
+ {n:'I realised it only when I got home.',i:[['Not until I got home','g'],['did','y'],['I','o'],['realise','l'],['it.','p']]},
+ {n:'You should never leave the car.',i:[['Under no circumstances','g'],['should','y'],['you','o'],['leave','l'],['the car.','p']]}
+];
+
+const TASKS=[
+{id:'t1',chip:'Spot it',title:'Spot the inversion',instr:'Read each sentence. Is the word order correct? Tap your answer — your first choice counts.',
+ blocks:[{k:'tf',items:[
+  {s:'Never have I seen such a mess in my life.',ok:true,why:'Never на початку → інверсія: <b>have I seen</b>.'},
+  {s:'Only Billy did know the answer.',ok:false,why:'Only стосується підмета → без інверсії: <b>Only Billy knew</b> the answer.'},
+  {s:'Not until I got home I realised I’d lost my keys.',ok:false,why:'Інверсія в другій частині: Not until I got home <b>did I realise</b>…'},
+  {s:'In no time was he asleep.',ok:false,why:'In no time = «миттєво», це не заперечення → <b>In no time he was</b> asleep.'},
+  {s:'Little did she suspect that the party was for her.',ok:true,why:'Little + did + she + suspect ✓'},
+  {s:'Not long ago did I meet him.',ok:false,why:'Not long ago — не заперечення змісту → <b>Not long ago I met</b> him.'},
+  {s:'Hardly had we sat down when the phone rang.',ok:true,why:'Hardly … had we … <b>when</b> ✓'},
+  {s:'No sooner had the film started when the lights went out.',ok:false,why:'No sooner — тільки з <b>than</b>: …than the lights went out.'},
+  {s:'Under no circumstances you should share your password.',ok:false,why:'Потрібна інверсія: Under no circumstances <b>should you</b> share…'},
+  {s:'Only after the meeting did she understand the problem.',ok:true,why:'Only after + інверсія в головній частині ✓'}]}]},
+
+{id:'t2',chip:'Hardly / No sooner',title:'Hardly … when / No sooner … than',instr:'First choose the missing word, then rewrite the sentences starting with the words in capitals.',
+ rule:`<p><b>Hardly / Scarcely / Barely … when</b> і <b>No sooner … than</b> = «ледве / щойно…, як». Перша дія — Past Perfect з інверсією, друга — звичайний Past Simple.</p>${fm(['Hardly','g'],['had','y'],['subject','o'],['V3','l'],['… when + past simple','p'])}${fm(['No sooner','g'],['had','y'],['subject','o'],['V3','l'],['… than + past simple','p'])}<p class="warn">Hardly → <b>when</b>, No sooner → <b>than</b>. Не плутай!</p>`,
+ blocks:[
+ {k:'pick',h:'A. than or when?',items:[
+  {a:'No sooner had I left the house',b:'it started to rain.',o:['than','when'],ans:0},
+  {a:'Hardly had she opened the door',b:'the dog ran out.',o:['than','when'],ans:1},
+  {a:'Scarcely had we arrived',b:'the meeting began.',o:['than','when'],ans:1},
+  {a:'No sooner had he paid',b:'he realised his mistake.',o:['than','when'],ans:0},
+  {a:'Barely had the plane landed',b:'everyone stood up.',o:['than','when'],ans:1},
+  {a:'Hardly had the teacher left the room',b:'the students started chatting.',o:['than','when'],ans:1}]},
+ {k:'type',h:'B. Rewrite',items:[
+  {p:'As soon as I got into bed, my phone rang.',key:'NO SOONER',acc:['no sooner had i [got|gone] [into|to] bed than my phone rang'],m:'No sooner had I got into bed than my phone rang.'},
+  {p:'The match had just started when it began to snow.',key:'HARDLY',acc:['hardly had the match [just |][started|begun] when it [began|started] to snow'],m:'Hardly had the match started when it began to snow.'},
+  {p:'She had only just finished her presentation when the projector broke.',key:'NO SOONER',acc:['no sooner had she [just |]finished her presentation than the projector broke'],m:'No sooner had she finished her presentation than the projector broke.'},
+  {p:'We had just ordered our food when the fire alarm went off.',key:'HARDLY',acc:['hardly had we [just |]ordered [our food|] when the fire alarm went off'],m:'Hardly had we ordered our food when the fire alarm went off.'}]},
+ {k:'open',h:'C. Your turn',items:[
+  {p:'Finish about your own life: No sooner had I … than …',ph:'No sooner had I…'},
+  {p:'Finish about your own life: Hardly had I … when …',ph:'Hardly had I…'}]}]},
+
+{id:'t3',chip:'Little',title:'Little = «і гадки не мав»',instr:'Rewrite each sentence starting with Little. Keep the meaning the same.',
+ rule:`<p><b>Little</b> тут означає не «мало», а «зовсім не, і гадки не мав». Найчастіше з дієсловами думки: <b>know, realise, suspect, imagine, think, expect</b>. Улюблений прийом оповідачів: читач знає більше, ніж герой.</p>${fm(['Little','g'],['did / do','y'],['subject','o'],['verb','l'])}<p class="ex">He didn’t know it was his last race. → <b>Little did he know</b> it was his last race.</p>`,
+ blocks:[
+ {k:'type',items:[
+  {p:'He didn’t know that his life was about to change.',key:'LITTLE',acc:['little did he [know|realise|suspect] [that|] his life was about to change'],m:'Little did he know (that) his life was about to change.'},
+  {p:'We didn’t realise how dangerous the hike would be.',key:'LITTLE',acc:['little did we [realise|know] how dangerous the hike would be'],m:'Little did we realise how dangerous the hike would be.'},
+  {p:'She had no idea that her boss was watching her.',key:'LITTLE',acc:['little did she [know|realise|suspect] [that|] her boss was watching her'],m:'Little did she know (that) her boss was watching her.'},
+  {p:'They didn’t expect the test to be so difficult.',key:'LITTLE',acc:['little did they expect the test to be so difficult'],m:'Little did they expect the test to be so difficult.'},
+  {p:'I never imagined that one day I would be teaching English.',key:'LITTLE',acc:['little did i [imagine|think|know] [that|] one day [i would|i\'d] be teaching english'],m:'Little did I imagine (that) one day I would be teaching English.'}]},
+ {k:'open',h:'Your turn',items:[{p:'Write the first line of a story that starts with “Little did…”',ph:'Little did Anna know that the old key in her pocket…'}]}]},
+
+{id:'t4',chip:'Not until / Only…',title:'Not until / Only when / Only after / Only by / Only if',instr:'A: tap the sticky notes in the right order. B: rewrite the sentences starting with the words in capitals.',
+ rule:`<p>Тут дві частини, і інверсія — <b>лише в другій</b> (головній). Перша частина — звичайний порядок слів.</p>${fm(['Not until / Only when / Only after…','g'],['+ normal clause,','p'],['auxiliary','y'],['subject','o'],['verb','l'])}<p class="ex">✗ Not until <s>did I get</s> home I realised…<br>✓ Not until I got home <b>did I realise</b>…</p><p class="ex">Only by training <b>can you</b> win · Only if you practise <b>will you</b> improve · Only then <b>did I</b> understand</p>`,
+ blocks:[
+ {k:'order',h:'A. Build the sentence',items:[
+  {t:['Not until','the lights went out','did','we','notice','the strange noise.']},
+  {t:['Only when','she read the letter','did','she','understand','the truth.']},
+  {t:['Only after','the exam','did','I','finally','relax.']},
+  {t:['Only by','working together','can','we','solve','this problem.']},
+  {t:['Only if','you book in advance','will','you','get','a table.']},
+  {t:['Only then','did','he','realise','his mistake.']}]},
+ {k:'type',h:'B. Rewrite',items:[
+  {p:'I only understood the instructions when I read them twice.',key:'ONLY WHEN',acc:['only when i [had |]read them twice did i understand the instructions'],m:'Only when I read them twice did I understand the instructions.'},
+  {p:'She didn’t start enjoying her job until her second year.',key:'NOT UNTIL',acc:['not until her second year did she [start|begin] [enjoying|to enjoy] her job'],m:'Not until her second year did she start enjoying her job.'},
+  {p:'You can only improve your speaking by practising every day.',key:'ONLY BY',acc:['only by practising every day can you improve your speaking'],m:'Only by practising every day can you improve your speaking.'},
+  {p:'You will only pass the exam if you revise regularly.',key:'ONLY IF',acc:['only if you revise regularly will you pass the exam'],m:'Only if you revise regularly will you pass the exam.'}]}]},
+
+{id:'t5',chip:'Strict rules',title:'«Ніколи й за що!» Strict official rules',instr:'Turn these ordinary sentences into very strict, formal ones with inversion. Start with the words in capitals.',
+ rule:`<p>Ці вирази звучать <b>дуже твердо й офіційно</b>: правила, інструкції, таблички, сильна порада.</p><table class="rt"><tr><td>Under no circumstances</td><td>за жодних обставин</td></tr><tr><td>On no account</td><td>у жодному разі</td></tr><tr><td>At no time</td><td>ніколи, жодного разу</td></tr><tr><td>In no way</td><td>ніяк, жодним чином</td></tr><tr><td>Nowhere (else)</td><td>ніде (більше)</td></tr><tr><td>Not once</td><td>жодного разу</td></tr><tr><td>Not a single + noun</td><td>жодного…</td></tr></table><p class="ex">⚠ <i>Not a single person said a word.</i> — тут «not a single person» це підмет, тому інверсії немає. А <i>Not a single word <b>did she say</b>.</i> — інверсія є.</p>`,
+ blocks:[
+ {k:'type',items:[
+  {p:'Candidates must not use phones during the exam.',key:'UNDER NO CIRCUMSTANCES',acc:['under no circumstances [must|should|may|can] candidates use [their |]phones during the exam','under no circumstances are candidates [allowed to|permitted to|to] use [their |]phones during the exam'],m:'Under no circumstances must candidates use phones during the exam.'},
+  {p:'Visitors must never feed the animals.',key:'ON NO ACCOUNT',acc:['on no account [must|should|may|can] visitors feed the animals','on no account are visitors [allowed to|permitted to|to] feed the animals'],m:'On no account should visitors feed the animals.'},
+  {p:'The patient was never left alone.',key:'AT NO TIME',acc:['at no time was the patient left alone'],m:'At no time was the patient left alone.'},
+  {p:'You won’t find better coffee anywhere in the city.',key:'NOWHERE',acc:['nowhere in the city will you find better coffee','nowhere [else |]will you find better coffee [in the city|]'],m:'Nowhere in the city will you find better coffee.'},
+  {p:'She didn’t complain once during the whole trip.',key:'NOT ONCE',acc:['not once did she complain during the whole trip','not once during the whole trip did she complain'],m:'Not once did she complain during the whole trip.'},
+  {p:'She didn’t say a single word all evening.',key:'NOT A SINGLE',acc:['not a single word did she say all evening'],m:'Not a single word did she say all evening.'},
+  {p:'It isn’t your fault at all.',key:'IN NO WAY',acc:['in no way is [it|this] your fault'],m:'In no way is it your fault.'}]},
+ {k:'open',h:'Your turn',items:[
+  {p:'Write a strict rule for your home, school or workplace.',ph:'Under no circumstances should anyone eat my yoghurt from the fridge!'},
+  {p:'Write one more — use a different expression.',ph:'On no account must…'}]}]},
+
+{id:'t6',chip:'Traps',title:'Common traps: no inversion here!',instr:'Read the Ukrainian meaning and choose the correct English sentence. Your first choice counts.',
+ rule:`<table class="rt"><tr><td>Only + підмет</td><td><i>Only Billy knew the truth.</i></td></tr><tr><td>Never / rarely не на початку</td><td><i>I have never seen it.</i></td></tr><tr><td>In no time = «миттєво»</td><td><i>In no time he was asleep.</i></td></tr><tr><td>Not long ago / Not far from here</td><td><i>Not long ago I met him.</i></td></tr><tr><td>Not only не на початку</td><td><i>She not only sings but also dances.</i></td></tr></table>`,
+ blocks:[{k:'mc',items:[
+  {q:'Він заснув миттєво.',o:['In no time he was asleep.','In no time was he asleep.'],a:0,why:'In no time = «миттєво» → звичайний порядок слів.'},
+  {q:'Він жодного разу не заснув.',o:['At no time he was asleep.','At no time was he asleep.'],a:1,why:'At no time = «жодного разу» → інверсія.'},
+  {q:'Лише Біллі знав правду.',o:['Only Billy did know the truth.','Only Billy knew the truth.'],a:1,why:'Only + підмет → без інверсії.'},
+  {q:'Нещодавно я його зустрів.',o:['Not long ago I met him.','Not long ago did I meet him.'],a:0,why:'Not long ago — не заперечення → без інверсії.'},
+  {q:'Вона не лише співає, а й танцює.',o:['She not only sings but also dances.','She not only does sing but also dances.'],a:0,why:'Not only не на початку речення → без інверсії.'},
+  {q:'Те саме, але з Not only на початку.',o:['Not only she sings, but she also dances.','Not only does she sing, but she also dances.'],a:1,why:'Not only на початку → інверсія: does she sing.'},
+  {q:'Лише тоді я зрозумів.',o:['Only then I understood.','Only then did I understand.'],a:1,why:'Only then (не підмет) → інверсія.'},
+  {q:'Жодна людина в залі не сказала ні слова.',o:['Not a single person in the audience said a word.','Not a single person in the audience did say a word.'],a:0,why:'Not a single person — це підмет → без інверсії.'}]}]},
+
+{id:'t7',chip:'C1 transformations',title:'Mixed: key word transformations',instr:'Complete the second sentence so it means the same as the first. Use 3–6 words, including the word given. Don’t change the word given.',
+ rule:`<p>Формат <b>C1 Advanced, Reading &amp; Use of English Part 4</b>. Допиши від 3 до 6 слів, включно зі словом у capitals; саме слово не змінюй. Скорочення (I’d) рахуються як два слова.</p>`,
+ blocks:[{k:'gap',items:[
+  {o:'I had no idea that she was planning to leave.',key:'DID',pre:'Little',post:'she was planning to leave.',acc:['did i [know|realise|suspect|imagine] [that|]'],m:'did I know (that)'},
+  {o:'As soon as we arrived at the airport, our flight was cancelled.',key:'SOONER',pre:'No',post:'at the airport than our flight was cancelled.',acc:['sooner had we [arrived|got]'],m:'sooner had we arrived'},
+  {o:'You must not open this door under any circumstances.',key:'CIRCUMSTANCES',pre:'Under',post:'this door.',acc:['no circumstances [must|should|may|can] you open','no circumstances are you [to|allowed to] open'],m:'no circumstances must you open'},
+  {o:'I only realised how much I had missed home when I came back.',key:'REALISE',pre:'Only when I came back',post:'how much I had missed home.',acc:['did i realise'],m:'did I realise'},
+  {o:'He didn’t complain once, even though the job was hard.',key:'ONCE',pre:'',post:', even though the job was hard.',acc:['not once did he complain'],m:'Not once did he complain'},
+  {o:'It is not your fault in any way.',key:'WAY',pre:'In',post:'fault.',acc:['no way is [it|this] your'],m:'no way is it your'},
+  {o:'The team only won because everyone worked together.',key:'BY',pre:'Only',post:'did the team win.',acc:['by [everyone |]working together'],m:'by working together'},
+  {o:'They had just got home when it started to pour.',key:'HARDLY',pre:'',post:'when it started to pour.',acc:['hardly had they [just |][got|arrived] home'],m:'Hardly had they got home'}]}]},
+
+{id:'t8',chip:'Translate',title:'Translate into English',instr:'Translate into English. Use inversion where it fits — but two of these are traps! Then press “Show model answers” and mark yourself honestly.',
+ rule:`<p>Перекладай англійською. Де можна — використовуй інверсію, але пам’ятай: не кожне «миттєво» чи «лише» її вимагає.</p>`,
+ blocks:[{k:'translate',items:[
+  {ua:'Ледве я заснув, як задзвонив будильник.',m:'Hardly had I fallen asleep when the alarm went off.'},
+  {ua:'Щойно ми вийшли з дому, як почався дощ.',m:'No sooner had we left the house than it started to rain.'},
+  {ua:'Він і гадки не мав, що на нього чекає сюрприз.',m:'Little did he know (that) a surprise was waiting for him.'},
+  {ua:'Лише коли я переїхав до Києва, я зрозумів, як сильно сумую за родиною.',m:'Only when I moved to Kyiv did I realise how much I missed my family.'},
+  {ua:'Лише завдяки щоденній практиці ти заговориш вільно.',m:'Only by practising every day will you speak fluently.'},
+  {ua:'За жодних обставин не відкривай цей конверт до свого дня народження.',m:'Under no circumstances should you open this envelope before your birthday.'},
+  {ua:'Ніде більше ви не знайдете такого смачного борщу.',m:'Nowhere else will you find such delicious borscht.'},
+  {ua:'За весь вечір вона не сказала жодного слова.',m:'Not a single word did she say all evening.'},
+  {ua:'Він заснув миттєво.',m:'In no time he was asleep. / He fell asleep in no time. (no inversion — trap!)'},
+  {ua:'Лише Марко знав правду.',m:'Only Marko knew the truth. (Only + subject — no inversion!)'}]}]}
+];
+
+const AUTO=['tf','pick','mc','type','order','gap'], CHECK=['type','order','gap','translate'];
+const IDX={};
+TASKS.forEach(t=>t.blocks.forEach((b,bi)=>b.items.forEach((it,i)=>{const id=`${t.id}.${bi}.${i}`;IDX[id]={t,b,it};
+  if(b.k==='order'){const n=it.t.length;let sh=[...Array(n).keys()].sort((x,y)=>((x*7+i*3+5)%n)-((y*7+i*3+5)%n));if(sh.every((v,k)=>v===k))sh.push(sh.shift());it.sh=sh}})));
+
+const KEY='dinglish-inversion-hw-v1';
+let S={name:'',a:{},r:{},v:{},self:{},ck:{}};
+try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&x.a)S=Object.assign(S,x)}catch(e){}
+let st;const save=()=>{clearTimeout(st);st=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}},250)};
+
+const fbTyped=(id,it)=>{const r=S.r[id];if(r===undefined)return'';if(r)return'<p class="fb"><b>✓ Correct</b></p>';
+  return `<p class="fb"><b>✗ Not quite.</b> ${S.v[id]?`<span class="model">${esc(it.m)}</span>`:`<button class="link" data-act="reveal" data-id="${id}">Show answer</button>`}</p>`};
+const cls=id=>S.r[id]===undefined?'':(S.r[id]?'ok':'bad');
+
+function itemHTML(t,b,it,id){
+  const v=S.a[id],done=v!==undefined&&v!==null;
+  if(b.k==='tf'){const right=it.ok?1:0;
+    return `<li class="it ${done?cls(id):''}"><p class="s">${esc(it.s)}</p><div class="opts">${[[1,'✓ Correct'],[0,'✗ Wrong']].map(([val,l])=>`<button class="opt ${done&&v===val?'picked':''} ${done&&val===right&&!S.r[id]?'right':''}" data-act="choose" data-id="${id}" data-v="${val}" ${done?'disabled':''}>${l}</button>`).join('')}</div>${done?`<p class="fb"><b>${S.r[id]?'✓':'✗'}</b> ${it.why}</p>`:''}</li>`}
+  if(b.k==='pick'){
+    return `<li class="it ${done?cls(id):''}"><p class="s">${esc(it.a)} <span class="gapw">${done?esc(it.o[v]):'&nbsp;?&nbsp;'}</span> ${esc(it.b)}</p><div class="opts">${it.o.map((o,j)=>`<button class="opt ${done&&v===j?'picked':''} ${done&&j===it.ans&&!S.r[id]?'right':''}" data-act="choose" data-id="${id}" data-v="${j}" ${done?'disabled':''}>${o}</button>`).join('')}</div>${done&&!S.r[id]?`<p class="fb"><b>✗</b> ${it.ans===0?'No sooner → than':'Hardly / Scarcely / Barely → when'}</p>`:''}</li>`}
+  if(b.k==='mc'){
+    return `<li class="it ${done?cls(id):''}"><p class="s ua">${esc(it.q)}</p><div class="opts">${it.o.map((o,j)=>`<button class="opt ${done&&v===j?'picked':''} ${done&&j===it.a&&!S.r[id]?'right':''}" data-act="choose" data-id="${id}" data-v="${j}" ${done?'disabled':''}>${esc(o)}</button>`).join('')}</div>${done?`<p class="fb"><b>${S.r[id]?'✓':'✗'}</b> ${it.why}</p>`:''}</li>`}
+  if(b.k==='type'){const k=it.key.split(' ').map(w=>w[0]+w.slice(1).toLowerCase()).join(' ');
+    return `<li class="it ${cls(id)}"><p class="s">${esc(it.p)} <span class="key">${esc(it.key)}</span></p><input class="in" data-id="${id}" value="${esc(v||'')}" placeholder="${esc(k)}…" autocomplete="off" spellcheck="false">${fbTyped(id,it)}</li>`}
+  if(b.k==='gap'){
+    return `<li class="it ${cls(id)}"><p class="s">${esc(it.o)}</p><p class="gapline"><span class="key">${it.key}</span>${it.pre?`<span>${esc(it.pre)}</span>`:''}<input class="in" data-id="${id}" value="${esc(v||'')}" placeholder="3–6 words" autocomplete="off" spellcheck="false"><span>${esc(it.post)}</span></p>${fbTyped(id,it)}</li>`}
+  if(b.k==='order'){const cur=Array.isArray(v)?v:[];const bank=it.sh.filter(j=>!cur.includes(j));
+    return `<li class="it ${cls(id)}"><div class="line">${cur.length?cur.map(j=>`<button class="tile" data-act="untile" data-id="${id}" data-j="${j}">${esc(it.t[j])}</button>`).join(''):'<span class="ph">Tap the notes below to build the sentence</span>'}</div><div class="bank">${bank.map(j=>`<button class="tile" data-act="tile" data-id="${id}" data-j="${j}">${esc(it.t[j])}</button>`).join('')}</div>${fbTyped(id,{m:it.t.join(' ')})}</li>`}
+  if(b.k==='open'){
+    return `<li class="it"><p class="s">${esc(it.p)}</p><textarea class="in" data-id="${id}" rows="2" placeholder="${esc(it.ph)}">${esc(v||'')}</textarea><p class="hint">✎ Not auto-checked — your teacher will read it.</p></li>`}
+  if(b.k==='translate'){const sv=S.self[id];
+    return `<li class="it ${sv===undefined?'':(sv?'ok':'bad')}"><p class="s ua">${esc(it.ua)}</p><textarea class="in" data-id="${id}" rows="2" placeholder="Your translation…">${esc(v||'')}</textarea>${S.ck[t.id]?`<div class="modelbox"><span class="lbl">Model</span>${esc(it.m)}</div><div class="opts">${[[1,'✓ I got it'],[0,'✗ Not quite']].map(([x,l])=>`<button class="opt ${sv===!!x?'picked':''}" data-act="self" data-id="${id}" data-v="${x}">${l}</button>`).join('')}</div>`:''}</li>`}
+  return '';
+}
+
+function score(t){let ok=0,n=0,self=0,sn=0;t.blocks.forEach((b,bi)=>b.items.forEach((it,i)=>{const id=`${t.id}.${bi}.${i}`;
+  if(AUTO.includes(b.k)){n++;if(S.r[id])ok++}if(b.k==='translate'){sn++;if(S.self[id])self++}}));return{ok,n,self,sn}}
+
+const bodyHTML=t=>t.blocks.map((b,bi)=>`${b.h?`<h3>${b.h}</h3>`:''}<ol class="items k-${b.k}">${b.items.map((it,i)=>itemHTML(t,b,it,`${t.id}.${bi}.${i}`)).join('')}</ol>`).join('');
+function footHTML(t){const s=score(t),tr=t.blocks.some(b=>b.k==='translate'),need=t.blocks.some(b=>CHECK.includes(b.k));
+  const sc=tr?(S.ck[t.id]?`Self-check: <b>${s.self}/${s.sn}</b>`:''):`Score: <b>${s.ok}/${s.n}</b>`;
+  return `<span class="score">${sc}</span>${need?`<button class="btn" data-act="check" data-t="${t.id}">${tr?'Show model answers':'Check answers'}</button>`:''}`}
+
+function drawTask(t){$('#b-'+t.id).innerHTML=bodyHTML(t);$('#f-'+t.id).innerHTML=footHTML(t)}
+function render(){
+  $('#tasks').innerHTML=TASKS.map((t,ti)=>`<section class="task" id="${t.id}"><div class="th"><span class="num">${ti+1}</span><div><h2>${t.title}</h2><p class="instr">${t.instr}</p></div></div>${t.rule?`<details class="rule" open><summary>Rule reminder · правило</summary>${t.rule}</details>`:''}<div id="b-${t.id}">${bodyHTML(t)}</div><div class="foot" id="f-${t.id}">${footHTML(t)}</div></section>`).join('');
+  summary();
+}
+function summary(){
+  let ok=0,n=0,done=0;
+  $('#bars').innerHTML=TASKS.map((t,i)=>{const s=score(t);const tr=s.sn>0;const a=tr?s.self:s.ok,m=tr?s.sn:s.n;if(!tr){ok+=s.ok;n+=s.n}
+    return `<div class="bar"><span>${i+1}. ${t.chip}</span><span class="tr"><i style="width:${m?a/m*100:0}%"></i></span><span>${a}/${m}</span></div>`}).join('');
+  Object.keys(IDX).forEach(id=>{const k=IDX[id].b.k;if(AUTO.includes(k)&&S.r[id]!==undefined)done++});
+  $('#tot').textContent=`${n?Math.round(ok/n*100):0}%`;
+  $('#pg').style.width=`${done/n*100}%`;
+  $('#chips').innerHTML=TASKS.map((t,i)=>{const s=score(t);const full=s.sn?S.ck[t.id]&&Object.keys(S.self).filter(k=>k.startsWith(t.id+'.')).length===s.sn:s.ok===s.n;return `<a href="#${t.id}" class="${full?'done':''}">${i+1} · ${t.chip}</a>`}).join('');
+}
+
+function report(){
+  const L=['dinglish · Inversion homework (B2+/C1)','Student: '+(S.name||'—')];let ok=0,n=0;
+  TASKS.forEach(t=>{const s=score(t);ok+=s.ok;n+=s.n});L.push(`Auto-checked: ${ok}/${n} (${n?Math.round(ok/n*100):0}%)`,'');
+  TASKS.forEach((t,ti)=>{const s=score(t);L.push(`${ti+1}. ${t.title} — ${s.sn?`self-check ${s.self}/${s.sn}`:`${s.ok}/${s.n}`}`);
+    t.blocks.forEach((b,bi)=>{const marks=[];b.items.forEach((it,i)=>{const id=`${t.id}.${bi}.${i}`,v=S.a[id];
+      if(['tf','pick','mc'].includes(b.k))marks.push(`${i+1}${S.r[id]===undefined?'–':S.r[id]?'✓':'✗'}`);
+      else{let txt=Array.isArray(v)?v.map(j=>it.t[j]).join(' '):(v||'').trim();
+        const m=b.k==='open'?'✎':b.k==='translate'?(S.self[id]===undefined?'':S.self[id]?'✓':'✗'):(S.r[id]===undefined?'':S.r[id]?'✓':'✗');
+        L.push(`   ${b.h?b.h[0]+'.':''}${i+1}) ${txt||'—'} ${m}`.replace(/\s+$/,''))}});
+      if(marks.length)L.push('   '+(b.h?b.h[0]+': ':'')+marks.join('  '))});L.push('')});
+  return L.join('\n');
+}
+
+const hero=i=>{const h=HERO[i];$('#hp').textContent=h.n;const r=$('#hr');r.innerHTML=h.i.map(([w,c],k)=>`<span class="tile ${c}" style="animation-delay:${k*70}ms">${esc(w)}</span>`).join('');
+  $('#dots').innerHTML=HERO.map((_,k)=>`<button data-act="hero" data-v="${k}" aria-label="Example ${k+1}" aria-current="${k===i}"></button>`).join('');hi=i};
+let hi=0;hero(0);
+const still=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+let timer=still?null:setInterval(()=>hero((hi+1)%HERO.length),4500);
+
+const setName=v=>{S.name=v;document.querySelectorAll('[data-act=name]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));save()};
+setName(S.name);if(S.name&&!['Masha','Alina'].includes(S.name))$('#nm').value=S.name;
+
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const act=b.dataset.act,id=b.dataset.id,X=id&&IDX[id];
+  if(act==='choose'){if(S.a[id]!==undefined)return;const v=+b.dataset.v,it=X.it,k=X.b.k;S.a[id]=v;
+    S.r[id]=k==='tf'?((v===1)===it.ok):k==='pick'?v===it.ans:v===it.a;drawTask(X.t);summary();save()}
+  else if(act==='tile'||act==='untile'){const j=+b.dataset.j;let cur=Array.isArray(S.a[id])?S.a[id].slice():[];
+    cur=act==='tile'?[...cur,j]:cur.filter(x=>x!==j);S.a[id]=cur;delete S.r[id];delete S.v[id];drawTask(X.t);summary();save()}
+  else if(act==='reveal'){S.v[id]=true;drawTask(X.t);save()}
+  else if(act==='self'){S.self[id]=b.dataset.v==='1';drawTask(X.t);summary();save()}
+  else if(act==='check'){const t=TASKS.find(x=>x.id===b.dataset.t);
+    t.blocks.forEach((bl,bi)=>bl.items.forEach((it,i)=>{const iid=`${t.id}.${bi}.${i}`,v=S.a[iid];
+      if(bl.k==='type'||bl.k==='gap')S.r[iid]=matches(v,it.acc);
+      if(bl.k==='order'){const c=Array.isArray(v)?v:[];S.r[iid]=c.length===it.t.length&&c.every((j,k)=>it.t[j]===it.t[k])}}));
+    if(t.blocks.some(x=>x.k==='translate'))S.ck[t.id]=true;drawTask(t);summary();save()}
+  else if(act==='hero'){clearInterval(timer);timer=null;hero(+b.dataset.v)}
+  else if(act==='name'){$('#nm').value='';setName(b.dataset.v)}
+  else if(act==='copy'){const txt=report(),ta=$('#rep');ta.value=txt;ta.style.display='block';
+    const fallback=()=>{ta.focus();ta.select();$('#msg').textContent='Select all the text below, copy it and send it to your teacher.'};
+    try{navigator.clipboard.writeText(txt).then(()=>{$('#msg').textContent=S.name?'Copied! Paste it into the chat with your teacher.':'Copied! (Tip: choose your name at the top first.)'},fallback)}catch(err){fallback()}}
+  else if(act==='reset'){if(b.dataset.sure){S={name:S.name,a:{},r:{},v:{},self:{},ck:{}};save();render();b.textContent='Start again';delete b.dataset.sure;$('#msg').textContent='Cleared. Good luck!';$('#rep').style.display='none'}
+    else{b.dataset.sure='1';b.textContent='Sure? Tap again to clear everything'}}
+});
+document.addEventListener('input',e=>{const el=e.target;
+  if(el.id==='nm'){setName(el.value.trim());return}
+  if(el.matches('.in[data-id]')){const id=el.dataset.id;S.a[id]=el.value;
+    if(S.r[id]!==undefined){delete S.r[id];delete S.v[id];const li=el.closest('li');li.classList.remove('ok','bad');li.querySelector('.fb')?.remove();summary()}save()}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input.in[data-id]')){const t=IDX[e.target.dataset.id].t;const ins=[...document.querySelectorAll(`#${t.id} input.in`)];const n=ins[ins.indexOf(e.target)+1];if(n)n.focus();else document.querySelector(`#f-${t.id} .btn`)?.focus()}});
+render();
+}
+</script>
+</body>
+</html>
