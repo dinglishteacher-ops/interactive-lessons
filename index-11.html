@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Present Perfect vs Past Simple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: friendly, clear teacher's homework sheet — calm, no clutter
+   IDEA: a timeline on a classroom board — a closed dot in the past vs an arrow that reaches NOW
+   PICTURE: two large timelines at the top, coral dot (Past Simple) and teal arrow (Present Perfect)
+   COLOUR and TYPE: white ground, coral = Past Simple, teal = Present Perfect everywhere; Manrope
+   LAYOUT: one column of bands: timelines, theory cards side by side, then numbered tasks, report at the end */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0e1315);--ink:light-dark(#15191b,#edf2f2);--mut:light-dark(#5b6569,#9aa7ab);
+--line:light-dark(#e2e8e9,#253033);--card:light-dark(#f5f8f8,#151c1f);
+--ps:light-dark(#d9532f,#ff8a66);--pss:light-dark(#fde8e0,#3a1c13);
+--pp:light-dark(#0b8781,#3fd0c6);--pps:light-dark(#dcf3f1,#0d2d2b);
+--ok:light-dark(#1d8f4e,#4fd18a);--oks:light-dark(#e3f6ea,#0f2a1b);
+--bad:light-dark(#c93c3c,#ff7b7b);--bads:light-dark(#fdeaea,#3a1616)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1040px;margin:0 auto}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+h1{font-size:clamp(32px,6vw,50px);line-height:1.05;margin:0 0 10px;text-wrap:balance;font-weight:800}
+h1 .a{color:var(--pp)}h1 .b{color:var(--ps)}
+h2{font-size:clamp(24px,3.4vw,32px);line-height:1.1;margin:0 0 6px;font-weight:800;text-wrap:balance}
+h3{font-size:19px;margin:0 0 8px;font-weight:800}
+.meta{color:var(--mut);margin:0 0 18px}
+.name{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+.name label{font-weight:700}
+input,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;min-height:44px}
+input:focus,textarea:focus,button:focus-visible{outline:3px solid color-mix(in srgb,var(--pp) 45%,transparent);outline-offset:1px;border-color:var(--pp)}
+button{font:inherit;cursor:pointer;border-radius:10px;min-height:44px;padding:8px 14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font-weight:700}
+.nav{display:flex;gap:8px;overflow-x:auto;padding:10px max(5vw,16px);border-block:1px solid var(--line);background:var(--bg);scrollbar-width:thin}
+.nav a{flex:none;color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;padding:8px 12px;border-radius:99px;background:var(--card)}
+@media(min-width:900px){.nav{position:sticky;top:0;z-index:5}}
+/* timelines */
+.tls{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.tl{border-radius:18px;padding:18px 18px 16px}
+.tl.ps{background:var(--pss)}.tl.pp{background:var(--pps)}
+.tl-name{font-weight:800;font-size:22px}.ps .tl-name{color:var(--ps)}.pp .tl-name{color:var(--pp)}
+.track{position:relative;height:84px;margin:6px 0 4px}
+.axis{position:absolute;left:0;right:0;top:46px;height:3px;background:color-mix(in srgb,var(--ink) 35%,transparent);border-radius:2px}
+.now{position:absolute;right:10%;top:22px;bottom:8px;width:3px;background:var(--ink);border-radius:2px}
+.now::after{content:"NOW";position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-weight:800;font-size:13px}
+.past{position:absolute;left:0;top:56px;font-size:13px;color:var(--mut);font-weight:700}
+.dot{position:absolute;top:38px;width:19px;height:19px;border-radius:50%;margin-left:-9px;box-shadow:0 0 0 4px var(--bg)}
+.ps .dot{background:var(--ps);left:36%}.pp .dot{background:var(--pp);left:28%}
+.ps .done{position:absolute;left:36%;top:60px;transform:translateX(-50%);font-size:13px;font-weight:700;color:var(--ps)}
+.arrow{position:absolute;left:28%;right:calc(10% + 6px);top:43px;height:9px;background:var(--pp);border-radius:5px;transform-origin:left;animation:grow 1.2s ease-out .3s both}
+.arrow::after{content:"";position:absolute;right:-10px;top:-5px;border:9px solid transparent;border-left:11px solid var(--pp);border-right:0}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.chips span{background:var(--bg);border-radius:99px;padding:3px 10px;font-size:14px;font-weight:700}
+.tl p{margin:0}
+/* theory */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin-top:18px}
+.card{background:var(--card);border-radius:16px;padding:20px}
+.card.ps{border-top:6px solid var(--ps)}.card.pp{border-top:6px solid var(--pp)}
+.card ul{margin:0 0 12px;padding-left:20px}.card li{margin-bottom:6px}
+.f{display:grid;grid-template-columns:28px 1fr;gap:4px 8px;background:var(--bg);border-radius:12px;padding:12px;font-weight:700;margin:10px 0}
+.f b{font-size:18px;text-align:center}
+.ex{font-style:italic}
+.rule{margin-top:18px;border-radius:16px;padding:20px;background:var(--ink);color:var(--bg)}
+.rule h3{color:inherit}.rule p{margin:6px 0}
+.rule .k1{color:light-dark(#ffb39c,#d9532f);font-weight:800}.rule .k2{color:light-dark(#7fe3db,#0b8781);font-weight:800}
+.dlg{margin:0;padding:0;list-style:none}.dlg li{padding:6px 0;border-bottom:1px dashed var(--line)}
+.tpp{color:var(--pp);font-weight:800}.tps{color:var(--ps);font-weight:800}
+table{border-collapse:collapse;width:100%;margin-top:6px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:14px;color:var(--mut)}
+.mist{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.mist li{display:flex;flex-wrap:wrap;gap:4px 14px}
+.mist s{color:var(--bad)}.mist em{color:var(--ok);font-style:normal;font-weight:700}
+/* tasks */
+.task{border-top:1px solid var(--line)}
+.inst{color:var(--mut);margin:0 0 16px;font-weight:500}
+.row{padding:12px 14px;border-radius:12px;margin-bottom:8px;background:var(--card);border:1.5px solid transparent}
+.row.ok{background:var(--oks);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
+.row.bad{background:var(--bads);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.fb{display:block;font-size:14px;font-weight:700;margin-top:4px}
+.fb:empty{display:none}.ok .fb{color:var(--ok)}.bad .fb{color:var(--bad)}
+.r1{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.r1 .w{font-weight:800;font-size:17px;flex:1 1 150px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button.on{color:#fff;border-color:transparent;background:var(--ink)}
+.seg button.vps.on{background:var(--ps)}.seg button.vpp.on{background:var(--pp)}
+:root[data-theme=dark] .seg button.on,.seg button.on{color:var(--bg)}
+.q{font-weight:700;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font-weight:600;text-align:left}
+.gap{width:auto;min-width:0;max-width:100%;padding:6px 10px;min-height:40px;margin:2px 2px;border-width:1.5px;field-sizing:content;min-inline-size:9ch}
+.gap.ok{border-color:var(--ok);background:var(--oks)}.gap.bad{border-color:var(--bad);background:var(--bads)}
+.gfb{color:var(--bad);font-weight:800;font-size:14px}
+.line{display:grid;grid-template-columns:60px 1fr;gap:8px;padding:10px 0;border-bottom:1px dashed var(--line);line-height:2.3}
+.who{font-weight:800;line-height:1.6;padding-top:8px}.who.a{color:var(--ps)}.who.m{color:var(--pp)}
+.fix{display:none;margin-top:8px;gap:8px;align-items:center;flex-wrap:wrap}
+.needfix .fix{display:flex}
+.fix input{flex:1 1 200px}
+.ctrl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px}
+.check{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.score{font-weight:800;font-size:20px}
+.list{columns:2 220px;margin:0 0 12px;padding-left:20px}
+textarea{width:100%;resize:vertical;line-height:1.5}
+.tr{display:block}.tr .ua{font-weight:700;margin-bottom:6px}.tr input{width:100%}
+.model{display:block;font-size:14px;color:var(--ink);font-weight:600;margin-top:4px}
+.sum{background:var(--pps)}
+.srow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+.srow b{white-space:nowrap}
+.total{font-size:clamp(28px,5vw,40px);font-weight:800;margin:12px 0}
+#rep{margin-top:12px;font-size:14px;min-height:180px;display:none}
+.note{font-size:14px;color:var(--mut)}
+footer{padding:22px max(5vw,16px);color:var(--mut);font-size:14px;text-align:center}
+@media(max-width:600px){table{font-size:14px}.line{grid-template-columns:1fr;gap:0}.who{padding-top:0}
+.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:block;border:0;padding:3px 0}}
+</style>
+</head>
+<body>
+
+<header class="band">
+<div class="wrap">
+<h1><span class="a">Present Perfect</span> vs <span class="b">Past Simple</span></h1>
+<p class="meta">B1 · Homework · dinglish</p>
+<div class="name"><label for="nm">Your name:</label><input id="nm" data-k="name" placeholder="Name" autocomplete="name"></div>
+<div class="tls">
+<div class="tl ps">
+<div class="tl-name">Past Simple</div>
+<div class="track"><span class="axis"></span><span class="past">past</span><span class="dot"></span><span class="done">finished</span><span class="now"></span></div>
+<div class="chips"><span>yesterday</span><span>2 days ago</span><span>last summer</span><span>in 2019</span><span>When…?</span></div>
+<p>Дія закінчилась. Ми знаємо або питаємо, <b>коли</b> саме.</p>
+</div>
+<div class="tl pp">
+<div class="tl-name">Present Perfect</div>
+<div class="track"><span class="axis"></span><span class="past">past</span><span class="dot"></span><span class="arrow"></span><span class="now"></span></div>
+<div class="chips"><span>ever</span><span>never</span><span>already</span><span>yet</span><span>just</span><span>for</span><span>since</span></div>
+<p>Минуле пов'язане з <b>теперішнім</b>: результат, досвід, триває досі. Час не названо.</p>
+</div>
+</div>
+</div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+<a href="#theory">Theory</a><a href="#task1">1 Time words</a><a href="#task2">2 Choose</a><a href="#task3">3 Verbs</a><a href="#task4">4 Dialogue</a><a href="#task5">5 Meaning</a><a href="#task6">6 Mistakes</a><a href="#task7">7 Writing</a><a href="#task8">8 Translate</a><a href="#finish">Finish</a>
+</nav>
+
+<section class="band" id="theory">
+<div class="wrap">
+<h2>Як розрізнити ці два часи</h2>
+<p class="inst">Головне питання: чи названий (або зрозумілий) конкретний момент у минулому?</p>
+<div class="cols">
+<div class="card ps">
+<h3 class="tps">Past Simple — «Коли?»</h3>
+<ul>
+<li>Дія закінчилась у минулому, і час відомий: <span class="ex">He sent a letter 2 hours ago.</span></li>
+<li>Дії одна за одною (історія): <span class="ex">I went to the library, took a book and came back home.</span></li>
+<li>Період або людина вже в минулому: <span class="ex">Shakespeare wrote many plays.</span></li>
+</ul>
+<div class="f"><b>+</b><span>I / she / they + V2 / -ed (went, worked)</span><b>−</b><span>didn't + V (didn't go)</span><b>?</b><span>(When) did + you + V? (did you go?)</span></div>
+<p class="note">Без дієслова: I/he/she/it — was, you/we/they — were.</p>
+<p><b>Слова-маркери:</b> yesterday, last week / month / year, … ago, in 2019, on Monday, when I was a child, When…? What time…?</p>
+</div>
+<div class="card pp">
+<h3 class="tpp">Present Perfect — «Що маємо зараз?»</h3>
+<ul>
+<li>Результат важливий зараз: <span class="ex">I have already done the project.</span></li>
+<li>Досвід у житті (скільки разів): <span class="ex">She has visited Paris twice.</span></li>
+<li>Щойно сталося: <span class="ex">The plane has just landed.</span></li>
+<li>Почалось у минулому й триває досі: <span class="ex">They have worked here for 3 years.</span></li>
+<li>Період ще не закінчився: today, this week, this year.</li>
+</ul>
+<div class="f"><b>+</b><span>have / has + V3 (have seen, has gone)</span><b>−</b><span>haven't / hasn't + V3</span><b>?</b><span>(How long) have / has + you + V3?</span></div>
+<p class="note">I / you / we / they — have; he / she / it — has.</p>
+<p><b>Слова-маркери:</b> ever, never, already, yet, just, for, since, so far, recently, How many times…? How long…?</p>
+</div>
+</div>
+
+<div class="rule">
+<h3>Головне правило</h3>
+<p>Є конкретний час у минулому (yesterday, ago, last…, in 2019, When…?) → <span class="k1">Past Simple</span>.</p>
+<p>Час не названий, важливий результат, досвід або період до тепер → <span class="k2">Present Perfect</span>.</p>
+<p>Present Perfect <b>ніколи</b> не вживаємо з yesterday, ago, last…, in + рік і в питаннях When…?</p>
+</div>
+
+<div class="cols">
+<div class="card">
+<h3>Типова розмова: PP → PS</h3>
+<p class="note">Починаємо із загального досвіду (Present Perfect), а деталі — коли, де, як — розповідаємо в Past Simple.</p>
+<ul class="dlg">
+<li>A: <span class="tpp">Have you ever been</span> to Italy?</li>
+<li>B: Yes, I <span class="tpp">have</span>. I <span class="tps">went</span> there in 2023.</li>
+<li>A: <span class="tps">Did</span> you <span class="tps">like</span> it?</li>
+<li>B: Yes, I <span class="tps">loved</span> it! We <span class="tps">visited</span> Rome and Venice.</li>
+</ul>
+</div>
+<div class="card">
+<h3>been чи gone?</h3>
+<p><span class="ex">She has <b>been</b> to Paris.</span> — була там і повернулась (досвід).</p>
+<p><span class="ex">She has <b>gone</b> to Paris.</span> — поїхала, вона зараз там або в дорозі.</p>
+<h3 style="margin-top:14px">Типові помилки</h3>
+<ul class="mist">
+<li><s>I have seen him yesterday.</s><em>I saw him yesterday.</em></li>
+<li><s>When have you arrived?</s><em>When did you arrive?</em></li>
+<li><s>I live here since 2020.</s><em>I have lived here since 2020.</em></li>
+<li><s>I didn't finish it yet.</s><em>I haven't finished it yet.</em></li>
+</ul>
+</div>
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>Одна ситуація — різний зміст</h3>
+<table class="stack">
+<thead><tr><th>Речення</th><th>Що це означає</th></tr></thead>
+<tbody>
+<tr><td class="tpp">I've lost my keys.</td><td>Ключів досі немає — проблема зараз.</td></tr>
+<tr><td class="tps">I lost my keys yesterday.</td><td>Історія про вчора; можливо, я їх уже знайшов.</td></tr>
+<tr><td class="tpp">He has worked here for 3 years.</td><td>Він і зараз тут працює.</td></tr>
+<tr><td class="tps">He worked here for 3 years.</td><td>Він тут більше не працює.</td></tr>
+<tr><td class="tpp">Have you seen Tom this morning?</td><td>Зараз ще ранок.</td></tr>
+<tr><td class="tps">Did you see Tom this morning?</td><td>Ранок уже минув.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section class="band task" id="task1"><div class="wrap">
+<h2>1. Which tense?</h2>
+<p class="inst">Which tense do these time expressions usually go with? Tap Past Simple or Present Perfect.</p>
+<div id="t1"></div>
+<div class="ctrl"><button class="check" data-check="t1">Check answers</button><span class="score" id="sc-t1"></span></div>
+</div></section>
+
+<section class="band task" id="task2"><div class="wrap">
+<h2>2. Choose the correct option</h2>
+<p class="inst">Read each sentence and choose the correct verb form.</p>
+<div id="t2"></div>
+<div class="ctrl"><button class="check" data-check="t2">Check answers</button><span class="score" id="sc-t2"></span></div>
+</div></section>
+
+<section class="band task" id="task3"><div class="wrap">
+<h2>3. Put the verbs in the correct form</h2>
+<p class="inst">Use Past Simple or Present Perfect. Short forms (haven't, didn't) are OK.</p>
+<div id="t3"></div>
+<div class="ctrl"><button class="check" data-check="t3">Check answers</button><span class="score" id="sc-t3"></span></div>
+</div></section>
+
+<section class="band task" id="task4"><div class="wrap">
+<h2>4. Complete the dialogue</h2>
+<p class="inst">Anna and Max are talking about travelling. Put the verbs in brackets into the correct tense.</p>
+<div id="t4"></div>
+<div class="ctrl"><button class="check" data-check="t4">Check answers</button><span class="score" id="sc-t4"></span></div>
+</div></section>
+
+<section class="band task" id="task5"><div class="wrap">
+<h2>5. What does it mean?</h2>
+<p class="inst">Choose the correct meaning of each sentence.</p>
+<div id="t5"></div>
+<div class="ctrl"><button class="check" data-check="t5">Check answers</button><span class="score" id="sc-t5"></span></div>
+</div></section>
+
+<section class="band task" id="task6"><div class="wrap">
+<h2>6. Correct or wrong?</h2>
+<p class="inst">Decide if each sentence is correct. If it is wrong, write the correct verb form.</p>
+<div id="t6"></div>
+<div class="ctrl"><button class="check" data-check="t6">Check answers</button><span class="score" id="sc-t6"></span></div>
+</div></section>
+
+<section class="band task" id="task7"><div class="wrap">
+<h2>7. Writing: my experiences</h2>
+<p class="inst">Choose 3 experiences from the list (or use your own). For each one, write one Present Perfect sentence and then 1–2 Past Simple sentences with details (when? where? who with?). Aim for 60–100 words.</p>
+<ul class="list">
+<li>travel abroad</li><li>meet a famous person</li><li>lose something important</li><li>try an extreme sport</li><li>win a prize or competition</li><li>cook for a lot of people</li><li>see a concert live</li><li>your own idea</li>
+</ul>
+<p class="note">Example: <span class="ex"><span class="tpp">I have been</span> to Poland. <span class="tps">I went</span> there in 2022 with my friends, and we <span class="tps">visited</span> Kraków.</span></p>
+<textarea id="t7" data-k="t7" rows="8" placeholder="I have ..."></textarea>
+<p class="note" id="wc">0 words</p>
+</div></section>
+
+<section class="band task" id="task8"><div class="wrap">
+<h2>8. Translate into English</h2>
+<p class="inst">Translate the sentences. After checking, compare your answer with the model.</p>
+<div id="t8"></div>
+<div class="ctrl"><button class="check" data-check="t8">Check answers</button><span class="score" id="sc-t8"></span></div>
+</div></section>
+
+<section class="band sum" id="finish"><div class="wrap">
+<h2>Finish: send your results</h2>
+<p class="inst" style="color:inherit">Write your name at the top, check every task, then copy the report and send it to your teacher.</p>
+<div id="sum"></div>
+<div class="ctrl"><button class="check" id="mk">Copy report for teacher</button><span class="note" id="cpmsg"></span></div>
+<textarea id="rep" readonly></textarea>
+<div class="ctrl"><button id="reset">Clear all answers</button></div>
+</div></section>
+
+<footer>dinglish · English with Vlad</footer>
+
+<script>
+{
+const KEY="dinglish-ppps-b1";
+let S={};
+try{S=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){S={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const n=s=>String(s||"").toLowerCase().replace(/[’‘`´]/g,"'").replace(/n't\b/g," not").replace(/'ve\b/g," have").replace(/'s\b/g," has").replace(/'m\b/g," am").replace(/'d\b/g," had").replace(/[.,!?;:"()—–…]/g," ").replace(/\s+/g," ").trim();
+const acc=(arr,g)=>!!n(g)&&arr.map(n).includes(n(g));
+const val=k=>esc(S[k]||"");
+
+const T1=[["yesterday","ps"],["ever","pp"],["two days ago","ps"],["already","pp"],["last summer","ps"],["since 2021","pp"],["in 2019","ps"],["yet","pp"],["when I was a child","ps"],["so far","pp"],["an hour ago","ps"],["just","pp"],["What time…?","ps"],["this week (it isn't over)","pp"]];
+
+const T2=[
+{q:"I ___ my keys. I can't open the door.",o:["lost","have lost"],a:1,w:"Результат зараз (не можу відкрити двері) → PP."},
+{q:"I ___ my keys yesterday, but Mum found them.",o:["lost","have lost"],a:0,w:"yesterday → PS."},
+{q:"___ you ever ___ sushi?",o:["Did … try","Have … tried"],a:1,w:"ever — досвід у житті → PP."},
+{q:"When ___ you ___ in Kyiv?",o:["did … arrive","have … arrived"],a:0,w:"When…? питає про конкретний момент → PS."},
+{q:"She ___ for this company since 2020.",o:["worked","has worked"],a:1,w:"since 2020 і працює досі → PP."},
+{q:"My grandad ___ in a factory for 30 years. He retired in 2015.",o:["worked","has worked"],a:0,w:"Він уже на пенсії — період закінчився → PS."},
+{q:"We ___ a great film last weekend.",o:["saw","have seen"],a:0,w:"last weekend → PS."},
+{q:"Look! Somebody ___ the window.",o:["broke","has broken"],a:1,w:"Бачимо результат зараз, час не названий → PP."},
+{q:"I ___ him two weeks ago.",o:["met","have met"],a:0,w:"ago → завжди PS."},
+{q:"How many cups of coffee ___ today? (It's 11 a.m.)",o:["did you drink","have you drunk"],a:1,w:"Сьогодні ще не закінчилось → PP."},
+{q:"Shakespeare ___ many plays.",o:["wrote","has written"],a:0,w:"Життя цієї людини вже в минулому → PS."},
+{q:"I ___ to the gym this morning. (It's 9 p.m. now.)",o:["went","have been"],a:0,w:"Ранок уже минув → PS."}];
+
+const T3=[
+{q:"I ___ (not/see) Tom since Monday.",a:["haven't seen"],w:"since → PP"},
+{q:"We ___ (go) to Lviv last month.",a:["went"],w:"last month → PS"},
+{q:"___ (you/finish) your project yet?",a:["have you finished"],w:"yet → PP"},
+{q:"She ___ (buy) a new phone two days ago.",a:["bought"],w:"ago → PS"},
+{q:"My parents ___ (be) married for 25 years. They're still very happy.",a:["have been"],w:"for + триває досі → PP"},
+{q:"___ (you/watch) the match last night?",a:["did you watch"],w:"last night → PS"},
+{q:"I ___ (never/eat) Indian food. Is it spicy?",a:["have never eaten"],w:"never — досвід → PP"},
+{q:"Tom ___ (leave) school in 2018.",a:["left"],w:"in 2018 → PS"},
+{q:"The children ___ (just/come) home. They're hungry.",a:["have just come","have just got"],w:"just → PP"},
+{q:"When ___ (she/move) to London?",a:["did she move"],w:"When…? → PS"},
+{q:"Oh no! I ___ (lose) my wallet. Have you seen it?",a:["have lost"],w:"результат зараз → PP"},
+{q:"He ___ (not/call) me yesterday.",a:["didn't call"],w:"yesterday → PS"}];
+
+const T4L=[
+["a","___ (you/ever/be) to Italy?"],
+["m","Yes, I ___ ."],
+["a","Really? When ___ (you/go) there?"],
+["m","I ___ (go) to Rome two years ago with my sister."],
+["a","What ___ (you/see) there?"],
+["m","We ___ (visit) the Colosseum, and we ___ (eat) the best pizza of our lives!"],
+["a","Lucky you! I ___ (never/travel) abroad."],
+["m","Never? But you ___ (go) to Poland last summer!"],
+["a","Oh, right! But it was only for one day. And I ___ (not/be) anywhere since then."],
+["m","Then it's time! I ___ (already/find) some cheap tickets for you."]];
+const T4A=[["have you ever been"],["have"],["did you go"],["went"],["did you see"],["visited"],["ate"],["have never travelled","have never traveled"],["went"],["haven't been"],["have already found"]];
+
+const T5=[
+{q:"Kate has gone to Paris.",o:["She is in Paris now (or on her way).","She went to Paris and came back."],a:0},
+{q:"Kate has been to Paris.",o:["She is in Paris now (or on her way).","She went to Paris and came back."],a:1},
+{q:"I have worked here for five years.",o:["I still work here.","I don't work here now."],a:0},
+{q:"I worked here for five years.",o:["I still work here.","I don't work here now."],a:1},
+{q:"I've lost my glasses.",o:["I still can't find them.","I found them later."],a:0},
+{q:"Have you seen Tom this morning?",o:["It's still morning.","The morning is over."],a:0},
+{q:"Did you see Tom this morning?",o:["It's still morning.","The morning is over."],a:1},
+{q:"How long have you lived in Kyiv?",o:["The person still lives in Kyiv.","The person doesn't live in Kyiv now."],a:0},
+{q:"How long did you live in Odesa?",o:["The person still lives in Odesa.","The person doesn't live in Odesa now."],a:1}];
+
+const T6=[
+{s:"I have seen this film last week.",ok:false,fix:["saw"],full:"I saw this film last week.",w:"last week → PS"},
+{s:"She has lived in Odesa since 2015.",ok:true},
+{s:"When have you bought this jacket?",ok:false,fix:["did you buy"],full:"When did you buy this jacket?",w:"When…? → PS"},
+{s:"I didn't finish my report yet.",ok:false,fix:["haven't finished"],full:"I haven't finished my report yet.",w:"yet → PP"},
+{s:"We went to the cinema on Saturday.",ok:true},
+{s:"He works here since January.",ok:false,fix:["has worked","has been working"],full:"He has worked here since January.",w:"since: почалось у минулому й триває досі → PP, не Present Simple"},
+{s:"Have you ever met a famous person?",ok:true},
+{s:"Yesterday I have cooked dinner for my family.",ok:false,fix:["cooked"],full:"Yesterday I cooked dinner for my family.",w:"yesterday → PS"},
+{s:"My brother has broken his arm two weeks ago.",ok:false,fix:["broke"],full:"My brother broke his arm two weeks ago.",w:"ago → PS"},
+{s:"They have just arrived — let's say hello!",ok:true}];
+
+const T8=[
+{ua:"Я вже зробила домашнє завдання.",m:"I have already done my homework.",y:[/\bhave (already )?(done|finished)\b/]},
+{ua:"Вчора я зробила домашнє завдання за годину.",m:"Yesterday I did my homework in an hour.",y:[/\b(did|finished)\b/],x:[/\bhave (done|finished)\b/]},
+{ua:"Ти коли-небудь був у Лондоні? — Так, я був там у 2021 році.",m:"Have you ever been to London? — Yes, I have. I was there in 2021. / I went there in 2021.",y:[/\bhave you ever been\b/,/\b(was|went|visited|travelled|traveled)\b/]},
+{ua:"Ми знаємо одне одного з 2018 року.",m:"We have known each other since 2018.",y:[/\bhave known\b/]},
+{ua:"Коли ти купила цю сукню?",m:"When did you buy this dress?",y:[/\bwhen did you buy\b/]},
+{ua:"Він щойно повернувся додому.",m:"He has just come back home. / He has just returned home.",y:[/\bhas just (come|got|gotten|returned|arrived)\b/]},
+{ua:"Я ще не бачила цей фільм.",m:"I haven't seen this film yet.",y:[/\bhave not (yet )?(seen|watched)\b/]},
+{ua:"Минулого літа ми їздили на море.",m:"We went to the seaside last summer.",y:[/\b(went|were|travelled|traveled|drove|visited)\b/],x:[/\bhave\b/]},
+{ua:"Вона працює вчителькою вже п'ять років.",m:"She has worked as a teacher for five years. / She has been a teacher for five years.",y:[/\bhas (been working|worked|been)\b/,/\bfor (five|5) years\b/]},
+{ua:"Я загубила телефон! Ти його не бачив?",m:"I've lost my phone! Have you seen it?",y:[/\bhave lost\b/,/\bhave you (seen|noticed)\b/]}];
+
+const TASKS=[["t1","1. Which tense?"],["t2","2. Choose the correct option"],["t3","3. Verbs in the correct form"],["t4","4. Dialogue"],["t5","5. What does it mean?"],["t6","6. Correct or wrong?"],["t8","8. Translation"]];
+
+const gapify=(txt,key)=>{const p=txt.split("___");return p.map((s,i)=>esc(s)+(i<p.length-1?`<input class="gap" data-k="${key}" id="${key}" aria-label="answer" value="${val(key)}" autocomplete="off" autocapitalize="off" spellcheck="false">`:"")).join("")};
+
+function render(){
+$("#nm").value=S.name||"";
+$("#t1").innerHTML=T1.map(([w],i)=>`<div class="row" id="r1-${i}"><div class="r1"><span class="w">${esc(w)}</span><div class="seg"><button class="vps" data-k="t1-${i}" data-v="ps">Past Simple</button><button class="vpp" data-k="t1-${i}" data-v="pp">Present Perfect</button></div></div><span class="fb"></span></div>`).join("");
+$("#t2").innerHTML=T2.map((it,i)=>`<div class="row" id="r2-${i}"><div class="q">${i+1}. ${esc(it.q).replace(/___/g,"_____")}</div><div class="opts seg">${it.o.map((o,j)=>`<button data-k="t2-${i}" data-v="${j}">${esc(o)}</button>`).join("")}</div><span class="fb"></span></div>`).join("");
+$("#t3").innerHTML=T3.map((it,i)=>`<div class="row" id="r3-${i}"><div>${i+1}. ${gapify(it.q,"t3-"+i)}</div><span class="fb"></span></div>`).join("");
+let g=0;
+$("#t4").innerHTML=T4L.map(([w,t])=>{const p=t.split("___");const h=p.map((s,i)=>{if(i===p.length-1)return esc(s);const k="t4-"+g++;return esc(s)+`<input class="gap" data-k="${k}" id="${k}" aria-label="answer" value="${val(k)}" autocomplete="off" autocapitalize="off" spellcheck="false"><span class="gfb" id="f${k}"></span>`}).join("");return `<div class="line"><span class="who ${w}">${w=="a"?"Anna":"Max"}</span><div>${h}</div></div>`}).join("");
+$("#t5").innerHTML=T5.map((it,i)=>`<div class="row" id="r5-${i}"><div class="q">${i+1}. “${esc(it.q)}”</div><div class="opts seg">${it.o.map((o,j)=>`<button data-k="t5-${i}" data-v="${j}">${esc(o)}</button>`).join("")}</div><span class="fb"></span></div>`).join("");
+$("#t6").innerHTML=T6.map((it,i)=>`<div class="row" id="r6-${i}"><div class="q">${i+1}. ${esc(it.s)}</div><div class="seg"><button data-k="t6-${i}" data-v="ok">✓ Correct</button><button data-k="t6-${i}" data-v="bad">✗ Wrong</button></div><div class="fix"><label for="t6f-${i}">Correct verb form:</label><input id="t6f-${i}" data-k="t6f-${i}" value="${val("t6f-"+i)}" autocomplete="off" autocapitalize="off" spellcheck="false"></div><span class="fb"></span></div>`).join("");
+$("#t7").value=S.t7||"";
+$("#t8").innerHTML=T8.map((it,i)=>`<div class="row tr" id="r8-${i}"><div class="ua">${i+1}. ${esc(it.ua)}</div><input data-k="t8-${i}" aria-label="translation ${i+1}" value="${val("t8-"+i)}" autocomplete="off" spellcheck="false"><span class="fb"></span></div>`).join("");
+paint();wc();
+for(const [k] of TASKS){const r=S.R&&S.R[k];$("#sc-"+k).textContent=r?`${r.s} / ${r.t}`:""}
+summary();
+}
+
+function paint(){
+document.querySelectorAll("button[data-k]").forEach(b=>b.classList.toggle("on",S[b.dataset.k]===b.dataset.v));
+T6.forEach((_,i)=>$("#r6-"+i).classList.toggle("needfix",S["t6-"+i]==="bad"));
+}
+function wc(){const w=(S.t7||"").trim().split(/\s+/).filter(Boolean).length;$("#wc").textContent=w+(w==1?" word":" words")}
+
+function mark(id,ok,msg){const r=document.getElementById(id);r.classList.remove("ok","bad");r.classList.add(ok?"ok":"bad");r.querySelector(".fb").innerHTML=msg}
+const PSPP=v=>v=="ps"?"Past Simple":"Present Perfect";
+
+const C={
+t1:()=>T1.map(([w,a],i)=>{const g=S["t1-"+i],ok=g===a;mark("r1-"+i,ok,ok?"✓ Correct":"✗ → "+PSPP(a));return{ok,lab:w,g:g?PSPP(g):"—",c:PSPP(a)}}),
+t2:()=>T2.map((it,i)=>{const g=S["t2-"+i],ok=g!=null&&+g===it.a;mark("r2-"+i,ok,ok?"✓ Correct":`✗ → ${esc(it.o[it.a])}. ${esc(it.w)}`);return{ok,lab:`${i+1}. ${it.q}`,g:g!=null?it.o[g]:"—",c:it.o[it.a]}}),
+t3:()=>T3.map((it,i)=>{const k="t3-"+i,ok=acc(it.a,S[k]);$("#"+k).className="gap "+(ok?"ok":"bad");mark("r3-"+i,ok,ok?"✓ Correct":`✗ → ${esc(it.a[0])} (${esc(it.w)})`);return{ok,lab:`${i+1}. ${it.q}`,g:S[k]||"—",c:it.a[0]}}),
+t4:()=>T4A.map((a,i)=>{const k="t4-"+i,ok=acc(a,S[k]);$("#"+k).className="gap "+(ok?"ok":"bad");$("#f"+k).textContent=ok?"":" → "+a[0];return{ok,lab:`gap ${i+1}`,g:S[k]||"—",c:a[0]}}),
+t5:()=>T5.map((it,i)=>{const g=S["t5-"+i],ok=g!=null&&+g===it.a;mark("r5-"+i,ok,ok?"✓ Correct":"✗ → "+esc(it.o[it.a]));return{ok,lab:`${i+1}. ${it.q}`,g:g!=null?it.o[g]:"—",c:it.o[it.a]}}),
+t6:()=>T6.map((it,i)=>{const g=S["t6-"+i],f=S["t6f-"+i];let ok,msg;
+ if(it.ok){ok=g==="ok";msg=ok?"✓ Yes, this sentence is correct.":"✗ This sentence is correct."}
+ else{const st=g==="bad",fx=acc(it.fix,f)||acc([it.full],f);ok=st&&fx;msg=ok?`✓ Correct: ${esc(it.full)}`:`✗ ${st?"Right, it's wrong — but the form is":"It's wrong. Correct:"} ${esc(it.full)} (${esc(it.w)})`}
+ mark("r6-"+i,ok,msg);return{ok,lab:`${i+1}. ${it.s}`,g:g?(g=="ok"?"correct":"wrong: "+(f||"—")):"—",c:it.ok?"correct":it.full}}),
+t8:()=>T8.map((it,i)=>{const x=n(S["t8-"+i]);const ok=!!x&&it.y.every(r=>r.test(x))&&!(it.x||[]).some(r=>r.test(x));mark("r8-"+i,ok,(ok?"✓ The tense looks right.":"✗ Check the tense.")+`<span class="model">Model: ${esc(it.m)}</span>`);return{ok,lab:`${i+1}. ${it.ua}`,g:S["t8-"+i]||"—",c:it.m}})
+};
+
+function runCheck(t){
+const res=C[t]();const s=res.filter(r=>r.ok).length;
+S.R=S.R||{};const prev=S.R[t];
+S.R[t]={s,t:res.length,first:prev?prev.first:s,err:res.filter(r=>!r.ok).map(r=>`${r.lab} — "${r.g}" → ${r.c}`)};
+save();$("#sc-"+t).textContent=`${s} / ${res.length}`;summary();
+}
+
+function totals(){let s=0,t=0;for(const [k] of TASKS){const r=S.R&&S.R[k];if(r){s+=r.s;t+=r.t}}return{s,t}}
+function summary(){
+const rows=TASKS.map(([k,title])=>{const r=S.R&&S.R[k];return `<div class="srow"><span>${esc(title)}</span><b>${r?`${r.s} / ${r.t}`:"not checked"}</b></div>`}).join("");
+const w=(S.t7||"").trim().split(/\s+/).filter(Boolean).length;
+const T=totals();
+$("#sum").innerHTML=rows+`<div class="srow"><span>7. Writing</span><b>${w} words</b></div><div class="total">${T.t?`${T.s} / ${T.t}`:"—"}</div>`;
+}
+
+function report(){
+const L=["dinglish · Present Perfect vs Past Simple (B1) — homework","Student: "+(S.name||"—"),"Date: "+new Date().toLocaleDateString("uk-UA"),""];
+for(const [k,title] of TASKS){const r=S.R&&S.R[k];L.push(r?`${title}: ${r.s}/${r.t} (first try ${r.first}/${r.t})`:`${title}: not checked`)}
+const T=totals();L.push(`TOTAL: ${T.s}/${T.t}`,"");
+for(const [k,title] of TASKS){const r=S.R&&S.R[k];if(r&&r.err.length&&k!="t8"){L.push(`Mistakes — ${title}:`);r.err.forEach(e=>L.push("  "+e));L.push("")}}
+L.push("— 7. Writing —",(S.t7||"—").trim(),"","— 8. Translation —");
+T8.forEach((it,i)=>{L.push(`${i+1}. ${it.ua}`,`   ${S["t8-"+i]||"—"}`)});
+return L.join("\n");
+}
+
+document.addEventListener("click",e=>{
+const b=e.target.closest("button[data-k]");
+if(b){S[b.dataset.k]=b.dataset.v;save();paint();return}
+const c=e.target.closest("[data-check]");
+if(c){runCheck(c.dataset.check);return}
+});
+document.addEventListener("input",e=>{
+const el=e.target;if(!el.dataset||!el.dataset.k)return;
+S[el.dataset.k]=el.value;save();
+if(el.dataset.k==="t7"){wc();summary()}
+});
+
+$("#mk").addEventListener("click",async()=>{
+const txt=report();const ta=$("#rep");ta.value=txt;ta.style.display="block";
+try{await navigator.clipboard.writeText(txt);$("#cpmsg").textContent="Copied! Paste it into a message to your teacher."}
+catch(err){ta.focus();ta.select();$("#cpmsg").textContent="Select the text below and copy it (Ctrl+C / long press)."}
+});
+
+let armed=false;
+$("#reset").addEventListener("click",()=>{
+const b=$("#reset");
+if(!armed){armed=true;b.textContent="Tap again to clear everything";setTimeout(()=>{armed=false;b.textContent="Clear all answers"},4000);return}
+armed=false;b.textContent="Clear all answers";S={};save();$("#rep").style.display="none";$("#cpmsg").textContent="";render();
+});
+
+render();
+}
+</script>
+</body>
+</html>
