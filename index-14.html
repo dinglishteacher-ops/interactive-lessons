@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Past Simple Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: friendly, brisk tutor workbook for an elementary adult learner
+   IDEA: a bright exercise booklet with tabbed parts and answer gaps that fill in
+   PICTURE: the drills themselves; the 18-verb card wall and the flash-card trainer lead Part C
+   COLOUR and TYPE: cobalt band, sunflower chips, coral for mistakes; Onest (Cyrillic-friendly)
+   LAYOUT: blue header band, sticky part tabs with live score, one calm column of tasks */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0e1330);--ink:light-dark(#141a3a,#eef1ff);--muted:light-dark(#545c80,#a9b0d6);
+--blue:light-dark(#2346d8,#7d95ff);--band:light-dark(#2346d8,#18267a);--sun:#ffcc33;
+--coral:light-dark(#d93a31,#ff8077);--ok:light-dark(#0a7f55,#45d69f);
+--card:light-dark(#f2f4ff,#161d45);--line:light-dark(#d6dbf3,#2b3468);
+--okbg:light-dark(#e3f6ee,#123a33);--badbg:light-dark(#fde8e6,#43202a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Onest,system-ui,sans-serif;overflow-x:clip}
+html{scroll-padding-top:84px;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:860px;margin:0 auto}
+header.band{background:var(--band);color:#fff}
+.brand{font-weight:800;font-size:15px;letter-spacing:.02em;color:var(--sun)}
+h1{font-size:clamp(34px,6vw,52px);line-height:1.05;margin:.25em 0 .3em;font-weight:800;text-wrap:balance}
+.lead{max-width:62ch;margin:0 0 18px;color:#dfe5ff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none}
+.chips li{background:var(--sun);color:#1b1d2e;font-weight:700;font-size:14px;padding:5px 12px;border-radius:999px}
+.namebox{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.namebox label{font-weight:600}
+input[type=text]{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:9px 12px;min-height:44px;width:100%}
+header input[type=text]{max-width:280px;border-color:transparent}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--line)}
+.tabs .wrap{display:flex;align-items:center;gap:6px;padding:8px max(5vw,16px) 6px}
+.scroll{overflow-x:auto;display:flex;gap:6px;flex:1;scrollbar-width:none}
+.scroll a{flex:none;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px;padding:8px 12px;border-radius:9px;background:var(--card)}
+.scroll a:hover{background:var(--line)}
+.score{flex:none;font-weight:800;font-size:15px;color:var(--blue);white-space:nowrap;padding-left:6px}
+.bar{height:4px;background:var(--line)}.bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .3s}
+section.part{border-bottom:2px solid var(--line)}
+.ptag{display:inline-block;background:var(--blue);color:#fff;font-weight:800;border-radius:8px;padding:2px 10px;font-size:15px}
+:root[data-theme=dark] .ptag{color:#0e1330}
+h2{font-size:clamp(28px,4.5vw,38px);line-height:1.1;margin:.3em 0 .5em;text-wrap:balance}
+h3{font-size:21px;margin:1.8em 0 .2em}
+.instr{margin:0 0 12px;color:var(--muted);font-weight:500}
+.rule{background:var(--card);border-radius:14px;padding:16px 18px;margin:0 0 8px}
+.rule p{margin:.4em 0}
+.rule table{border-collapse:collapse;width:100%;margin:6px 0}
+.rule td,.rule th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.rule th{font-size:14px;color:var(--muted);font-weight:600}
+.rule b,.hl{color:var(--blue)}
+s{color:var(--coral)}
+ol.task{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:30px minmax(0,1fr);gap:4px 10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row .n{font-weight:800;color:var(--muted);padding-top:2px}
+.row .s{margin:0;font-size:17px}
+.row.opts-row{grid-template-columns:30px minmax(0,1fr) auto;align-items:center}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt,.btn,.chk{font:inherit;font-weight:700;font-size:15px;min-height:44px;min-width:56px;padding:0 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opt:hover,.chk:hover{border-color:var(--blue)}
+.opt.right{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.opt.wrong{background:var(--badbg);border-color:var(--coral);color:var(--coral);text-decoration:line-through}
+.done .opt{cursor:default}
+.gap{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--blue);text-align:center;font-weight:700;color:var(--blue)}
+.ok .gap{color:var(--ok);border-color:var(--ok)}.bad .gap{color:var(--coral);border-color:var(--coral)}
+.tag{display:inline-block;font-weight:800;border-radius:6px;padding:0 7px;margin-right:6px;background:var(--sun);color:#1b1d2e}
+.in{display:flex;gap:8px;margin-top:8px}
+.in input{flex:1}
+.ok .in input{border-color:var(--ok);background:var(--okbg)}.bad .in input{border-color:var(--coral);background:var(--badbg)}
+.retry .in input{border-color:var(--sun)}
+.gs{line-height:2.5}
+input.gi{display:inline-block;max-width:100%;font-weight:700;color:var(--blue);background:var(--card);border:0;border-bottom:2px solid var(--blue);border-radius:6px 6px 0 0;padding:4px 8px;margin:0 4px;min-height:38px;line-height:1.3}
+input.gi.g-ok{color:var(--ok);border-color:var(--ok);background:var(--okbg)}
+input.gi.g-bad{color:var(--coral);border-color:var(--coral);background:var(--badbg)}
+.self{margin-left:6px;font-size:14px;min-height:36px}
+.fb{margin:6px 0 0;font-size:15px;min-height:0}
+.ok .fb{color:var(--ok);font-weight:600}.bad .fb,.retry .fb{color:var(--muted)}
+.bad .fb b{color:var(--ok)}
+.btn{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme=dark] .btn{color:#0e1330}
+.btn.ghost{background:var(--bg);color:var(--blue)}
+.verbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:14px 0 6px}
+.vc{background:var(--card);border-radius:14px;padding:12px 14px;position:relative;border:2px solid transparent}
+.vc .f{font-weight:800;font-size:19px;line-height:1.2}
+.vc .f em{font-style:normal;color:var(--blue);background:light-dark(#dfe5ff,#25307a);border-radius:5px;padding:0 4px}
+.vc .ipa{font-size:13px;color:var(--muted);margin-top:4px}
+.vc .ua{font-size:15px;margin-top:2px}
+.drill{background:var(--band);color:#fff;border-radius:18px;padding:clamp(18px,3vw,28px);margin-top:10px}
+.dtop{display:flex;justify-content:space-between;font-weight:600;color:#dfe5ff;font-size:15px}
+.dword{display:flex;align-items:center;gap:6px;margin-top:10px}
+.dword b{font-size:clamp(40px,8vw,56px);line-height:1.05;font-weight:800}
+.dua{margin:2px 0 14px;color:#dfe5ff;font-size:17px}
+.dins{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.dins label{font-size:14px;font-weight:600;color:#dfe5ff;display:grid;gap:4px}
+.drill input{border-color:transparent}
+.drill input.ok{border-color:var(--ok);background:#e3f6ee;color:#0a5c3e}
+.drill input.bad{border-color:#ff8077;background:#fde8e6;color:#8f1d16}
+.dact{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.drill .btn{background:var(--sun);border-color:var(--sun);color:#1b1d2e}
+.drill .fb{color:#fff;font-size:17px;margin-top:10px}
+.drill .fb b{color:var(--sun)}
+.dend p{font-size:20px;font-weight:700;margin:6px 0 14px}
+.speak li{padding:10px 0;border-bottom:1px solid var(--line);font-size:17px}
+.speak{margin:0;padding-left:1.4em}
+.res{background:var(--card);border-radius:16px;padding:18px}
+.res .big{font-size:clamp(36px,7vw,52px);font-weight:800;color:var(--blue);line-height:1.05;margin:0}
+pre{overflow-x:auto;white-space:pre-wrap;background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:12px;font:14px/1.5 ui-monospace,Menlo,monospace;max-height:340px}
+footer{padding:22px max(5vw,16px);color:var(--muted);font-size:14px;text-align:center}
+@media(max-width:600px){
+.row.opts-row{grid-template-columns:30px minmax(0,1fr)}.row.opts-row .opts{grid-column:2}
+.dins{grid-template-columns:minmax(0,1fr)}
+.rule td,.rule th{padding:5px 4px;font-size:14px}
+.score{font-size:14px}}
+</style>
+</head>
+<body>
+<header class="band">
+ <div class="wrap">
+  <div class="brand">dinglish</div>
+  <h1>Past Simple: revision</h1>
+  <p class="lead">Повторюємо <b>was / were</b>, Past Simple і 18 неправильних дієслів. Виконуй завдання по черзі — відповіді перевіряються одразу. Внизу можна скопіювати результат і надіслати вчителю.</p>
+  <ul class="chips"><li>yesterday</li><li>last week</li><li>two days ago</li><li>in 2020</li><li>when I was a child</li></ul>
+  <div class="namebox"><label for="name">Your name:</label><input type="text" id="name" placeholder="Type your name" autocomplete="given-name"></div>
+ </div>
+</header>
+
+<nav class="tabs" aria-label="Parts">
+ <div class="wrap">
+  <div class="scroll"><a href="#was">A · was/were</a><a href="#past">B · Past Simple</a><a href="#verbs">C · 18 verbs</a><a href="#speak">D · Speak &amp; translate</a><a href="#results">Results</a></div>
+  <span class="score" id="score">0 / 0</span>
+ </div>
+ <div class="bar"><i id="bar"></i></div>
+</nav>
+
+<main>
+<section class="part band" id="was"><div class="wrap">
+ <span class="ptag">Part A</span>
+ <h2>was / were</h2>
+ <div class="rule">
+  <p><b>Was / were</b> — це минулий час дієслова <i>to be</i> (бути): «був, була, було, були».</p>
+  <table>
+   <tr><th></th><th>I / he / she / it</th><th>you / we / they</th></tr>
+   <tr><td>+</td><td>I <b>was</b> tired.</td><td>They <b>were</b> at home.</td></tr>
+   <tr><td>−</td><td>She <b>wasn't</b> late.</td><td>We <b>weren't</b> hungry.</td></tr>
+   <tr><td>?</td><td><b>Was</b> it cold?</td><td><b>Were</b> you at work?</td></tr>
+  </table>
+  <p><b>There was</b> + одна річ, <b>there were</b> + багато: There was a cat. There were three cats. Після <b>everybody / nobody</b> — <b>was</b>.</p>
+  <p>Питання з питальним словом: <b>Where were</b> you? <b>Why was</b> she late?</p>
+  <p>З was/were <b>не потрібне did</b>: <s>Did you be at home?</s> → <b>Were</b> you at home?</p>
+ </div>
+ <h3>A1</h3><p class="instr">Choose <i>was</i> or <i>were</i>.</p>
+ <ol class="task" id="a1"></ol>
+ <h3>A2</h3><p class="instr">Make the sentences negative (−), yes/no questions (?) or questions with the word given.</p>
+ <ol class="task" id="a2"></ol>
+</div></section>
+
+<section class="part band" id="past"><div class="wrap">
+ <span class="ptag">Part B</span>
+ <h2>Past Simple: the rules</h2>
+ <div class="rule">
+  <table>
+   <tr><td>+</td><td><b>V2</b>: правильні дієслова + <b>-ed</b> (work → work<b>ed</b>, study → stud<b>ied</b>, stop → stop<b>ped</b>), неправильні — 2-га форма (go → <b>went</b>)</td></tr>
+   <tr><td>−</td><td><b>didn't + V1</b>: I didn't <b>go</b>. &nbsp;<s>I didn't went</s></td></tr>
+   <tr><td>?</td><td><b>Did</b> + хто + <b>V1</b>? Did you <b>see</b> it? &nbsp;<s>Did you saw</s></td></tr>
+   <tr><td>Wh-?</td><td>Where / When / Why … + <b>did</b> + хто + <b>V1</b>? <b>Where did</b> you <b>go</b>?</td></tr>
+  </table>
+  <p>Після <b>did / didn't</b> дієслово завжди в 1-й формі — минулий час «сидить» уже в did.</p>
+ </div>
+ <h3>B1</h3><p class="instr">Put the verbs in brackets into the Past Simple. <i>not/…</i> = negative, <i>you / …</i> = question.</p>
+ <ol class="task" id="b1"></ol>
+ <h3>B2</h3><p class="instr">Make the sentences negative (−), yes/no questions (?) or questions with the word given.</p>
+ <ol class="task" id="b2"></ol>
+ <h3>B3</h3><p class="instr">Choose <i>was</i>, <i>were</i> or <i>did</i>.</p>
+ <ol class="task" id="b3"></ol>
+</div></section>
+
+<section class="part band" id="verbs"><div class="wrap">
+ <span class="ptag">Part C</span>
+ <h2>Focus: 18 irregular verbs</h2>
+ <p class="instr">Для Past Simple потрібна <span class="hl">2-га форма (V2)</span> — вона виділена.</p>
+ <div class="verbs" id="vgrid"></div>
+ <h3>C1</h3><p class="instr">Choose the correct Past Simple form. Be careful: some answers look very similar!</p>
+ <ol class="task" id="c1"></ol>
+ <h3>C2</h3><p class="instr">Flash cards: type the second (V2) and third (V3) forms.</p>
+ <div class="drill" id="drill">
+  <div id="dCard">
+   <div class="dtop"><span id="dCount"></span><span id="dRight"></span></div>
+   <div class="dword"><b id="dV1"></b></div>
+   <p class="dua" id="dUa"></p>
+   <div class="dins"><label>V2 · Past Simple<input type="text" id="dV2" autocomplete="off" autocapitalize="off" spellcheck="false"></label><label>V3 · Past Participle<input type="text" id="dV3" autocomplete="off" autocapitalize="off" spellcheck="false"></label></div>
+   <div class="dact"><button class="btn" type="button" id="dCheck">Check</button><button class="btn" type="button" id="dNext" hidden>Next</button></div>
+   <p class="fb" id="dFb" aria-live="polite"></p>
+  </div>
+  <div class="dend" id="dEnd" hidden><p id="dSum"></p><div class="dact"><button class="btn" type="button" id="dMiss">Practise my mistakes</button><button class="btn" type="button" id="dAll">All 18 again</button></div></div>
+ </div>
+ <h3>C3</h3><p class="instr">Put the verbs in brackets into the Past Simple. <i>not/…</i> = negative.</p>
+ <ol class="task" id="c3"></ol>
+ <h3>C4</h3><p class="instr">Make the sentences negative (−), yes/no questions (?) or questions with the word given.</p>
+ <ol class="task" id="c4"></ol>
+</div></section>
+
+<section class="part band" id="speak"><div class="wrap">
+ <span class="ptag">Part D</span>
+ <h2>Speak &amp; translate</h2>
+ <h3>D1</h3><p class="instr">Answer the questions out loud. Use full sentences and add one more detail.</p>
+ <ol class="speak">
+  <li>Tell me about the best day of last summer. Where were you? Who were you with? What did you do?</li>
+  <li>What was the last book or article you read? What was it about? Did you like it?</li>
+  <li>What was the best present you ever got? Who gave it to you and why?</li>
+  <li>Did you fly anywhere last year? Where did you go, and what was the most interesting thing there?</li>
+  <li>Who taught you to swim, to ride a bike or to cook? Was it easy or difficult?</li>
+  <li>What did you wear to the last party or wedding you went to? Why did you choose it?</li>
+  <li>Tell me about a time you forgot something important. What happened?</li>
+  <li>When did you begin to learn English? What was your first teacher like?</li>
+  <li>Did you keep anything from your childhood — toys, letters, photos? Where do you keep it now?</li>
+  <li>Tell me about a time somebody didn't understand you. What did you say, and what did they do?</li>
+ </ol>
+ <h3>D2</h3><p class="instr">Translate into English. If your answer is different from the model but means the same, you can mark it as correct.</p>
+ <ol class="task" id="d2"></ol>
+</div></section>
+
+<section class="band" id="results"><div class="wrap">
+ <h2>Your results</h2>
+ <div class="res">
+  <p class="big" id="rBig">0 / 0</p>
+  <p class="instr" id="rDone"></p>
+  <div class="dact"><button class="btn" type="button" id="copy">Copy results for the teacher</button></div>
+  <p class="fb" id="copyFb" aria-live="polite"></p>
+  <pre id="report" hidden></pre>
+ </div>
+</div></section>
+</main>
+<footer>dinglish · Past Simple revision</footer>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s).toLowerCase().replace(/[’‘`ʼ]/g,"'").replace(/\bdid not\b/g,"didn't").replace(/\bwas not\b/g,"wasn't").replace(/\bwere not\b/g,"weren't").replace(/[.,!?;:"«»]/g,'').replace(/\s+/g,' ').trim();
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const gapify=s=>esc(s).replace('___','<span class="gap">&nbsp;</span>');
+
+const V=[
+['get','got','got/gotten','ɡet – ɡɒt – ɡɒt','ґет – ґот – ґот','отримувати, діставати'],
+['give','gave','given','ɡɪv – ɡeɪv – ˈɡɪvən','ґів – ґейв – ґíвен','давати'],
+['read','read','read','riːd – red – red','рід – ред – ред','читати'],
+['show','showed','shown/showed','ʃəʊ – ʃəʊd – ʃəʊn','шоу – шоуд – шоун','показувати'],
+['speak','spoke','spoken','spiːk – spəʊk – ˈspəʊkən','спік – споук – спо́укен','говорити'],
+['begin','began','begun','bɪˈɡɪn – bɪˈɡæn – bɪˈɡʌn','біґíн – біґе́н – біґа́н','починати'],
+['drive','drove','driven','draɪv – drəʊv – ˈdrɪvən','драйв – дроув – дрíвен','керувати автомобілем'],
+['fly','flew','flown','flaɪ – fluː – fləʊn','флай – флу – флоун','літати'],
+['say','said','said','seɪ – sed – sed','сей – сед – сед','казати'],
+['teach','taught','taught','tiːtʃ – tɔːt – tɔːt','тіч – тот – тот','навчати, викладати'],
+['wear','wore','worn','weə – wɔː – wɔːn','веа – во – вон','носити (одяг)'],
+['bite','bit','bitten','baɪt – bɪt – ˈbɪtən','байт – біт – бі́тен','кусати'],
+['blow','blew','blown','bləʊ – bluː – bləʊn','блоу – блу – блоун','дути'],
+['cut','cut','cut','kʌt – kʌt – kʌt','кат – кат – кат','різати'],
+['forgive','forgave','forgiven','fəˈɡɪv – fəˈɡeɪv – fəˈɡɪvən','феґíв – феґе́йв – феґíвен','пробачати'],
+['forget','forgot','forgotten','fəˈɡet – fəˈɡɒt – fəˈɡɒtən','феґе́т – феґо́т – феґо́тен','забувати'],
+['keep','kept','kept','kiːp – kept – kept','кіп – кепт – кепт','зберігати, тримати'],
+['understand','understood','understood','ˌʌndəˈstænd – ˌʌndəˈstʊd – ˌʌndəˈstʊd','андесте́нд – андесту́д – андесту́д','розуміти']
+].map(([v,p,pp,ipa,tr,ua])=>({v,p,pp,ipa,tr,ua}));
+
+/* scoring */
+const tasks={};
+const reg=(id,title,total)=>{tasks[id]={title,total,res:{}}};
+function record(id,i,ok,given,right,q){if(tasks[id].res[i])return;tasks[id].res[i]={ok,given,right,q};update()}
+function update(){let ok=0,tot=0,done=0;for(const t of Object.values(tasks)){tot+=t.total;for(const r of Object.values(t.res)){done++;if(r.ok)ok++}}
+ $('#score').textContent=`${ok} / ${tot}`;$('#bar').style.width=(tot?done/tot*100:0)+'%';
+ $('#rBig').textContent=`${ok} / ${tot}`;$('#rDone').textContent=`Done: ${done} of ${tot} answers.`}
+
+/* choice task */
+function choiceTask(id,title,items,mix){
+ const el=$('#'+id);reg(id,title,items.length);
+ el.innerHTML=items.map((it,i)=>{const o=mix?shuffle(it.o.slice()):it.o;return `<li class="row opts-row" data-i="${i}"><span class="n">${i+1}</span><p class="s">${gapify(it.s)}</p><div class="opts">${o.map(x=>`<button class="opt" type="button">${esc(x)}</button>`).join('')}</div></li>`}).join('');
+ el.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;const li=b.closest('.row');if(li.classList.contains('done'))return;
+  const i=+li.dataset.i,it=items[i],ok=b.textContent===it.a;li.classList.add('done',ok?'ok':'bad');b.classList.add(ok?'right':'wrong');
+  if(!ok)[...li.querySelectorAll('.opt')].find(x=>x.textContent===it.a).classList.add('right');
+  li.querySelector('.gap').textContent=it.a;record(id,i,ok,b.textContent,it.a,it.s.replace('___','…'))});
+}
+
+/* typing task: items {h:html prompt, p:plain prompt, a:[accepted]} */
+function typeTask(id,title,items,hint,self){
+ const el=$('#'+id);reg(id,title,items.length);
+ el.innerHTML=items.map((it,i)=>`<li class="row" data-i="${i}"><span class="n">${i+1}</span><div><p class="s">${it.h}</p><div class="in"><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${i+1}"><button class="chk" type="button">Check</button></div><p class="fb" aria-live="polite"></p></div></li>`).join('');
+ const check=li=>{if(li.classList.contains('done'))return;const i=+li.dataset.i,it=items[i],inp=li.querySelector('input'),v=inp.value,fb=li.querySelector('.fb');if(!v.trim())return;
+  const ok=it.a.some(a=>norm(a)===norm(v));
+  if(ok){li.classList.remove('retry');li.classList.add('done','ok');fb.textContent='Correct!';inp.readOnly=true;record(id,i,true,v,it.a[0],it.p)}
+  else if(!li.dataset.tried){li.dataset.tried=1;li.classList.add('retry');fb.textContent=hint||'Not quite. Try again.';inp.focus()}
+  else{li.classList.remove('retry');li.classList.add('done','bad');fb.innerHTML=`${self?'Model answer':'Correct answer'}: <b>${esc(it.a[0])}</b>`+(self?' <button class="chk self" type="button">My answer means the same</button>':'');inp.readOnly=true;record(id,i,false,v,it.a[0],it.p)}};
+ el.addEventListener('click',e=>{const s=e.target.closest('.self');
+  if(s){const li=s.closest('.row'),r=tasks[id].res[+li.dataset.i];r.ok=true;r.self=true;li.classList.replace('bad','ok');s.remove();li.querySelector('.fb').insertAdjacentHTML('beforeend',' · marked as correct');update();return}
+  const b=e.target.closest('.chk');if(b)check(b.closest('.row'))});
+ el.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName==='INPUT'){e.preventDefault();check(e.target.closest('.row'))}});
+}
+
+/* multi-gap task: items {s:'... ___ (verb) ... ___ (verb)', a:[[accepted],[accepted]]} */
+function gapTask(id,title,items){
+ const el=$('#'+id);reg(id,title,items.length);
+ el.innerHTML=items.map((it,i)=>{const parts=it.s.split('___');return `<li class="row" data-i="${i}"><span class="n">${i+1}</span><div><p class="s gs">${parts.map((p,k)=>esc(p)+(k<parts.length-1?`<input type="text" class="gi" style="width:${Math.max(...it.a[k].map(x=>x.length))+4}ch" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Gap ${k+1}">`:'')).join('')}</p><div class="in"><button class="chk" type="button">Check</button></div><p class="fb" aria-live="polite"></p></div></li>`}).join('');
+ const check=li=>{if(li.classList.contains('done'))return;const i=+li.dataset.i,it=items[i],ins=[...li.querySelectorAll('.gi')],fb=li.querySelector('.fb');
+  if(ins.every(x=>!x.value.trim()))return;
+  const oks=ins.map((x,k)=>it.a[k].some(a=>norm(a)===norm(x.value)));
+  ins.forEach((x,k)=>{x.classList.toggle('g-ok',oks[k]);x.classList.toggle('g-bad',!oks[k]);if(oks[k])x.readOnly=true});
+  const p=it.s.replace(/___/g,'…'),given=ins.map(x=>x.value.trim()||'—').join(' / '),right=it.a.map(a=>a[0]).join(' / ');
+  if(oks.every(Boolean)){li.classList.remove('retry');li.classList.add('done','ok');fb.textContent='Correct!';record(id,i,true,given,right,p)}
+  else if(!li.dataset.tried){li.dataset.tried=1;li.classList.add('retry');fb.textContent='The red gaps are wrong. Try again.';ins[oks.indexOf(false)].focus()}
+  else{li.classList.remove('retry');li.classList.add('done','bad');ins.forEach(x=>x.readOnly=true);fb.innerHTML='Correct answers: '+it.a.map(a=>`<b>${esc(a[0])}</b>`).join(', ');record(id,i,false,given,right,p)}};
+ el.addEventListener('click',e=>{const b=e.target.closest('.chk');if(b)check(b.closest('.row'))});
+ el.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.target.tagName!=='INPUT')return;e.preventDefault();const li=e.target.closest('.row'),ins=[...li.querySelectorAll('.gi')],nx=ins.slice(ins.indexOf(e.target)+1).find(x=>!x.readOnly&&!x.value.trim());if(nx)nx.focus();else check(li)});
+}
+const tr=(src,tag,a)=>({h:`<span class="tag">${esc(tag)}</span>${esc(src)}`,p:`${tag} ${src}`,a});
+
+/* PART A */
+const WW=['was','were'],WWc=['Was','Were'];
+choiceTask('a1','A1 was/were',[
+ {s:'My grandparents ___ really happy when we visited them last Sunday.',o:WW,a:'were'},
+ {s:'The hotel was cheap, but the rooms ___ very small and a bit dirty.',o:WW,a:'were'},
+ {s:'___ the shops open on New Year\'s Day, or did you stay at home?',o:WWc,a:'Were'},
+ {s:'When I ___ a little girl, I hated vegetables and loved sweets.',o:WW,a:'was'},
+ {s:'My best friend and I ___ in the same class at school for eleven years.',o:WW,a:'were'},
+ {s:'There ___ only one person in the café when we arrived at 7 a.m.',o:WW,a:'was'},
+ {s:'There ___ about fifty people at my cousin\'s wedding, and the music was great.',o:WW,a:'were'},
+ {s:'Why ___ your phone off all day yesterday? I called you five times!',o:WW,a:'was'},
+ {s:'The exam ___n\'t as difficult as I thought, so I finished early.',o:WW,a:'was'},
+ {s:'Our neighbours ___n\'t at home, so the courier left the parcel at our door.',o:WW,a:'were'},
+ {s:'___ it your first time in London, or did you go there before?',o:WWc,a:'Was'},
+ {s:'After the twelve-hour bus trip everybody ___ tired and hungry.',o:WW,a:'was'}]);
+typeTask('a2','A2 was/were − / ? / Wh-?',[
+ tr('The pizza in that new restaurant was very expensive.','−',["The pizza in that new restaurant wasn't very expensive."]),
+ tr('Your parents were in Turkey last October.','?',['Were your parents in Turkey last October?']),
+ tr('There were a lot of mistakes in my last test.','−',["There weren't a lot of mistakes in my last test.","There weren't many mistakes in my last test."]),
+ tr('It was sunny on the day of your sister\'s wedding.','?',["Was it sunny on the day of your sister's wedding?"]),
+ tr('Her children were at school yesterday morning.','?',['Were her children at school yesterday morning?']),
+ tr('They were in Paris last week. → Where …?','Where?',['Where were they last week?']),
+ tr('The concert tickets were 800 hryvnias. → How much …?','How much?',['How much were the concert tickets?','How much were the tickets?']),
+ tr('She was late for work because of the snow. → Why …?','Why?',['Why was she late for work?','Why was she late?'])],'Not quite. Check the word order: Was / Were + who …?');
+
+/* PART B */
+gapTask('b1','B1 Past Simple in context',[
+ {s:'Last Saturday we ___ (wake) up late, ___ (have) a big breakfast and ___ (go) for a walk in the park.',a:[['woke'],['had'],['went']]},
+ {s:'My sister ___ (try) on five dresses in the shop, but she ___ (not/buy) any of them.',a:[['tried'],["didn't buy"]]},
+ {s:'I ___ (call) you three times yesterday! Why ___ (you / not / answer)?',a:[['called'],["didn't you answer"]]},
+ {s:'We ___ (arrive) at the station at 7:05, but our train ___ (leave) at 7:00!',a:[['arrived'],['left']]},
+ {s:'___ (you / enjoy) the film last night? — Yes, but it ___ (be) a bit too long.',a:[['Did you enjoy'],['was']]},
+ {s:'My dad ___ (stop) smoking ten years ago and ___ (start) running every morning.',a:[['stopped'],['started']]},
+ {s:'I ___ (not/sleep) well last night because my neighbours ___ (have) a noisy party.',a:[["didn't sleep"],['had']]},
+ {s:'In 2019 my family ___ (move) to Kyiv, and my mum ___ (find) a job in a big company.',a:[['moved'],['found']]},
+ {s:'She ___ (see) a beautiful jacket in the shop window, but it ___ (cost) too much.',a:[['saw'],['cost']]},
+ {s:'We ___ (plan) a picnic, but it ___ (rain) all day, so we ___ (stay) at home and ___ (make) pizza.',a:[['planned'],['rained'],['stayed'],['made']]},
+ {s:'What ___ (you / do) last weekend? — I ___ (meet) my old school friends.',a:[['did you do'],['met']]},
+ {s:'The waiter ___ (bring) us the wrong soup, so we ___ (ask) for another one.',a:[['brought'],['asked']]}]);
+typeTask('b2','B2 did − / ? / Wh-?',[
+ tr('We went to the new Italian restaurant near our office on Friday.','−',["We didn't go to the new Italian restaurant near our office on Friday."]),
+ tr('Your brother bought a new phone last month.','?',['Did your brother buy a new phone last month?']),
+ tr('I made a lot of mistakes in my last English test.','−',["I didn't make a lot of mistakes in my last English test.","I didn't make many mistakes in my last English test."]),
+ tr('They stayed in a small hotel near the beach.','?',['Did they stay in a small hotel near the beach?']),
+ tr('She left the party at midnight. → When …?','When?',['When did she leave the party?']),
+ tr('He paid 2,000 hryvnias for these shoes. → How much …?','How much?',['How much did he pay for these shoes?','How much did he pay for the shoes?']),
+ tr('They met in a small bookshop in Lviv. → Where …?','Where?',['Where did they meet?']),
+ tr('She called her mum because she felt sad. → Why …?','Why?',['Why did she call her mum?'])],"Not quite. Remember: (Wh-) + did / didn't + V1.");
+const WWD=['was','were','did'],WWDc=['Was','Were','Did'];
+choiceTask('b3','B3 was/were/did',[
+ {s:'___ you at home when I called you yesterday evening?',o:WWDc,a:'Were'},
+ {s:'___ you see the match last night? It was amazing!',o:WWDc,a:'Did'},
+ {s:'My sister ___n\'t enjoy the trip because the weather was awful.',o:WWD,a:'did'},
+ {s:'The trip ___n\'t very nice because it rained every single day.',o:WWD,a:'was'},
+ {s:'Where ___ your parents during the winter holidays?',o:WWD,a:'were'},
+ {s:'How much ___ you pay for your new laptop?',o:WWD,a:'did'},
+ {s:'Why ___ the children so quiet at dinner yesterday?',o:WWD,a:'were'},
+ {s:'I ___n\'t understand the joke, so everybody laughed at me.',o:WWD,a:'did'},
+ {s:'What time ___ your train arrive in Odesa?',o:WWD,a:'did'},
+ {s:'___ the museum interesting? — Not really, it was a bit boring.',o:WWDc,a:'Was'},
+ {s:'We ___n\'t hungry because we had a huge lunch at Grandma\'s.',o:WWD,a:'were'},
+ {s:'___ your grandma really teach English at university?',o:WWDc,a:'Did'}]);
+
+/* PART C */
+$('#vgrid').innerHTML=V.map(x=>`<div class="vc"><div class="f">${esc(x.v)} – <em>${esc(x.p)}</em> – ${esc(x.pp.split('/')[0])}</div><div class="ipa">/${esc(x.ipa)}/ · ${esc(x.tr)}</div><div class="ua">${esc(x.ua)}</div></div>`).join('');
+
+const C1=[
+ ['I ___ a strange message from an unknown number at 3 a.m.',['got','getted','gat']],
+ ['For my last birthday my friends ___ me tickets to a concert.',['gave','gived','given']],
+ ['She ___ all seven books of the series in one summer when she was twelve.',['read','readed','reed']],
+ ['The guide ___ us the oldest church in the city.',['showed','shown','shewed']],
+ ['The taxi driver ___ only Spanish, so we used a translation app.',['spoke','speaked','spoken']],
+ ['It ___ to rain the moment we left the house without an umbrella.',['began','begun','beginned']],
+ ['My uncle ___ all night to get to the sea by morning.',['drove','drived','driven']],
+ ['A little bird ___ into our kitchen through the open window!',['flew','flied','flown']],
+ ['When I asked him about the money, he ___ nothing and left the room.',['said','sayed','says']],
+ ['My grandad ___ me how to fish when I was seven.',['taught','teached','thought']],
+ ['She ___ a long red dress to her sister\'s wedding.',['wore','weared','worn']],
+ ['A mosquito ___ me on the nose, and I looked terrible in all the photos.',['bit','bited','bitten']],
+ ['The wind ___ my hat off, and it landed in the river.',['blew','blowed','blown']],
+ ['The hairdresser ___ my hair too short, and I cried all evening.',['cut','cutted','cat']],
+ ['I broke her favourite cup, but she ___ me the next day.',['forgave','forgived','forgiven']],
+ ['We ___ our passports at home and nearly missed our flight!',['forgot','forgetted','forgotten']],
+ ['He ___ the secret for ten years and told nobody.',['kept','keeped','kepted']],
+ ['I didn\'t listen carefully, so I ___ only half of the instructions.',['understood','understanded','understand']]];
+choiceTask('c1','C1 choose the verb form',C1.map(([s,o])=>({s,o,a:o[0]})),true);
+
+const dr={q:[],i:0,miss:[],first:true,right:0};
+const dIn=()=>[$('#dV2'),$('#dV3')];
+function dStart(list,first,focus){dr.q=shuffle(list.slice());dr.i=0;dr.miss=[];dr.right=0;dr.first=first;$('#dEnd').hidden=true;$('#dCard').hidden=false;dShow(focus)}
+function dShow(focus){const v=dr.q[dr.i];$('#dV1').textContent=v.v;$('#dUa').textContent=v.ua;
+ $('#dCount').textContent=`${dr.i+1} / ${dr.q.length}`+(dr.first?'':' · mistakes round');$('#dRight').textContent=`✓ ${dr.right}`;
+ dIn().forEach(x=>{x.value='';x.readOnly=false;x.className=''});$('#dFb').innerHTML='';$('#dCheck').hidden=false;$('#dNext').hidden=true;
+ if(focus)$('#dV2').focus({preventScroll:true})}
+function dCheck(){const v=dr.q[dr.i],[i2,i3]=dIn();if(!i2.value.trim()&&!i3.value.trim())return;
+ const ok2=norm(i2.value)===v.p,ok3=v.pp.split('/').includes(norm(i3.value)),ok=ok2&&ok3;
+ i2.className=ok2?'ok':'bad';i3.className=ok3?'ok':'bad';dIn().forEach(x=>x.readOnly=true);
+ $('#dFb').innerHTML=ok?'Correct!':`${esc(v.v)} – <b>${esc(v.p)}</b> – <b>${esc(v.pp.split('/')[0])}</b>`;
+ if(ok)dr.right++;else dr.miss.push(v);$('#dRight').textContent=`✓ ${dr.right}`;
+ if(dr.first)record('c2',V.indexOf(v),ok,`${i2.value} / ${i3.value}`,`${v.p} / ${v.pp.split('/')[0]}`,v.v);
+ $('#dCheck').hidden=true;$('#dNext').hidden=false;$('#dNext').focus({preventScroll:true})}
+function dNext(){dr.i++;if(dr.i<dr.q.length){dShow(true);return}
+ $('#dCard').hidden=true;$('#dEnd').hidden=false;
+ $('#dSum').textContent=dr.miss.length?`${dr.right} of ${dr.q.length} correct. Let's practise the ${dr.miss.length} tricky one${dr.miss.length>1?'s':''} again.`:`${dr.right} of ${dr.q.length} correct. Excellent!`;
+ $('#dMiss').hidden=!dr.miss.length;dr.last=dr.miss.slice()}
+reg('c2','C2 flash cards V2/V3',V.length);
+$('#dCheck').addEventListener('click',dCheck);$('#dNext').addEventListener('click',dNext);
+$('#dMiss').addEventListener('click',()=>dStart(dr.last,false,true));$('#dAll').addEventListener('click',()=>dStart(V,false,true));
+$('#drill').addEventListener('keydown',e=>{if(e.key!=='Enter'||e.target.tagName!=='INPUT')return;e.preventDefault();
+ if(e.target.id==='dV2'&&!$('#dCheck').hidden&&!$('#dV3').value.trim()){$('#dV3').focus();return}
+ if(!$('#dCheck').hidden)dCheck();else dNext()});
+dStart(V,true,false);
+
+gapTask('c3','C3 the 18 verbs in context',[
+ {s:'The lesson ___ (begin) at nine, but the teacher ___ (forget) the keys, so we waited outside for twenty minutes.',a:[['began'],['forgot']]},
+ {s:'My cousin ___ (fly) to Canada last year and ___ (teach) English to kids there for six months.',a:[['flew'],['taught']]},
+ {s:'I ___ (read) the instructions three times, but I still ___ (not/understand) how to use the coffee machine.',a:[['read'],["didn't understand"]]},
+ {s:'At the meeting the boss ___ (speak) for two hours and ___ (show) us a hundred boring slides.',a:[['spoke'],['showed']]},
+ {s:'The wind ___ (blow) so hard that a tree fell on the road, so Dad ___ (drive) us to school a different way.',a:[['blew'],['drove']]},
+ {s:'Our dog ___ (bite) the postman, so we ___ (give) him a big box of chocolates to say sorry.',a:[['bit'],['gave']]},
+ {s:'She ___ (wear) her mum\'s old leather jacket to the party, and everybody ___ (say) it looked amazing.',a:[['wore'],['said']]},
+ {s:'I ___ (get) a really bad mark in the maths test, but my parents ___ (forgive) me.',a:[['got'],['forgave']]},
+ {s:'My grandma ___ (keep) all my childhood drawings in a box, and she ___ (cut) out every newspaper photo of our school.',a:[['kept'],['cut']]}]);
+typeTask('c4','C4 the 18 verbs − / ? / Wh-?',[
+ tr('He spoke to the manager about the problem.','−',["He didn't speak to the manager about the problem."]),
+ tr('She wore the same dress to two different weddings.','?',['Did she wear the same dress to two different weddings?']),
+ tr('You understood the teacher\'s explanation.','?',["Did you understand the teacher's explanation?"]),
+ tr('My grandma taught me to bake bread.','−',["My grandma didn't teach me to bake bread."]),
+ tr('They flew to Egypt in March. → When …?','When?',['When did they fly to Egypt?']),
+ tr('He gave his old bike to his little brother. → What …?','What?',['What did he give to his little brother?','What did he give his little brother?']),
+ tr('The film began at 8 p.m. → What time …?','What time?',['What time did the film begin?']),
+ tr('She forgot her umbrella because she was in a hurry. → Why …?','Why?',['Why did she forget her umbrella?']),
+ tr('They kept the money in a box under the bed. → Where …?','Where?',['Where did they keep the money?'])],"Not quite. Remember: (Wh-) + did + V1 (speak, not spoke).");
+
+/* PART D */
+const ua=(src,a)=>({h:esc(src),p:src,a});
+typeTask('d2','D2 translation',[
+ ua('Минулих вихідних ми були в горах, але погода була жахливою.',['We were in the mountains last weekend, but the weather was terrible.','Last weekend we were in the mountains, but the weather was terrible.','We were in the mountains last weekend, but the weather was awful.','Last weekend we were in the mountains, but the weather was awful.']),
+ ua('Де ти була вчора ввечері? Я дзвонила тобі тричі!',['Where were you yesterday evening? I called you three times!','Where were you last night? I called you three times!']),
+ ua('Моя бабуся навчила мене плавати, коли мені було сім.',['My grandma taught me to swim when I was seven.','My grandmother taught me to swim when I was seven.','My grandma taught me how to swim when I was seven.','My grandmother taught me how to swim when I was seven.']),
+ ua('Вчитель сказав щось важливе, але я не зрозуміла.',["The teacher said something important, but I didn't understand.","The teacher said something important, but I didn't understand it."]),
+ ua('Ми полетіли до Барселони в травні й говорили там тільки англійською.',['We flew to Barcelona in May and spoke only English there.','We flew to Barcelona in May and only spoke English there.']),
+ ua('Фільм почався о восьмій, а ми прийшли о пів на дев\'яту.',['The film began at eight, but we came at half past eight.','The film began at eight and we came at half past eight.','The film began at eight, but we arrived at half past eight.','The film began at eight and we arrived at half past eight.']),
+ ua('Ти прочитала книжку, яку я тобі дала?',['Did you read the book that I gave you?','Did you read the book I gave you?','Did you read the book which I gave you?']),
+ ua('Він не показав мені фото з відпустки.',["He didn't show me the photos from his holiday.","He didn't show me his holiday photos.","He didn't show me the photos from the holiday."]),
+ ua('Чому ти не вдягла свою нову сукню на вечірку?',["Why didn't you wear your new dress to the party?","Why didn't you wear your new dress for the party?"]),
+ ua('Собака вкусив мого брата, але брат його пробачив.',['The dog bit my brother, but my brother forgave it.','The dog bit my brother, but my brother forgave him.','The dog bit my brother, but he forgave it.','The dog bit my brother, but he forgave him.']),
+ ua('Скільки ти заплатила за ці квитки?',['How much did you pay for these tickets?','How much did you pay for those tickets?']),
+ ua('Мої батьки зберігали всі мої шкільні зошити в старій валізі.',['My parents kept all my school notebooks in an old suitcase.','My parents kept all my school exercise books in an old suitcase.'])],'Not quite like the model answer. Check the verb forms and word order, then try again.',true);
+
+/* results */
+function report(){let ok=0,tot=0;const lines=[];
+ for(const t of Object.values(tasks)){const r=Object.values(t.res),c=r.filter(x=>x.ok).length;ok+=c;tot+=t.total;
+  lines.push(`${t.title}: ${c}/${t.total}${r.length<t.total?` (answered ${r.length})`:''}`);
+  r.forEach(x=>{if(!x.ok)lines.push(`   ✗ ${x.q} → "${x.given}" (correct: ${x.right})`);else if(x.self)lines.push(`   ~ ${x.q} → "${x.given}" (self-checked; model: ${x.right})`)})}
+ return [`dinglish · Past Simple revision`,`Student: ${$('#name').value.trim()||'—'}`,`Date: ${new Date().toLocaleDateString('uk-UA')}`,`Total: ${ok}/${tot}`,'',...lines].join('\n')}
+$('#copy').addEventListener('click',async()=>{const t=report(),pre=$('#report');pre.textContent=t;pre.hidden=false;
+ try{await navigator.clipboard.writeText(t);$('#copyFb').textContent='Copied! Paste it into a message to your teacher.'}
+ catch(e){$('#copyFb').textContent='Select the text below and copy it to your teacher.'}});
+update();
+}
+</script>
+</body>
+</html>
