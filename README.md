@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Past Simple Revision | [index-14.html](index-14.html) |
 | Inversion homework | [index-12.html](index-12.html) |
 | Present Perfect vs Past Simple | [index-11.html](index-11.html) |
 | Zero & First Conditionals — Revision · dinglish | [index-7.html](index-7.html) |
