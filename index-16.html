@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Past Simple Speaking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: friendly speaking club; energetic but clear for A2 adults
+   IDEA: a memory timeline / photo strip of last year
+   PICTURE: hero time-strip of last year's moments; tasks are generators that keep the student talking
+   COLOUR and TYPE: sunflower yellow field, ink black, tomato accent, sky support; Rubik (Cyrillic-ready)
+   LAYOUT: sticky part links, Part 1 → Part 2 → Mixed → Translation, one task per card */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#14151a);--ink:light-dark(#1b1b1f,#f2f0ea);--muted:light-dark(#5d5d66,#a9a8b0);
+--card:light-dark(#f6f6f3,#1d1f26);--line:light-dark(#e2e0d8,#30333c);
+--sun:#ffd23f;--tom:#ff5a36;--tomInk:light-dark(#c63a1b,#ff7d5e);--sky:light-dark(#dff1ff,#1b3144);--skyInk:light-dark(#145a8c,#8fd0ff);
+--ok:light-dark(#1d7a46,#5fd393);--okBg:light-dark(#e3f6ea,#173a27);--bad:light-dark(#b42318,#ff8a7a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.55 Rubik,system-ui,sans-serif;overflow-x:clip}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+h1,h2,h3{line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6vw,52px);font-weight:800}
+h2{font-size:clamp(28px,4vw,38px);font-weight:800}
+h3{font-size:21px;font-weight:700}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1100px;margin:0 auto}
+button{font:inherit;cursor:pointer;min-height:44px;border-radius:12px;border:2px solid var(--ink);background:var(--bg);color:var(--ink);padding:8px 16px;font-weight:500}
+button:hover{background:var(--card)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--tom);outline-offset:2px}
+button.main{background:var(--ink);color:var(--bg)}
+button.main:hover{opacity:.88}
+
+/* hero */
+.hero{background:var(--sun);color:#1b1b1f}
+.brand{font-weight:800;font-size:18px;margin-bottom:18px}
+.brand span{background:#1b1b1f;color:var(--sun);padding:2px 8px;border-radius:8px}
+.lead{font-size:18px;max-width:60ch;margin:14px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.meta b{background:#fff6;border:2px solid #1b1b1f;border-radius:99px;padding:4px 12px;font-weight:500;font-size:15px}
+.rules{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-weight:500}
+.rules span::before{content:"✓ ";font-weight:800}
+.strip{margin-top:28px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;position:relative}
+.strip::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;background:#1b1b1f;border-radius:4px}
+.ph{position:relative;background:#fff;border:2px solid #1b1b1f;border-radius:10px;padding:10px 10px 14px;box-shadow:4px 4px 0 #1b1b1f;transform:rotate(var(--r));text-align:center}
+.ph small{display:block;font-size:13px;color:#5d5d66}
+.ph strong{display:block;font-size:16px;margin-top:2px}
+.ph.now{background:var(--tom);color:#fff}.ph.now small{color:#fff}
+@media(max-width:700px){.strip{grid-template-columns:repeat(3,minmax(0,1fr))}.strip .ph:nth-child(n+4){display:none}.strip::before{display:none}}
+
+/* nav */
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--line)}
+nav .scroll{display:flex;gap:6px;overflow-x:auto;padding:8px max(5vw,16px);max-width:1200px;margin:0 auto}
+nav a{flex:none;color:var(--ink);text-decoration:none;padding:8px 14px;border-radius:99px;font-weight:500;font-size:15px}
+nav a:hover{background:var(--card)}
+
+/* parts */
+.part-h{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-weight:700;font-size:14px;padding:4px 12px;border-radius:99px;background:var(--tom);color:#fff}
+.sub{color:var(--muted);margin:6px 0 26px;max-width:65ch}
+.task{background:var(--card);border-radius:18px;padding:clamp(18px,3vw,28px);margin-bottom:20px}
+.task>h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.task>h3 i{font-style:normal;color:var(--tomInk)}
+.inst{margin:8px 0 18px;font-weight:500}
+.talk{display:inline-block;font-size:13px;font-weight:700;background:var(--sky);color:var(--skyInk);padding:2px 10px;border-radius:99px;vertical-align:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hint{color:var(--muted);font-size:15px}
+
+/* grammar (UA) */
+.gram{border:2px solid var(--ink);border-radius:18px;padding:clamp(18px,3vw,26px);margin-bottom:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px 28px}
+.gram h3{grid-column:1/-1}
+.gram h4{margin:0 0 6px;font-size:17px}
+.gram p,.gram ul{margin:0;font-size:15.5px}
+.gram ul{padding-left:18px}
+.gram em{font-style:normal;background:var(--sun);color:#1b1b1f;padding:0 4px;border-radius:4px;font-weight:500}
+.gram .x{color:var(--bad);text-decoration:line-through}
+.gram .v{color:var(--ok);font-weight:500}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--bg);border:2px solid var(--line);border-radius:99px;padding:5px 12px;font-size:15px}
+button.chip{min-height:40px;font-weight:500}
+button.chip.on{background:var(--sun);border-color:var(--sun);color:#1b1b1f}
+
+/* timer */
+.timer{display:inline-flex;align-items:center;gap:8px;background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:4px 6px 4px 14px}
+.timer output{font-weight:800;font-size:22px;font-variant-numeric:tabular-nums;min-width:3.2ch}
+.timer.done output{color:var(--tomInk)}
+.timer button{min-height:38px;padding:4px 12px}
+
+/* prompt card */
+.prompt{background:var(--bg);border-radius:16px;border:2px dashed var(--line);padding:22px;font-size:clamp(20px,3vw,27px);font-weight:500;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin-bottom:12px;gap:8px}
+.prompt b{color:var(--tomInk)}
+.prompt small{font-size:15px;color:var(--muted);font-weight:400}
+
+/* agree scale */
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:14px}
+.scale button{min-height:52px;padding:6px;font-size:14.5px;line-height:1.2;border-color:var(--line)}
+.scale button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+@media(max-width:600px){.scale{grid-template-columns:repeat(2,minmax(0,1fr))}.scale button:last-child{grid-column:1/-1}}
+
+/* must-use words */
+.words{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:12px}
+.words button{font-size:19px;min-height:50px;border-style:dashed;border-color:var(--tomInk);color:var(--tomInk)}
+.words button.on{border-style:solid;background:var(--okBg);border-color:var(--ok);color:var(--ok);text-decoration:line-through}
+.fb{font-weight:500}.fb.ok{color:var(--ok)}
+
+/* answer -> question */
+.aq{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.aqc{background:var(--bg);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.aqc .a{font-size:19px;font-weight:700}
+.aqc .a::before{content:"A: ";color:var(--muted);font-weight:500}
+.aqc .q{display:none;color:var(--ok);font-weight:500}
+.aqc.on .q{display:block}
+.aqc button{align-self:flex-start;min-height:38px;padding:4px 12px}
+
+/* story builder */
+.sb{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.sb button{background:var(--bg);border:2px solid var(--line);border-radius:14px;min-height:110px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;padding:12px;gap:6px}
+.sb button small{font-size:13px;color:var(--muted);font-weight:700}
+.sb button span{font-size:18px;font-weight:700;line-height:1.25}
+.sb button:hover{border-color:var(--ink)}
+@media(max-width:820px){.sb{grid-template-columns:repeat(2,minmax(0,1fr))}.sb button:last-child{grid-column:1/-1}}
+
+.reveal{display:none;background:var(--bg);border-left:4px solid var(--sun);border-radius:8px;padding:14px 16px;margin-top:12px}
+.reveal.on{display:block}
+ol.q{margin:0;padding-left:22px}
+ol.q li{margin:6px 0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.box{background:var(--bg);border-radius:14px;padding:16px}
+.box h4{margin:0 0 8px;font-size:17px}
+
+/* translation */
+.tr{background:var(--bg);border-radius:14px;padding:12px 14px;margin-bottom:8px;display:grid;grid-template-columns:2em minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+.tr .n{font-weight:800;color:var(--tomInk)}
+.tr .ua{font-size:17px}
+.tr .en{grid-column:2/-1;color:var(--ok);font-weight:500;display:none}
+.tr.on .en{display:block}
+.tr button{min-height:38px;padding:4px 12px}
+
+footer{border-top:2px solid var(--line);color:var(--muted);font-size:15px;text-align:center;padding:24px 16px}
+footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header class="hero band">
+ <div class="wrap">
+  <div class="brand"><span>dinglish</span></div>
+  <h1>Past Simple: let's talk about it</h1>
+  <p class="lead">A speaking lesson: your last year, your opinions and stories you build yourself. Talk more than your teacher!</p>
+  <div class="meta"><b>Elementary+ (A2)</b><b>60–75 min</b><b>1-on-1 or group</b></div>
+  <div class="rules"><span>Answer in 3+ sentences</span><span>Give a reason: because…</span><span>Ask a question back</span></div>
+  <div class="strip" aria-hidden="true">
+   <div class="ph" style="--r:-3deg"><small>in January</small><strong>I started a new job</strong></div>
+   <div class="ph" style="--r:2deg"><small>in spring</small><strong>I moved to a new flat</strong></div>
+   <div class="ph" style="--r:-1.5deg"><small>last summer</small><strong>We went to the sea</strong></div>
+   <div class="ph" style="--r:2.5deg"><small>in October</small><strong>I didn't rest at all</strong></div>
+   <div class="ph now" style="--r:-2deg"><small>now</small><strong>Your turn!</strong></div>
+  </div>
+ </div>
+</header>
+
+<nav><div class="scroll">
+ <a href="#warm-up">Warm-up</a><a href="#part-1">Part 1 · Last year</a><a href="#part-2">Part 2 · Stories</a><a href="#mixed">Mixed</a><a href="#translate">Translation</a>
+</div></nav>
+
+<main>
+<!-- WARM-UP -->
+<section class="band" id="warm-up"><div class="wrap">
+ <div class="part-h"><h2>Warm-up</h2></div>
+ <p class="sub">Розігрів: описуємо минулий рік трьома словами.</p>
+ <div class="task">
+  <h3><i>W</i> My year in three words</h3>
+  <p class="inst">Choose three words that describe your last year. Explain each word with an example: <b>"It was busy because I changed my job and I worked a lot."</b> Then guess your teacher's three words. <span class="talk">speaking</span></p>
+  <div class="chips" id="yw" style="margin-bottom:12px"></div>
+  <p class="hint" id="ywFb" style="margin:0">Chosen: 0 / 3</p>
+ </div>
+</div></section>
+
+<!-- PART 1 -->
+<section class="band" id="part-1" style="padding-top:0"><div class="wrap">
+ <div class="part-h"><span class="tag">Part 1</span><h2>My last year</h2></div>
+ <p class="sub">Говоримо про власний досвід і висловлюємо думку. Мінімум граматики — максимум розмови.</p>
+
+ <div class="gram">
+  <h3>Нагадування перед розмовою</h3>
+  <div>
+   <h4>Маркери часу</h4>
+   <p><em>last year</em>, <em>in 2025</em>, <em>in summer</em>, <em>in March</em>, <em>three months ago</em>, <em>at the end of the year</em>, <em>when I was 20</em></p>
+   <p style="margin-top:6px"><b>ago</b> стоїть після періоду: two weeks <b>ago</b> = два тижні тому.</p>
+  </div>
+  <div>
+   <h4>Типові помилки</h4>
+   <ul>
+    <li><span class="x">I didn't went</span> → <span class="v">I didn't go</span></li>
+    <li><span class="x">When you went?</span> → <span class="v">When did you go?</span></li>
+    <li><span class="x">I was go</span> → <span class="v">I went</span></li>
+    <li><span class="x">Last year I have a dog</span> → <span class="v">I had a dog</span></li>
+   </ul>
+  </div>
+  <div>
+   <h4>Як розгорнути відповідь</h4>
+   <p>Факт → причина → деталь → почуття:</p>
+   <p style="margin-top:6px"><i>I went to Odesa. I went there <b>because</b> my friend got married. We stayed by the sea for a week. It <b>was</b> amazing!</i></p>
+  </div>
+ </div>
+
+ <div class="task">
+  <h3><i>1.1</i> Last year cards</h3>
+  <p class="inst">Click "Next card". Talk about it for at least 30 seconds. Then your teacher asks the follow-up questions. <span class="talk">speaking</span></p>
+  <div class="prompt" id="lyOut">Click "Next card" to start</div>
+  <div class="row"><button class="main" id="lyNext">Next card</button><button id="lyFq">Follow-up questions</button>
+   <div class="timer" data-s="30"><output>0:30</output><button class="go">Start</button><button class="rs">Reset</button></div></div>
+  <div class="reveal" id="lyFqBox"><ol class="q" id="lyFqList"></ol></div>
+ </div>
+
+ <div class="task">
+  <h3><i>1.2</i> Agree or disagree?</h3>
+  <p class="inst">Read the statement. Choose your answer on the scale. Explain why and give an example from your life in the past. Then ask: <b>"And what do you think?"</b> <span class="talk">speaking</span></p>
+  <div class="prompt" id="agOut">Click "Next statement" to start</div>
+  <div class="scale" id="scale"><button>Totally agree</button><button>Agree</button><button>Not sure</button><button>Disagree</button><button>Totally disagree</button></div>
+  <div class="row" style="margin-bottom:14px"><button class="main" id="agNext">Next statement</button></div>
+  <div class="box"><h4>Useful phrases</h4><div class="chips">
+   <span class="chip">I totally agree, because…</span><span class="chip">I don't agree. I think…</span><span class="chip">I partly agree.</span><span class="chip">It depends.</span><span class="chip">For example, last year I…</span><span class="chip">When I was a child, …</span><span class="chip">My parents / grandparents…</span><span class="chip">But on the other hand, …</span>
+  </div></div>
+ </div>
+
+ <div class="task">
+  <h3><i>1.3</i> Use these words!</h3>
+  <p class="inst">Answer the question. You MUST use all three words in your answer. Click a word when you use it. Can you use them all? <span class="talk">speaking</span></p>
+  <div class="prompt" id="wqOut">Click "Next question" to start</div>
+  <div class="words" id="wqWords"></div>
+  <div class="row"><button class="main" id="wqNext">Next question</button><span class="fb" id="wqFb"></span></div>
+  <p class="hint" style="margin:12px 0 0">Swap: the student chooses three words and the teacher must use them!</p>
+ </div>
+</div></section>
+
+<!-- PART 2 -->
+<section class="band" id="part-2" style="padding-top:0"><div class="wrap">
+ <div class="part-h"><span class="tag">Part 2</span><h2>Stories and questions</h2></div>
+ <p class="sub">Ставимо питання і будуємо власні історії.</p>
+
+ <div class="gram">
+  <h3>Питання й зв'язки для історій</h3>
+  <div>
+   <h4>Питання з did</h4>
+   <p>Wh- + <em>did</em> + subject + V1?</p>
+   <p style="margin-top:6px">Where did you go? How long did you stay? How much did it cost?</p>
+  </div>
+  <div>
+   <h4>Питання до підмета — без did!</h4>
+   <p>Коли питаємо <b>хто? що?</b> зробив:</p>
+   <p style="margin-top:6px"><span class="v">Who called you?</span> <span class="v">What happened?</span></p>
+   <p style="margin-top:6px"><span class="x">Who did call you?</span> <span class="x">What did happen?</span></p>
+  </div>
+  <div>
+   <h4>to be</h4>
+   <p>Were you nervous? How was the trip? Where were you?</p>
+  </div>
+  <div>
+   <h4>Зв'язки для історії</h4>
+   <p><em>First</em> → <em>Then</em> → <em>After that</em> → <em>Suddenly</em> → <em>In the end</em></p>
+   <p style="margin-top:6px"><b>but</b> — але, <b>so</b> — тому, <b>because</b> — тому що, <b>when</b> — коли</p>
+  </div>
+ </div>
+
+ <div class="task">
+  <h3><i>2.1</i> What was the question?</h3>
+  <p class="inst">These are answers. Make a question for each one. Many questions are possible! Then ask your teacher your question. Click "Example" to see one possible question. <span class="talk">speaking</span></p>
+  <div class="aq" id="aq"></div>
+ </div>
+
+ <div class="task">
+  <h3><i>2.2</i> Story builder</h3>
+  <p class="inst">Click "New story". Click any card to change only that card. Tell a story with all five cards and use at least four linking words. You have 2 minutes. After that, your teacher asks three questions about your story. <span class="talk">storytelling</span></p>
+  <div class="sb" id="sb"></div>
+  <div class="row" style="margin-bottom:14px"><button class="main" id="sbAll">New story</button>
+   <div class="timer" data-s="120"><output>2:00</output><button class="go">Start</button><button class="rs">Reset</button></div></div>
+  <div class="chips"><span class="chip">First,</span><span class="chip">Then</span><span class="chip">After that,</span><span class="chip">Suddenly</span><span class="chip">but</span><span class="chip">so</span><span class="chip">because</span><span class="chip">when</span><span class="chip">In the end,</span></div>
+ </div>
+
+ <div class="task">
+  <h3><i>2.3</i> Story chain</h3>
+  <p class="inst">Read the beginning. Take turns: each person adds one sentence in the Past Simple. Use a linking word every time. After 8–10 sentences, the student retells the whole story alone. <span class="talk">speaking</span></p>
+  <div class="prompt" id="scOut">Click "New beginning" to start</div>
+  <div class="row"><button class="main" id="scNext">New beginning</button><span class="hint">Group: go around the group, one sentence each.</span></div>
+ </div>
+</div></section>
+
+<!-- MIXED -->
+<section class="band" id="mixed" style="padding-top:0"><div class="wrap">
+ <div class="part-h"><span class="tag">Mixed</span><h2>Put it all together</h2></div>
+ <p class="sub">Усе разом: розповіді, питання, рольові ігри й обговорення.</p>
+
+ <div class="task">
+  <h3><i>3.1</i> True story or lie?</h3>
+  <p class="inst">Get a topic. Secretly decide: tell a true story or invent one. Talk for one minute. Your teacher (or partner) asks five questions and then guesses: true or lie? Swap. <span class="talk">speaking</span></p>
+  <div class="prompt" id="tlOut">Click "New topic" to start</div>
+  <div class="row" style="margin-bottom:14px"><button class="main" id="tlNext">New topic</button>
+   <div class="timer" data-s="60"><output>1:00</output><button class="go">Start</button><button class="rs">Reset</button></div></div>
+  <div class="box"><h4>Questions to catch a lie</h4><div class="chips">
+   <span class="chip">When exactly did it happen?</span><span class="chip">Who was with you?</span><span class="chip">What did you say?</span><span class="chip">What did you do next?</span><span class="chip">How did you feel?</span><span class="chip">Why did you…?</span><span class="chip">What happened in the end?</span>
+  </div></div>
+ </div>
+
+ <div class="task">
+  <h3><i>3.2</i> Hot seat interview</h3>
+  <p class="inst">Get a role card. You are this person and you are on a TV show. Answer the interviewer's questions with lots of details. Then swap roles. <span class="talk">role-play</span></p>
+  <div class="prompt" id="hsOut">Click "New role" to start</div>
+  <div class="row" style="margin-bottom:14px"><button class="main" id="hsNext">New role</button></div>
+  <div class="box"><h4>Interviewer's questions</h4><ol class="q">
+   <li>When did it happen?</li><li>How did it start? Why did you decide to do it?</li><li>Who was with you?</li><li>What was the best moment?</li><li>What was the worst / most difficult moment?</li><li>What did your family say?</li><li>What did you learn?</li><li>Did your life change after that? How?</li>
+  </ol></div>
+ </div>
+
+ <div class="task">
+  <h3><i>3.3</i> Then and now</h3>
+  <p class="inst">Discuss the questions. Compare the past with today: <b>"When I was a child, I didn't have a phone, but now…"</b> Give an example for every answer. <span class="talk">discussion</span></p>
+  <ol class="q">
+   <li>What did you do in your free time when you were ten? What do children do now?</li>
+   <li>How did you talk to your friends before smartphones?</li>
+   <li>What did your family eat on holidays when you were small? Is it the same now?</li>
+   <li>What was the most popular music or TV show when you were a teenager?</li>
+   <li>What did you want to be when you were a child? Why didn't / did it happen?</li>
+   <li>What was better in the past? What is better now?</li>
+  </ol>
+ </div>
+</div></section>
+
+<!-- TRANSLATION -->
+<section class="band" id="translate" style="padding-top:0"><div class="wrap">
+ <div class="part-h"><span class="tag">Final</span><h2>Translate and say it</h2></div>
+ <p class="sub">Переклади речення англійською вголос, потім перевір себе.</p>
+ <div class="task">
+  <h3><i>4</i> Ukrainian → English</h3>
+  <p class="inst">Translate each sentence into English. Say it aloud first, then click "Check".</p>
+  <div id="trs"></div>
+  <div class="row" style="margin-top:12px"><button id="trAll">Show all</button><button id="trHide">Hide all</button></div>
+ </div>
+</div></section>
+</main>
+
+<footer><b>dinglish</b> · Past Simple · Speaking · Elementary+</footer>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+const deck=items=>{let pool=[];return()=>{if(!pool.length)pool=shuf(items);return pool.pop()}};
+
+/* timers */
+document.querySelectorAll('.timer').forEach(el=>{
+ const total=+el.dataset.s;let left=total,id=null;
+ const out=el.querySelector('output'),go=el.querySelector('.go'),rs=el.querySelector('.rs');
+ const show=()=>{out.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.toggle('done',left===0)};
+ const stop=()=>{clearInterval(id);id=null;go.textContent='Start'};
+ go.addEventListener('click',()=>{if(id){stop();return}if(left===0)left=total;id=setInterval(()=>{left--;show();if(left<=0)stop()},1000);go.textContent='Pause'});
+ rs.addEventListener('click',()=>{stop();left=total;show()});
+ show();
+});
+
+/* warm-up words */
+const yw=['busy','crazy','quiet','difficult','happy','long','fast','interesting','boring','stressful','exciting','lucky','sad','surprising','productive','tiring','calm','strange'];
+$('#yw').innerHTML=yw.map(w=>`<button class="chip">${w}</button>`).join('');
+$('#yw').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const on=$('#yw').querySelectorAll('.on').length;if(!b.classList.contains('on')&&on>=3)return;b.classList.toggle('on');$('#ywFb').textContent=`Chosen: ${$('#yw').querySelectorAll('.on').length} / 3`});
+
+/* 1.1 last year cards */
+const ly=deck([
+ ['a place you visited for the first time',['Where was it?','Who did you go with?','What did you like most?','Would you go there again? Why?']],
+ ['a new person you met',['Where did you meet?','What did you talk about?','What did you think of them at first?','Did you meet again?']],
+ ['the best day of the year',['When was it?','What happened?','Who was with you?','Why was it so special?']],
+ ['something you bought and loved',['What was it?','Where did you buy it?','How much did it cost?','Why did you like it?']],
+ ['something you bought and didn\'t use',['What was it?','Why did you buy it?','Why didn\'t you use it?','What did you do with it in the end?']],
+ ['something new you learned',['What did you learn?','Who taught you?','Was it difficult? Why?','How long did it take?']],
+ ['a film, series or book you liked',['What was it about?','When did you watch / read it?','Who was your favourite character?','Did you tell your friends about it?']],
+ ['a celebration you remember',['What did you celebrate?','Where was it?','What did you eat?','What did you wear?']],
+ ['a mistake you made',['What happened?','Why did it happen?','What did you do then?','What did you learn?']],
+ ['something that surprised you',['What happened?','When was it?','How did you feel?','What did you say?']],
+ ['a habit you started or stopped',['What was the habit?','Why did you start / stop?','Was it easy?','How did you feel after a month?']],
+ ['a difficult moment',['What happened?','Who helped you?','What did you do?','How did it end?']]
+]);
+$('#lyNext').addEventListener('click',()=>{const [p,f]=ly();$('#lyOut').innerHTML=`<span>Last year: <b>${p}</b></span><small>Talk for 30 seconds or more</small>`;$('#lyFqList').innerHTML=f.map(q=>`<li>${q}</li>`).join('');$('#lyFqBox').classList.remove('on')});
+$('#lyFq').addEventListener('click',()=>{if($('#lyFqList').children.length)$('#lyFqBox').classList.toggle('on')});
+
+/* 1.2 agree or disagree */
+const ag=deck(['2025 was a good year for me.','Last year went really fast.','I spent too much time on my phone last year.','I learned something important last year.','I didn\'t have enough rest last year.','Life was better 30 years ago.','Children played outside more when I was a child.','School was more difficult in our parents\' time.','People were happier without the internet.','Food was tastier in the past.','Our grandparents worked harder than us.','Holidays were more fun when I was a child.']);
+const scale=$('#scale');
+const clearScale=()=>scale.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+scale.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;clearScale();b.classList.add('on')});
+$('#agNext').addEventListener('click',()=>{$('#agOut').innerHTML=`<span>"${ag()}"</span><small>Say why + give an example</small>`;clearScale()});
+
+/* 1.3 must-use words */
+const wq=deck([
+ ['What did you do last New Year\'s Eve?',['midnight','with','because']],
+ ['Tell me about your last holiday.',['stayed','the weather','didn\'t']],
+ ['What was the last thing you bought online?',['ordered','arrived','expensive']],
+ ['How did you spend your last birthday?',['invited','cake','present']],
+ ['Tell me about a bad day last year.',['suddenly','lost','so']],
+ ['What did you do last Sunday?',['woke up','after that','tired']],
+ ['Tell me about your first day at work or school.',['nervous','met','felt']],
+ ['Describe a meal you remember.',['cooked','tasted','delicious']],
+ ['Tell me about a time you were late.',['missed','ran','in the end']],
+ ['Tell me about a film you saw recently.',['about','ending','but']],
+ ['When did you last help someone?',['asked','helped','thanked']],
+ ['Tell me about a trip that went wrong.',['forgot','had to','finally']]
+]);
+let wqTotal=0;
+$('#wqNext').addEventListener('click',()=>{const [q,w]=wq();wqTotal=w.length;$('#wqOut').innerHTML=`<span>${q}</span>`;$('#wqWords').innerHTML=w.map(x=>`<button>${x}</button>`).join('');$('#wqFb').textContent=''});
+$('#wqWords').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;b.classList.toggle('on');const n=$('#wqWords').querySelectorAll('.on').length;const fb=$('#wqFb');fb.textContent=n===wqTotal?'All three words — well done!':`${n} / ${wqTotal} words used`;fb.className='fb'+(n===wqTotal?' ok':'')});
+
+/* 2.1 answer -> question */
+const aq=[['In 2018.','When did you finish school?'],['With my sister.','Who did you go on holiday with?'],['Because I was really tired.','Why did you go to bed so early?'],['About two weeks ago.','When did you last go to the cinema?'],['It was terrible!','How was the weather on your holiday?'],['No, I didn\'t. I stayed at home.','Did you go out last night?'],['My mum.','Who called you yesterday? (no did!)'],['A big pizza.','What did you have for dinner?'],['For three hours.','How long did you wait at the airport?'],['A cat fell into the river!','What happened? (no did!)'],['Yes, I was. Very!','Were you nervous before your exam?'],['By train.','How did you get to Lviv?']];
+$('#aq').innerHTML=aq.map(([a,q])=>`<div class="aqc"><span class="a">${a}</span><span class="q">Q: ${q}</span><button>Example</button></div>`).join('');
+$('#aq').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const c=b.parentElement;c.classList.toggle('on');b.textContent=c.classList.contains('on')?'Hide':'Example'});
+
+/* 2.2 story builder */
+const irr=['went','saw','met','found','lost','took','gave','bought','made','left','ran','came','forgot','told','thought','felt','broke','paid','caught','fell'];
+const cols=[
+ ['Who?',deck(['a young teacher','my neighbour','a famous singer','a tourist from Japan','an old man with a dog','two best friends','a taxi driver','a little girl','my boss','a grandma'])],
+ ['Where?',deck(['at the airport','in a small village','in a supermarket','on a night train','at a wedding','in the mountains','in an old hotel','at the sea','at a concert','in a café'])],
+ ['When?',deck(['last Christmas','two years ago','on a rainy Monday','at midnight','last summer','on her birthday','early in the morning','during a storm'])],
+ ['What happened?',deck(['lost the keys','missed the plane','found a lot of money','met a famous person','the lights went off','got on the wrong bus','forgot something important','saw something strange in the sky','found a lost dog','won a prize'])],
+ ['Use these verbs',()=>shuf(irr).slice(0,3).join(', ')]
+];
+const sb=$('#sb');
+sb.innerHTML=cols.map(([l],i)=>`<button data-i="${i}" aria-label="Change ${l}"><small>${l}</small><span>?</span></button>`).join('');
+const roll=i=>{sb.children[i].querySelector('span').textContent=cols[i][1]()};
+sb.addEventListener('click',e=>{const b=e.target.closest('button');if(b)roll(+b.dataset.i)});
+$('#sbAll').addEventListener('click',()=>cols.forEach((c,i)=>roll(i)));
+
+/* 2.3 story chain */
+const sc=deck(['Last Friday I came home and the door was open…','On my last holiday, I lost my passport…','One morning I woke up and I could speak ten languages…','Yesterday a stranger gave me a letter…','Last winter I found a little cat in the snow…','I got on the wrong train and…','It was my birthday, but nobody remembered…','We went to a restaurant, and the waiter was my old classmate…','Last weekend my phone fell into the sea…','I opened the fridge and saw…']);
+$('#scNext').addEventListener('click',()=>{$('#scOut').innerHTML=`<span>"${sc()}"</span><small>Next sentence: First / Then / Suddenly / But / So…</small>`});
+
+/* 3.1 true or lie */
+const tl=deck(['a time you lost something important','a time you were very scared','the most expensive thing you bought','a time you met someone interesting','your worst holiday','a time you laughed a lot','a strange dream you had','a time you broke something','a present you didn\'t like','a time you got lost','a time you were very angry','the best food you ate on a trip']);
+$('#tlNext').addEventListener('click',()=>{$('#tlOut').innerHTML=`<span>Tell me about <b>${tl()}</b>.</span><small>True or invented? Only you know!</small>`});
+
+/* 3.2 hot seat */
+const hs=deck(['You travelled around the world last year.','You won one million dollars last year.','You lived alone on an island for a month.','You climbed a very high mountain last summer.','You opened your own café last year.','You met your favourite actor in a small café.','You ran a marathon for the first time.','You worked as a chef on a big ship for a year.']);
+$('#hsNext').addEventListener('click',()=>{$('#hsOut').innerHTML=`<span>${hs()}</span><small>Answer with details: when, where, who, how you felt</small>`});
+
+/* 4 translation */
+const tr=[['Минулого року я вперше поїхала за кордон.','Last year I went abroad for the first time.'],['Хто тобі вчора дзвонив?','Who called you yesterday?'],['Що сталося? Чому ти не прийшла на вечірку?','What happened? Why didn\'t you come to the party?'],['Ми чекали на автобус пів години, тому запізнилися.','We waited for the bus for half an hour, so we were late.'],['Скільки коштував твій новий телефон?','How much did your new phone cost?'],['Я не спала всю ніч, бо фільм був дуже страшний.','I didn\'t sleep all night because the film was very scary.'],['Коли ти востаннє бачила своїх шкільних друзів?','When did you last see your school friends?'],['Спочатку ми пообідали, а потім пішли гуляти в парк.','First we had lunch, and then we went for a walk in the park.'],['Мені не сподобався готель, але погода була чудова.','I didn\'t like the hotel, but the weather was great.'],['Скільки тобі було років, коли ти навчилася плавати?','How old were you when you learned to swim?']];
+const trs=$('#trs');
+trs.innerHTML=tr.map(([u,e],i)=>`<div class="tr"><span class="n">${i+1}</span><span class="ua">${u}</span><button>Check</button><span class="en">${e}</span></div>`).join('');
+trs.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const r=b.parentElement;r.classList.toggle('on');b.textContent=r.classList.contains('on')?'Hide':'Check'});
+$('#trAll').addEventListener('click',()=>trs.querySelectorAll('.tr').forEach(r=>{r.classList.add('on');r.querySelector('button').textContent='Hide'}));
+$('#trHide').addEventListener('click',()=>trs.querySelectorAll('.tr').forEach(r=>{r.classList.remove('on');r.querySelector('button').textContent='Check'}));
+}
+</script>
+</body>
+</html>
