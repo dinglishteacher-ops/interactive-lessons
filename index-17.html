@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What have you been up to?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: friendly, clear teacher's workbook for a live online speaking lesson
+   IDEA: a timeline — every tense is a different shape on the line from the past to NOW
+   PICTURE: three timeline tracks (dot / dot→now / wave→now) that colour-code the whole lesson
+   COLOUR and TYPE: white or deep ink ground; blue = Past Simple, vermilion = Present Perfect, teal = PP Continuous; Sora + Figtree
+   LAYOUT: hero timeline, sticky section links, one calm column of tasks, each task a card with its own control */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#12151c);--ink:light-dark(#161a22,#eceef3);--mute:light-dark(#5b6272,#a2a9b8);
+--card:light-dark(#f4f5f8,#1b1f29);--line:light-dark(#dfe2ea,#2c3240);
+--ps:light-dark(#3150d4,#7d95ff);--pp:light-dark(#d9461f,#ff7b57);--ppc:light-dark(#0b8c7b,#3fd0bb);
+--psl:light-dark(#e8ecff,#1e2547);--ppl:light-dark(#fde9e3,#3a221b);--ppcl:light-dark(#dff5f1,#15332f);
+--ok:light-dark(#0b8c4a,#4ad38a);--bad:light-dark(#c4262e,#ff6b72)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.55 Figtree,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Sora,Figtree,sans-serif;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,5.4vw,52px);letter-spacing:-.02em}
+h2{font-size:clamp(24px,3.2vw,32px);letter-spacing:-.01em}
+h3{font-size:19px;margin-bottom:6px}
+.wrap{max-width:900px;margin:0 auto}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.hero{padding-bottom:20px}
+.brand{font-weight:700;color:var(--pp);font-size:15px}
+.lead{color:var(--mute);margin:10px 0 24px;max-width:60ch}
+.tl{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:210px minmax(0,1fr);gap:14px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--card)}
+.row b{display:block;font-family:Sora,sans-serif;font-size:16px}
+.row small{color:var(--mute);font-size:14px}
+.row svg{width:100%;height:56px;display:block}
+.ps b{color:var(--ps)}.pp b{color:var(--pp)}.ppc b{color:var(--ppc)}
+.nowlbl{display:flex;justify-content:flex-end;font:700 13px Sora,sans-serif;color:var(--mute);padding-right:calc(16.6% - 18px)}
+nav{background:var(--bg);border-block:1px solid var(--line);padding:8px max(5vw,16px);z-index:5}
+nav .scroll{display:flex;gap:8px;max-width:900px;margin:0 auto}
+nav a{flex:none;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px;padding:10px 14px;border-radius:999px;background:var(--card)}
+nav a:hover,nav a:focus-visible{background:var(--line)}
+@media(min-width:900px){nav{position:sticky;top:0}}
+.part{border-top:1px solid var(--line)}
+.part-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:18px}
+.tag{font:700 13px Sora,sans-serif;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.t-ps{background:var(--psl);color:var(--ps)}.t-pp{background:var(--ppl);color:var(--pp)}.t-ppc{background:var(--ppcl);color:var(--ppc)}.t-mix{background:var(--card);color:var(--ink)}
+.time{color:var(--mute);font-size:14px;white-space:nowrap}
+.task{background:var(--card);border-radius:18px;padding:clamp(16px,3vw,26px);margin:18px 0}
+.ins{margin:0 0 14px;font-weight:500}
+.ins em{color:var(--mute);font-style:normal}
+details.gr{border:2px solid var(--line);border-radius:16px;padding:4px 18px;margin:0 0 18px;background:var(--bg)}
+details.gr summary{cursor:pointer;font-weight:700;padding:12px 0;min-height:44px}
+.gr table{border-collapse:collapse;width:100%;margin:6px 0 14px;font-size:15.5px}
+.gr td,.gr th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:start;vertical-align:top}
+.gr th{font-family:Sora,sans-serif;font-size:14px}
+.ex-s{font-style:italic}
+.note{background:var(--ppl);border-radius:12px;padding:10px 14px;margin:10px 0 14px}
+.note.t{background:var(--ppcl)}
+.formula{font:700 17px Sora,sans-serif;margin:6px 0 10px}
+.qi{padding:12px 0;border-top:1px solid var(--line)}
+.qi:first-of-type{border-top:0}
+.qi p{margin:0 0 8px}
+.gap{display:inline-block;min-width:56px;border-bottom:2px solid var(--mute);margin:0 3px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+button{font:600 15.5px Figtree,sans-serif;min-height:44px;padding:8px 16px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--mute)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--ps);outline-offset:2px}
+button.ok{border-color:var(--ok);color:var(--ok)}
+button.bad{border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+button.main{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fb{font-size:15px;color:var(--mute);margin:8px 0 0}
+.score{font-weight:700;margin-top:10px}
+.deck{display:grid;gap:12px}
+.card{background:var(--bg);border-radius:16px;padding:22px;min-height:150px;display:flex;flex-direction:column;justify-content:center;border-left:6px solid var(--pp)}
+.card.c-ppc{border-left-color:var(--ppc)}.card.c-mix{border-left-color:var(--ps)}
+.card .big{font:700 clamp(20px,3vw,26px)/1.25 Sora,sans-serif}
+.card .sub{color:var(--mute);margin-top:8px}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.count{color:var(--mute);font-size:14px;margin-left:auto}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;list-style:none}
+.chips li{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:15px}
+.rl{list-style:none;margin:0;padding:0;counter-reset:r}
+.rl li{counter-increment:r;padding:12px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:30px minmax(0,1fr);gap:4px 8px}
+.rl li:first-child{border-top:0}
+.rl li::before{content:counter(r)".";font-weight:700;color:var(--mute)}
+.rl .ans{grid-column:2;color:var(--ppc);font-weight:600}
+.rl .ans small{display:block;color:var(--mute);font-weight:400}
+.rl button{grid-column:2;justify-self:start;min-height:36px;padding:4px 12px;font-size:14px}
+.dl p{margin:0 0 12px;line-height:2.1}
+.dl b{font-family:Sora,sans-serif}
+.dl input{font:16px Figtree,sans-serif;width:12.5em;max-width:100%;padding:6px 8px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.dl input.ok{border-color:var(--ok)}.dl input.bad{border-color:var(--bad)}
+.hint{color:var(--mute);font-size:14px;white-space:nowrap}
+.key{color:var(--ok);font-size:14px;font-weight:600;margin-left:4px}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.role{background:var(--bg);border-radius:14px;padding:16px}
+.role p{margin:6px 0 0;font-size:15.5px}
+.role .ab{font:700 13px Sora,sans-serif;color:var(--pp)}
+.role .ab.b{color:var(--ppc)}
+footer{padding:28px max(5vw,16px) 40px;color:var(--mute);font-size:14px;text-align:center;border-top:1px solid var(--line)}
+footer b{color:var(--pp)}
+@media(max-width:600px){
+ .row{grid-template-columns:minmax(0,1fr)}
+ .nowlbl{display:none}
+ .gr table{font-size:14px}
+ .count{margin-left:0;width:100%}
+}
+@media(prefers-reduced-motion:no-preference){.card{animation:pop .25s ease}@keyframes pop{from{opacity:.3;transform:translateY(6px)}}}
+</style>
+</head>
+<body>
+
+<header class="band hero">
+ <div class="wrap">
+  <div class="brand">dinglish · B1+ · speaking lesson · ~70 min</div>
+  <h1 style="margin-top:10px">What have you been up to?</h1>
+  <p class="lead">Present Perfect, Present Perfect Continuous and Past Simple — lots of talking, a little checking.</p>
+  <div class="nowlbl" aria-hidden="true">NOW</div>
+  <div class="tl">
+   <div class="row ps"><div><b>Past Simple</b><small>finished time: <span class="ex-s">I went to Lviv last summer.</span></small></div>
+    <svg viewBox="0 0 600 56" aria-hidden="true"><line x1="0" y1="28" x2="600" y2="28" stroke="currentColor" stroke-opacity=".25" stroke-width="2"/><line x1="500" y1="4" x2="500" y2="52" stroke="currentColor" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 4"/><circle cx="210" cy="28" r="11" fill="var(--ps)"/><line x1="226" y1="28" x2="290" y2="28" stroke="var(--ps)" stroke-width="2" stroke-dasharray="2 6"/><path d="M285 20l12 8-12 8" fill="none" stroke="var(--ps)" stroke-width="0"/></svg></div>
+   <div class="row pp"><div><b>Present Perfect</b><small>past → result now: <span class="ex-s">I've been to Lviv twice.</span></small></div>
+    <svg viewBox="0 0 600 56" aria-hidden="true"><line x1="0" y1="28" x2="600" y2="28" stroke="currentColor" stroke-opacity=".25" stroke-width="2"/><line x1="500" y1="4" x2="500" y2="52" stroke="currentColor" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 4"/><circle cx="150" cy="28" r="9" fill="var(--pp)"/><circle cx="300" cy="28" r="9" fill="var(--pp)"/><path d="M160 22 Q330 -6 490 24" fill="none" stroke="var(--pp)" stroke-width="3"/><path d="M308 22 Q400 8 490 24" fill="none" stroke="var(--pp)" stroke-width="3" stroke-opacity=".6"/><path d="M478 16l13 9-15 4" fill="none" stroke="var(--pp)" stroke-width="3" stroke-linejoin="round"/></svg></div>
+   <div class="row ppc"><div><b>Present Perfect Continuous</b><small>started → still going: <span class="ex-s">I've been living here since 2021.</span></small></div>
+    <svg viewBox="0 0 600 56" aria-hidden="true"><line x1="0" y1="28" x2="600" y2="28" stroke="currentColor" stroke-opacity=".25" stroke-width="2"/><line x1="500" y1="4" x2="500" y2="52" stroke="currentColor" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 4"/><circle cx="120" cy="28" r="7" fill="var(--ppc)"/><path id="wave" d="M128 28 q12 -16 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0" fill="none" stroke="var(--ppc)" stroke-width="5" stroke-linecap="round"/><path d="M512 28 q12 -16 24 0 t24 0" fill="none" stroke="var(--ppc)" stroke-width="5" stroke-linecap="round" stroke-opacity=".3" stroke-dasharray="3 7"/></svg></div>
+  </div>
+ </div>
+</header>
+
+<nav aria-label="Lesson sections"><div class="scroll">
+ <a href="#warm-up">Warm-up</a><a href="#part-1">1 · Present Perfect</a><a href="#part-2">2 · PP Continuous</a><a href="#mix">3 · Mix</a><a href="#translate">Translate</a>
+</div></nav>
+
+<main>
+<!-- WARM-UP -->
+<section class="band" id="warm-up"><div class="wrap">
+ <div class="part-h"><h2>Warm-up: Two truths and a lie</h2><span class="tag t-mix">all 3 tenses</span><span class="time">5–7 min</span></div>
+ <div class="task">
+  <p class="ins">Write three sentences about your life: two are true, one is a lie. Use each pattern once. Your partner (or teacher) asks follow-up questions and guesses the lie.</p>
+  <ul class="chips"><li>I've never… / I've … twice</li><li>I've been …-ing for / since…</li><li>Last year / In 2019 I …</li></ul>
+  <p class="ins" style="margin-top:16px">Follow-up questions to ask:</p>
+  <ul class="chips"><li>When did that happen?</li><li>Why have you never…?</li><li>How long have you been…?</li><li>Who were you with?</li><li>How did you feel?</li></ul>
+  <details class="gr" style="margin-top:16px"><summary>Teacher's example</summary>
+   <p>1. I've never eaten sushi. · 2. I've been playing the guitar since I was 12. · 3. Last summer I swam in the Black Sea at 5 a.m.</p></details>
+ </div>
+</div></section>
+
+<!-- PART 1 -->
+<section class="band part" id="part-1"><div class="wrap">
+ <div class="part-h"><h2>Part 1: Present Perfect vs Past Simple</h2><span class="tag t-pp">Present Perfect</span><span class="tag t-ps">Past Simple</span><span class="time">25 min</span></div>
+
+ <details class="gr" open><summary>Граматика — коротко</summary>
+  <table>
+   <tr><th style="color:var(--pp)">Present Perfect · have/has + V3</th><th style="color:var(--ps)">Past Simple · V2 / did</th></tr>
+   <tr><td>Досвід без конкретного часу: <span class="ex-s">I've been to Paris twice.</span></td><td>Конкретний момент: <span class="ex-s">I went there in 2019.</span></td></tr>
+   <tr><td>Результат важливий зараз: <span class="ex-s">I've lost my keys.</span></td><td>Завершена історія, послідовність подій</td></tr>
+   <tr><td>Незавершений період: <i>today, this week, so far</i></td><td>Завершений період: <i>yesterday, last week, ago</i></td></tr>
+   <tr><td><i>ever, never, just, already, yet, for, since</i></td><td><i>when…?, ago, in 2020, last…</i></td></tr>
+  </table>
+  <div class="note"><b>Головне правило розмови:</b> починаємо з Present Perfect, деталі — у Past Simple.<br><span class="ex-s">— Have you ever been to Lviv? — Yes, I have. — When did you go? — I went there last summer.</span></div>
+ </details>
+
+ <div class="task">
+  <h3>1.1 Choose the correct form</h3>
+  <p class="ins">Choose the correct option. Say <em>why</em> before you click.</p>
+  <div id="q1"></div><div class="score" id="q1s"></div>
+ </div>
+
+ <div class="task">
+  <h3>1.2 Have you ever…?</h3>
+  <p class="ins">Ask the question on the card. If the answer is <b>“Yes, I have”</b>, ask at least three follow-up questions in Past Simple. If it's <b>“No, I haven't”</b>, ask: <em>Would you like to? Why / why not?</em></p>
+  <div class="deck" id="d1"></div>
+  <ul class="chips"><li>When was it?</li><li>Where were you?</li><li>Who were you with?</li><li>What happened next?</li><li>How did you feel?</li><li>Would you do it again?</li></ul>
+ </div>
+
+ <div class="task">
+  <h3>1.3 This year so far</h3>
+  <p class="ins">Answer in Present Perfect, then add one or two details in Past Simple. Then ask your partner (or teacher) the same question.</p>
+  <ol class="rl" id="r13"></ol>
+ </div>
+</div></section>
+
+<!-- PART 2 -->
+<section class="band part" id="part-2"><div class="wrap">
+ <div class="part-h"><h2>Part 2: Present Perfect Continuous</h2><span class="tag t-ppc">PP Continuous</span><span class="tag t-pp">vs Present Perfect</span><span class="time">25 min</span></div>
+
+ <details class="gr" open><summary>Граматика — коротко</summary>
+  <p class="formula" style="color:var(--ppc)">have / has + been + V-ing</p>
+  <table>
+   <tr><th>Коли вживаємо</th><th>Приклад</th></tr>
+   <tr><td>Дія почалась у минулому і триває досі — акцент на <b>тривалості</b></td><td class="ex-s">I've been learning English for five years / since 2021.</td></tr>
+   <tr><td>Дія щойно закінчилась, але <b>видно наслідки</b></td><td class="ex-s">Your eyes are red. Have you been crying?</td></tr>
+   <tr><td>Те, що відбувається <b>останнім часом</b> (lately, recently)</td><td class="ex-s">I've been sleeping badly lately.</td></tr>
+  </table>
+  <div class="note t"><b>PP vs PPC:</b> Present Perfect = результат, <i>скільки</i> зроблено → <span class="ex-s">I've written three emails.</span><br>PP Continuous = процес, <i>як довго</i> → <span class="ex-s">I've been writing emails all morning.</span></div>
+  <div class="note"><b>Увага!</b> Дієслова стану (<i>know, like, love, want, believe, understand, own, have = мати, be</i>) — тільки Present Perfect: <span class="ex-s">I've known her for ten years</span>, не <s>I've been knowing</s>.</div>
+ </details>
+
+ <div class="task">
+  <h3>2.1 Simple or continuous?</h3>
+  <p class="ins">Choose the correct option. Watch out for state verbs!</p>
+  <div id="q2"></div><div class="score" id="q2s"></div>
+ </div>
+
+ <div class="task">
+  <h3>2.2 Be a detective</h3>
+  <p class="ins">Read the situation and make two or three guesses: <em>What has he / she been doing?</em> Then check the ideas. Bonus: has this ever happened to you? Tell the story in Past Simple.</p>
+  <div class="deck" id="d2"></div>
+ </div>
+
+ <div class="task">
+  <h3>2.3 How long…?</h3>
+  <p class="ins">Interview your partner (or teacher). After each answer, ask the Past Simple follow-up. Questions marked <b>!</b> have a state verb — which tense do you need?</p>
+  <ol class="rl" id="r23"></ol>
+ </div>
+</div></section>
+
+<!-- PART 3 -->
+<section class="band part" id="mix"><div class="wrap">
+ <div class="part-h"><h2>Part 3: Mixed practice</h2><span class="tag t-ps">PS</span><span class="tag t-pp">PP</span><span class="tag t-ppc">PPC</span><span class="time">20 min</span></div>
+
+ <div class="task">
+  <h3>3.1 Spot the mistake</h3>
+  <p class="ins">Each sentence has one mistake. Say the correct sentence out loud, then check.</p>
+  <ol class="rl" id="r31"></ol>
+ </div>
+
+ <div class="task dl">
+  <h3>3.2 Catching up</h3>
+  <p class="ins">Anna and Max meet after five years. Put the verbs in the correct tense. Then read the dialogue in roles and continue it for 2 more minutes.</p>
+  <div id="dlg"></div>
+  <div class="ctrl"><button class="main" id="dchk">Check answers</button><button id="dshow">Show answers</button><button id="dclr">Clear</button><span class="score" id="ds"></span></div>
+ </div>
+
+ <div class="task">
+  <h3>3.3 Role-plays</h3>
+  <p class="ins">Choose a situation. Student A starts. In a 1-on-1 lesson, the teacher plays B. Use all three tenses — try to use each one at least twice.</p>
+  <div class="roles" id="roles"></div>
+ </div>
+
+ <div class="task">
+  <h3>3.4 Big questions</h3>
+  <p class="ins">Get a random question and talk for at least one minute. Your partner asks one follow-up question.</p>
+  <div class="deck" id="d3"></div>
+ </div>
+</div></section>
+
+<!-- TRANSLATION -->
+<section class="band part" id="translate"><div class="wrap">
+ <div class="part-h"><h2>Final task: Translate into English</h2><span class="tag t-mix">all 3 tenses</span><span class="time">10 min</span></div>
+ <div class="task">
+  <p class="ins">Translate the sentences out loud, then check. <button id="tall" style="margin-left:6px">Show all answers</button></p>
+  <ol class="rl" id="rtr"></ol>
+ </div>
+</div></section>
+</main>
+
+<footer><b>dinglish</b> · Present Perfect · PP Continuous · Past Simple · B1+</footer>
+
+<script>
+{
+const $=id=>document.getElementById(id);
+const fmt=s=>s.replace(/___/g,'<span class="gap"></span>');
+
+const Q1=[
+ {q:"I ___ my phone. Can you call it?",o:["have lost","lost"],a:0,e:"Результат зараз — телефона немає."},
+ {q:"We ___ to Spain in 2019.",o:["have gone","went"],a:1,e:"Конкретний час у минулому → Past Simple."},
+ {q:"___ you ever ___ sushi?",o:["Have … tried","Did … try"],a:0,e:"Досвід без часу, ever → Present Perfect."},
+ {q:"She ___ three cups of coffee today, and it's only 10 a.m.",o:["has had","had"],a:0,e:"Today ще не закінчився → Present Perfect."},
+ {q:"When ___ you ___ your job?",o:["have … started","did … start"],a:1,e:"When питає про конкретний момент → Past Simple."},
+ {q:"I ___ him since we ___ at university.",o:["haven't seen … were","didn't see … have been","haven't seen … have been"],a:0,e:"since + момент у минулому (Past Simple), основна дія — Present Perfect."},
+ {q:"Shakespeare ___ 37 plays.",o:["has written","wrote"],a:1,e:"Автор помер — період завершений → Past Simple."},
+ {q:"Look! Someone ___ my bike!",o:["has stolen","stole"],a:0,e:"Новина з результатом зараз → Present Perfect."},
+ {q:"I ___ to the gym three times this week, but I ___ yesterday.",o:["have been … didn't go","went … haven't gone"],a:0,e:"This week — незавершений період; yesterday — завершений."}
+];
+const Q2=[
+ {q:"I'm so tired. I ___ all day.",o:["have worked","have been working"],a:1,e:"Процес + видимий наслідок (втома)."},
+ {q:"She ___ four reports this week.",o:["has written","has been writing"],a:0,e:"Кількість, результат → Present Perfect."},
+ {q:"How long ___ you ___ each other?",o:["have … known","have … been knowing"],a:0,e:"Know — дієслово стану, без -ing."},
+ {q:"It ___ since morning — the streets are flooded.",o:["has rained","has been raining"],a:1,e:"Тривалість (since morning) + наслідки."},
+ {q:"I ___ this book three times.",o:["have read","have been reading"],a:0,e:"Скільки разів → Present Perfect."},
+ {q:"Why are your hands so dirty? — I ___ in the garden.",o:["have worked","have been working"],a:1,e:"Видно наслідки дії, що щойно закінчилась."},
+ {q:"We ___ this car since 2018.",o:["have had","have been having"],a:0,e:"Have = мати (володіти) — дієслово стану."},
+ {q:"They ___ for a new flat for months, but they ___ anything yet.",o:["have been looking … haven't found","have looked … haven't been finding"],a:0,e:"Процес триває (looking) / результату немає (found)."},
+ {q:"I ___ a lot of series lately. I've just finished my fifth one!",o:["have watched","have been watching"],a:1,e:"Lately — те, що відбувається останнім часом. Друге речення — результат (PP)."}
+];
+
+const D1=["been stuck in a lift","lost something really important","met someone famous","cooked for more than ten people","had to speak in front of a big audience","changed your mind about something big","stayed up all night","got lost in a foreign city","done something you were really scared of","forgotten someone's birthday","broken something that belonged to someone else","won a competition or a prize","bought something you never used","taught someone a new skill","missed a plane or a train","pretended to like a present"].map(x=>({t:"Have you ever "+x+"?",s:"Yes → 3 follow-ups in Past Simple · No → Would you like to?"}));
+const D2=[
+ ["Your friend's eyes are red and there's a pile of tissues next to her.","She's been crying. / She's been watching a sad film. / She's been sneezing all day."],
+ ["Your flatmate is sweaty and out of breath.","He's been running. / He's been working out at the gym."],
+ ["Your neighbour's hands and clothes are covered in paint.","He's been painting the walls. / He's been redecorating his flat."],
+ ["The kitchen smells amazing and there are dirty pans everywhere.","Someone has been cooking. / Mum has been baking a cake."],
+ ["Your colleague looks exhausted and there are five empty coffee cups on her desk.","She's been working late. / She hasn't been sleeping well."],
+ ["Your little brother's face is covered in chocolate.","He's been eating sweets. / He's been raiding the fridge."],
+ ["Your friend is sunburnt and there's sand in her bag.","She's been lying on the beach. / She's been sunbathing."],
+ ["Your phone battery is at 2% and your son looks guilty.","He's been playing games on your phone. / He's been watching videos."],
+ ["The dog is wet and muddy.","It's been playing in the rain. / It's been running around the park."],
+ ["Your friend has almost no voice today.","She's been shouting at a football match. / She's been singing at a concert."],
+ ["Your boss is smiling and the team is eating cake in the office.","They've been celebrating something. / The team has been doing a great job."]
+].map(([t,s])=>({t,s,hide:1,c:"c-ppc"}));
+const D3=[
+ "What's the biggest change you've made in your life in the last few years? Why did you make it?",
+ "What's something you've been meaning to do for a long time but haven't done yet?",
+ "Who has influenced you the most? When did you meet them?",
+ "What's the best decision you've ever made? When did you make it?",
+ "How has your town or city changed since you were a child?",
+ "What's the most useful thing you've learnt this year? How did you learn it?",
+ "What's a habit you've been trying to change? How long have you had it?",
+ "Which app or gadget have you been using the most lately? When did you start using it?",
+ "Have you ever made a decision you later regretted? What happened?",
+ "What have you been looking forward to recently?"
+].map(t=>({t,s:"Talk for 1 minute · partner asks 1 follow-up",c:"c-mix"}));
+
+const R13=[
+ "Name three things you've already done this year that you're proud of.",
+ "What haven't you done yet this year that you planned to do? Why not?",
+ "What's the best film or series you've watched this year? When did you watch it?",
+ "How many books have you read so far this year? Which one was the best?",
+ "Have you just started or finished anything — a course, a project, a hobby?",
+ "What's the most interesting place you've visited this year? What did you do there?",
+ "Have you met any new people this year? How did you meet them?"
+];
+const R23=[
+ ["How long have you been living in your current home?","When did you move in? Why did you choose it?"],
+ ["How long have you been learning English?","When did you start? What made you start?"],
+ ["! How long have you known your best friend?","How did you meet?"],
+ ["! How long have you had your phone?","Where did you buy it? Why did you choose it?"],
+ ["What have you been doing in your free time lately?","When did you start doing it?"],
+ ["Have you been watching any good series recently?","What happened in the last episode you watched?"],
+ ["How long have you been working or studying where you are now?","What was your first day like?"],
+ ["What skill have you been trying to improve recently? How much progress have you made?","When did you decide to work on it?"]
+];
+const R31=[
+ ["I have seen this film last week.","I saw this film last week.","last week → Past Simple"],
+ ["I've been knowing him for years.","I've known him for years.","know — дієслово стану"],
+ ["How long are you living here?","How long have you been living here?","How long + досі → PP Continuous"],
+ ["She has been writing three emails this morning.","She has written three emails this morning.","кількість → Present Perfect"],
+ ["Did you ever eat oysters?","Have you ever eaten oysters?","досвід → Present Perfect (BrE)"],
+ ["I live in Kyiv since 2015.","I have lived / have been living in Kyiv since 2015.","since → Perfect"],
+ ["When have you arrived?","When did you arrive?","when → Past Simple"],
+ ["We've been waiting for two hours yesterday.","We waited for two hours yesterday.","yesterday → Past Simple"],
+ ["He has gone to London twice.","He has been to London twice.","gone = він досі там; been = досвід"],
+ ["I'm working here for five years.","I've been working here for five years.","for + досі триває → PP Continuous"]
+];
+const TR=[
+ ["Я вже двічі був у Лондоні, але минулого року я туди не їздив.","I've been to London twice, but I didn't go there last year."],
+ ["Як довго ти вивчаєш англійську? — Я вчу її з 2020 року.","How long have you been learning English? — I've been learning it since 2020."],
+ ["Ми з Олею знайомі вже десять років.","Olya and I have known each other for ten years."],
+ ["Я щойно закінчив проєкт — я працював над ним увесь тиждень.","I've just finished the project — I've been working on it all week."],
+ ["Чому в тебе мокре волосся? — Я бігав під дощем.","Why is your hair wet? — I've been running in the rain."],
+ ["Коли ти купив цю машину? — Три роки тому. Вона в мене вже три роки.","When did you buy this car? — Three years ago. I've had it for three years."],
+ ["Останнім часом я погано сплю.","I haven't been sleeping well lately."],
+ ["Ти вже бачив новий фільм? — Ще ні. А ти? — Так, я бачив його в суботу.","Have you seen the new film yet? — Not yet. Have you? — Yes, I saw it on Saturday."],
+ ["Цього місяця вона вже написала три статті.","She has already written three articles this month."],
+ ["Ми чекаємо на автобус уже пів години, а він досі не приїхав.","We've been waiting for the bus for half an hour, and it still hasn't come."],
+ ["Я ніколи не пробував дайвінг, але минулого літа я вперше плавав з маскою.","I've never tried diving, but last summer I went snorkelling for the first time."],
+ ["Скільки разів ти змінював роботу?","How many times have you changed jobs?"]
+];
+const ROLES=[
+ ["Old friends","You meet a school friend after ten years. Find out what they've been doing, where they've lived and what has changed in their life.","Invent your life since school: two big changes and one surprising thing. Ask about A's life too."],
+ ["Job interview","You're the interviewer. Ask about experience: How long have you been…? Have you ever…? What did you do in your last job?","You're applying for your dream job. Make your experience sound impressive — but be ready for tricky questions."],
+ ["Flatmates","Someone has been eating your food and using your things. You found your favourite mug broken this morning. Complain politely but firmly.","You've been really busy and stressed lately. Explain what you've been doing, apologise — or deny everything!"],
+ ["At the doctor's","You're the doctor. Find out what the problem is, how long it has been going on and what the patient has been doing lately.","You haven't been sleeping well and you've been feeling tired for weeks. Explain when it started and what you've tried."]
+];
+const GAPS=[
+ {h:"not see",a:["have not seen"]},{h:"meet",a:["met"]},{h:"you / do",a:["have you been doing","have you done"]},
+ {h:"move",a:["moved"]},{h:"work",a:["have been working","have worked"]},{h:"you / ever / regret",a:["have you ever regretted"]},
+ {h:"just / come back",a:["have just come back","have just got back","have just returned"]},{h:"start",a:["started"]},
+ {h:"travel",a:["have been travelling","have been traveling"]},{h:"you / visit",a:["have you visited","have you been to"]},
+ {h:"go",a:["went"]},{h:"be",a:["was"]}
+];
+const DLG=[
+ ["Anna","Max! I can't believe it! I {0} you for ages!"],
+ ["Max","Anna! Yes, it's been about five years. The last time we {1} was at Olga's wedding."],
+ ["Anna","Right! So, what {2} since then?"],
+ ["Max","Oh, lots of things. I {3} to Lviv in 2022, and I {4} as a designer there ever since."],
+ ["Anna","Wow! {5} moving?"],
+ ["Max","Never! But what about you? You look so tanned!"],
+ ["Anna","Ha! I {6} from a month in Portugal. I {7} my own online school last year, so I {8} a lot lately."],
+ ["Max","Amazing! How many countries {9} this year?"],
+ ["Anna","Seven! I {10} to Japan in spring — it {11} the best trip of my life."]
+];
+
+/* quizzes */
+function quiz(id,data){
+ $(id).innerHTML=data.map((d,i)=>`<div class="qi" data-i="${i}"><p>${i+1}. ${fmt(d.q)}</p><div class="opts">${d.o.map((o,j)=>`<button data-q="${id}" data-i="${i}" data-j="${j}">${o}</button>`).join('')}</div><p class="fb" hidden></p></div>`).join('');
+}
+const QD={q1:Q1,q2:Q2},done={q1:{},q2:{}};
+quiz('q1',Q1);quiz('q2',Q2);
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button[data-q]');if(!b)return;
+ const id=b.dataset.q,i=+b.dataset.i,j=+b.dataset.j,d=QD[id][i],box=b.closest('.qi');
+ if(done[id][i]!==undefined)return;
+ done[id][i]=j===d.a;
+ box.querySelectorAll('button').forEach((x,k)=>{if(k===d.a)x.classList.add('ok');else if(k===j)x.classList.add('bad');});
+ const fb=box.querySelector('.fb');fb.hidden=false;fb.textContent=(j===d.a?'✓ ':'✗ ')+d.e;
+ const n=Object.keys(done[id]).length,ok=Object.values(done[id]).filter(Boolean).length;
+ $(id+'s').textContent=n===QD[id].length?`Score: ${ok} / ${n}`:'';
+});
+
+/* decks */
+function deck(id,data){
+ let order=data.map((_,i)=>i),p=0,shown=false;
+ const el=$(id);
+ const draw=()=>{const d=data[order[p]];
+  el.innerHTML=`<div class="card ${d.c||''}"><div class="big">${d.t}</div>${d.hide?(shown?`<div class="sub">💡 ${d.s}</div>`:''):`<div class="sub">${d.s}</div>`}</div>
+  <div class="ctrl"><button data-a="prev">← Back</button><button class="main" data-a="next">Next card →</button>${d.hide?`<button data-a="show">${shown?'Hide ideas':'Show ideas'}</button>`:''}<button data-a="mix">Shuffle</button><span class="count">${p+1} / ${data.length}</span></div>`;};
+ el.addEventListener('click',e=>{const a=e.target.closest('button')?.dataset.a;if(!a)return;
+  if(a==='next'){p=(p+1)%data.length;shown=false}
+  if(a==='prev'){p=(p-1+data.length)%data.length;shown=false}
+  if(a==='show')shown=!shown;
+  if(a==='mix'){for(let i=order.length-1;i>0;i--){const r=Math.floor(Math.random()*(i+1));[order[i],order[r]]=[order[r],order[i]]}p=0;shown=false}
+  draw();});
+ draw();
+}
+deck('d1',D1);deck('d2',D2);deck('d3',D3);
+$('d2').querySelector('.big');
+
+/* reveal lists */
+function reveal(id,items){
+ $(id).innerHTML=items.map(([q,a,n])=>`<li><span>${q}</span>${a?`<button class="rv">Show answer</button><span class="ans" hidden>${a}${n?`<small>${n}</small>`:''}</span>`:''}</li>`).join('');
+}
+$('r13').innerHTML=R13.map(q=>`<li><span>${q}</span></li>`).join('');
+$('r23').innerHTML=R23.map(([q,f])=>`<li><span><b>${q.startsWith('!')?'<span style="color:var(--pp)">!</span> '+q.slice(2):q}</b><br><span style="color:var(--mute)">→ ${f}</span></span></li>`).join('');
+reveal('r31',R31.map(([w,c,n])=>[`<s style="color:var(--bad);text-decoration-thickness:1px">${w}</s>`,c,n]));
+reveal('rtr',TR);
+document.addEventListener('click',e=>{const b=e.target.closest('.rv');if(!b)return;const a=b.nextElementSibling;a.hidden=!a.hidden;b.textContent=a.hidden?'Show answer':'Hide answer';});
+$('tall').addEventListener('click',()=>{const all=$('rtr').querySelectorAll('.ans'),open=[...all].some(a=>a.hidden);all.forEach(a=>a.hidden=!open);$('rtr').querySelectorAll('.rv').forEach(b=>b.textContent=open?'Hide answer':'Show answer');$('tall').textContent=open?'Hide all answers':'Show all answers';});
+
+/* roles */
+$('roles').innerHTML=ROLES.map(([t,a,b])=>`<div class="role"><h3>${t}</h3><p><span class="ab">A</span> ${a}</p><p><span class="ab b">B</span> ${b}</p></div>`).join('');
+
+/* dialogue gap fill */
+$('dlg').innerHTML=DLG.map(([who,l])=>`<p><b>${who}:</b> ${l.replace(/\{(\d+)\}/g,(_,n)=>`<input data-g="${n}" aria-label="gap ${+n+1}: ${GAPS[n].h}" autocomplete="off" spellcheck="false"> <span class="hint">(${GAPS[n].h})</span><span class="key" data-k="${n}"></span>`)}</p>`).join('');
+const norm=s=>s.toLowerCase().replace(/[’`]/g,"'").replace(/n't\b/g," not").replace(/'ve\b/g," have").replace(/[.!?,]/g,'').replace(/\s+/g,' ').trim();
+const ins=()=>[...$('dlg').querySelectorAll('input')];
+$('dchk').addEventListener('click',()=>{let ok=0;ins().forEach(x=>{const g=GAPS[x.dataset.g],r=g.a.includes(norm(x.value));x.classList.toggle('ok',r);x.classList.toggle('bad',!r);if(r)ok++;});$('ds').textContent=`${ok} / ${GAPS.length}`;});
+$('dshow').addEventListener('click',()=>{$('dlg').querySelectorAll('.key').forEach(k=>k.textContent=k.textContent?'':'→ '+GAPS[k.dataset.k].a[0]);});
+$('dclr').addEventListener('click',()=>{ins().forEach(x=>{x.value='';x.classList.remove('ok','bad')});$('dlg').querySelectorAll('.key').forEach(k=>k.textContent='');$('ds').textContent='';});
+}
+</script>
+</body>
+</html>
