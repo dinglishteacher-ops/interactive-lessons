@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Units 1–9 Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: one reading column; each part of the lesson is a metro line running down the left, every task is a station on it. */
+:root{
+  --paper:#f3f5f8;
+  --card:#ffffff;
+  --ink:#172031;
+  --muted:#5a6475;
+  --rule:#dde2ea;
+  --soft:#eef1f6;
+  /* line colours: one per part of the lesson */
+  --line-w:#6b7486;
+  --line-a:#2346a8;
+  --line-b:#0d7a5c;
+  --line-c:#a86a08;
+  --line-t:#a8326e;
+  /* feedback */
+  --ok:#16834a; --ok-bg:#e3f4ea;
+  --bad:#c0392b; --bad-bg:#fbe7e4;
+  --sel:#172031; --sel-ink:#ffffff;
+  /* illustration */
+  --floor:#e2e6ee; --furn:#c6d1e6; --furn2:#8fa1c6; --wood:#b98a5a;
+  --water:#9cc7e8; --hill:#cfe5d6; --tree:#2f7d4f; --road:#5a6475;
+  --font-d:"Bricolage Grotesque","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-b:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f141d; --card:#171e2a; --ink:#e7ebf2; --muted:#9ba5b6; --rule:#2a3342; --soft:#1f2736;
+    --line-w:#9ba5b6; --line-a:#7d98f2; --line-b:#43c49a; --line-c:#e3a53d; --line-t:#e872ad;
+    --ok:#4cc985; --ok-bg:#163526; --bad:#ff8172; --bad-bg:#3b1e1b; --sel:#e7ebf2; --sel-ink:#0f141d;
+    --floor:#1d2534; --furn:#3a4766; --furn2:#586a92; --wood:#8a6744;
+    --water:#2c5876; --hill:#1e3a2b; --tree:#46a26d; --road:#9ba5b6;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f141d; --card:#171e2a; --ink:#e7ebf2; --muted:#9ba5b6; --rule:#2a3342; --soft:#1f2736;
+  --line-w:#9ba5b6; --line-a:#7d98f2; --line-b:#43c49a; --line-c:#e3a53d; --line-t:#e872ad;
+  --ok:#4cc985; --ok-bg:#163526; --bad:#ff8172; --bad-bg:#3b1e1b; --sel:#e7ebf2; --sel-ink:#0f141d;
+  --floor:#1d2534; --furn:#3a4766; --furn2:#586a92; --wood:#8a6744;
+  --water:#2c5876; --hill:#1e3a2b; --tree:#46a26d; --road:#9ba5b6;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--font-b);-webkit-text-size-adjust:100%}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+h1,h2,h3,h4{font-family:var(--font-d);text-wrap:balance;margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--line,var(--line-a));outline-offset:2px;border-radius:6px}
+
+/* ---------- header ---------- */
+.hero{padding:36px 0 10px}
+.brand{font-family:var(--font-d);font-weight:800;font-size:22px;letter-spacing:-.02em;display:inline-flex;align-items:baseline;gap:2px}
+.brand i{width:9px;height:9px;border-radius:50%;background:var(--line-a);display:inline-block;margin-left:2px}
+.eyebrow{font-size:14px;color:var(--muted);margin-left:10px}
+.hero h1{font-size:clamp(36px,6.5vw,58px);line-height:1;letter-spacing:-.035em;margin:18px 0 12px}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+
+.map{margin:26px 0 8px;overflow-x:auto;padding:4px 2px 10px}
+.map-line{position:relative;display:grid;grid-template-columns:repeat(9,minmax(92px,1fr));min-width:860px}
+.map-line::before{content:"";position:absolute;left:4%;right:4%;top:15px;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--line-a) 0 44%,var(--line-b) 44% 100%)}
+.stn{position:relative;background:none;border:0;padding:0 6px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.stn .dot{width:36px;height:36px;border-radius:50%;background:var(--card);border:5px solid var(--g);display:grid;place-items:center;font-family:var(--font-d);font-weight:800;font-size:15px;z-index:1}
+.stn .st{font-weight:700;font-size:14px;line-height:1.2}
+.stn .sg{font-size:12px;color:var(--muted);line-height:1.3}
+.stn:hover .dot{background:var(--g);color:var(--card)}
+.map-note{font-size:13px;color:var(--muted);margin:2px 0 0}
+
+/* ---------- sticky bar ---------- */
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar-in{display:flex;align-items:center;gap:14px;height:52px}
+.bar nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+.bar nav::-webkit-scrollbar{display:none}
+.bar nav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:14px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid transparent}
+.bar nav a span{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:6px}
+.bar nav a:hover{border-color:var(--rule)}
+.pill{white-space:nowrap;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;background:var(--card);border:1.5px solid var(--rule);border-radius:999px;padding:4px 12px}
+.prog{height:4px;background:var(--rule)}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--line-a),var(--line-b),var(--line-c),var(--line-t));transition:width .4s}
+
+/* ---------- parts ---------- */
+.part{position:relative;padding:34px 0 6px 40px}
+.part::before{content:"";position:absolute;left:13px;top:46px;bottom:0;width:6px;border-radius:3px;background:var(--line)}
+.part-head{position:relative;margin-bottom:6px}
+.part-head::before{content:"";position:absolute;left:-40px;top:2px;width:32px;height:32px;border-radius:9px;background:var(--line)}
+.part-label{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--line)}
+.part-head h2{font-size:clamp(26px,4vw,34px);letter-spacing:-.02em;line-height:1.1;margin-top:4px}
+.part-head p{color:var(--muted);margin:6px 0 0;max-width:62ch}
+#warm{--line:var(--line-w)} #partA{--line:var(--line-a)} #partB{--line:var(--line-b)} #partC{--line:var(--line-c)} #partT{--line:var(--line-t)} #results{--line:var(--ink)}
+
+details.gram{background:var(--card);border:1px solid var(--rule);border-left:6px solid var(--line);border-radius:12px;padding:12px 18px;margin:16px 0 4px}
+details.gram summary{cursor:pointer;font-weight:700;font-family:var(--font-d);font-size:18px}
+details.gram[open] summary{margin-bottom:12px}
+.gram-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.g-card{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:15px;line-height:1.5}
+.g-card h5{margin:0 0 6px;font-family:var(--font-d);font-size:16px;color:var(--line)}
+.g-card p{margin:0 0 6px}
+.g-card p:last-child{margin:0}
+.g-card b{font-weight:700}
+.g-card table{border-collapse:collapse;font-size:14px;margin:4px 0 6px}
+.g-card td{padding:2px 10px 2px 0}
+.ex{font-style:italic}
+
+/* ---------- tasks ---------- */
+.task{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:20px 22px 18px;margin:20px 0;transition:box-shadow .3s}
+.task::before{content:"";position:absolute;left:-37px;top:24px;width:20px;height:20px;border-radius:50%;background:var(--card);border:5px solid var(--line)}
+.task.hl{box-shadow:0 0 0 3px var(--line)}
+.t-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.t-code{font-family:var(--font-d);font-weight:800;font-size:15px;background:var(--line);color:var(--card);border-radius:8px;padding:2px 9px;line-height:1.5}
+.t-head h3{font-size:23px;letter-spacing:-.015em;line-height:1.15}
+.t-units{display:flex;gap:4px;margin-left:auto}
+.t-units b{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--line)}
+.t-sub{width:100%;font-size:14px;color:var(--muted)}
+.rubric{margin:10px 0 4px;font-weight:700}
+.block{margin-top:16px}
+.block-label{font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--line);margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.race{font-family:var(--font-b);font-size:14px;font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700;border:1.5px solid var(--rule);border-radius:999px;padding:1px 10px}
+
+ol.items{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+ol.items>li{display:flex;gap:10px;align-items:baseline}
+.num{flex:0 0 auto;min-width:1.5em;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums;font-size:15px}
+.it{flex:1;min-width:0}
+ol.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px 18px}
+ol.grid>li{background:var(--soft);border-radius:10px;padding:8px 10px}
+ol.grid .num{display:none}
+
+.gap{font:inherit;color:var(--ink);background:var(--soft);border:0;border-bottom:2px solid var(--muted);border-radius:6px 6px 0 0;padding:0 6px;margin:2px 2px;height:1.75em;vertical-align:baseline;max-width:100%}
+ol.grid .gap{background:var(--card)}
+.gap:focus{outline:2px solid var(--line);outline-offset:1px}
+.gap.ok,.line-in.ok,textarea.tr.ok{border-color:var(--ok);background:var(--ok-bg)}
+.gap.bad,.line-in.bad,textarea.tr.bad{border-color:var(--bad);background:var(--bad-bg)}
+.gap.shown,.line-in.shown{border-color:var(--line);color:var(--line);font-weight:700}
+
+.opts{display:inline-flex;flex-wrap:wrap;gap:4px;margin:2px 3px;vertical-align:baseline}
+.opt{font-size:.95em;border:1.5px solid var(--rule);background:var(--card);border-radius:999px;padding:0 11px;line-height:1.75;cursor:pointer;transition:background .15s,border-color .15s}
+.opt:hover{border-color:var(--line)}
+.opt[aria-pressed="true"]{background:var(--sel);border-color:var(--sel);color:var(--sel-ink)}
+.opts.ok .opt[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.opts.bad .opt[aria-pressed="true"]{background:var(--bad);border-color:var(--bad);color:#fff}
+.opts.bad:not(:has([aria-pressed="true"])){outline:2px dashed var(--bad);outline-offset:2px;border-radius:999px}
+.opts.shown .opt[aria-pressed="true"]{background:var(--line);border-color:var(--line);color:var(--card)}
+
+.sort-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px 22px;list-style:none;margin:0;padding:0}
+.sort-list li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px dashed var(--rule)}
+.sort-list .w{font-weight:700}
+
+.order-item{display:grid;gap:8px}
+.built{min-height:46px;border:2px dashed var(--rule);border-radius:12px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.built.ok{border-color:var(--ok);border-style:solid;background:var(--ok-bg)}
+.built.bad{border-color:var(--bad);border-style:solid;background:var(--bad-bg)}
+.built.shown{border-color:var(--line);border-style:solid}
+.ph{color:var(--muted);font-size:14px;padding:0 6px}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+.tile{border:1.5px solid var(--rule);background:var(--soft);border-radius:8px;padding:3px 12px;cursor:pointer}
+.built .tile{background:var(--card);border-color:var(--line)}
+
+.tf-p{font-weight:700}
+.cue{display:inline-block;font-size:13px;font-weight:700;color:var(--line);border:1.5px solid var(--line);border-radius:6px;padding:0 6px;margin-left:6px;vertical-align:1px}
+.fix .tf-p{text-decoration:underline wavy var(--bad);text-decoration-thickness:1px;text-underline-offset:4px;font-weight:400}
+.line-in{display:block;width:100%;font:inherit;color:var(--ink);background:var(--soft);border:0;border-bottom:2px solid var(--muted);border-radius:8px 8px 0 0;padding:6px 10px;margin-top:6px}
+.line-in:focus{outline:2px solid var(--line);outline-offset:1px}
+
+.match-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:6px 14px;align-items:center}
+.match-row .say{font-weight:700}
+select.sel{font:inherit;font-size:15px;width:100%;color:var(--ink);background:var(--soft);border:1.5px solid var(--rule);border-radius:10px;padding:7px 8px}
+select.sel.ok{border-color:var(--ok);background:var(--ok-bg)}
+select.sel.bad{border-color:var(--bad);background:var(--bad-bg)}
+select.sel.shown{border-color:var(--line);color:var(--line);font-weight:700}
+
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.rv{text-align:left;border:1.5px solid var(--rule);border-radius:12px;background:var(--soft);padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-height:92px}
+.rv .q{font-family:var(--font-d);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15}
+.rv .a{display:none;color:var(--line);font-weight:700;font-size:15px;line-height:1.35}
+.rv .hint{font-size:13px;color:var(--muted)}
+.rv.open{background:var(--card);border-color:var(--line)}
+.rv.open .a{display:block}
+.rv.open .hint{display:none}
+.mini{font-size:13px;font-weight:700;border:1.5px solid var(--rule);background:var(--card);border-radius:999px;padding:2px 10px;cursor:pointer;color:var(--ink)}
+.mini:hover{border-color:var(--line)}
+
+.sp-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.clock{font-family:var(--font-d);font-weight:800;font-size:22px;font-variant-numeric:tabular-nums;color:var(--line);min-width:3.5em}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.sp-card{border:1.5px solid var(--rule);border-radius:14px;padding:14px 16px;background:var(--card);transition:border-color .2s,box-shadow .2s}
+.sp-card h4{font-size:18px;margin-bottom:6px}
+.sp-card ul{margin:0;padding-left:18px;font-size:15px}
+.sp-card li{margin:3px 0}
+.sp-card.picked{border-color:var(--line);box-shadow:0 0 0 3px var(--line)}
+
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.t9{text-align:left;border:1.5px solid var(--rule);border-radius:14px;background:var(--card);padding:12px 14px;cursor:pointer;min-height:118px;display:flex;flex-direction:column;gap:4px}
+.t9 .n{font-family:var(--font-d);font-size:30px;font-weight:800;line-height:1;color:var(--g)}
+.t9 .ttl{font-weight:700;font-size:15px;line-height:1.25}
+.t9 .qq{display:none;font-size:15px;line-height:1.4}
+.t9 .hint{font-size:13px;color:var(--muted);margin-top:auto}
+.t9.open{border-color:var(--g);background:var(--soft)}
+.t9.open .qq{display:block}
+.t9.open .hint{display:none}
+.t9.picked{box-shadow:0 0 0 3px var(--g)}
+
+.tr-list{list-style:none;margin:0;padding:0;display:grid;gap:16px;counter-reset:tr}
+.tr-list li{display:grid;gap:6px}
+.tr-ua{font-weight:700;display:flex;gap:10px}
+.tr-ua .num{font-size:16px}
+textarea.tr{font:inherit;width:100%;min-height:58px;resize:vertical;color:var(--ink);background:var(--soft);border:0;border-bottom:2px solid var(--muted);border-radius:8px 8px 0 0;padding:8px 10px}
+textarea.tr:focus{outline:2px solid var(--line);outline-offset:1px}
+textarea.tr.ok{border-color:var(--ok);background:var(--ok-bg)}
+textarea.tr.bad{border-color:var(--bad);background:var(--bad-bg)}
+.model{display:none;font-size:15px;background:var(--soft);border-left:4px solid var(--line);border-radius:0 8px 8px 0;padding:6px 10px}
+.model.on{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.model b{color:var(--line)}
+
+.svg-box{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--soft)}
+.svg-box svg{display:block;width:100%;height:auto;min-width:520px}
+.sv-wall{fill:var(--soft)} .sv-floor{fill:var(--floor)} .sv-furn{fill:var(--furn)} .sv-furn2{fill:var(--furn2)}
+.sv-wood{fill:var(--wood)} .sv-lbl{fill:var(--muted);font:600 13px var(--font-b)} .sv-lbl-strong{fill:var(--ink);font:700 13px var(--font-b)}
+.sv-road{stroke:var(--road);fill:none} .sv-water{fill:var(--water)} .sv-hill{fill:var(--hill)} .sv-tree{fill:var(--tree)}
+.sv-card{fill:var(--card)} .sv-ink{fill:var(--ink)} .sv-muted{fill:var(--muted)}
+
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--rule)}
+.btn{font-weight:700;border-radius:10px;padding:8px 16px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.score{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted)}
+.score.good{color:var(--ok)}
+
+/* ---------- results ---------- */
+.res-card{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:20px 22px;margin:20px 0}
+.res-top{display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between}
+.res-top label{font-weight:700;display:grid;gap:4px;flex:1;min-width:220px}
+.res-top input{font:inherit;color:var(--ink);background:var(--soft);border:0;border-bottom:2px solid var(--muted);border-radius:8px 8px 0 0;padding:6px 10px}
+.big{font-family:var(--font-d);font-weight:800;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}
+.big small{font-size:18px;color:var(--muted);font-weight:700}
+.res-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px}
+.res-table td{padding:6px 4px;border-bottom:1px solid var(--rule)}
+.res-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.res-table .code{font-family:var(--font-d);font-weight:800;width:3.2em}
+.res-table .nc{color:var(--muted);font-weight:400}
+.res-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.copy-out{width:100%;min-height:160px;font:14px/1.45 ui-monospace,Consolas,monospace;color:var(--ink);background:var(--soft);border:1px solid var(--rule);border-radius:10px;padding:10px;margin-top:12px;display:none}
+.copy-out.on{display:block}
+.msg{font-size:15px;font-weight:700;color:var(--ok)}
+
+footer{padding:26px 0 48px;color:var(--muted);font-size:14px}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .part{padding-left:28px}
+  .part::before{left:6px;width:5px}
+  .part-head::before{left:-28px;width:24px;height:24px;top:4px}
+  .task{padding:16px 14px 14px}
+  .task::before{left:-29px;width:16px;height:16px;border-width:4px}
+  .t-units{margin-left:0;width:100%}
+  .match-row{grid-template-columns:1fr}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .score{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap hero">
+  <div><span class="brand">dinglish<i></i></span><span class="eyebrow">Elementary · revision lesson</span></div>
+  <h1>Units 1–9 revision</h1>
+  <p class="lede">Grammar, vocabulary and everyday English from nine units in one lesson. Check your answers as you go. At the end, copy your results and send them to your teacher.</p>
+  <div class="map" aria-label="Route map of units 1 to 9">
+    <div class="map-line" id="map"></div>
+  </div>
+  <p class="map-note">Tap a station to find the tasks for that unit.</p>
+</header>
+
+<div class="bar">
+  <div class="wrap bar-in">
+    <nav aria-label="Lesson parts">
+      <a href="#warm" style="--c:var(--line-w)"><span></span>Warm-up</a>
+      <a href="#partA" style="--c:var(--line-a)"><span></span>Units 1–4</a>
+      <a href="#partB" style="--c:var(--line-b)"><span></span>Units 5–9</a>
+      <a href="#partC" style="--c:var(--line-c)"><span></span>Mixed</a>
+      <a href="#partT" style="--c:var(--line-t)"><span></span>Translation</a>
+      <a href="#results" style="--c:var(--ink)"><span></span>Results</a>
+    </nav>
+    <div class="pill" id="pill">0 / 0</div>
+  </div>
+  <div class="prog"><i id="progbar"></i></div>
+</div>
+
+<main class="wrap">
+
+  <section class="part" id="warm">
+    <div class="part-head">
+      <span class="part-label">Warm-up</span>
+      <h2>Nine stations</h2>
+      <p>One question from every unit. Speak first, then we start the revision.</p>
+    </div>
+    <div class="tasks" data-part="warm"></div>
+  </section>
+
+  <section class="part" id="partA">
+    <div class="part-head">
+      <span class="part-label">Part A · Units 1–4</span>
+      <h2>People, routines and homes</h2>
+      <p>to be, possessives, the Present Simple, there is / there are, some / any and everyday conversations.</p>
+    </div>
+    <details class="gram">
+      <summary>Grammar snapshot · Units 1–4 (українською)</summary>
+      <div class="gram-grid">
+        <div class="g-card"><h5>to be · U1</h5>
+          <p><b>I am</b> · <b>you / we / they are</b> · <b>he / she / it is</b></p>
+          <p>Заперечення: I'm not, isn't, aren't. Питання: <span class="ex">Are you…? Is she…?</span></p>
+          <p>Коротка відповідь: <span class="ex">Yes, I am.</span> (не <s>Yes, I'm.</s>) Вік: <span class="ex">I'm 22.</span> (не <s>22 years</s>)</p>
+        </div>
+        <div class="g-card"><h5>Займенники · U1–2</h5>
+          <table>
+            <tr><td>I</td><td>me</td><td>my</td></tr>
+            <tr><td>he</td><td>him</td><td>his</td></tr>
+            <tr><td>she</td><td>her</td><td>her</td></tr>
+            <tr><td>we</td><td>us</td><td>our</td></tr>
+            <tr><td>they</td><td>them</td><td>their</td></tr>
+          </table>
+          <p>Підмет — перед дієсловом, об'єкт — після: <span class="ex">She likes him.</span></p>
+          <p><b>'s</b> = is (<span class="ex">She's a teacher</span>) або «чий» (<span class="ex">Jason's brother</span>).</p>
+        </div>
+        <div class="g-card"><h5>Present Simple · U2–3</h5>
+          <p>Факти, звички, розклад. <b>he / she / it + -s</b>: works, lives.</p>
+          <p><b>-es</b> після o, s, sh, ch, x: goes, does, watches, relaxes. Приголосна + y → <b>-ies</b>: studies (але plays). have → <b>has</b>.</p>
+          <p>Питання і заперечення — з <b>do / does</b>, дієслово без -s: <span class="ex">Does he work? He doesn't work.</span></p>
+        </div>
+        <div class="g-card"><h5>Як часто? · U3</h5>
+          <p><b>always · usually · often · sometimes · never</b> — перед основним дієсловом, але після be: <span class="ex">She never goes out. She's always late.</span></p>
+          <p><b>like / love / hate + -ing</b>: <span class="ex">I like cooking.</span></p>
+        </div>
+        <div class="g-card"><h5>there is / there are · U4</h5>
+          <p><span class="ex">There's a sofa. There are two bedrooms. Is there…? Are there any…?</span></p>
+          <p><b>some</b> — у ствердженнях, <b>any</b> — у запитаннях і запереченнях, <b>a lot of</b> — багато.</p>
+          <p><b>this / these</b> — тут, поруч; <b>that / those</b> — там, далеко.</p>
+        </div>
+        <div class="g-card"><h5>Прийменники місця · U4</h5>
+          <p>in · on · under · next to · between · opposite · in front of · behind · above · near</p>
+          <p>Сполучники: <b>and</b> (і), <b>but</b> (але), <b>so</b> (тому), <b>because</b> (бо). Перед but і so зазвичай ставимо кому.</p>
+        </div>
+      </div>
+    </details>
+    <div class="tasks" data-part="A"></div>
+  </section>
+
+  <section class="part" id="partB">
+    <div class="part-head">
+      <span class="part-label">Part B · Units 5–9</span>
+      <h2>Talents, the past, food and cities</h2>
+      <p>can and could, was / were, the Past Simple, adverbs, food and quantities, comparing places and finding the way.</p>
+    </div>
+    <details class="gram">
+      <summary>Grammar snapshot · Units 5–9 (українською)</summary>
+      <div class="gram-grid">
+        <div class="g-card"><h5>can / could · U5</h5>
+          <p><b>can + дієслово без to</b>, однаково для всіх осіб: <span class="ex">She can swim. Can you…? I can't.</span></p>
+          <p>Минуле — <b>could / couldn't</b>: <span class="ex">I could read when I was four.</span> (не <s>didn't could</s>)</p>
+        </div>
+        <div class="g-card"><h5>was / were · U5</h5>
+          <p><b>I / he / she / it was</b> · <b>you / we / they were</b></p>
+          <p>Народитися: <span class="ex">I was born in 2001.</span> (не <s>I am born</s>)</p>
+        </div>
+        <div class="g-card"><h5>Past Simple · U6–7</h5>
+          <p>Завершена дія в минулому. Правильні: worked, lived, stopped, studied. Неправильні треба вивчити: go → went, buy → bought.</p>
+          <p>Питання і заперечення: <b>did / didn't + дієслово без -ed</b>: <span class="ex">Did you go? I didn't go.</span></p>
+          <p>Вимова -ed: /t/ worked · /d/ lived · /ɪd/ started (після t і d).</p>
+        </div>
+        <div class="g-card"><h5>Коли? · U7</h5>
+          <p><b>in</b> 1928, in July, in winter, in the morning</p>
+          <p><b>on</b> Monday, on 20 July, on Christmas Day</p>
+          <p><b>at</b> 7 o'clock, at night, at the weekend</p>
+          <p>two days <b>ago</b> (тому) · last night · yesterday</p>
+        </div>
+        <div class="g-card"><h5>Прислівники, -ed / -ing · U6–7</h5>
+          <p>Прикметник описує іменник (<span class="ex">a careful driver</span>), прислівник — дію (<span class="ex">he drives carefully</span>). quick → quickly, happy → happily. Неправильні: good → <b>well</b>, hard, fast, early, late.</p>
+          <p><b>-ed</b> — як я почуваюся: <span class="ex">I'm bored.</span> <b>-ing</b> — яке щось: <span class="ex">The film is boring.</span></p>
+        </div>
+        <div class="g-card"><h5>Їжа і кількість · U8</h5>
+          <p>Злічувані: an apple, two eggs. Незлічувані: milk, bread, money.</p>
+          <p><b>How many</b> eggs? <b>How much</b> milk? many / much — у питаннях і запереченнях, <b>a lot of</b> — у ствердженнях. <b>some</b> — коли щось пропонуємо або просимо.</p>
+          <p><b>Do you like…?</b> — чи подобається взагалі. <b>Would you like…?</b> — чи хочеш зараз. I'd like = I would like.</p>
+        </div>
+        <div class="g-card"><h5>Порівняння · U9</h5>
+          <p>Короткі: cheap → cheap<b>er</b> → the cheap<b>est</b>; big → bigger; busy → busier.</p>
+          <p>Довгі: <b>more</b> expensive → <b>the most</b> expensive.</p>
+          <p>good → better → the best · bad → worse → the worst. «Ніж» = <b>than</b>; набагато = <b>much</b> bigger.</p>
+        </div>
+        <div class="g-card"><h5>have got · U9</h5>
+          <p>= have (британська розмовна): <span class="ex">I've got · She's got · I haven't got · Have you got…? — Yes, I have.</span> Минуле — <b>had</b>.</p>
+        </div>
+        <div class="g-card"><h5>Письмо · U5–9</h5>
+          <p><b>which</b> — речі, <b>who</b> — люди, <b>where</b> — місця.</p>
+          <p><b>when</b> — коли, <b>until</b> — доки не, до; <b>However,</b> — однак (на початку речення, з комою).</p>
+          <p>Офіційно: <span class="ex">Dear Ms Yates, … Yours sincerely.</span> Неофіційно: <span class="ex">Hi Matt, … Lots of love.</span></p>
+        </div>
+      </div>
+    </details>
+    <div class="tasks" data-part="B"></div>
+  </section>
+
+  <section class="part" id="partC">
+    <div class="part-head">
+      <span class="part-label">Part C · Units 1–9</span>
+      <h2>Mixed revision</h2>
+      <p>Everything together: find the mistakes, choose the tense, ask questions and talk for a minute.</p>
+    </div>
+    <div class="tasks" data-part="C"></div>
+  </section>
+
+  <section class="part" id="partT">
+    <div class="part-head">
+      <span class="part-label">Final task</span>
+      <h2>Translate into English</h2>
+      <p>One or two sentences from every unit.</p>
+    </div>
+    <div class="tasks" data-part="T"></div>
+  </section>
+
+  <section class="part" id="results">
+    <div class="part-head">
+      <span class="part-label">Results</span>
+      <h2>Send your results</h2>
+      <p>Write your name, copy the results and paste them into a message to your teacher.</p>
+    </div>
+    <div class="res-card">
+      <div class="res-top">
+        <label for="stname">Your name<input id="stname" type="text" autocomplete="name" placeholder="Name"></label>
+        <div class="big" id="bigscore">0<small> / 0</small></div>
+      </div>
+      <table class="res-table" id="restable"></table>
+      <div class="res-actions">
+        <button class="btn" type="button" id="copybtn">Copy results</button>
+        <button class="btn ghost" type="button" id="clearbtn">Clear all answers</button>
+        <span class="msg" id="copymsg" role="status"></span>
+      </div>
+      <textarea class="copy-out" id="copyout" readonly aria-label="Results text"></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">dinglish · Elementary revision · Units 1–9. Your answers are saved in this browser.</footer>
+
+<script>
+/* ================= DATA ================= */
+const UNITS = [
+  {n:1, t:"Nice to meet you!", g:"am / is / are · my, your, his, her"},
+  {n:2, t:"Work and family life", g:"Present Simple: he / she / it"},
+  {n:3, t:"Time off", g:"Present Simple: I / you / we / they · always, never"},
+  {n:4, t:"House and home", g:"there is / are · some / any · this / that"},
+  {n:5, t:"Super U!", g:"can / can't · was / were · could"},
+  {n:6, t:"Lessons in life", g:"Past Simple: regular and irregular"},
+  {n:7, t:"Remember when…", g:"Past Simple questions · in / on / at"},
+  {n:8, t:"Love it or hate it!", g:"count / uncount · much / many · would like"},
+  {n:9, t:"Life in the city", g:"comparatives · superlatives · have got"}
+];
+
+const ROOM_SVG = `<svg viewBox="0 0 640 300" role="img" aria-label="A living room with a sofa, an armchair, a table, a shelf, a lamp, a plant, a rug, a cat, a dog and a ball">
+  <rect class="sv-wall" x="0" y="0" width="640" height="232"/>
+  <rect class="sv-floor" x="0" y="232" width="640" height="68"/>
+  <!-- shelf and books -->
+  <rect x="40" y="58" width="12" height="36" fill="var(--line-a)"/>
+  <rect x="54" y="62" width="10" height="32" fill="var(--line-b)"/>
+  <rect x="66" y="55" width="14" height="39" fill="var(--line-c)"/>
+  <rect x="82" y="64" width="10" height="30" fill="var(--line-t)"/>
+  <rect x="94" y="60" width="12" height="34" fill="var(--line-a)"/>
+  <rect class="sv-wood" x="30" y="94" width="110" height="7" rx="2"/>
+  <text class="sv-lbl" x="85" y="118" text-anchor="middle">shelf</text>
+  <!-- side table and ball -->
+  <rect class="sv-wood" x="30" y="172" width="110" height="9" rx="2"/>
+  <rect class="sv-wood" x="38" y="181" width="7" height="52"/>
+  <rect class="sv-wood" x="125" y="181" width="7" height="52"/>
+  <text class="sv-lbl" x="85" y="164" text-anchor="middle">table</text>
+  <circle cx="85" cy="218" r="14" fill="#ffffff" stroke="var(--ink)" stroke-width="2"/>
+  <path d="M85 210 l7 5 -3 8 h-8 l-3 -8 z" fill="var(--ink)"/>
+  <!-- picture -->
+  <rect x="226" y="40" width="118" height="78" rx="3" fill="var(--water)" stroke="var(--wood)" stroke-width="7"/>
+  <path d="M232 112 L268 72 L292 96 L306 82 L338 112 Z" class="sv-tree" opacity=".8"/>
+  <text class="sv-lbl" x="285" y="32" text-anchor="middle">picture</text>
+  <!-- rug -->
+  <ellipse cx="285" cy="266" rx="150" ry="22" fill="var(--line-t)" opacity=".35"/>
+  <text class="sv-lbl-strong" x="285" y="271" text-anchor="middle">rug</text>
+  <!-- sofa -->
+  <rect class="sv-furn2" x="190" y="130" width="190" height="62" rx="14"/>
+  <rect class="sv-furn" x="182" y="172" width="206" height="42" rx="10"/>
+  <rect class="sv-furn2" x="170" y="152" width="28" height="64" rx="10"/>
+  <rect class="sv-furn2" x="372" y="152" width="28" height="64" rx="10"/>
+  <rect class="sv-wood" x="190" y="216" width="8" height="16"/>
+  <rect class="sv-wood" x="372" y="216" width="8" height="16"/>
+  <text class="sv-lbl-strong" x="240" y="200" text-anchor="middle">sofa</text>
+  <!-- cat on the sofa -->
+  <g transform="translate(318 140)">
+    <ellipse cx="0" cy="22" rx="26" ry="12" fill="var(--line-c)"/>
+    <circle cx="-20" cy="8" r="11" fill="var(--line-c)"/>
+    <path d="M-29 1 l3 -12 6 9 z M-17 -2 l4 -11 4 11 z" fill="var(--line-c)"/>
+    <path d="M24 22 q16 -4 12 -20" stroke="var(--line-c)" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="-23" cy="7" r="1.8" fill="var(--ink)"/><circle cx="-16" cy="7" r="1.8" fill="var(--ink)"/>
+  </g>
+  <text class="sv-lbl" x="318" y="116" text-anchor="middle">cat</text>
+  <!-- dog behind the armchair (drawn first) -->
+  <g transform="translate(505 118)">
+    <ellipse cx="0" cy="12" rx="20" ry="18" fill="var(--wood)"/>
+    <ellipse cx="-19" cy="10" rx="7" ry="14" fill="var(--ink)" opacity=".75"/>
+    <ellipse cx="19" cy="10" rx="7" ry="14" fill="var(--ink)" opacity=".75"/>
+    <circle cx="-7" cy="8" r="2.4" fill="var(--ink)"/><circle cx="7" cy="8" r="2.4" fill="var(--ink)"/>
+    <ellipse cx="0" cy="17" rx="4" ry="3" fill="var(--ink)"/>
+  </g>
+  <text class="sv-lbl" x="545" y="102" text-anchor="middle">dog</text>
+  <!-- armchair -->
+  <rect class="sv-furn2" x="462" y="132" width="86" height="64" rx="12"/>
+  <rect class="sv-furn" x="455" y="176" width="100" height="38" rx="10"/>
+  <rect class="sv-furn2" x="446" y="156" width="20" height="60" rx="8"/>
+  <rect class="sv-furn2" x="544" y="156" width="20" height="60" rx="8"/>
+  <rect class="sv-wood" x="456" y="216" width="7" height="16"/>
+  <rect class="sv-wood" x="547" y="216" width="7" height="16"/>
+  <text class="sv-lbl-strong" x="505" y="200" text-anchor="middle">armchair</text>
+  <!-- plant between sofa and armchair -->
+  <ellipse cx="414" cy="176" rx="9" ry="22" class="sv-tree" transform="rotate(-25 414 176)"/>
+  <ellipse cx="432" cy="174" rx="9" ry="22" class="sv-tree" transform="rotate(22 432 174)"/>
+  <ellipse cx="423" cy="166" rx="8" ry="24" class="sv-tree"/>
+  <path d="M405 202 H441 L436 232 H410 Z" class="sv-wood"/>
+  <text class="sv-lbl" x="423" y="250" text-anchor="middle">plant</text>
+  <!-- lamp next to the armchair -->
+  <rect x="592" y="104" width="5" height="126" fill="var(--muted)"/>
+  <ellipse cx="594" cy="231" rx="18" ry="4" fill="var(--muted)"/>
+  <path d="M574 106 H614 L604 74 H584 Z" fill="var(--line-c)"/>
+  <text class="sv-lbl" x="594" y="66" text-anchor="middle">lamp</text>
+</svg>`;
+
+const ROUTE_SVG = `<svg viewBox="0 0 920 260" role="img" aria-label="A route from the castle along George Street, past the hotel, over the bridge, up Park Hill, through the wood, down the hill, under the railway bridge to the petrol station">
+  <rect x="0" y="0" width="920" height="260" class="sv-wall"/>
+  <!-- hill -->
+  <path d="M380 196 L520 112 L650 112 L780 196 Z" class="sv-hill"/>
+  <!-- river -->
+  <rect x="300" y="200" width="72" height="60" class="sv-water"/>
+  <text class="sv-lbl" x="336" y="248" text-anchor="middle">river</text>
+  <!-- castle -->
+  <rect x="24" y="142" width="58" height="54" class="sv-furn2"/>
+  <rect x="18" y="118" width="18" height="78" class="sv-furn2"/>
+  <rect x="70" y="118" width="18" height="78" class="sv-furn2"/>
+  <rect x="18" y="110" width="5" height="9" class="sv-furn2"/><rect x="25" y="110" width="5" height="9" class="sv-furn2"/><rect x="31" y="110" width="5" height="9" class="sv-furn2"/>
+  <rect x="70" y="110" width="5" height="9" class="sv-furn2"/><rect x="77" y="110" width="5" height="9" class="sv-furn2"/><rect x="83" y="110" width="5" height="9" class="sv-furn2"/>
+  <path d="M44 196 v-18 a9 9 0 0 1 18 0 v18 z" class="sv-ink" opacity=".6"/>
+  <text class="sv-lbl-strong" x="53" y="222" text-anchor="middle">START</text>
+  <text class="sv-lbl" x="53" y="238" text-anchor="middle">castle</text>
+  <!-- hotel -->
+  <rect x="150" y="122" width="72" height="66" class="sv-furn"/>
+  <rect x="160" y="146" width="12" height="12" class="sv-card"/><rect x="180" y="146" width="12" height="12" class="sv-card"/><rect x="200" y="146" width="12" height="12" class="sv-card"/>
+  <rect x="160" y="166" width="12" height="12" class="sv-card"/><rect x="200" y="166" width="12" height="12" class="sv-card"/>
+  <text class="sv-lbl-strong" x="186" y="139" text-anchor="middle">HOTEL</text>
+  <!-- trees behind the road -->
+  <path d="M540 108 l14 -40 14 40 z M572 108 l14 -46 14 46 z M604 108 l14 -40 14 40 z M630 108 l12 -34 12 34 z" class="sv-tree" opacity=".75"/>
+  <!-- road -->
+  <path d="M90 196 H300 M372 196 H380 L520 112 H650 L780 196 H912" class="sv-road" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M90 196 H300 M372 196 H380 L520 112 H650 L780 196 H912" stroke="var(--card)" stroke-width="2" stroke-dasharray="10 10" fill="none"/>
+  <!-- bridge over the river -->
+  <path d="M296 196 H376" class="sv-road" stroke-width="12"/>
+  <path d="M300 204 Q336 238 372 204" class="sv-road" stroke-width="5"/>
+  <text class="sv-lbl" x="336" y="178" text-anchor="middle">bridge</text>
+  <!-- trees in front of the road: the road goes through the wood -->
+  <path d="M552 140 l12 -34 12 34 z M588 142 l12 -36 12 36 z M622 140 l11 -30 11 30 z" class="sv-tree"/>
+  <text class="sv-lbl" x="592" y="58" text-anchor="middle">wood</text>
+  <text class="sv-lbl" x="430" y="132" text-anchor="middle">Park Hill</text>
+  <text class="sv-lbl" x="200" y="222" text-anchor="middle">George Street</text>
+  <!-- railway bridge -->
+  <rect x="788" y="126" width="9" height="66" class="sv-muted"/>
+  <rect x="846" y="126" width="9" height="66" class="sv-muted"/>
+  <rect x="780" y="116" width="84" height="12" class="sv-muted"/>
+  <rect x="792" y="96" width="58" height="20" rx="4" fill="var(--line-a)"/>
+  <rect x="800" y="101" width="10" height="8" class="sv-card"/><rect x="816" y="101" width="10" height="8" class="sv-card"/><rect x="832" y="101" width="10" height="8" class="sv-card"/>
+  <text class="sv-lbl" x="822" y="86" text-anchor="middle">railway bridge</text>
+  <!-- petrol station on the right of the road -->
+  <rect x="884" y="206" width="18" height="34" fill="var(--line-c)"/>
+  <rect x="888" y="212" width="10" height="9" class="sv-card"/>
+  <text class="sv-lbl-strong" x="912" y="254" text-anchor="end">petrol station</text>
+  <!-- direction arrow -->
+  <path d="M100 176 h30 m-8 -6 l8 6 -8 6" stroke="var(--line-b)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
+const PAST = [["go","went"],["have","had"],["make","made"],["take","took"],["give","gave"],["come","came"],["meet","met"],["pay","paid"],["win","won"],["spend","spent"],["fly","flew"],["begin","began"],["become","became"],["cost","cost"],["buy","bought"],["leave","left"],["stop","stopped"],["study","studied"],["live","lived"],["plan","planned"]];
+const THIRD = [["live","lives"],["go","goes"],["watch","watches"],["study","studies"],["play","plays"],["have","has"],["do","does"],["finish","finishes"],["fly","flies"],["teach","teaches"],["enjoy","enjoys"],["relax","relaxes"]];
+const T4 = ["in","on","at","ago"];
+const REL = ["which","who","where"];
+
+const TASKS = [
+/* ---------- WARM-UP ---------- */
+{id:"W1", part:"warm", code:"W", title:"Nine stations", units:[1,2,3,4,5,6,7,8,9],
+ rubric:"Tap a station and answer the question in two or three sentences. Then ask your teacher or partner the same question.",
+ blocks:[{type:"tiles", items:[
+  {n:1, q:"How do you spell your surname? Who is the oldest person in your family?"},
+  {n:2, q:"What does your best friend do? Where does he or she work?"},
+  {n:3, q:"What do you usually do on Sundays? What do you never do at the weekend?"},
+  {n:4, q:"Describe your bedroom. What is there? What isn't there?"},
+  {n:5, q:"What can you do really well? What couldn't you do when you were five?"},
+  {n:6, q:"Where were your parents born? When did you start school?"},
+  {n:7, q:"When did you last go on holiday? Where did you go and what did you do?"},
+  {n:8, q:"What food did you hate as a child? Do you like it now?"},
+  {n:9, q:"What's the most beautiful place in your town? Compare your town with another town you know."}
+ ]}]},
+
+/* ---------- PART A ---------- */
+{id:"A1", part:"A", code:"A1", title:"Hello, I'm…", sub:"to be · possessive adjectives", units:[1],
+ rubric:"Complete the sentences with am, is or are (+ not), or with my, your, his, her, our or their.",
+ blocks:[{type:"gaps", items:[
+  {t:"“What's {0} name?” “My name's Ryan.”", a:[["your"]]},
+  {t:"“Where {0} Ryan from?” “Sydney, in Australia.”", a:[["is"]]},
+  {t:"Charlotta is 22. She {0} (not) married.", a:[["isn't","is not"]]},
+  {t:"“{0} you a student?” “Yes, I {1}.”", a:[["Are"],["am"]]},
+  {t:"Ethan is Jason's brother. {0} sixteen and he's at school.", a:[["He's","He is"]]},
+  {t:"Megan is a teacher. {0} husband, Andrew, is a lawyer.", a:[["Her"]]},
+  {t:"Andrew and Megan live in London. {0} house is in Notting Hill.", a:[["Their"]]},
+  {t:"We {0} (not) at home today. We {1} in class.", a:[["aren't","are not"],["are"]]},
+  {t:"“Is it Sunday today?” “No, it {0}.”", a:[["isn't","is not"]]},
+  {t:"I'm Maria, and this is {0} English family, the Coles.", a:[["my"]]}
+ ]}]},
+
+{id:"A2", part:"A", code:"A2", title:"Who is it?", sub:"family · jobs · opposites", units:[1,2],
+ rubric:"Write one word in each gap.",
+ blocks:[
+  {type:"gaps", label:"Family", items:[
+   {t:"My mother's father is my {0}.", a:[["grandfather","grandad","granddad"]]},
+   {t:"My aunt's husband is my {0}.", a:[["uncle"]]},
+   {t:"My sister's son is my {0}.", a:[["nephew"]]},
+   {t:"My brother's daughter is my {0}.", a:[["niece"]]},
+   {t:"My aunt's children are my {0}.", a:[["cousins"]]}
+  ]},
+  {type:"gaps", label:"Jobs", items:[
+   {t:"She cuts hair. She's a {0}.", a:[["hairdresser"]]},
+   {t:"He designs buildings. He's an {0}.", a:[["architect"]]},
+   {t:"She looks after people's teeth. She's a {0}.", a:[["dentist"]]},
+   {t:"He writes news stories. He's a {0}.", a:[["journalist","reporter"]]},
+   {t:"She works with money. She's an {0}.", a:[["accountant"]]}
+  ]},
+  {type:"gaps", layout:"grid", label:"Opposites", items:[
+   {t:"cheap ↔ {0}", a:[["expensive"]]},
+   {t:"young ↔ {0}", a:[["old"]]},
+   {t:"hot ↔ {0}", a:[["cold"]]},
+   {t:"early ↔ {0}", a:[["late"]]},
+   {t:"easy ↔ {0}", a:[["difficult","hard"]]},
+   {t:"learn ↔ {0}", a:[["teach"]]},
+   {t:"go to bed ↔ {0}", a:[["get up"]]}
+  ]}
+ ]},
+
+{id:"A3", part:"A", code:"A3", title:"He works, she studies", sub:"Present Simple · he / she / it", units:[2],
+ rubric:"Write the he / she / it form. Then say three true sentences about a person you know.",
+ blocks:[{type:"gaps", layout:"grid", items: THIRD.map(([b,f])=>({t:b+" → {0}", a:[[f]]}))}]},
+
+{id:"A4", part:"A", code:"A4", title:"Ask and say no", sub:"Present Simple · questions and negatives", units:[2,3],
+ rubric:"Write a question with the word in the box, or make the sentence negative (–).",
+ blocks:[{type:"transform", items:[
+  {p:"Maggie works at the Wolf Centre.", c:"Where …?", a:["Where does {Maggie|she} work"]},
+  {p:"James comes from Scotland.", c:"Where …?", a:["Where does {James|he} come from"]},
+  {p:"Logan trains every weekday.", c:"How often …?", a:["How often does {Logan|he} train"]},
+  {p:"James plays snooker.", c:"Yes / No question", a:["Does {James|he} play snooker"]},
+  {p:"You live in a flat.", c:"Yes / No question", a:["Do you live in a flat"]},
+  {p:"Logan and Tony watch TV on Sundays.", c:"What … do …?", a:["What do {Logan and Tony|they} do on Sundays"]},
+  {p:"Kristina goes to school.", c:"–", a:["{Kristina|She} doesn't go to school"]},
+  {p:"The Amish use electricity.", c:"–", a:["{The Amish|They} don't use electricity"]},
+  {p:"Natalie Portman eats meat.", c:"–", a:["{Natalie Portman|Natalie|She} doesn't eat meat"]}
+ ]}]},
+
+{id:"A5", part:"A", code:"A5", title:"Time off", sub:"always, never… · like + -ing · free-time activities", units:[3],
+ rubric:"Tap the words to build the sentences. Then choose the correct verb.",
+ blocks:[
+  {type:"order", label:"Build the sentence", items:[
+   {w:["always","Logan","hard","trains"], a:["Logan always trains hard"]},
+   {w:["late","never","I'm","for work"], a:["I'm never late for work"]},
+   {w:["do","at weekends","what","usually","you","do"], a:["What do you usually do at weekends"]},
+   {w:["likes","she","in winter","skiing","going"], a:["She likes going skiing in winter","In winter she likes going skiing"]},
+   {w:["doesn't","cooking","he","like"], a:["He doesn't like cooking"]},
+   {w:["often","we","don't","out","go"], a:["We don't often go out","We don't go out often"]},
+   {w:["sometimes","my sister","late","stays","at work"], a:["My sister sometimes stays late at work","Sometimes my sister stays late at work","My sister stays late at work sometimes"]}
+  ]},
+  {type:"choice", label:"play, go or listen to?", items:[
+   {t:"I {0} swimming every Saturday.", o:[["go","play"]], a:[0]},
+   {t:"Do you {0} golf?", o:[["go","play"]], a:[1]},
+   {t:"We {0} skiing in winter.", o:[["go","play"]], a:[0]},
+   {t:"My brother {0} computer games all day.", o:[["goes","plays"]], a:[1]},
+   {t:"She {0} to the gym after work.", o:[["goes","plays"]], a:[0]},
+   {t:"They {0} fishing at the weekend.", o:[["go","play"]], a:[0]},
+   {t:"I love {0} music in the car.", o:[["listening","listening to","hearing to"]], a:[1]}
+  ]}
+ ]},
+
+{id:"A6", part:"A", code:"A6", title:"Emma's new flat", sub:"there is / are · some / any / a lot of · this / that / these / those", units:[4],
+ rubric:"Choose the correct word.",
+ blocks:[{type:"choice", items:[
+  {t:"There {0} a big sofa in the living room.", o:[["is","are"]], a:[0]},
+  {t:"There {0} two bedrooms and one bathroom.", o:[["is","are"]], a:[1]},
+  {t:"“{0} there a garden?” “No, there isn't.”", o:[["Is","Are"]], a:[0]},
+  {t:"Emma has {0} plates, but she doesn't have {1} glasses.", o:[["some","any"],["some","any"]], a:[0,1]},
+  {t:"Are there {0} curtains in the bedroom?", o:[["some","any"]], a:[1]},
+  {t:"She has {0} books. There are about two hundred!", o:[["a lot of","any"]], a:[0]},
+  {t:"How much {0} these cushions?", o:[["is","are"]], a:[1]},
+  {t:"(a lamp in a shop window, far away) Look at {0} lamp over there!", o:[["this","that"]], a:[1]},
+  {t:"(towels in your hands) I love {0} towels. They're so soft!", o:[["these","those"]], a:[0]},
+  {t:"How many bathrooms {0} there?", o:[["is","are"]], a:[1]}
+ ]}]},
+
+{id:"A7", part:"A", code:"A7", title:"Where's the cat?", sub:"prepositions of place · adjectives for good and bad", units:[4],
+ rubric:"Look at the picture and choose the correct preposition. Then sort the adjectives.",
+ blocks:[
+  {type:"svg", svg: ROOM_SVG},
+  {type:"choice", items:[
+   {t:"The picture is {0} the sofa.", o:[["above","on","under"]], a:[0]},
+   {t:"The cat is {0} the sofa.", o:[["in","on","behind"]], a:[1]},
+   {t:"The ball is {0} the table.", o:[["on","opposite","under"]], a:[2]},
+   {t:"The plant is {0} the sofa and the armchair.", o:[["next to","between","in front of"]], a:[1]},
+   {t:"The lamp is {0} the armchair.", o:[["next to","between","above"]], a:[0]},
+   {t:"The rug is {0} the sofa.", o:[["behind","in front of","above"]], a:[1]},
+   {t:"The dog is {0} the armchair.", o:[["on","in front of","behind"]], a:[2]},
+   {t:"The books are {0} the shelf.", o:[["on","under","between"]], a:[0]}
+  ]},
+  {type:"sort", label:"Good or bad?", cats:["good","bad"], items:[["excellent",0],["terrible",1],["amazing",0],["horrible",1],["wonderful",0],["awful",1],["fabulous",0],["dreadful",1],["fantastic",0],["lovely",0]]}
+ ]},
+
+{id:"A8", part:"A", code:"A8", title:"Say the right thing", sub:"everyday conversations · social expressions · time · numbers and prices", units:[1,2,3,4],
+ rubric:"Choose the best reply. Then say the times, numbers and prices aloud and tap to check.",
+ blocks:[
+  {type:"match", label:"Choose the reply", items:[
+   {t:"How are you today?", a:"Fine, thanks. And you?"},
+   {t:"This is Jane. She's from our New York office.", a:"Hello, Jane. Nice to meet you."},
+   {t:"I'm sorry I'm late. The traffic is terrible!", a:"Never mind. Come and sit down."},
+   {t:"Have a nice weekend!", a:"Thanks. Same to you!"},
+   {t:"Can I sit next to you?", a:"Yes, of course. I'll move my bag."},
+   {t:"Is that a new jacket? It looks great!", a:"Thanks. Glad you like it!"},
+   {t:"Can I have a large Americano, please?", a:"Sure. To have here or take away?"},
+   {t:"Excuse me, can you tell me the time, please?", a:"Yes, of course. It's ten past eight."}
+  ]},
+  {type:"reveal", label:"Say it aloud", items:[
+   {q:"8:20", a:"It's twenty past eight."},
+   {q:"11:40", a:"It's twenty to twelve."},
+   {q:"2:15", a:"It's (a) quarter past two."},
+   {q:"6:30", a:"It's half past six."},
+   {q:"9:55", a:"It's five to ten."},
+   {q:"187", a:"a / one hundred and eighty-seven"},
+   {q:"1,300", a:"one thousand three hundred"},
+   {q:"6.8", a:"six point eight"},
+   {q:"£4.80", a:"four pounds eighty"},
+   {q:"$19.99", a:"nineteen dollars ninety-nine"},
+   {q:"€3.50", a:"three euros fifty"},
+   {q:"07861 56678", a:"oh seven eight six one, five six six seven eight"}
+  ]}
+ ]},
+
+{id:"A9", part:"A", code:"A9", title:"Join it up", sub:"pronouns · and, but, so, because", units:[2,4],
+ rubric:"Choose the correct word.",
+ blocks:[{type:"choice", items:[
+  {t:"Tom has two sons. He often plays football with {0}.", o:[["they","them","their"]], a:[1]},
+  {t:"That's my dictionary. Can I have {0} back, please?", o:[["it","its","him"]], a:[0]},
+  {t:"Mr Banks is our new teacher. We like {0} a lot.", o:[["he","his","him"]], a:[2]},
+  {t:"Kate likes Joanna, but Maria doesn't like {0} at all.", o:[["she","her","hers"]], a:[1]},
+  {t:"Our flat is really small, {0} it's very comfortable.", o:[["but","so","because"]], a:[0]},
+  {t:"We love living here {0} it's opposite the park.", o:[["so","because","but"]], a:[1]},
+  {t:"Our best friends live in the next street, {0} we often see them.", o:[["so","because","but"]], a:[0]},
+  {t:"There isn't a garden, {0} there's a small balcony.", o:[["so","and","but"]], a:[2]}
+ ]}]},
+
+{id:"SA", part:"A", code:"Talk", title:"Talk time", sub:"Units 1–4", units:[1,2,3,4],
+ rubric:"Choose a card or tap “Pick a card”. Speak for one minute. Your teacher can ask you questions.",
+ blocks:[{type:"speak", items:[
+  {h:"My family", p:["Who is in your family?","What are their names? How old are they?","What do they do? Where do they live?"]},
+  {h:"A day in the life", p:["Choose a person you know.","What time does he or she get up?","What does he or she do all day and in the evening?"]},
+  {h:"My weekend", p:["What do you always, usually or never do at the weekend?","What do you like doing? What don't you like doing?"]},
+  {h:"My home", p:["Is it a house or a flat? Where is it?","What is there in the living room? Where are things?","What is really nice about it? What isn't so good?"]}
+ ]}]},
+
+/* ---------- PART B ---------- */
+{id:"B1", part:"B", code:"B1", title:"Super you", sub:"can / can't · could · was / were", units:[5],
+ rubric:"Complete the sentences with can, can't, could, couldn't, was, wasn't, were or weren't.",
+ blocks:[{type:"gaps", items:[
+  {t:"Dexter is only six, but he {0} play the guitar brilliantly.", a:[["can"]]},
+  {t:"Superman can fly, but Batman {0}.", a:[["can't","cannot","can not"]]},
+  {t:"“{0} you speak any foreign languages?” “Yes, French and a little bit of German.”", a:[["Can"]]},
+  {t:"Sheku {0} play the cello when he was six.", a:[["could"]]},
+  {t:"“{0} you swim when you were five?” “No, I {1}.”", a:[["Could"],["couldn't","could not"]]},
+  {t:"I {0} at school yesterday because I {1} ill.", a:[["wasn't","was not"],["was"]]},
+  {t:"“Where {0} you born?” “In Kyiv.”", a:[["were"]]},
+  {t:"Picasso {0} born in Malaga in 1881.", a:[["was"]]},
+  {t:"“{0} there many people at Ben's party?” “Yes, there {1}. It {2} a fantastic party!”", a:[["Were"],["were"],["was"]]}
+ ]}]},
+
+{id:"B2", part:"B", code:"B2", title:"Words that go together", sub:"verb + noun · prepositions · noun + noun", units:[5],
+ rubric:"Choose the correct word. Then complete the noun + noun words.",
+ blocks:[
+  {type:"choice", label:"Verb + noun", items:[
+   {t:"I'd love to {0} a motorbike.", o:[["drive","ride","go"]], a:[1]},
+   {t:"Braimah can {0} the violin really well.", o:[["make","do","play"]], a:[2]},
+   {t:"Lawyers usually {0} a lot of money.", o:[["earn","pay","cost"]], a:[0]},
+   {t:"Teenagers {0} a lot of text messages.", o:[["say","send","tell"]], a:[1]},
+   {t:"At work, my dad has to {0} a shirt and tie.", o:[["wear","dress","carry"]], a:[0]},
+   {t:"Eat well and {0} your health!", o:[["look at","look for","look after"]], a:[2]},
+   {t:"Where do you usually {0} on holiday?", o:[["make","go","do"]], a:[1]}
+  ]},
+  {type:"choice", label:"Prepositions", items:[
+   {t:"What are you worried {0}?", o:[["about","of","to"]], a:[0]},
+   {t:"What sort {0} music do you like?", o:[["about","from","of"]], a:[2]},
+   {t:"Is Paula married {0} Mike?", o:[["with","to","on"]], a:[1]},
+   {t:"Do you want to come shopping {0} me?", o:[["to","with","of"]], a:[1]},
+   {t:"Can I speak {0} Dave? Is he {1} work today?", o:[["to","for","of"],["in","on","at"]], a:[0,2]}
+  ]},
+  {type:"gaps", label:"Noun + noun", items:[
+   {t:"sun{0} (you wear them on a sunny day)", a:[["glasses"]]},
+   {t:"railway {0} (you get on a train here)", a:[["station"]]},
+   {t:"traffic {0} (red, amber, green)", a:[["lights"]]},
+   {t:"car {0} (you leave your car here)", a:[["park"]]},
+   {t:"hand{0} (you carry your things in it)", a:[["bag"]]},
+   {t:"bus {0} (you wait for the bus here)", a:[["stop","station"]]}
+  ]}
+ ]},
+
+{id:"B3", part:"B", code:"B3", title:"Past forms race", sub:"Past Simple · regular and irregular verbs · -ed sounds", units:[6],
+ rubric:"Write the Past Simple. The timer starts when you start typing. Then choose the sound of -ed.",
+ blocks:[
+  {type:"gaps", layout:"grid", race:true, label:"Past forms", items: PAST.map(([b,f])=>({t:b+" → {0}", a:[[f]]}))},
+  {type:"sort", label:"/t/, /d/ or /ɪd/?", cats:["/t/","/d/","/ɪd/"], items:[["worked",0],["lived",1],["started",2],["watched",0],["played",1],["wanted",2],["stopped",0],["loved",1],["visited",2],["finished",0],["arrived",1],["needed",2]]}
+ ]},
+
+{id:"B4", part:"B", code:"B4", title:"What did they do?", sub:"Past Simple · questions and negatives", units:[6,7],
+ rubric:"Write a question with the word in the box, or make the sentence negative (–).",
+ blocks:[{type:"transform", items:[
+  {p:"Madame Tussaud moved to London in 1802.", c:"When …?", a:["When did {Madame Tussaud|Marie Tussaud|Marie|she} move to London"]},
+  {p:"She married François Tussaud.", c:"Who …?", a:["Who did {she|Marie|Madame Tussaud|Marie Tussaud} marry"]},
+  {p:"Roger passed his exams.", c:"–", a:["{Roger|He} didn't pass his exams"]},
+  {p:"Roger got pocket money.", c:"Yes / No question", a:["Did {Roger|he} get pocket money"]},
+  {p:"Hedy Lamarr ran away to Paris.", c:"Where …?", a:["Where did {Hedy Lamarr|Hedy|she} run away[ to]"]},
+  {p:"I bought some new clothes.", c:"What … you …?", a:["What did you buy"]},
+  {p:"The fisherman fished all day.", c:"–", a:["{The fisherman|He} didn't fish all day"]},
+  {p:"You paid £150 for your jacket.", c:"How much …?", a:["How much did you pay[ for your jacket]"]},
+  {p:"Watson and Crick won the Nobel Prize.", c:"What …?", a:["What did {Watson and Crick|they} win"]}
+ ]}]},
+
+{id:"B5", part:"B", code:"B5", title:"in, on, at or ago?", sub:"time expressions", units:[7],
+ rubric:"Choose the correct word.",
+ blocks:[{type:"choice", items:[
+  {t:"Man first landed on the moon {0} July 20th, 1969.", o:[T4], a:[1]},
+  {t:"Alexander Fleming discovered penicillin {0} 1928.", o:[T4], a:[0]},
+  {t:"I usually go to bed late {0} night.", o:[T4], a:[2]},
+  {t:"What do you do {0} the weekend?", o:[T4], a:[2]},
+  {t:"Let's meet {0} Saturday afternoon.", o:[T4], a:[1]},
+  {t:"It's often very cold here {0} winter.", o:[T4], a:[0]},
+  {t:"The lesson starts {0} seven o'clock.", o:[T4], a:[2]},
+  {t:"Billy saw his grandad two days {0}.", o:[T4], a:[3]},
+  {t:"My birthday is {0} March.", o:[T4], a:[0]},
+  {t:"We open our presents {0} Christmas Day.", o:[T4], a:[1]},
+  {t:"I always drink coffee {0} the morning.", o:[T4], a:[0]}
+ ]}]},
+
+{id:"B6", part:"B", code:"B6", title:"How did it go?", sub:"adjective or adverb? · -ed or -ing?", units:[6,7],
+ rubric:"Choose the correct word.",
+ blocks:[{type:"choice", items:[
+  {t:"Rosalind Franklin worked very {0}.", o:[["hard","hardly"]], a:[0]},
+  {t:"Hedy {0} became a famous actress.", o:[["quick","quickly"]], a:[1]},
+  {t:"Helen is a {0} driver. She drives very {1}.", o:[["good","well"],["careful","carefully"]], a:[0,1]},
+  {t:"Franklin's work went {0}.", o:[["good","well"]], a:[1]},
+  {t:"It started to rain. {0}, I had an umbrella.", o:[["Fortunate","Fortunately"]], a:[1]},
+  {t:"She speaks Greek {0}.", o:[["fluent","fluently"]], a:[1]},
+  {t:"The film was {0}. I was {1} from start to finish.", o:[["boring","bored"],["boring","bored"]], a:[0,1]},
+  {t:"It's my birthday tomorrow! I'm really {0}.", o:[["exciting","excited"]], a:[1]},
+  {t:"The news is very {0}.", o:[["worrying","worried"]], a:[0]},
+  {t:"That game of tennis was very {0}. I need a rest!", o:[["tired","tiring"]], a:[1]}
+ ]}]},
+
+{id:"B7", part:"B", code:"B7", title:"Toad in the Hole", sub:"count and uncount nouns · some / any · much / many · like or would like", units:[8],
+ rubric:"Sort the words. Then choose the correct words for Jake and Matt in the kitchen and in the restaurant.",
+ blocks:[
+  {type:"sort", label:"Countable or uncountable?", cats:["countable","uncountable"], items:[["egg",0],["milk",1],["sausage",0],["flour",1],["apple",0],["bread",1],["money",1],["biscuit",0],["tomato",0],["oil",1]]},
+  {type:"choice", label:"In the kitchen", items:[
+   {t:"How {0} eggs do we need?", o:[["much","many"]], a:[1]},
+   {t:"How {0} milk is there?", o:[["much","many"]], a:[0]},
+   {t:"There isn't {0} vegetable oil.", o:[["much","many"]], a:[0]},
+   {t:"We need {0} milk for this recipe.", o:[["a lot of","many"]], a:[0]},
+   {t:"Are there {0} sausages?", o:[["some","any"]], a:[1]},
+   {t:"Put {0} onion and {1} eggs on the shopping list.", o:[["a","an","some"],["an","some","any"]], a:[1,1]}
+  ]},
+  {type:"choice", label:"In the restaurant", items:[
+   {t:"“{0} spaghetti?” “Yes, I love it!”", o:[["Do you like","Would you like"]], a:[0]},
+   {t:"“{0} a cold drink?” “Yes, please.”", o:[["Do you like","Would you like"]], a:[1]},
+   {t:"“What would you like?” “{0} the steak, please.”", o:[["I like","I'd like"]], a:[1]},
+   {t:"Would you like {0} water?", o:[["some","any"]], a:[0]},
+   {t:"Can I have {0} bread, please?", o:[["a","some"]], a:[1]}
+  ]}
+ ]},
+
+{id:"B8", part:"B", code:"B8", title:"Bigger, better, the best", sub:"comparatives · superlatives · have got", units:[9],
+ rubric:"Write the comparative or superlative form. Then rewrite the sentences with have got.",
+ blocks:[
+  {type:"gaps", label:"London, New York and more", items:[
+   {t:"New York is much {0} than London. (small)", a:[["smaller"]]},
+   {t:"Tokyo is {0} than Bangkok. (expensive)", a:[["more expensive"]]},
+   {t:"I think the weather is {0} in New York. (good)", a:[["better"]]},
+   {t:"Yesterday was {0} than today. (hot)", a:[["hotter"]]},
+   {t:"Life in New York is {0} than in a small town. (busy)", a:[["busier"]]},
+   {t:"Sunday is the {0} day in Central Park. (busy)", a:[["busiest"]]},
+   {t:"Cleopatra's Needle is the {0} thing in the park. (old)", a:[["oldest"]]},
+   {t:"Strawberry Fields is named after one of the {0} Beatles songs. (famous)", a:[["most famous"]]},
+   {t:"This is the {0} pizza in town! (good)", a:[["best"]]},
+   {t:"It was the {0} day of my life! (bad)", a:[["worst"]]}
+  ]},
+  {type:"transform", label:"have got", items:[
+   {p:"I have a nice car.", c:"have got", a:["{I've|I have} got a nice car"]},
+   {p:"Does she have a sister?", c:"have got", a:["Has she got a sister"]},
+   {p:"We don't have a garden.", c:"have got", a:["We haven't got a garden"]},
+   {p:"How many children do they have?", c:"have got", a:["How many children have they got"]},
+   {p:"Jack doesn't have a brother.", c:"have got", a:["Jack hasn't got a brother"]},
+   {p:"Do you have any homework today?", c:"have got", a:["Have you got any homework today"]}
+  ]}
+ ]},
+
+{id:"B9", part:"B", code:"B9", title:"Over the bridge, through the wood", sub:"prepositions of movement · directions · town and country", units:[9],
+ rubric:"Follow the route on the map and choose the correct word. Then complete the town and country words.",
+ blocks:[
+  {type:"svg", svg: ROUTE_SVG},
+  {type:"choice", label:"From the castle to the petrol station", items:[
+   {t:"Start at the castle and go {0} George Street.", o:[["along","over","under"]], a:[0]},
+   {t:"Go {0} the hotel.", o:[["through","past","up"]], a:[1]},
+   {t:"Go {0} the bridge.", o:[["under","through","over"]], a:[2]},
+   {t:"Drive {0} Park Hill.", o:[["up","down","past"]], a:[0]},
+   {t:"Drive {0} the wood.", o:[["over","through","under"]], a:[1]},
+   {t:"Go {0} the hill.", o:[["up","along","down"]], a:[2]},
+   {t:"Drive {0} the railway bridge.", o:[["under","over","up"]], a:[0]},
+   {t:"The petrol station is {0} your right.", o:[["in","at","on"]], a:[2]}
+  ]},
+  {type:"gaps", label:"Town and country", items:[
+   {t:"You can see old and interesting things in a {0}.", a:[["museum"]]},
+   {t:"A very big and important church is a {0}.", a:[["cathedral"]]},
+   {t:"A small old house in a village is a {0}.", a:[["cottage"]]},
+   {t:"Farmers grow things in a {0}.", a:[["field"]]},
+   {t:"A town is bigger than a {0}.", a:[["village"]]},
+   {t:"You post letters in a {0}.", a:[["post box","postbox","letter box","letterbox"]]}
+  ]}
+ ]},
+
+{id:"B10", part:"B", code:"B10", title:"Writing toolkit", sub:"which / who / where · when / until / however · formal or informal?", units:[5,6,8,9],
+ rubric:"Choose the correct word. Then decide: formal or informal?",
+ blocks:[
+  {type:"choice", label:"which, who or where?", items:[
+   {t:"That's Buckingham Palace, {0} the King lives.", o:[REL], a:[2]},
+   {t:"I'd like you to meet Andrea, {0} lives in my street.", o:[REL], a:[1]},
+   {t:"I had a guide book, {0} was really useful.", o:[REL], a:[0]},
+   {t:"We went to Amsterdam, {0} my brother lives.", o:[REL], a:[2]},
+   {t:"We met the hotel owner, {0} was very friendly.", o:[REL], a:[1]}
+  ]},
+  {type:"choice", label:"when, until or however?", items:[
+   {t:"Ben didn't read or write {0} he was nine.", o:[["when","until","however"]], a:[1]},
+   {t:"He wrote his first computer program {0} he was eleven.", o:[["when","until","however"]], a:[0]},
+   {t:"He was a millionaire at seventeen. {0}, in 2001 he lost it all.", o:[["When","Until","However"]], a:[2]}
+  ]},
+  {type:"sort", label:"Formal or informal?", cats:["formal","informal"], items:[["Dear Ms Yates,",0],["Hi Matt,",1],["Yours sincerely,",0],["Lots of love,",1],["I look forward to hearing from you.",0],["Can't wait to see you again!",1],["Thanks for last weekend. It was great!",1],["I'd like to thank you very much for your help.",0]]}
+ ]},
+
+{id:"B11", part:"B", code:"B11", title:"What do you say?", sub:"polite requests · special occasions · shopping · dates", units:[5,6,7,8],
+ rubric:"Choose what you say in each situation. Then say the dates aloud and tap to check.",
+ blocks:[
+  {type:"match", label:"What do you say?", items:[
+   {t:"You want to borrow your friend's dictionary.", a:"Could I borrow your dictionary, please?"},
+   {t:"You want to pay in a restaurant.", a:"Could we have the bill, please?"},
+   {t:"You need help with a heavy box.", a:"Could you give me a hand with this box?"},
+   {t:"It's your friend's birthday.", a:"Happy birthday!"},
+   {t:"It's midnight on 31st December.", a:"Happy New Year!"},
+   {t:"Your friends tell you they're getting married.", a:"Congratulations!"},
+   {t:"It's 31st October. Children knock on your door. What do they say?", a:"Trick or treat!"},
+   {t:"You're in a chemist's and you have a headache.", a:"I'd like some aspirin, please."},
+   {t:"The shop assistant asks, “Anything else?” You have everything.", a:"No, thanks. That's all."}
+  ]},
+  {type:"reveal", label:"Say the date", items:[
+   {q:"1st · 2nd · 3rd", a:"first · second · third"},
+   {q:"5th · 12th · 20th", a:"fifth · twelfth · twentieth"},
+   {q:"22nd · 31st", a:"twenty-second · thirty-first"},
+   {q:"3/4/2015", a:"the third of April, two thousand and fifteen (or twenty fifteen)"},
+   {q:"29/2/1976", a:"the twenty-ninth of February, nineteen seventy-six"},
+   {q:"15/1/2019", a:"the fifteenth of January, twenty nineteen"},
+   {q:"1907", a:"nineteen oh seven"},
+   {q:"2005", a:"two thousand and five"}
+  ]}
+ ]},
+
+{id:"SB", part:"B", code:"Talk", title:"Talk time", sub:"Units 5–9", units:[5,6,7,8,9],
+ rubric:"Choose a card or tap “Pick a card”. Speak for one minute. Your teacher can ask you questions.",
+ blocks:[{type:"speak", items:[
+  {h:"A talented person", p:["Who is the most talented person you know?","What can he or she do really well?","What could he or she do as a child?"]},
+  {h:"My last holiday", p:["When did you last go on holiday?","Where did you go? Who did you go with?","What did you do? What was the best thing?"]},
+  {h:"A meal to remember", p:["Where were you, and when was it?","What did you eat? Who were you with?","Why was it so special?"]},
+  {h:"Two cities", p:["Compare two cities you know.","Which is bigger, older, more expensive, more beautiful?","What's the best thing about each one?"]}
+ ]}]},
+
+/* ---------- PART C ---------- */
+{id:"C1", part:"C", code:"C1", title:"Find and fix", sub:"typical mistakes from Units 1–9", units:[1,2,3,4,5,6,7,8,9],
+ rubric:"Each sentence has one mistake. Write the correct sentence.",
+ blocks:[{type:"transform", fix:true, items:[
+  {p:"She don't like coffee.", a:["She doesn't like coffee"]},
+  {p:"Where you live?", a:["Where do you live"]},
+  {p:"I'm 25 years.", a:["I'm {25|twenty five}[ years old]"]},
+  {p:"There is two bedrooms in my flat.", a:["There are two bedrooms in my flat"]},
+  {p:"I like play tennis.", a:["I like playing tennis"]},
+  {p:"He can to swim very well.", a:["He can swim very well"]},
+  {p:"Did you went to the party?", a:["Did you go to the party"]},
+  {p:"I didn't could swim when I was five.", a:["I couldn't swim when I was five"]},
+  {p:"I was born on 1998.", a:["I was born in 1998"]},
+  {p:"She sings very good.", a:["She sings very well"]},
+  {p:"How much apples do we need?", a:["How many apples do we need"]},
+  {p:"My brother is more tall than me.", a:["My brother is taller than {me|I am}"]}
+ ]}]},
+
+{id:"C2", part:"C", code:"C2", title:"Now or then?", sub:"Present Simple · Past Simple · can / could · be · have got", units:[2,3,5,6,7,9],
+ rubric:"Put the verbs in brackets in the correct form.",
+ blocks:[{type:"gaps", items:[
+  {t:"Logan usually {0} (train) every weekday, but yesterday he {1} (not / train).", a:[["trains"],["didn't train","did not train"]]},
+  {t:"“{0} you {1} (like) rugby?” “Yes, I love it!”", a:[["Do"],["like"]]},
+  {t:"When I was a child, I {0} (can / not) swim, but now I {1} (can) swim very well.", a:[["couldn't","could not"],["can"]]},
+  {t:"There {0} (be) a lot of people at the party last night.", a:[["were"]]},
+  {t:"My sister {0} (live) in London now, but she {1} (be) born in Kyiv.", a:[["lives"],["was"]]},
+  {t:"We {0} (go) to Italy last summer. It {1} (be) a fantastic holiday.", a:[["went"],["was"]]},
+  {t:"“What {0} your father {1} (do)?” “He's a pilot.”", a:[["does"],["do"]]},
+  {t:"I {0} (not / have got) a car, but my brother {1} (have got) two!", a:[["haven't got","have not got"],["has got","'s got"]]},
+  {t:"There {0} (be) some milk in the fridge, but there {1} (not / be) any eggs.", a:[["is","'s"],["aren't","are not"]]},
+  {t:"Marie Curie {0} (not / go) to university in Poland. She {1} (study) in Paris.", a:[["didn't go","did not go"],["studied"]]}
+ ]}]},
+
+{id:"C3", part:"C", code:"C3", title:"Ask me!", sub:"questions from all nine units", units:[1,2,3,4,5,6,7,8,9],
+ rubric:"Make questions from the words and check them. Then ask your teacher or partner and listen to the answers.",
+ blocks:[{type:"transform", items:[
+  {p:"where / you / born?", a:["Where were you born"]},
+  {p:"what / you / do / last weekend?", a:["What did you do last weekend"]},
+  {p:"you / can / play / a musical instrument?", a:["Can you play a musical instrument"]},
+  {p:"how often / you / go / to the gym?", a:["How often do you go to the gym"]},
+  {p:"you / have got / any pets?", a:["Have you got any pets"]},
+  {p:"what / you / like / doing / at weekends?", a:["What do you like doing at weekends"]},
+  {p:"how many / people / there / in your family?", a:["How many people are there in your family"]},
+  {p:"when / you / last / go / to the cinema?", a:["When did you last go to the cinema"]},
+  {p:"what / the best restaurant / in your town?", a:["What's the best restaurant in your town"]},
+  {p:"what / you / would like / for dinner tonight?", a:["What would you like for dinner tonight"]}
+ ]}]},
+
+{id:"C4", part:"C", code:"C4", title:"One-minute talk", sub:"use grammar from all nine units", units:[1,2,3,4,5,6,7,8,9],
+ rubric:"Pick a card and start the timer. Talk for one minute without stopping.",
+ blocks:[{type:"speak", items:[
+  {h:"Me now and ten years ago", p:["Where do you live? What do you do now?","Where did you live ten years ago? What could you do then?"]},
+  {h:"My dream home", p:["Where is it? How many rooms are there?","What's in the living room? What's next to the window?"]},
+  {h:"The best day of my life", p:["When was it? Where were you?","What happened? How did you feel: excited, surprised, tired?"]},
+  {h:"My town", p:["What's the best place? What's the worst thing?","Is it bigger or smaller, older or more modern than other towns you know?"]},
+  {h:"My food story", p:["What did you love and hate as a child?","What do you like now? What would you like to try?"]}
+ ]}]},
+
+/* ---------- TRANSLATION ---------- */
+{id:"T1", part:"T", code:"T", title:"Translate into English", sub:"all nine units", units:[1,2,3,4,5,6,7,8,9],
+ rubric:"Translate the sentences and check them. If your answer is different from the model but also correct, tap “Mine is correct too”.",
+ blocks:[{type:"translate", items:[
+  {ua:"Як твоє прізвище? Як воно пишеться?", m:"What's your surname? How do you spell it?",
+   a:["{What's|What is} your {surname|last name|family name} How do you spell it"]},
+  {ua:"Моя сестра заміжня, а брат — ні.", m:"My sister is married, but my brother isn't.",
+   a:["{My sister is|My sister's} married {but|and} my brother {isn't|is not}"]},
+  {ua:"Чим займається твій тато? — Він архітектор.", m:"What does your dad do? — He's an architect.",
+   a:["What does your {dad|father} do {He's|He is} an architect"]},
+  {ua:"Вона ніколи не ходить у спортзал у неділю.", m:"She never goes to the gym on Sundays.",
+   a:["She never goes to the gym on {Sundays|Sunday|a Sunday}"]},
+  {ua:"Я люблю готувати, але не люблю прибирати.", m:"I like cooking, but I don't like cleaning.",
+   a:["I {like|love} {cooking|to cook} but I don't {like|love} {cleaning|to clean}"]},
+  {ua:"У вітальні є великий диван, але немає штор.", m:"There's a big sofa in the living room, but there aren't any curtains.",
+   a:["There's a big sofa in the living room but there {aren't any|are no} curtains","In the living room there's a big sofa but there {aren't any|are no} curtains"]},
+  {ua:"Коли мені було шість, я вже вмів(-ла) читати, але не вмів(-ла) плавати.", m:"When I was six, I could already read, but I couldn't swim.",
+   a:["When I was six[ years old] I could [already ]read but I couldn't swim","When I was six[ years old] I [already ]could read but I couldn't swim","When I was six[ years old] I {was able to|knew how to} read but I {couldn't|wasn't able to|didn't know how to} swim"]},
+  {ua:"Ми їздили до Італії два роки тому.", m:"We went to Italy two years ago.",
+   a:["We went to Italy two years ago","Two years ago we went to Italy"]},
+  {ua:"Хочеш кави? — Так, будь ласка.", m:"Would you like some coffee? — Yes, please.",
+   a:["Would you like {some coffee|a coffee|coffee} Yes please"]},
+  {ua:"Львів менший за Київ, але, на мою думку, гарніший.", m:"Lviv is smaller than Kyiv, but I think it's more beautiful.",
+   a:["Lviv is smaller than Kyiv but {I think|in my opinion} it's {more beautiful|prettier|nicer}"]},
+  {ua:"У мене є двоє братів, але немає сестри.", m:"I've got two brothers, but I haven't got a sister.",
+   a:["{I've|I have} got two brothers but I {haven't got|don't have} a sister","I have two brothers but I {don't have|haven't got} a sister"]},
+  {ua:"Вона дуже добре говорить англійською.", m:"She speaks English very well.",
+   a:["She speaks English very well","She speaks very good English"]},
+  {ua:"Ідіть уздовж річки, через міст і повз церкву.", m:"Go along the river, over the bridge and past the church.",
+   a:["Go along the river over the bridge and past the church","Walk along the river over the bridge and past the church"]}
+ ]}]}
+];
+</script>
+
+<script>
+/* ================= ENGINE ================= */
+(function(){
+"use strict";
+const KEY = "dinglish-elem-revision-u1-9";
+let S = {v:{}, c:{}, o:{}, score:{}, shown:{}, conf:{}, name:""};
+try{ const raw = localStorage.getItem(KEY); if(raw){ const p = JSON.parse(raw); if(p && typeof p === "object") S = Object.assign(S, p); } }catch(e){}
+let saveTimer = null;
+function save(){ clearTimeout(saveTimer); saveTimer = setTimeout(()=>{ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }, 250); }
+
+/* ---- helpers ---- */
+function h(tag, props){
+  const n = document.createElement(tag);
+  if(props) for(const k in props){
+    const v = props[k];
+    if(v == null || v === false) continue;
+    if(k === "class") n.className = v;
+    else if(k === "text") n.textContent = v;
+    else if(k === "html") n.innerHTML = v;
+    else if(k.slice(0,2) === "on") n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for(let i = 2; i < arguments.length; i++){
+    const c = arguments[i];
+    if(c == null || c === false) continue;
+    if(Array.isArray(c)) c.forEach(x => x != null && n.append(x.nodeType ? x : document.createTextNode(x)));
+    else n.append(c.nodeType ? c : document.createTextNode(c));
+  }
+  return n;
+}
+function norm(s){
+  s = String(s || "").toLowerCase();
+  s = s.replace(/[’‘`´]/g, "'");
+  s = s.replace(/[“”"«»…]/g, " ");
+  s = s.replace(/[—–\-]/g, " ");
+  s = s.replace(/[.,!?;:()]/g, " ");
+  s = s.replace(/\bwon't\b/g, "will not").replace(/\bcan't\b/g, "can not").replace(/\bcannot\b/g, "can not").replace(/n't\b/g, " not");
+  s = s.replace(/\b(is|are|was|were|do|does|did|could|have|has|would|should)nt\b/g, "$1 not").replace(/\bcant\b/g, "can not").replace(/\bwont\b/g, "will not");
+  s = s.replace(/\bi'm\b/g, "i am").replace(/\bim\b/g, "i am").replace(/'re\b/g, " are").replace(/'ve\b/g, " have").replace(/'ll\b/g, " will").replace(/'d\b/g, " would");
+  s = s.replace(/\b(he|she|it|what|where|who|there|that|here|how|when|why)'s\b/g, "$1 is");
+  return s.replace(/\s+/g, " ").trim();
+}
+function expand(p){
+  p = p.replace(/\[([^\]]*)\]/g, "{$1|}");
+  let res = [""], last = 0, m;
+  const re = /\{([^}]*)\}/g;
+  while((m = re.exec(p))){
+    const lit = p.slice(last, m.index);
+    const alts = m[1].split("|");
+    const next = [];
+    res.forEach(r => alts.forEach(a => next.push(r + lit + a)));
+    res = next; last = re.lastIndex;
+    if(res.length > 5000) break;
+  }
+  return res.map(r => (r + p.slice(last)).replace(/\s+/g, " ").trim());
+}
+const accCache = new Map();
+function accSet(list){
+  const k = JSON.stringify(list);
+  if(accCache.has(k)) return accCache.get(k);
+  const set = new Set();
+  list.forEach(p => expand(p).forEach(x => set.add(norm(x))));
+  accCache.set(k, set);
+  return set;
+}
+function firstOf(list){ return expand(list[0])[0]; }
+function hash(str){ let x = 2166136261; for(let i = 0; i < str.length; i++){ x ^= str.charCodeAt(i); x = Math.imul(x, 16777619); } return x >>> 0; }
+function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function shuffle(arr, key){
+  const r = rng(hash(key)); const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(r() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
+  if(a.length > 1 && a.every((v, i) => v === arr[i])) a.push(a.shift());
+  return a;
+}
+function qPunct(s){ return /^(what|where|when|who|why|how|do|does|did|can|could|have|has|is|are|was|were|would)\b/i.test(s) ? s + "?" : s + "."; }
+function blankText(t){ return t.replace(/\{\d+\}/g, "___"); }
+function gapWidth(list){ let mx = 0; list.forEach(p => expand(p).forEach(x => mx = Math.max(mx, x.length))); return mx <= 8 ? "9.5ch" : mx <= 12 ? "13ch" : "16ch"; }
+function unitColor(n){ return n <= 4 ? "var(--line-a)" : "var(--line-b)"; }
+
+/* ---- block renderers: each returns scorable units ---- */
+const R = {};
+
+R.gaps = function(b, wrap, task, bi){
+  const units = [];
+  const ol = h("ol", {class: "items" + (b.layout === "grid" ? " grid" : "")});
+  b.items.forEach((it, ii) => {
+    const li = h("li", null, h("span", {class: "num"}, (ii + 1) + "."));
+    const box = h("div", {class: "it"});
+    it.t.split(/(\{\d+\})/).forEach(part => {
+      const m = part.match(/^\{(\d+)\}$/);
+      if(!m){ if(part) box.append(document.createTextNode(part)); return; }
+      const gi = +m[1], id = `${task.id}_${bi}_${ii}_${gi}`, ans = it.a[gi];
+      const inp = h("input", {class: "gap", id, type: "text", autocomplete: "off", autocapitalize: "off", spellcheck: "false", "aria-label": `Item ${ii + 1}, gap ${gi + 1}`});
+      inp.style.width = gapWidth(ans);
+      if(S.v[id]) inp.value = S.v[id];
+      inp.addEventListener("input", () => { S.v[id] = inp.value; inp.classList.remove("ok", "bad", "shown"); save(); });
+      box.append(inp);
+      units.push({
+        label: `${task.code}.${ii + 1}`, q: blankText(it.t), block: bi,
+        check: () => accSet(ans).has(norm(inp.value)),
+        mark: ok => { inp.classList.remove("ok", "bad", "shown"); inp.classList.add(ok ? "ok" : "bad"); },
+        show: () => { inp.value = ans[0]; S.v[id] = inp.value; inp.classList.remove("ok", "bad"); inp.classList.add("shown"); },
+        clear: () => { inp.value = ""; delete S.v[id]; inp.classList.remove("ok", "bad", "shown"); },
+        given: () => inp.value.trim(), right: () => ans[0], el: inp
+      });
+    });
+    li.append(box); ol.append(li);
+  });
+  wrap.append(ol);
+  if(b.race){
+    const clock = h("span", {class: "race", "aria-live": "off"}, "⏱ 0:00");
+    const lab = wrap.querySelector(".block-label");
+    if(lab) lab.append(clock); else wrap.prepend(clock);
+    let start = 0, timer = null;
+    const fmt = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+    ol.addEventListener("input", () => { if(!timer && !wrap.dataset.done){ start = Date.now(); timer = setInterval(() => { clock.textContent = "⏱ " + fmt(Math.round((Date.now() - start) / 1000)); }, 500); } });
+    wrap._raceStop = (allOk) => { if(timer && allOk){ clearInterval(timer); timer = null; wrap.dataset.done = "1"; clock.textContent = "⏱ Done in " + fmt(Math.round((Date.now() - start) / 1000)); } };
+    wrap._raceReset = () => { if(timer) clearInterval(timer); timer = null; delete wrap.dataset.done; clock.textContent = "⏱ 0:00"; };
+  }
+  return units;
+};
+
+function optGroup(id, opts, label){
+  const grp = h("span", {class: "opts", role: "group", "aria-label": label});
+  const btns = opts.map((o, oi) => {
+    const btn = h("button", {type: "button", class: "opt", "aria-pressed": String(S.c[id] === oi)}, o);
+    btn.addEventListener("click", () => {
+      S.c[id] = oi; save();
+      btns.forEach((x, xi) => x.setAttribute("aria-pressed", String(xi === oi)));
+      grp.classList.remove("ok", "bad", "shown");
+    });
+    grp.append(btn); return btn;
+  });
+  return {grp, btns};
+}
+
+R.choice = function(b, wrap, task, bi){
+  const units = [];
+  const ol = h("ol", {class: "items"});
+  b.items.forEach((it, ii) => {
+    const li = h("li", null, h("span", {class: "num"}, (ii + 1) + "."));
+    const box = h("div", {class: "it"});
+    it.t.split(/(\{\d+\})/).forEach(part => {
+      const m = part.match(/^\{(\d+)\}$/);
+      if(!m){ if(part) box.append(document.createTextNode(part)); return; }
+      const gi = +m[1], id = `${task.id}_${bi}_${ii}_${gi}`, opts = it.o[gi], cor = it.a[gi];
+      const {grp, btns} = optGroup(id, opts, `Item ${ii + 1}, choice ${gi + 1}`);
+      box.append(grp);
+      units.push({
+        label: `${task.code}.${ii + 1}`, q: blankText(it.t), block: bi,
+        check: () => S.c[id] === cor,
+        mark: ok => { grp.classList.remove("ok", "bad", "shown"); grp.classList.add(ok ? "ok" : "bad"); },
+        show: () => { S.c[id] = cor; btns.forEach((x, xi) => x.setAttribute("aria-pressed", String(xi === cor))); grp.classList.remove("ok", "bad"); grp.classList.add("shown"); },
+        clear: () => { delete S.c[id]; btns.forEach(x => x.setAttribute("aria-pressed", "false")); grp.classList.remove("ok", "bad", "shown"); },
+        given: () => S.c[id] == null ? "" : opts[S.c[id]], right: () => opts[cor]
+      });
+    });
+    li.append(box); ol.append(li);
+  });
+  wrap.append(ol);
+  return units;
+};
+
+R.sort = function(b, wrap, task, bi){
+  const units = [];
+  const ul = h("ul", {class: "sort-list"});
+  b.items.forEach(([w, cor], ii) => {
+    const id = `${task.id}_${bi}_${ii}`;
+    const {grp, btns} = optGroup(id, b.cats, w);
+    ul.append(h("li", null, h("span", {class: "w"}, w), grp));
+    units.push({
+      label: `${task.code} · ${w}`, q: w, block: bi,
+      check: () => S.c[id] === cor,
+      mark: ok => { grp.classList.remove("ok", "bad", "shown"); grp.classList.add(ok ? "ok" : "bad"); },
+      show: () => { S.c[id] = cor; btns.forEach((x, xi) => x.setAttribute("aria-pressed", String(xi === cor))); grp.classList.remove("ok", "bad"); grp.classList.add("shown"); },
+      clear: () => { delete S.c[id]; btns.forEach(x => x.setAttribute("aria-pressed", "false")); grp.classList.remove("ok", "bad", "shown"); },
+      given: () => S.c[id] == null ? "" : b.cats[S.c[id]], right: () => b.cats[cor]
+    });
+  });
+  wrap.append(ul);
+  return units;
+};
+
+function tilesFor(ans, words){
+  let rest = norm(ans); const used = new Set(), out = []; let guard = 0;
+  while(rest && guard++ < 60){
+    let best = -1, bl = 0;
+    words.forEach((w, i) => { if(used.has(i)) return; const nw = norm(w); if((rest === nw || rest.startsWith(nw + " ")) && nw.length > bl){ best = i; bl = nw.length; } });
+    if(best < 0) return null;
+    used.add(best); out.push(best); rest = rest.slice(bl).trim();
+  }
+  return out;
+}
+
+R.order = function(b, wrap, task, bi){
+  const units = [];
+  const ol = h("ol", {class: "items"});
+  b.items.forEach((it, ii) => {
+    const id = `${task.id}_${bi}_${ii}`;
+    const bankOrder = shuffle(it.w.map((_, i) => i), id);
+    let built = Array.isArray(S.o[id]) ? S.o[id].filter(i => i < it.w.length) : [];
+    const line = h("div", {class: "built", "aria-label": "Your sentence"});
+    const bank = h("div", {class: "bank", "aria-label": "Words"});
+    const tile = (txt, fn) => h("button", {type: "button", class: "tile", onclick: fn}, txt);
+    function draw(){
+      line.textContent = ""; bank.textContent = "";
+      if(!built.length) line.append(h("span", {class: "ph"}, "Tap the words below…"));
+      built.forEach((wi, pos) => line.append(tile(it.w[wi], () => { built.splice(pos, 1); changed(); })));
+      bankOrder.filter(i => !built.includes(i)).forEach(wi => bank.append(tile(it.w[wi], () => { built.push(wi); changed(); })));
+    }
+    function changed(){ S.o[id] = built.slice(); save(); line.classList.remove("ok", "bad", "shown"); draw(); }
+    draw();
+    ol.append(h("li", null, h("span", {class: "num"}, (ii + 1) + "."), h("div", {class: "it order-item"}, line, bank)));
+    units.push({
+      label: `${task.code}.${ii + 1}`, q: it.w.join(" / "), block: bi,
+      check: () => accSet(it.a).has(norm(built.map(i => it.w[i]).join(" "))),
+      mark: ok => { line.classList.remove("ok", "bad", "shown"); line.classList.add(ok ? "ok" : "bad"); },
+      show: () => { const t = tilesFor(it.a[0], it.w); if(t){ built = t; S.o[id] = built.slice(); draw(); } line.classList.remove("ok", "bad"); line.classList.add("shown"); },
+      clear: () => { built = []; delete S.o[id]; draw(); line.classList.remove("ok", "bad", "shown"); },
+      given: () => built.map(i => it.w[i]).join(" "), right: () => qPunct(it.a[0])
+    });
+  });
+  wrap.append(ol);
+  return units;
+};
+
+R.transform = function(b, wrap, task, bi){
+  const units = [];
+  const ol = h("ol", {class: "items" + (b.fix ? " fix" : "")});
+  b.items.forEach((it, ii) => {
+    const id = `${task.id}_${bi}_${ii}`;
+    const inp = h("input", {class: "line-in", id, type: "text", autocomplete: "off", spellcheck: "false", "aria-label": `Item ${ii + 1}: ${it.p}`});
+    if(S.v[id]) inp.value = S.v[id];
+    inp.addEventListener("input", () => { S.v[id] = inp.value; inp.classList.remove("ok", "bad", "shown"); save(); });
+    const head = h("div", null, h("span", {class: "tf-p"}, it.p), it.c ? h("span", {class: "cue"}, it.c) : null);
+    ol.append(h("li", null, h("span", {class: "num"}, (ii + 1) + "."), h("div", {class: "it"}, head, inp)));
+    const model = qPunct(firstOf(it.a));
+    units.push({
+      label: `${task.code}.${ii + 1}`, q: it.p + (it.c ? ` (${it.c})` : ""), block: bi,
+      check: () => accSet(it.a).has(norm(inp.value)),
+      mark: ok => { inp.classList.remove("ok", "bad", "shown"); inp.classList.add(ok ? "ok" : "bad"); },
+      show: () => { inp.value = model; S.v[id] = inp.value; inp.classList.remove("ok", "bad"); inp.classList.add("shown"); },
+      clear: () => { inp.value = ""; delete S.v[id]; inp.classList.remove("ok", "bad", "shown"); },
+      given: () => inp.value.trim(), right: () => model
+    });
+  });
+  wrap.append(ol);
+  return units;
+};
+
+R.match = function(b, wrap, task, bi){
+  const units = [];
+  const options = b.items.map(x => x.a).slice().sort((x, y) => x.localeCompare(y));
+  const ol = h("ol", {class: "items"});
+  b.items.forEach((it, ii) => {
+    const id = `${task.id}_${bi}_${ii}`;
+    const sel = h("select", {class: "sel", id, "aria-label": `Reply to: ${it.t}`}, h("option", {value: ""}, "Choose…"), options.map(o => h("option", {value: o}, o)));
+    if(S.v[id]) sel.value = S.v[id];
+    sel.addEventListener("change", () => { S.v[id] = sel.value; sel.classList.remove("ok", "bad", "shown"); save(); });
+    ol.append(h("li", null, h("span", {class: "num"}, (ii + 1) + "."), h("div", {class: "it match-row"}, h("span", {class: "say"}, it.t), sel)));
+    units.push({
+      label: `${task.code}.${ii + 1}`, q: it.t, block: bi,
+      check: () => sel.value === it.a,
+      mark: ok => { sel.classList.remove("ok", "bad", "shown"); sel.classList.add(ok ? "ok" : "bad"); },
+      show: () => { sel.value = it.a; S.v[id] = it.a; sel.classList.remove("ok", "bad"); sel.classList.add("shown"); },
+      clear: () => { sel.value = ""; delete S.v[id]; sel.classList.remove("ok", "bad", "shown"); },
+      given: () => sel.value, right: () => it.a
+    });
+  });
+  wrap.append(ol);
+  return units;
+};
+
+R.translate = function(b, wrap, task, bi){
+  const units = [];
+  const ol = h("ol", {class: "tr-list"});
+  b.items.forEach((it, ii) => {
+    const id = `${task.id}_${bi}_${ii}`;
+    const ta = h("textarea", {class: "tr", id, rows: "2", spellcheck: "false", "aria-label": `Translation ${ii + 1}`});
+    if(S.v[id]) ta.value = S.v[id];
+    const confBtn = h("button", {type: "button", class: "mini"}, "Mine is correct too");
+    const model = h("div", {class: "model"}, h("span", null, "Model: ", h("b", null, it.m)), confBtn);
+    ta.addEventListener("input", () => { S.v[id] = ta.value; delete S.conf[id]; ta.classList.remove("ok", "bad"); save(); });
+    confBtn.addEventListener("click", () => { if(!ta.value.trim()) return; S.conf[id] = true; save(); ta.classList.remove("bad"); ta.classList.add("ok"); confBtn.disabled = true; confBtn.textContent = "Marked as correct"; task._recount && task._recount(); });
+    ol.append(h("li", null, h("div", {class: "tr-ua", lang: "uk"}, h("span", {class: "num"}, (ii + 1) + "."), h("span", null, it.ua)), ta, model));
+    const matches = () => accSet(it.a).has(norm(ta.value));
+    units.push({
+      label: `${task.code}.${ii + 1}`, q: it.ua, block: bi,
+      check: () => matches() || (!!S.conf[id] && !!ta.value.trim()),
+      mark: ok => {
+        ta.classList.remove("ok", "bad"); ta.classList.add(ok ? "ok" : "bad");
+        const showConf = !ok && !!ta.value.trim();
+        model.classList.toggle("on", (!ok && !!ta.value.trim()) || !!S.conf[id]);
+        confBtn.style.display = showConf || S.conf[id] ? "" : "none";
+        confBtn.disabled = !!S.conf[id]; confBtn.textContent = S.conf[id] ? "Marked as correct" : "Mine is correct too";
+        if(matches()) model.classList.remove("on");
+      },
+      show: () => { model.classList.add("on"); confBtn.style.display = "none"; },
+      clear: () => { ta.value = ""; delete S.v[id]; delete S.conf[id]; ta.classList.remove("ok", "bad"); model.classList.remove("on"); confBtn.disabled = false; confBtn.textContent = "Mine is correct too"; },
+      given: () => ta.value.trim(), right: () => it.m
+    });
+  });
+  wrap.append(ol);
+  return units;
+};
+
+R.reveal = function(b, wrap){
+  const grid = h("div", {class: "rv-grid"});
+  const cards = b.items.map(it => {
+    const c = h("button", {type: "button", class: "rv", "aria-expanded": "false"}, h("span", {class: "q"}, it.q), h("span", {class: "hint"}, "Say it, then tap"), h("span", {class: "a"}, it.a));
+    c.addEventListener("click", () => { const o = c.classList.toggle("open"); c.setAttribute("aria-expanded", String(o)); });
+    grid.append(c); return c;
+  });
+  const lab = wrap.querySelector(".block-label");
+  const all = h("button", {type: "button", class: "mini"}, "Show all");
+  all.addEventListener("click", () => { const open = all.textContent === "Show all"; cards.forEach(c => { c.classList.toggle("open", open); c.setAttribute("aria-expanded", String(open)); }); all.textContent = open ? "Hide all" : "Show all"; });
+  if(lab) lab.append(all);
+  wrap.append(grid);
+  return [];
+};
+
+function makeTimer(btn, out){
+  let t = null, left = 60;
+  const fmt = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  btn.addEventListener("click", () => {
+    if(t){ clearInterval(t); t = null; btn.textContent = "Start 1-minute timer"; out.textContent = ""; return; }
+    left = 60; out.textContent = fmt(left); btn.textContent = "Stop timer";
+    t = setInterval(() => { left--; if(left <= 0){ clearInterval(t); t = null; out.textContent = "Time's up!"; btn.textContent = "Start 1-minute timer"; } else out.textContent = fmt(left); }, 1000);
+  });
+}
+
+R.speak = function(b, wrap){
+  const grid = h("div", {class: "sp-grid"});
+  const cards = b.items.map(it => { const c = h("div", {class: "sp-card"}, h("h4", null, it.h), h("ul", null, it.p.map(p => h("li", null, p)))); grid.append(c); return c; });
+  const pick = h("button", {type: "button", class: "btn"}, "Pick a card");
+  let lastPick = -1;
+  pick.addEventListener("click", () => {
+    let i; do{ i = Math.floor(Math.random() * cards.length); } while(cards.length > 1 && i === lastPick);
+    lastPick = i; cards.forEach((c, ci) => c.classList.toggle("picked", ci === i));
+    cards[i].scrollIntoView({behavior: "smooth", block: "nearest"});
+  });
+  const tbtn = h("button", {type: "button", class: "btn ghost"}, "Start 1-minute timer");
+  const clock = h("span", {class: "clock", "aria-live": "polite"});
+  makeTimer(tbtn, clock);
+  wrap.append(h("div", {class: "sp-tools"}, pick, tbtn, clock), grid);
+  return [];
+};
+
+R.tiles = function(b, wrap){
+  const grid = h("div", {class: "tiles"});
+  const tiles = b.items.map(it => {
+    const u = UNITS[it.n - 1];
+    const t = h("button", {type: "button", class: "t9", "aria-expanded": "false", style: "--g:" + unitColor(it.n)},
+      h("span", {class: "n"}, String(it.n)), h("span", {class: "ttl"}, u.t), h("span", {class: "qq"}, it.q), h("span", {class: "hint"}, "Tap to see the question"));
+    t.addEventListener("click", () => { const o = t.classList.toggle("open"); t.setAttribute("aria-expanded", String(o)); });
+    grid.append(t); return t;
+  });
+  const pick = h("button", {type: "button", class: "btn"}, "Pick a station for me");
+  pick.addEventListener("click", () => {
+    const closed = tiles.filter(t => !t.classList.contains("open"));
+    const pool = closed.length ? closed : tiles;
+    const t = pool[Math.floor(Math.random() * pool.length)];
+    tiles.forEach(x => x.classList.remove("picked"));
+    t.classList.add("picked", "open"); t.setAttribute("aria-expanded", "true");
+  });
+  wrap.append(h("div", {class: "sp-tools"}, pick), grid);
+  return [];
+};
+
+R.svg = function(b, wrap){ wrap.append(h("div", {class: "svg-box", html: b.svg})); return []; };
+
+/* ---- tasks ---- */
+const scorable = [];
+function renderTask(task){
+  const art = h("article", {class: "task", id: "task-" + task.id, "data-units": task.units.join(" ")});
+  const head = h("div", {class: "t-head"},
+    h("span", {class: "t-code"}, task.code),
+    h("h3", null, task.title),
+    h("span", {class: "t-units", "aria-label": "Units " + task.units.join(", ")}, task.units.length === 9 ? h("b", {style: "width:auto;padding:0 8px;border-radius:999px"}, "1–9") : task.units.map(n => h("b", null, String(n)))),
+    task.sub ? h("span", {class: "t-sub"}, task.sub) : null);
+  art.append(head, h("p", {class: "rubric"}, task.rubric));
+  task._units = []; task._wraps = [];
+  task.blocks.forEach((b, bi) => {
+    const wrap = h("div", {class: "block block-" + b.type});
+    if(b.label) wrap.append(h("h4", {class: "block-label"}, b.label));
+    else if(b.type === "reveal") wrap.append(h("h4", {class: "block-label"}, "Say it aloud"));
+    const u = R[b.type](b, wrap, task, bi) || [];
+    task._units.push(...u); task._wraps[bi] = wrap;
+    art.append(wrap);
+  });
+  if(task._units.length){
+    scorable.push(task);
+    const scoreEl = h("span", {class: "score", "aria-live": "polite"}, `– / ${task._units.length}`);
+    const checkBtn = h("button", {type: "button", class: "btn"}, "Check");
+    const showBtn = h("button", {type: "button", class: "btn ghost"}, "Show answers");
+    const resetBtn = h("button", {type: "button", class: "btn ghost"}, "Try again");
+    checkBtn.addEventListener("click", () => doCheck(task));
+    showBtn.addEventListener("click", () => doShow(task));
+    resetBtn.addEventListener("click", () => doReset(task));
+    task._scoreEl = scoreEl; task._checkBtn = checkBtn;
+    task._recount = () => { if(S.score[task.id]) doCheck(task, true); };
+    art.append(h("div", {class: "actions"}, checkBtn, showBtn, resetBtn, scoreEl));
+  }
+  return art;
+}
+function setScoreText(task){
+  const sc = S.score[task.id];
+  task._scoreEl.textContent = sc ? `${sc.r} / ${sc.t}` : `– / ${task._units.length}`;
+  task._scoreEl.classList.toggle("good", !!sc && sc.r === sc.t);
+}
+function doCheck(task, quiet){
+  let r = 0; const wrong = [];
+  task._units.forEach(u => { const ok = u.check(); u.mark(ok); if(ok) r++; else wrong.push({n: u.label, q: u.q, g: u.given(), a: u.right()}); });
+  S.score[task.id] = {r, t: task._units.length, wrong};
+  task._wraps.forEach((w, bi) => { if(w && w._raceStop){ const us = task._units.filter(u => u.block === bi); w._raceStop(us.every(u => u.check())); } });
+  setScoreText(task); save(); updateTotal();
+}
+function doShow(task){
+  task._units.forEach(u => u.show());
+  S.shown[task.id] = true; task._checkBtn.disabled = true; save();
+}
+function doReset(task){
+  task._units.forEach(u => u.clear());
+  delete S.score[task.id]; delete S.shown[task.id];
+  task._wraps.forEach(w => w && w._raceReset && w._raceReset());
+  task._checkBtn.disabled = false; setScoreText(task); save(); updateTotal();
+}
+
+/* ---- totals and results ---- */
+function totals(){
+  let got = 0, max = 0, checked = 0;
+  scorable.forEach(t => { max += t._units.length; const sc = S.score[t.id]; if(sc){ got += sc.r; checked++; } });
+  return {got, max, checked};
+}
+function updateTotal(){
+  const {got, max, checked} = totals();
+  document.getElementById("pill").textContent = `${got} / ${max}`;
+  document.getElementById("progbar").style.width = (max ? Math.round(got / max * 100) : 0) + "%";
+  document.getElementById("bigscore").innerHTML = `${got}<small> / ${max} · ${checked} of ${scorable.length} tasks</small>`;
+  const tb = document.getElementById("restable"); tb.textContent = "";
+  scorable.forEach(t => {
+    const sc = S.score[t.id];
+    tb.append(h("tr", null, h("td", {class: "code"}, t.code), h("td", null, t.title), h("td", {class: sc ? "" : "nc"}, sc ? `${sc.r} / ${sc.t}` : "not checked")));
+  });
+}
+function report(){
+  const {got, max, checked} = totals();
+  const d = new Date();
+  const L = [];
+  L.push("dinglish · Elementary revision · Units 1–9");
+  L.push("Name: " + (S.name || "—"));
+  L.push("Date: " + d.toLocaleDateString("en-GB"));
+  L.push(`Score: ${got} / ${max} (${max ? Math.round(got / max * 100) : 0}%) · ${checked} of ${scorable.length} tasks checked`);
+  L.push("");
+  const notChecked = [];
+  scorable.forEach(t => { const sc = S.score[t.id]; if(sc) L.push(`${t.code} ${t.title} — ${sc.r}/${sc.t}`); else notChecked.push(t.code); });
+  if(notChecked.length){ L.push(""); L.push("Not checked yet: " + notChecked.join(", ")); }
+  const mistakes = [];
+  scorable.forEach(t => { const sc = S.score[t.id]; if(sc && sc.wrong) sc.wrong.forEach(w => mistakes.push(`${w.n}  ${w.q} — wrote “${w.g || "(nothing)"}”, answer: ${w.a}`)); });
+  if(mistakes.length){
+    L.push(""); L.push("Mistakes to look at:");
+    mistakes.slice(0, 50).forEach(m => L.push("• " + m));
+    if(mistakes.length > 50) L.push(`…and ${mistakes.length - 50} more`);
+  }
+  return L.join("\n");
+}
+
+/* ---- route map ---- */
+function buildMap(){
+  const map = document.getElementById("map");
+  UNITS.forEach(u => {
+    const b = h("button", {type: "button", class: "stn", style: "--g:" + unitColor(u.n), "aria-label": `Unit ${u.n}: ${u.t}. Show tasks`},
+      h("span", {class: "dot"}, String(u.n)), h("span", {class: "st"}, u.t), h("span", {class: "sg"}, u.g));
+    b.addEventListener("click", () => {
+      const list = Array.from(document.querySelectorAll(".task")).filter(a => a.dataset.units.split(" ").includes(String(u.n)) && a.id !== "task-W1");
+      document.querySelectorAll(".task.hl").forEach(a => a.classList.remove("hl"));
+      list.forEach(a => a.classList.add("hl"));
+      if(list[0]) list[0].scrollIntoView({behavior: "smooth", block: "start"});
+      setTimeout(() => list.forEach(a => a.classList.remove("hl")), 3500);
+    });
+    map.append(b);
+  });
+}
+
+/* ---- init ---- */
+function init(){
+  buildMap();
+  TASKS.forEach(task => {
+    const host = document.querySelector(`.tasks[data-part="${task.part}"]`);
+    if(host) host.append(renderTask(task));
+  });
+  scorable.forEach(t => {
+    if(S.shown[t.id]){ t._units.forEach(u => u.show()); t._checkBtn.disabled = true; setScoreText(t); }
+    else if(S.score[t.id]) doCheck(t, true);
+  });
+  const nm = document.getElementById("stname");
+  nm.value = S.name || "";
+  nm.addEventListener("input", () => { S.name = nm.value; save(); });
+  const out = document.getElementById("copyout"), msg = document.getElementById("copymsg");
+  document.getElementById("copybtn").addEventListener("click", () => {
+    const txt = report(); out.value = txt;
+    const fallback = () => { out.classList.add("on"); out.focus(); out.select(); msg.textContent = "Select the text below and copy it."; };
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(() => { msg.textContent = "Copied! Paste it into a message to your teacher."; out.classList.add("on"); }, fallback);
+      } else fallback();
+    }catch(e){ fallback(); }
+  });
+  const clr = document.getElementById("clearbtn"); let armed = false, armT = null;
+  clr.addEventListener("click", () => {
+    if(!armed){ armed = true; clr.textContent = "Tap again to clear everything"; armT = setTimeout(() => { armed = false; clr.textContent = "Clear all answers"; }, 4000); return; }
+    clearTimeout(armT); armed = false; clr.textContent = "Clear all answers";
+    scorable.forEach(t => doReset(t));
+    S = {v:{}, c:{}, o:{}, score:{}, shown:{}, conf:{}, name: S.name};
+    save(); updateTotal(); msg.textContent = "All answers cleared."; out.classList.remove("on");
+  });
+  updateTotal();
+}
+init();
+})();
+</script>
+</body>
+</html>
