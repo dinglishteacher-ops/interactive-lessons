@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| Homework · Inversion & Fronting · B2+/C1 · dinglish | [index-21.html](index-21.html) |
 | NMT Word Trainer | [index-20.html](index-20.html) |
 | Seven reasons to be bored — Intermediate Plus 1.3 | [seven-reasons-bored-1.3-2.html](seven-reasons-bored-1.3-2.html) |
 | Units 1–9 Revision | [index-19.html](index-19.html) |
@@ -21,7 +22,7 @@ Repository with interactive English lessons.
 | Youth Work in English · Lesson 2: Have your say — participation & projects | [youth-work-lesson-2.html](youth-work-lesson-2.html) |
 | Youth Work in English · Lesson 1: Who's who in youth work | [youth-work-lesson-1.html](youth-work-lesson-1.html) |
 | On the move · Vocabulary revision · dinglish | [index-4.html](index-4.html) |
-| Busy-ness vocabulary — flashcards &amp; practice | [busyness-vocabulary-cards.html](busyness-vocabulary-cards.html) |
+| Busy-ness vocabulary — flashcards & practice | [busyness-vocabulary-cards.html](busyness-vocabulary-cards.html) |
 | Present Simple vs Continuous · dinglish | [present-simple-vs-continuous.html](present-simple-vs-continuous.html) |
 | Revision: Unit 1 \| dinglish | [index-3.html](index-3.html) |
 | Linking Words B1+ | [linking-words-b1plus.html](linking-words-b1plus.html) |
@@ -33,15 +34,15 @@ Repository with interactive English lessons.
 | Crime & investigation · dinglish | [Crime & investigation · dinglish.html](Crime%20&%20investigation%20·%20dinglish.html) |
 | Life is busy — Intermediate Plus 1.2 | [Life is busy — Intermediate Plus 1.2.html](Life%20is%20busy%20—%20Intermediate%20Plus%201.2.html) |
 | To be: am, is, are — dinglish | [to-be-elementary.html](to-be-elementary.html) |
-| Gerund &amp; Infinitive — тест | [gerund-infinitive-test-2.html](gerund-infinitive-test-2.html) |
-| Speaking cards — have sth done &amp; passive | [speaking-cards-have-done-passive.html](speaking-cards-have-done-passive.html) |
+| Gerund & Infinitive — тест | [gerund-infinitive-test-2.html](gerund-infinitive-test-2.html) |
+| Speaking cards — have sth done & passive | [speaking-cards-have-done-passive.html](speaking-cards-have-done-passive.html) |
 | Living your way — Intermediate Plus 1.1 (part 2) | [living-your-way-1.1b.html](living-your-way-1.1b.html) |
 | How Instagram decides what you see — dinglish | [instagram-ranking-lesson.html](instagram-ranking-lesson.html) |
 | Тренажер слів · dinglish | [vocab-trainer-b1.html](vocab-trainer-b1.html) |
 | Food — Revision (Elementary) \| dinglish | [food-revision-elementary.html](food-revision-elementary.html) |
 | Speaking · The Passive · B1+ \| dinglish | [passive-speaking.html](passive-speaking.html) |
 | ’s чи of? — Elementary practice | [possessive-practice.html](possessive-practice.html) |
-| Gerund &amp; Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
+| Gerund & Infinitive — тест | [gerund-infinitive-test.html](gerund-infinitive-test.html) |
 | Grammar Revision — NMT Practice \| dinglish | [grammar-revision-nmt-b1.html](grammar-revision-nmt-b1.html) |
 | Skincare English — Revision Lesson | [skincare-english-revision.html](skincare-english-revision.html) |
 | Revision Lesson · Units 1–6 | [revision-lesson.html](revision-lesson.html) |
