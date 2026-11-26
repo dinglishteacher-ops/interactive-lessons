@@ -6,6 +6,7 @@ Repository with interactive English lessons.
 
 | Lesson | File |
 |--------|------|
+| NMT Word Trainer | [index-20.html](index-20.html) |
 | Seven reasons to be bored — Intermediate Plus 1.3 | [seven-reasons-bored-1.3-2.html](seven-reasons-bored-1.3-2.html) |
 | Units 1–9 Revision | [index-19.html](index-19.html) |
 | What have you been up to? | [index-17.html](index-17.html) |
