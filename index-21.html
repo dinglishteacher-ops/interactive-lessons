@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework · Inversion & Fronting · B2+/C1 · dinglish</title>
+<style>
+  :root{
+    --bg:#faf9f6; --card:#fff; --ink:#1f1f1f; --muted:#6b6b6b; --line:#e7e4dc;
+    --yellow:#f6ef98; --orange:#f4b46e; --pink:#f1cdee;
+    --ok:#2f7d4f; --okbg:#e7f4ec; --bad:#b23b3b; --badbg:#fbeaea; --self:#8a6d1d; --selfbg:#fbf3dc;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  .wrap{max-width:780px;margin:0 auto;padding:24px 16px 80px}
+  header{margin-bottom:22px}
+  .brand{font-weight:800;letter-spacing:.5px;font-size:14px;color:var(--muted)}
+  .brand span{background:var(--yellow);padding:1px 6px;border-radius:6px;color:var(--ink)}
+  h1{font-size:28px;line-height:1.2;margin:10px 0 6px}
+  .sub{color:var(--muted);margin:0 0 16px}
+  .namebox{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .namebox label{font-weight:600}
+  input[type=text],textarea{font:inherit;width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  input[type=text]:focus,textarea:focus{outline:none;border-color:#b9b39f}
+  .namebox input{max-width:280px}
+  details.theory{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;margin:18px 0 26px}
+  details.theory summary{cursor:pointer;font-weight:700}
+  .rule{border-left:5px solid var(--yellow);padding:6px 12px;margin:14px 0}
+  .rule.o{border-color:var(--orange)} .rule.p{border-color:var(--pink)}
+  .rule b.f{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600;font-size:14px;background:#f3f1ea;padding:1px 6px;border-radius:6px}
+  .rule em{color:#444}
+  .part{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+  .part.A{background:var(--yellow)} .part.B{background:var(--orange)} .part.C{background:var(--pink)} .part.D{background:#e6e3da}
+  section.task{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 14px;margin:0 0 20px}
+  .thead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  h2{font-size:20px;margin:0 0 4px}
+  .rubric{color:var(--muted);margin:0 0 14px}
+  .score{flex:none;font-weight:700;font-size:14px;background:#f3f1ea;border-radius:999px;padding:4px 12px;white-space:nowrap}
+  .item{padding:12px 0;border-top:1px dashed var(--line)}
+  .item:first-of-type{border-top:none}
+  .q{margin-bottom:8px}
+  .n{display:inline-block;min-width:24px;font-weight:700;color:var(--muted)}
+  .q b{background:var(--yellow);padding:0 3px;border-radius:4px}
+  .start{display:inline-block;font-size:13px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:4px}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{font:inherit;cursor:pointer;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 12px;text-align:left;color:var(--ink)}
+  .opt:hover{border-color:#c9c3ad}
+  .opt.sel{border-color:var(--ink);background:#f6f4ee}
+  .opt.right{border-color:var(--ok);background:var(--okbg)}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .fb{font-size:15px;margin-top:8px;display:none;border-radius:10px;padding:8px 12px}
+  .fb.show{display:block}
+  .fb.ok{background:var(--okbg);color:var(--ok)}
+  .fb.bad{background:var(--badbg);color:var(--bad)}
+  .fb.self{background:var(--selfbg);color:var(--self)}
+  .fb .model{color:var(--ink);font-weight:600}
+  .fb .why{color:#444;display:block;margin-top:2px}
+  .selfbtn{font:inherit;font-size:13px;margin-top:6px;cursor:pointer;background:none;border:1px solid currentColor;border-radius:8px;padding:3px 8px;color:var(--bad)}
+  input.ok{border-color:var(--ok)} input.bad{border-color:var(--bad)} input.self{border-color:#c9a64a}
+  .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .btn{font:inherit;font-weight:700;cursor:pointer;border:none;border-radius:10px;padding:10px 18px;background:var(--ink);color:#fff}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn:active{transform:translateY(1px)}
+  .checklist label{display:flex;gap:10px;align-items:flex-start;margin:6px 0;cursor:pointer}
+  .checklist input{margin-top:5px;width:18px;height:18px;flex:none}
+  textarea{min-height:200px;resize:vertical}
+  .wc{font-size:14px;color:var(--muted);margin-top:6px}
+  .wc.good{color:var(--ok);font-weight:700}
+  #results{background:var(--card);border:2px solid var(--ink);border-radius:var(--radius);padding:18px}
+  #results h2{margin-bottom:8px}
+  .total{font-size:34px;font-weight:800;margin:4px 0 10px}
+  #report{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;min-height:160px;display:none;margin-top:12px}
+  .note{font-size:14px;color:var(--muted)}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-weight:600;opacity:0;transition:opacity .25s;pointer-events:none}
+  .toast.on{opacity:1}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:30px}
+  @media (max-width:520px){h1{font-size:24px} section.task{padding:16px 14px 12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><span>dinglish</span> · homework</div>
+    <h1>Inversion &amp; Fronting</h1>
+    <p class="sub">B2+ / C1 · So / Such + inversion · fronting · place inversion · contrast</p>
+    <div class="namebox">
+      <label for="studentName">Your name:</label>
+      <input type="text" id="studentName" placeholder="Type your name" autocomplete="name">
+    </div>
+  </header>
+
+  <details class="theory">
+    <summary>📌 Коротке повторення правил (відкрий, якщо потрібно)</summary>
+    <div class="rule">
+      <b>1. So + прикметник / прислівник</b> — «настільки…, що…» на початку речення → інверсія.<br>
+      <b class="f">So + adj + be + subject + that…</b><br><em>So tired was I that I fell asleep on the bus.</em><br>
+      <b class="f">So + adv + do/does/did + subject + verb + that…</b><br><em>So fast did he drive that nobody could catch him.</em>
+    </div>
+    <div class="rule">
+      <b>2. Such + be + noun + that…</b> — «такий великий / сильний». Прикметник зникає, <b>be</b> узгоджується з іменником.<br>
+      <em>Such <u>was</u> the noise that… / Such <u>were</u> the crowds that…</em>
+    </div>
+    <div class="rule o">
+      <b>3. Fronting без інверсії</b> — виносимо час, місце, спосіб дії або причину на початок, решта — звичайний порядок слів.<br>
+      Кома після прислівників способу дії та довгих фраз — <b>обов'язкова</b>; після коротких фраз часу/місця — за бажанням.<br>
+      <em>Slowly, she opened the letter. / In 2020 we moved to Lviv.</em>
+    </div>
+    <div class="rule o">
+      <b>4. Місце / напрямок + main verb + subject</b> (повна інверсія)<br>
+      ① жодних <b>do/does/did</b>: <em>Down came the rain.</em><br>
+      ② займенник → <b>без</b> інверсії: <em>Here it comes! / Into the room they ran.</em><br>
+      ③ лише з дієсловами руху або положення (<em>be, stand, sit, lie, hang, come, go, run, fly, rush, appear</em>).
+    </div>
+    <div class="rule p">
+      <b>5. Контраст</b><br>
+      Додаток на початку, <b>без інверсії</b>, зазвичай у парі: <em>Coffee I can live without; tea I can't.</em><br>
+      Прикметник / вищий ступінь + <b>be</b> + підмет (книжний стиль): <em>The food was bad. Even worse was the service.</em>
+    </div>
+  </details>
+
+  <div id="tasks"></div>
+
+  <section id="results">
+    <h2>Finish &amp; send to your teacher</h2>
+    <p class="note">Check every task first. Then press the button, and send the report to your teacher (Telegram / Viber / email).</p>
+    <div class="total" id="totalScore">— / —</div>
+    <div class="actions">
+      <button class="btn" id="makeReport">Get my report</button>
+      <button class="btn ghost" id="resetAll">Start again</button>
+    </div>
+    <textarea id="report" readonly></textarea>
+  </section>
+
+  <footer>dinglish · Inversion &amp; Fronting · B2+/C1</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const TASKS = [
+  {
+    id:"t1", part:"A", partName:"Part A · So / Such", type:"mcq",
+    title:"1. Choose the correct option",
+    rubric:"Choose the option that completes the sentence correctly.",
+    items:[
+      {q:"So ______ that nobody at the back could hear her.", opts:["quietly she spoke","quietly did she speak","quiet was she speak"], a:1, why:"Adverb (quietly) → do/does/did + subject + verb."},
+      {q:"______ the demand for tickets that the website crashed.", opts:["So was","Such did","Such was"], a:2, why:"Such + be + noun; demand is singular → was."},
+      {q:"So expensive ______ that we decided to cook at home.", opts:["was the restaurant","the restaurant was","did the restaurant be"], a:0, why:"Adjective (expensive) → be + subject."},
+      {q:"Such ______ the consequences that the company never recovered.", opts:["was","were","did"], a:1, why:"After such, be agrees with the noun: consequences → were."},
+      {q:"So hard ______ for the exam that she got top marks.", opts:["she studied","studied she","did she study"], a:2, why:"Adverb (hard) → did + subject + base verb."},
+      {q:"Such ______ his anger that he couldn't say a word.", opts:["was","were","did"], a:0, why:"anger is singular → was."}
+    ]
+  },
+  {
+    id:"t2", part:"A", partName:"Part A · So / Such", type:"text", allowSelf:true,
+    title:"2. Rewrite with So or Such",
+    rubric:"Rewrite each sentence. Start with the word in the box. Keep the meaning.",
+    items:[
+      {q:"The coffee was so strong that I couldn't sleep all night.", start:"So", answers:["So strong was the coffee that I couldn't sleep all night"]},
+      {q:"He spoke so fast that nobody understood him.", start:"So", answers:["So fast did he speak that nobody understood him","So fast did he speak that no one understood him"]},
+      {q:"The storm was so violent that trees were uprooted.", start:"Such", answers:["Such was the storm that trees were uprooted","Such was the violence of the storm that trees were uprooted"]},
+      {q:"The book was so gripping that I read it in one night.", start:"So", answers:["So gripping was the book that I read it in one night"]},
+      {q:"She sang so beautifully that the audience cried.", start:"So", answers:["So beautifully did she sing that the audience cried"]},
+      {q:"Her fear was so great that she couldn't move.", start:"Such", answers:["Such was her fear that she couldn't move"]},
+      {q:"The queues were so long that we gave up.", start:"Such", answers:["Such were the queues that we gave up","Such was the length of the queues that we gave up"]},
+      {q:"They worked so hard that they finished a week early.", start:"So", answers:["So hard did they work that they finished a week early"]}
+    ]
+  },
+  {
+    id:"t3", part:"B", partName:"Part B · Fronting", type:"text", strictComma:true, allowSelf:false,
+    title:"3. Fronting without inversion",
+    rubric:"Put the part in bold first. Add a comma if needed.",
+    items:[
+      {q:"The whole team gathered in the office <b>on Monday morning</b>.", start:"On Monday…", answers:["On Monday morning, the whole team gathered in the office","On Monday morning the whole team gathered in the office"]},
+      {q:"He accepted the offer <b>without a second thought</b>.", start:"Without…", answers:["Without a second thought, he accepted the offer"]},
+      {q:"I found an old photo of my grandparents <b>in the attic</b>.", start:"In the…", answers:["In the attic, I found an old photo of my grandparents","In the attic I found an old photo of my grandparents"]},
+      {q:"They cancelled the match <b>because of the heavy snow</b>.", start:"Because…", answers:["Because of the heavy snow, they cancelled the match"]},
+      {q:"She walked towards the stage <b>nervously</b>.", start:"Nervously…", answers:["Nervously, she walked towards the stage"]},
+      {q:"Everything changed <b>after that conversation</b>.", start:"After…", answers:["After that conversation, everything changed","After that conversation everything changed"]}
+    ]
+  },
+  {
+    id:"t4", part:"B", partName:"Part B · Place inversion", type:"mcq",
+    title:"4. Which sentence is correct?",
+    rubric:"Remember the three golden rules. Choose the correct sentence.",
+    items:[
+      {q:"", opts:["Down did the snow come.","Down came the snow."], a:1, why:"Rule 1: no do/does/did — the main verb itself goes before the subject."},
+      {q:"", opts:["Here comes she!","Here she comes!"], a:1, why:"Rule 2: pronoun → no inversion."},
+      {q:"", opts:["In the garden grew my dad tomatoes.","In the garden, my dad grew tomatoes."], a:1, why:"Rule 3: grow (tomatoes) is not a verb of movement or position → no inversion."},
+      {q:"", opts:["Around the corner appeared a police car.","Around the corner did a police car appear."], a:0, why:"Place + verb of appearing + noun subject → full inversion, no did."},
+      {q:"", opts:["Off went they.","Off they went."], a:1, why:"Rule 2: pronoun → no inversion."},
+      {q:"", opts:["On the wall hung a portrait of her grandmother.","On the wall a portrait of her grandmother did hang."], a:0, why:"hang = position verb → main verb before the subject."},
+      {q:"", opts:["There our last chance goes!","There goes our last chance!"], a:1, why:"Fixed conversational pattern: There goes + noun."}
+    ]
+  },
+  {
+    id:"t5", part:"B", partName:"Part B · Place inversion", type:"text", allowSelf:true,
+    title:"5. Full inversion",
+    rubric:"Start with the part in bold. Use full inversion where possible. Careful with pronouns!",
+    items:[
+      {q:"A tiny bird flew <b>out of the bushes</b>.", start:"Out of…", answers:["Out of the bushes flew a tiny bird"]},
+      {q:"Our guests come <b>here</b>!", start:"Here…", answers:["Here come our guests"]},
+      {q:"A beautiful lake lies <b>at the foot of the mountain</b>.", start:"At the foot…", answers:["At the foot of the mountain lies a beautiful lake"]},
+      {q:"The children rushed <b>into the classroom</b>.", start:"Into…", answers:["Into the classroom rushed the children"]},
+      {q:"They rushed <b>into the classroom</b>.", start:"Into…", answers:["Into the classroom they rushed"]},
+      {q:"The prices went <b>up</b>.", start:"Up…", answers:["Up went the prices"]},
+      {q:"A huge chandelier hung <b>above the dining table</b>.", start:"Above…", answers:["Above the dining table hung a huge chandelier"]}
+    ]
+  },
+  {
+    id:"t6", part:"C", partName:"Part C · Contrast", type:"text", allowSelf:true,
+    title:"6. Contrast & comparatives",
+    rubric:"Rewrite for emphasis. Start with the words given. In 4–6 rewrite only the second sentence.",
+    items:[
+      {q:"I've seen the film, but I haven't read the book.", start:"The film…", answers:["The film I've seen; the book I haven't","The film I've seen, but the book I haven't","The film I've seen; the book I haven't read","The film I've seen, but the book I haven't read"]},
+      {q:"I can forgive his rudeness, but I can't forgive his lies.", start:"His rudeness…", answers:["His rudeness I can forgive; his lies I can't","His rudeness I can forgive, but his lies I can't","His rudeness I can forgive; his lies I can't forgive","His rudeness I can forgive, but his lies I can't forgive"]},
+      {q:"I remember her face, but I've forgotten her name.", start:"Her face…", answers:["Her face I remember; her name I've forgotten","Her face I remember, but her name I've forgotten"]},
+      {q:"The flight was long. The delay at the airport was even more exhausting.", start:"Even more exhausting…", answers:["Even more exhausting was the delay at the airport"]},
+      {q:"The salary is attractive. The team is far more important to me.", start:"Far more important…", answers:["Far more important to me is the team","Far more important is the team"]},
+      {q:"Every start-up needs good ideas. Teamwork is equally essential.", start:"Equally essential…", answers:["Equally essential is teamwork"]}
+    ]
+  },
+  {
+    id:"t7", part:"D", partName:"Mixed", type:"mcq",
+    title:"7. Correct or wrong?",
+    rubric:"Decide if each sentence is correct. Read the explanation after checking.",
+    items:[
+      {q:"So tired I was that I fell asleep at my desk.", opts:["Correct","Wrong"], a:1, why:"→ So tired was I that…"},
+      {q:"Such was the noise that we couldn't hear each other.", opts:["Correct","Wrong"], a:0, why:"Such + was + noun (singular) + that…"},
+      {q:"Here comes it!", opts:["Correct","Wrong"], a:1, why:"→ Here it comes! (pronoun → no inversion)"},
+      {q:"So quickly did the news spread that by noon everyone knew.", opts:["Correct","Wrong"], a:0, why:"Adverb → did + subject + verb."},
+      {q:"In the café drank my friends coffee.", opts:["Correct","Wrong"], a:1, why:"→ In the café, my friends drank coffee. (drink is not a verb of movement/position)"},
+      {q:"Such were the excitement that nobody could sleep.", opts:["Correct","Wrong"], a:1, why:"→ Such was the excitement… (uncountable noun → was)"},
+      {q:"Down the stairs ran the dog.", opts:["Correct","Wrong"], a:0, why:"Direction + movement verb + noun subject."},
+      {q:"So loudly the band played that the windows shook.", opts:["Correct","Wrong"], a:1, why:"→ So loudly did the band play that…"},
+      {q:"Patience I have plenty of; time I don't.", opts:["Correct","Wrong"], a:0, why:"Object fronting for contrast — no inversion, comes in a pair."}
+    ]
+  },
+  {
+    id:"t8", part:"D", partName:"Mixed", type:"text", allowSelf:true,
+    title:"8. Translate into English",
+    rubric:"Translate using the structures from the lesson. The start of each sentence is given.",
+    items:[
+      {q:"Вона була настільки втомлена, що заснула просто в метро.", start:"So…", answers:["So tired was she that she fell asleep right on the metro","So tired was she that she fell asleep on the metro","So tired was she that she fell asleep right in the metro","So tired was she that she fell asleep in the metro","So tired was she that she fell asleep right on the underground","So tired was she that she fell asleep on the underground"]},
+      {q:"Його впевненість була такою, що ніхто не наважився сперечатися.", start:"Such…", answers:["Such was his confidence that nobody dared to argue","Such was his confidence that no one dared to argue","Such was his confidence that nobody dared argue","Such was his confidence that no one dared argue"]},
+      {q:"Він вів машину так обережно, що ми приїхали на годину пізніше.", start:"So…", answers:["So carefully did he drive that we arrived an hour late","So carefully did he drive that we arrived an hour later"]},
+      {q:"А ось і наш автобус!", start:"Here…", answers:["Here comes our bus"]},
+      {q:"Із-за рогу вибіг величезний пес.", start:"Around…", answers:["Around the corner ran a huge dog","Round the corner ran a huge dog","From around the corner ran a huge dog","Around the corner came a huge dog"]},
+      {q:"Каву я можу пити будь-коли, а от чай — лише вранці.", start:"Coffee…", answers:["Coffee I can drink any time; tea only in the morning","Coffee I can drink anytime; tea only in the morning","Coffee I can drink any time, but tea only in the morning","Coffee I can drink anytime, but tea only in the morning","Coffee I can drink any time; tea I can drink only in the morning","Coffee I can drink any time, but tea I can drink only in the morning"]},
+      {q:"Їжа була погана. Ще гіршим було обслуговування.", start:"The food… Even…", answers:["The food was bad. Even worse was the service","The food was terrible. Even worse was the service","The food was awful. Even worse was the service"]},
+      {q:"Не сказавши ні слова, він вийшов з кімнати.", start:"Without…", answers:["Without a word, he left the room","Without saying a word, he left the room","Without a word, he walked out of the room","Without saying a word, he walked out of the room"]}
+    ]
+  },
+  {
+    id:"t9", part:"D", partName:"Writing", type:"write",
+    title:"9. Your story",
+    rubric:"Write 80–120 words about the most dramatic moment of a trip, a match, a concert or a film you remember. Use all four structures and tick them off.",
+    checks:[
+      "So / Such + inversion (So loud was the music that… / Such was the noise that…)",
+      "Place / direction + full inversion (Into the room ran… / Here comes…)",
+      "Fronted time / place / manner phrase (Suddenly, … / At midnight, …)",
+      "Contrast fronting (The first half I enjoyed; the second I didn't. / Even worse was…)"
+    ]
+  }
+];
+
+const STORE_KEY = "dinglish-hw-inversion-fronting-v1";
+let state = { name:"", t:{} };
+try { const s = JSON.parse(localStorage.getItem(STORE_KEY)); if (s && s.t) state = s; } catch(e){}
+function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e){} }
+
+function norm(s, keepComma){
+  s = (s||"").toLowerCase().replace(/[’‘`´]/g,"'").replace(/[“”«»]/g,'"');
+  s = s.replace(/\bcan't\b/g,"cannot").replace(/\bwon't\b/g,"will not").replace(/n't\b/g," not")
+       .replace(/'ve\b/g," have").replace(/'ll\b/g," will").replace(/'re\b/g," are").replace(/\bi'm\b/g,"i am")
+       .replace(/\bcan not\b/g,"cannot").replace(/\banytime\b/g,"any time").replace(/\bstartup\b/g,"start up");
+  s = s.replace(/[—–]/g," ").replace(/\s-\s/g," ");
+  s = keepComma ? s.replace(/[^a-z0-9', ]/g," ") : s.replace(/[^a-z0-9' ]/g," ");
+  s = s.replace(/\s+,/g,",").replace(/,+/g,",").replace(/\s+/g," ").trim().replace(/,$/,"");
+  return s;
+}
+function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function tstate(id){ if(!state.t[id]) state.t[id] = { v:{}, st:{}, checked:false }; return state.t[id]; }
+
+const root = document.getElementById("tasks");
+
+function render(){
+  root.innerHTML = "";
+  TASKS.forEach(task=>{
+    const ts = tstate(task.id);
+    const sec = document.createElement("section");
+    sec.className = "task"; sec.id = task.id;
+    let html = `<span class="part ${task.part}">${task.partName}</span>
+      <div class="thead"><div><h2>${task.title}</h2><p class="rubric">${task.rubric}</p></div>
+      ${task.type!=="write" ? `<div class="score" id="${task.id}-score">— / ${task.items.length}</div>` : ""}</div>`;
+    if (task.type==="mcq"){
+      task.items.forEach((it,i)=>{
+        html += `<div class="item" data-i="${i}">
+          ${it.q ? `<div class="q"><span class="n">${i+1}</span>${it.q}</div>` : `<div class="q"><span class="n">${i+1}</span></div>`}
+          <div class="opts">${it.opts.map((o,k)=>`<button class="opt" data-k="${k}">${esc(o)}</button>`).join("")}</div>
+          <div class="fb"></div></div>`;
+      });
+    } else if (task.type==="text"){
+      task.items.forEach((it,i)=>{
+        html += `<div class="item" data-i="${i}">
+          <div class="q"><span class="n">${i+1}</span>${it.q} <span class="start">${esc(it.start)}</span></div>
+          <input type="text" placeholder="${esc(it.start)}" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="sentences">
+          <div class="fb"></div></div>`;
+      });
+    } else if (task.type==="write"){
+      html += `<textarea id="writing" placeholder="Start writing here…"></textarea>
+        <div class="wc" id="wc">0 words</div>
+        <div class="checklist" style="margin-top:10px">${task.checks.map((c,k)=>`<label><input type="checkbox" data-k="${k}"> <span>${esc(c)}</span></label>`).join("")}</div>`;
+    }
+    if (task.type!=="write") html += `<div class="actions"><button class="btn check">Check</button></div>`;
+    sec.innerHTML = html;
+    root.appendChild(sec);
+    wire(task, sec, ts);
+  });
+  updateTotal();
+}
+
+function wire(task, sec, ts){
+  if (task.type==="mcq"){
+    sec.querySelectorAll(".item").forEach(itemEl=>{
+      const i = +itemEl.dataset.i;
+      itemEl.querySelectorAll(".opt").forEach(b=>{
+        if (ts.v[i]===+b.dataset.k) b.classList.add("sel");
+        b.addEventListener("click", ()=>{
+          ts.v[i] = +b.dataset.k;
+          itemEl.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel","right","wrong"));
+          b.classList.add("sel");
+          if (ts.checked) checkTask(task, sec, ts); else save();
+        });
+      });
+    });
+  } else if (task.type==="text"){
+    sec.querySelectorAll(".item").forEach(itemEl=>{
+      const i = +itemEl.dataset.i, inp = itemEl.querySelector("input");
+      inp.value = ts.v[i] || "";
+      inp.addEventListener("input", ()=>{ ts.v[i] = inp.value; if (ts.st[i]==="self") delete ts.st[i]; save(); });
+      inp.addEventListener("keydown", e=>{ if (e.key==="Enter"){ e.preventDefault(); checkTask(task, sec, ts); } });
+    });
+  } else if (task.type==="write"){
+    const ta = sec.querySelector("#writing");
+    ta.value = ts.text || "";
+    const wc = ()=>{ const n = (ta.value.trim().match(/\S+/g)||[]).length; const el = sec.querySelector("#wc"); el.textContent = n+" words"+(n<80?" · aim for 80–120":(n>120?" · a bit long, aim for 80–120":" ✓")); el.className = "wc"+(n>=80&&n<=120?" good":""); };
+    ta.addEventListener("input", ()=>{ ts.text = ta.value; wc(); save(); });
+    wc();
+    ts.ticks = ts.ticks || {};
+    sec.querySelectorAll(".checklist input").forEach(cb=>{
+      cb.checked = !!ts.ticks[cb.dataset.k];
+      cb.addEventListener("change", ()=>{ ts.ticks[cb.dataset.k] = cb.checked; save(); });
+    });
+  }
+  const btn = sec.querySelector(".check");
+  if (btn) btn.addEventListener("click", ()=>checkTask(task, sec, ts));
+  if (ts.checked) checkTask(task, sec, ts, true);
+}
+
+function checkTask(task, sec, ts, silent){
+  ts.checked = true;
+  sec.querySelectorAll(".item").forEach(itemEl=>{
+    const i = +itemEl.dataset.i, it = task.items[i], fb = itemEl.querySelector(".fb");
+    fb.className = "fb"; fb.innerHTML = "";
+    if (task.type==="mcq"){
+      const v = ts.v[i];
+      itemEl.querySelectorAll(".opt").forEach(b=>b.classList.remove("right","wrong"));
+      if (v===undefined){ ts.st[i] = null; fb.className="fb show bad"; fb.textContent="No answer yet."; return; }
+      const ok = v===it.a;
+      ts.st[i] = ok ? "ok" : "bad";
+      itemEl.querySelector(`.opt[data-k="${v}"]`).classList.add(ok?"right":"wrong");
+      if (!ok) itemEl.querySelector(`.opt[data-k="${it.a}"]`).classList.add("right");
+      fb.className = "fb show "+(ok?"ok":"bad");
+      fb.innerHTML = (ok?"✓ Correct.":"✗ Not quite.")+` <span class="why">${esc(it.why)}</span>`;
+    } else {
+      const inp = itemEl.querySelector("input"), v = inp.value.trim();
+      inp.classList.remove("ok","bad","self");
+      if (!v){ ts.st[i] = null; fb.className="fb show bad"; fb.textContent="No answer yet."; return; }
+      const strict = !!task.strictComma;
+      const ok = it.answers.some(a=>norm(a,strict)===norm(v,strict));
+      if (ok){ ts.st[i]="ok"; inp.classList.add("ok"); fb.className="fb show ok"; fb.textContent="✓ Correct."; return; }
+      if (ts.st[i]==="self"){ inp.classList.add("self"); fb.className="fb show self"; fb.innerHTML=`✓ Counted as your own variant. Model: <span class="model">${esc(it.answers[0])}.</span>`; return; }
+      ts.st[i]="bad"; inp.classList.add("bad");
+      const almost = strict && it.answers.some(a=>norm(a,false)===norm(v,false));
+      fb.className="fb show bad";
+      fb.innerHTML = almost
+        ? `✗ Almost! Check the comma. Model: <span class="model">${esc(it.answers[0])}.</span>`
+        : `✗ Model answer: <span class="model">${esc(it.answers[0])}.</span>`;
+      if (!almost && task.allowSelf){
+        const b = document.createElement("button");
+        b.className="selfbtn"; b.textContent="My answer means the same — count it";
+        b.addEventListener("click", ()=>{ ts.st[i]="self"; checkTask(task, sec, ts, true); });
+        fb.appendChild(document.createElement("br")); fb.appendChild(b);
+      }
+    }
+  });
+  const okN = task.items.filter((_,i)=>ts.st[i]==="ok"||ts.st[i]==="self").length;
+  document.getElementById(task.id+"-score").textContent = okN+" / "+task.items.length;
+  save(); updateTotal();
+  if (!silent) toast(okN===task.items.length ? "Perfect! 🎉" : okN+" / "+task.items.length);
+}
+
+function totals(){
+  let ok=0, all=0;
+  TASKS.forEach(t=>{ if(t.type==="write") return; const ts=tstate(t.id); all+=t.items.length; t.items.forEach((_,i)=>{ if(ts.st[i]==="ok"||ts.st[i]==="self") ok++; }); });
+  return {ok, all};
+}
+function updateTotal(){ const {ok,all}=totals(); document.getElementById("totalScore").textContent = ok+" / "+all; }
+
+function buildReport(){
+  const name = (state.name||"").trim() || "(no name)";
+  const {ok,all} = totals();
+  const d = new Date();
+  let r = `dinglish · Homework: Inversion & Fronting (B2+/C1)\nStudent: ${name}\nDate: ${d.toLocaleDateString("en-GB")} ${d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}\nTOTAL: ${ok}/${all} (${all?Math.round(ok/all*100):0}%)\n`;
+  TASKS.forEach(t=>{
+    const ts = tstate(t.id);
+    if (t.type==="write"){
+      const n = ((ts.text||"").trim().match(/\S+/g)||[]).length;
+      const ticks = t.checks.map((c,k)=>(ts.ticks&&ts.ticks[k]?"[x] ":"[ ] ")+c.split(" (")[0]).join("\n");
+      r += `\n— ${t.title} (${n} words)\n${ticks}\n\n${(ts.text||"").trim()||"(not written)"}\n`;
+      return;
+    }
+    const okN = t.items.filter((_,i)=>ts.st[i]==="ok"||ts.st[i]==="self").length;
+    r += `\n— ${t.title}: ${okN}/${t.items.length}${ts.checked?"":" (not checked)"}\n`;
+    t.items.forEach((it,i)=>{
+      const st = ts.st[i], mark = st==="ok"?"✓":st==="self"?"✓*":st==="bad"?"✗":"–";
+      if (t.type==="mcq"){
+        const v = ts.v[i];
+        if (st!=="ok") r += `  ${i+1}. ${mark} ${v===undefined?"(no answer)":it.opts[v]}${st==="bad"?"  → "+it.opts[it.a]:""}\n`;
+      } else {
+        const v = (ts.v[i]||"").trim();
+        if (st!=="ok") r += `  ${i+1}. ${mark} ${v||"(no answer)"}${st==="bad"||st==="self"?"  → "+it.answers[0]:""}\n`;
+      }
+    });
+  });
+  r += `\n✓* = student counted own variant — please check.\nOnly mistakes and own variants are listed; everything else is correct.`;
+  return r;
+}
+
+const nameInp = document.getElementById("studentName");
+nameInp.value = state.name || "";
+nameInp.addEventListener("input", ()=>{ state.name = nameInp.value; save(); });
+
+document.getElementById("makeReport").addEventListener("click", async ()=>{
+  const ta = document.getElementById("report");
+  ta.value = buildReport(); ta.style.display = "block";
+  if (!(state.name||"").trim()) toast("Add your name at the top 🙂");
+  try { await navigator.clipboard.writeText(ta.value); toast("Report copied — paste it to your teacher"); }
+  catch(e){ ta.focus(); ta.select(); toast("Select the text and copy it"); }
+});
+let resetArmed=false, resetT;
+document.getElementById("resetAll").addEventListener("click", e=>{
+  const b=e.currentTarget;
+  if (!resetArmed){ resetArmed=true; b.textContent="Tap again to delete all answers"; clearTimeout(resetT); resetT=setTimeout(()=>{resetArmed=false;b.textContent="Start again";},3000); return; }
+  resetArmed=false; b.textContent="Start again";
+  state = { name: state.name, t:{} }; save();
+  document.getElementById("report").style.display="none";
+  render(); window.scrollTo({top:0,behavior:"smooth"});
+});
+
+let tt;
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("on"),2200); }
+
+render();
+</script>
+</body>
+</html>
